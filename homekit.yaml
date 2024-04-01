@@ -1,0 +1,131 @@
+- name: HASS Bridge Custom
+  port: 56320
+  filter:
+    include_entities:
+      # переключатели, розетки
+      - switch.ahtom_switch_1_table_light
+      - switch.ahtom_switch_2_tv_backlight
+      - switch.ahtom_switch_3_kitchen_led
+      - switch.ahtom_outlet_1_excrement
+      - switch.aqara_relay_1ch_1
+      # датчики
+      - sensor.aqara_t1_sensor_1_temperature
+      - sensor.aqara_t1_sensor_1_humidity
+      - sensor.aqara_t1_sensor_2_temperature
+      - sensor.aqara_t1_sensor_2_humidity
+      - sensor.aqara_t1_sensor_3_temperature
+      - sensor.aqara_t1_sensor_3_humidity
+      - sensor.aqara_tvoc_sensor_temperature
+      - sensor.aqara_tvoc_sensor_humidity
+      - sensor.aqara_tvoc_sensor_volatile_organic_compound_density
+      # - sensor.aqara_tvoc_sensor_air_quality
+      - sensor.qingping_air_monitor_lite_temperature
+      - sensor.qingping_air_monitor_lite_humidity
+      - sensor.qingping_air_monitor_lite_co2_carbon_dioxide
+      # - sensor.qingping_air_monitor_lite_air_quality
+      - sensor.qingping_air_monitor_lite_pm2_5_density
+      - sensor.qingping_air_monitor_lite_pm10_density
+      # термостаты
+      - climate.aqara_e1_thermostat_1
+      - climate.aqara_e1_thermostat_2
+      - climate.aqara_e1_thermostat_3
+      # увлажнители
+      - humidifier.smartmi_humidifier_rainforest_hum_dehum
+  entity_config:
+    # переключатели, розетки
+    switch.ahtom_switch_1_table_light:
+      name: "Свет у компьютера"
+      type: outlet
+    switch.ahtom_switch_2_tv_backlight:
+      name: "Ночник"
+      type: outlet
+    switch.ahtom_switch_3_kitchen_led:
+      name: "Свет на кухне"
+      type: outlet
+    switch.ahtom_outlet_1_excrement:
+      name: "Экскремент"
+      type: outlet
+    switch.aqara_relay_1ch_1:
+      name: "Компьютер"
+    # датчики
+    sensor.aqara_t1_sensor_1_temperature:
+      name: T1 Коридор
+      linked_battery_sensor: sensor.aqara_t1_sensor_1_battery
+      low_battery_threshold: 30
+    sensor.aqara_t1_sensor_1_humidity:
+      name: T1 Коридор
+      linked_battery_sensor: sensor.aqara_t1_sensor_1_battery
+      low_battery_threshold: 30
+    sensor.aqara_t1_sensor_2_temperature:
+      name: T1 Балкон
+      linked_battery_sensor: sensor.aqara_t1_sensor_2_battery
+      low_battery_threshold: 30
+    sensor.aqara_t1_sensor_2_humidity:
+      name: T1 Балкон
+      linked_battery_sensor: sensor.aqara_t1_sensor_2_battery
+      low_battery_threshold: 30
+    sensor.aqara_t1_sensor_3_temperature:
+      name: T1 Кухня
+      linked_battery_sensor: sensor.aqara_t1_sensor_3_battery
+      low_battery_threshold: 30
+    sensor.aqara_t1_sensor_3_humidity:
+      name: T1 Кухня
+      linked_battery_sensor: sensor.aqara_t1_sensor_3_battery
+      low_battery_threshold: 30
+    sensor.aqara_tvoc_sensor_temperature:
+      name: S1
+      linked_battery_sensor: sensor.aqara_tvoc_sensor_battery
+      low_battery_threshold: 30
+    sensor.aqara_tvoc_sensor_humidity:
+      name: S1
+      linked_battery_sensor: sensor.aqara_tvoc_sensor_battery
+      low_battery_threshold: 30
+    sensor.aqara_tvoc_sensor_volatile_organic_compound_density:
+      name: TVOC
+      linked_battery_sensor: sensor.aqara_tvoc_sensor_battery
+      low_battery_threshold: 30
+    # sensor.aqara_tvoc_sensor_air_quality:
+    #   name: TVOC AQ
+    #   linked_battery_sensor: sensor.aqara_tvoc_sensor_battery
+    #   low_battery_threshold: 30
+    sensor.qingping_air_monitor_lite_temperature:
+      name: QingPing
+      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      low_battery_threshold: 30
+    sensor.qingping_air_monitor_lite_humidity:
+      name: QingPing
+      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      low_battery_threshold: 30
+    sensor.qingping_air_monitor_lite_co2_carbon_dioxide:
+      name: CO2
+      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      low_battery_threshold: 30
+    sensor.qingping_air_monitor_lite_pm2_5_density:
+      name: PM2.5
+      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      low_battery_threshold: 30
+    sensor.qingping_air_monitor_lite_pm10_density:
+      name: PM10
+      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      low_battery_threshold: 30
+    # sensor.qingping_air_monitor_lite_air_quality:
+    #   name: QP AQ
+    #   linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+    #   low_battery_threshold: 30
+    # термостаты
+    climate.aqara_e1_thermostat_1:
+      name: Рабочее место Термостат 1
+      linked_battery_sensor: sensor.aqara_e1_thermostat_1_battery
+      low_battery_threshold: 30
+    climate.aqara_e1_thermostat_2:
+      name: Спальня Термостат 2
+      linked_battery_sensor: sensor.aqara_e1_thermostat_2_battery
+      low_battery_threshold: 30
+    climate.aqara_e1_thermostat_3:
+      name: Кухня Термостат 3
+      linked_battery_sensor: sensor.aqara_e1_thermostat_3_battery
+      low_battery_threshold: 30
+    # увлажнители
+    humidifier.smartmi_humidifier_rainforest_hum_dehum:
+      name: Увлажнитель
+      linked_humidity_sensor: sensor.smartmi_humidifier_rainforest_current_humidity

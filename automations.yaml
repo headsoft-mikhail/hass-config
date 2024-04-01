@@ -1,0 +1,71 @@
+- id: "0001"
+  alias: click_pc_button
+  description: Нажать и отжать кнопку компьютера
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.aqara_relay_1ch_1
+      to: "on"
+  condition: []
+  action:
+    - delay:
+        milliseconds: 400
+    - service: switch.turn_off
+      target:
+        entity_id: switch.aqara_relay_1ch_1
+      data: {}
+  mode: single
+- id: "0002"
+  alias: experiment
+  description: Экскремент
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.ahtom_outlet_1_excrement
+      to: "on"
+  condition: []
+  action:
+    - delay:
+        milliseconds: 500
+    - service: switch.turn_off
+      target:
+        entity_id: switch.ahtom_outlet_1_excrement
+      data: {}
+    - service: notify.notify
+      data:
+        message: Экскремент завершен
+  mode: single
+- id: "0003"
+  alias: notify_about_download_completed
+  description: Уведомление о завершении загрузки
+  trigger:
+    - platform: event
+      event_type: transmission_downloaded_torrent
+  condition: []
+  action:
+    - service: notify.notify
+      data:
+        title: Загрузка завершена
+        message: "{{trigger.event.data.name}}"
+    - service: transmission.remove_torrent
+      data:
+        entry_id: f3deebe4f56ebcaffbf23affd3c1c930 # transmission integration_id
+        id: "{{trigger.event.data.id}}"
+        delete_data: false
+  mode: single
+- id: "0004"
+  alias: run_speedtest
+  description: Run SpeedTest
+  trigger:
+    - platform: state
+      entity_id:
+        - input_button.run_speedtest
+  condition: []
+  action:
+    - service: homeassistant.update_entity
+      data: {}
+      target:
+        entity_id:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+  mode: single

@@ -1,0 +1,328 @@
+views:
+  - title: Сеть
+    path: network
+    icon: mdi:web
+    badges: []
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: markdown
+            content: >-
+              [<img
+              src='http://192.168.1.60:8123/local/images/icon_keenetic.svg'
+              height=100>](http://192.168.1.1/dashboard)
+          - type: markdown
+            content: >-
+              [<img
+              src='http://192.168.1.60:8123/local/images/icon_transmission.svg'
+              height=120>](http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer)
+          - type: markdown
+            content: >-
+              [<img src='http://192.168.1.60:8123/local/images/icon_github.svg'
+              height=100>](https://github.com/headsoft-mikhail/hass-config)
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: binary_sensor.zyxel_gateway_wan_status
+                name: Состояние WAN
+              - entity: sensor.zyxel_gateway_external_ip
+                name: Внешний IP
+                icon: mdi:ip
+              - entity: sensor.zyxel_gateway_download_speed
+                name: Текущая скорость загрузки
+                icon: mdi:speedometer
+              - entity: sensor.zyxel_gateway_upload_speed
+                name: Текущая скорость передачи
+                icon: mdi:speedometer
+            show_header_toggle: false
+            title: Zyxel Gateway
+            state_color: true
+          - type: entities
+            title: SpeedTest
+            entities:
+              - entity: input_button.run_speedtest
+                name: Запуск теста
+              - entity: sensor.speedtest_download
+                name: Загрузка
+              - entity: sensor.speedtest_upload
+                name: Передача
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.transmission_status
+                name: Статус
+                secondary_info: last-updated
+              - entity: sensor.transmission_download_speed
+                name: Скорость загрузки
+                icon: mdi:speedometer
+                secondary_info: none
+              - entity: switch.transmission_switch
+                name: Загрузка
+                icon: mdi:power
+            title: Transmission
+            state_color: true
+            show_header_toggle: false
+          - type: markdown
+            content: >-
+              {% set payload = state_attr('sensor.transmission_total_torrents',
+              'torrent_info') %}
+
+              | <!-- --> | <!-- --> | <!-- --> |
+
+              | :------: | :------- | :------: |
+
+              {% for torrent in payload.items() %}{% set name = torrent[0] %} {%
+              set data = torrent[1] %} {% if name %}| <ha-icon icon="mdi:{% if
+              data.status=="downloading" %}arrow-down-bold{% else %}pause{%
+              endif %}"></ha-icon>|{{ name|truncate(30) }} > |  ```{{
+              data.percent_done }}%```| {% endif %}
+
+              {% endfor %}
+
+              {% if not payload.items() %} загрузок нет {% endif %}
+            title: null
+      - type: entities
+        entities:
+          - entity: sensor.backup_state
+          - entity: sensor.home_assistant_core_cpu_percent
+            name: HA Core Использование CPU
+          - entity: sensor.home_assistant_core_memory_percent
+            name: HA Core Использование ROM
+          - entity: sensor.home_assistant_supervisor_cpu_percent
+            name: HA Supervisor Использование CPU
+          - entity: sensor.home_assistant_supervisor_memory_percent
+            name: HA Supervisor Использование ROM
+          - entity: sensor.home_assistant_host_disk_free
+            name: HA Host Свободно памяти
+          - entity: sensor.home_assistant_host_disk_used
+            name: HA Host Использовано памяти
+        title: Home Assistant
+  - title: Микроклимат
+    path: climate
+    icon: mdi:home-thermometer-outline
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: weather.openweathermap
+              - entity: sensor.openweathermap_humidity
+                name: Влажность
+              - entity: sensor.openweathermap_forecast_pressure
+                name: Атмосферное давление
+                icon: mdi:arrow-collapse-down
+              - entity: sensor.openweathermap_wind_speed
+                name: Скорость ветра
+              - entity: sensor.openweathermap_cloud_coverage
+                name: Облачность
+                icon: mdi:cloud
+            title: Погода
+          - type: custom:mini-graph-card
+            name: Температура на улице
+            hour24: true
+            font_size: 70
+            hours_to_show: 24
+            points_per_hour: 1
+            entities:
+              - sensor.openweathermap_temperature
+          - type: history-graph
+            entities:
+              - sun.sun
+            title: Солнце
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: thermostat
+                entity: climate.aqara_e1_thermostat_1
+                features:
+                  - type: climate-hvac-modes
+                    hvac_modes:
+                      - heat
+                      - 'off'
+              - type: thermostat
+                entity: climate.aqara_e1_thermostat_2
+                features:
+                  - type: climate-hvac-modes
+                    hvac_modes:
+                      - heat
+                      - 'off'
+          - type: horizontal-stack
+            cards:
+              - type: humidifier
+                entity: humidifier.smartmi_humidifier_rainforest_hum_dehum
+                features:
+                  - type: humidifier-toggle
+                show_current_as_primary: false
+                name: Увлажнитель
+              - type: thermostat
+                entity: climate.aqara_e1_thermostat_3
+                features:
+                  - type: climate-hvac-modes
+                    hvac_modes:
+                      - heat
+                      - 'off'
+      - type: vertical-stack
+        cards:
+          - type: custom:mini-graph-card
+            name: Температура
+            hour24: true
+            points_per_hour: 1
+            font_size: 70
+            entities:
+              - entity: sensor.qingping_air_monitor_lite_temperature
+                name: QingPing
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_tvoc_sensor_temperature
+                name: Спальня
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_t1_sensor_3_temperature
+                name: Кухня
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_t1_sensor_2_temperature
+                name: Балкон
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_t1_sensor_1_temperature
+                name: Коридор
+                show_indicator: true
+                show_state: true
+          - type: custom:mini-graph-card
+            name: Влажность
+            hour24: true
+            points_per_hour: 1
+            font_size: 70
+            entities:
+              - entity: sensor.qingping_air_monitor_lite_humidity
+                name: QingPing
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_tvoc_sensor_humidity
+                name: Спальня
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_t1_sensor_3_humidity
+                name: Кухня
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_t1_sensor_2_humidity
+                name: Балкон
+                show_indicator: true
+                show_state: true
+              - entity: sensor.aqara_t1_sensor_1_humidity
+                name: Коридор
+                show_indicator: true
+                show_state: true
+                show_legend: true
+              - entity: sensor.smartmi_humidifier_rainforest_current_humidity
+                name: Smartmi
+                show_indicator: true
+                show_state: true
+          - type: custom:mini-graph-card
+            name: CO2
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.qingping_air_monitor_lite_co2_carbon_dioxide
+                name: QingPing
+          - type: custom:mini-graph-card
+            name: TVOC
+            hour24: true
+            points_per_hour: 1
+            font_size: 70
+            entities:
+              - entity: sensor.aqara_tvoc_sensor_volatile_organic_compound_density
+                name: QingPing
+          - type: custom:mini-graph-card
+            name: PM
+            hour24: true
+            points_per_hour: 1
+            font_size: 70
+            entities:
+              - entity: sensor.qingping_air_monitor_lite_pm2_5_density
+                name: PM2.5
+                show_indicator: true
+                show_state: true
+              - entity: sensor.qingping_air_monitor_lite_pm10_density
+                name: PM10
+                show_indicator: true
+                show_state: true
+  - title: Устройства
+    path: device-control
+    icon: mdi:apps
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: switch.ahtom_switch_1_table_light
+          - entity: switch.ahtom_switch_2_tv_backlight
+          - entity: switch.ahtom_switch_3_kitchen_led
+          - entity: switch.aqara_relay_1ch_1
+            name: Компьютер
+          - entity: switch.ahtom_outlet_1_excrement
+        title: Custom
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: light.meross_ambient_light_1
+          - entity: light.meross_ambient_light_2
+          - entity: switch.meross_outlet_1
+          - entity: switch.meross_power_outlet_1
+        title: Meross
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: switch.relay1
+          - entity: switch.relay2
+        title: ModBus
+        show_header_toggle: true
+  - title: Энергия
+    path: energy
+    icon: mdi:battery-80
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.aqara_tvoc_sensor_battery
+            name: Aqara TVOC Спальня
+          - entity: sensor.aqara_t1_sensor_2_battery
+            name: Aqara T1 Кухня
+          - entity: sensor.aqara_t1_sensor_3_battery
+            name: Aqara T1 Коридор
+          - entity: sensor.aqara_t1_sensor_1_battery
+            name: Aqara T1 Балкон
+          - entity: sensor.aqara_e1_thermostat_1_battery
+            name: Aqara Термостат E1_1 Рабочее место
+          - entity: sensor.aqara_e1_thermostat_2_battery
+            name: Aqara Термостат E1_2 Спальня
+          - entity: sensor.aqara_e1_thermostat_3_battery
+            name: Aqara Термостат E1_3 Кухня
+          - entity: sensor.qingping_air_monitor_lite_battery
+            name: Qingping Air Monitor Lite
+      - type: entities
+        entities:
+          - entity: sensor.iphone_xs_battery_level
+          - entity: sensor.iphone_xs_battery_state
+          - entity: sensor.ipad_battery_level
+          - entity: sensor.ipad_battery_state
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.meross_power_outlet_1_energy
+        name: Обогрев балкона
+        hours_to_show: 168
+        lower_bound: 0
+        group: true
+        hour24: true
+        group_by: date
+        aggregate_func: max
+        show:
+          graph: bar
