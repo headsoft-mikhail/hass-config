@@ -239,7 +239,7 @@ views:
             font_size: 70
             entities:
               - entity: sensor.aqara_tvoc_sensor_volatile_organic_compound_density
-                name: QingPing
+                name: S1
           - type: custom:mini-graph-card
             name: PM
             hour24: true
