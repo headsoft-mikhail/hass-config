@@ -9,16 +9,16 @@ views:
           - type: markdown
             content: >-
               [<img
-              src='http://192.168.1.60:8123/local/images/icon_keenetic.svg'
+              src='http://homeassistant.local:8123/local/images/icon_keenetic.svg'
               height=100>](http://192.168.1.1/dashboard)
           - type: markdown
             content: >-
               [<img
-              src='http://192.168.1.60:8123/local/images/icon_transmission.svg'
+              src='http://homeassistant.local:8123/local/images/icon_transmission.svg'
               height=120>](http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer)
           - type: markdown
             content: >-
-              [<img src='http://192.168.1.60:8123/local/images/icon_github.svg'
+              [<img src='http://homeassistant.local:8123/local/images/icon_github.svg'
               height=100>](https://github.com/headsoft-mikhail/hass-config)
       - type: vertical-stack
         cards:
