@@ -18,7 +18,8 @@ views:
               height=120>](http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer)
           - type: markdown
             content: >-
-              [<img src='http://homeassistant.local:8123/local/images/icon_github.svg'
+              [<img
+              src='http://homeassistant.local:8123/local/images/icon_github.svg'
               height=100>](https://github.com/headsoft-mikhail/hass-config)
       - type: vertical-stack
         cards:
@@ -259,6 +260,8 @@ views:
     icon: mdi:apps
     badges: []
     cards:
+      - type: media-control
+        entity: media_player.yandex_station_mini
       - type: entities
         entities:
           - entity: switch.ahtom_switch_1_table_light
@@ -267,9 +270,9 @@ views:
           - entity: switch.aqara_relay_1ch_1
             name: Компьютер
           - entity: switch.ahtom_outlet_1_excrement
-        title: Custom
         show_header_toggle: false
         state_color: true
+        title: Ahtom
       - type: entities
         entities:
           - entity: light.meross_ambient_light_1

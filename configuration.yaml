@@ -11,6 +11,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 homekit: !include homekit.yaml
+yandex_station: !include yandex_station.yaml
 modbus: !include modbus.yaml
 
 input_button:
