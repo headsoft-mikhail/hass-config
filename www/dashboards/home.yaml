@@ -288,6 +288,29 @@ views:
           - entity: switch.relay2
         title: ModBus
         show_header_toggle: true
+      - type: horizontal-stack
+        title: MQTT
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: switch.4ch_switch_l1
+                    name: CH1
+              - type: entities
+                entities:
+                  - entity: switch.4ch_switch_l3
+                    name: CH3
+          - type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: switch.4ch_switch_l2
+                    name: CH2
+              - type: entities
+                entities:
+                  - entity: switch.4ch_switch_l4
+                    name: CH4
   - title: Энергия
     path: energy
     icon: mdi:battery-80

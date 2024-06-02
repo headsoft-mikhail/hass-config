@@ -1,7 +1,7 @@
 - name: modbus_relay_x2
   type: serial
   method: rtu
-  port: /dev/ttyUSB0
+  port: /dev/ttyUSB1
   baudrate: 9600
   bytesize: 8
   parity: N

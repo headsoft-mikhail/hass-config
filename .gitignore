@@ -2,6 +2,7 @@
 .HA_VERSION
 custom_components
 www/community
+zigbee2mqtt
 
 *.log*
 *.db*
