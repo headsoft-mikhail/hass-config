@@ -107,28 +107,12 @@ views:
     cards:
       - type: vertical-stack
         cards:
-          - type: entities
-            entities:
-              - entity: weather.openweathermap
-              - entity: sensor.openweathermap_humidity
-                name: Влажность
-              - entity: sensor.openweathermap_forecast_pressure
-                name: Атмосферное давление
-                icon: mdi:arrow-collapse-down
-              - entity: sensor.openweathermap_wind_speed
-                name: Скорость ветра
-              - entity: sensor.openweathermap_cloud_coverage
-                name: Облачность
-                icon: mdi:cloud
-            title: Погода
-          - type: custom:mini-graph-card
-            name: Температура на улице
-            hour24: true
-            font_size: 70
-            hours_to_show: 24
-            points_per_hour: 1
-            entities:
-              - sensor.openweathermap_temperature
+          - show_current: true
+            show_forecast: true
+            type: weather-forecast
+            entity: weather.home_assistant
+            forecast_type: hourly
+            name: Gismeteo
           - type: history-graph
             entities:
               - sun.sun
