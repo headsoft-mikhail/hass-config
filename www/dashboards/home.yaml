@@ -261,7 +261,6 @@ views:
         entities:
           - entity: light.meross_ambient_light_1
           - entity: light.meross_ambient_light_2
-          - entity: switch.meross_outlet_1
           - entity: switch.meross_power_outlet_1
         title: Meross
         show_header_toggle: false
