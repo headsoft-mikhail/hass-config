@@ -1,0 +1,8 @@
+disable_clock: false
+am_pm_clock: false
+disable_welcome_message: false
+v2_mode: false
+disable_sensor_graph: false
+invert_cover: false
+weather_entity: weather.home_assistant
+alarm_entity: ''

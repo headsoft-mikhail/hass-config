@@ -117,6 +117,44 @@ views:
             entities:
               - sun.sun
             title: Солнце
+          - type: custom:mini-graph-card
+            name: Температура
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.home_assistant_temperature
+                name: Температура
+                show_indicator: true
+                show_state: true
+              - entity: sensor.home_assistant_apparent_temperature
+                name: Ощущается
+                show_indicator: true
+                show_state: true
+          - type: custom:mini-graph-card
+            name: Влажность
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.home_assistant_humidity
+                name: Влажность
+          - type: custom:mini-graph-card
+            name: Давление
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.home_assistant_pressure
+                name: Давление
+          - type: custom:mini-graph-card
+            name: Скорость ветра
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.home_assistant_wind_speed
+                name: Скорость ветра
       - type: vertical-stack
         cards:
           - type: horizontal-stack
