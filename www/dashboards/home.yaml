@@ -113,10 +113,6 @@ views:
             entity: weather.home_assistant
             forecast_type: hourly
             name: Gismeteo
-          - type: history-graph
-            entities:
-              - sun.sun
-            title: Солнце
           - type: custom:mini-graph-card
             name: Температура
             hour24: true
@@ -131,6 +127,18 @@ views:
                 name: Ощущается
                 show_indicator: true
                 show_state: true
+              - color: white
+                entity: sun.sun
+                name: Солнце
+                show_line: false
+                show_points: false
+                show_legend: false
+                y_axis: secondary
+            state_map:
+              - value: below_horizon
+                label: Night
+              - value: above_horizon
+                label: Day
           - type: custom:mini-graph-card
             name: Влажность
             hour24: true
@@ -140,14 +148,6 @@ views:
               - entity: sensor.home_assistant_humidity
                 name: Влажность
           - type: custom:mini-graph-card
-            name: Давление
-            hour24: true
-            points_per_hour: 2
-            font_size: 70
-            entities:
-              - entity: sensor.home_assistant_pressure
-                name: Давление
-          - type: custom:mini-graph-card
             name: Скорость ветра
             hour24: true
             points_per_hour: 2
@@ -155,6 +155,14 @@ views:
             entities:
               - entity: sensor.home_assistant_wind_speed
                 name: Скорость ветра
+          - type: custom:mini-graph-card
+            name: Давление
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.home_assistant_pressure
+                name: Давление
       - type: vertical-stack
         cards:
           - type: horizontal-stack
