@@ -183,12 +183,20 @@ views:
                       - 'off'
           - type: horizontal-stack
             cards:
-              - type: humidifier
-                entity: humidifier.smartmi_humidifier_rainforest_hum_dehum
-                features:
-                  - type: humidifier-toggle
-                show_current_as_primary: false
-                name: Увлажнитель
+              - type: vertical-stack
+                cards:
+                  - type: humidifier
+                    entity: humidifier.smartmi_humidifier_rainforest_hum_dehum
+                    features:
+                      - type: humidifier-toggle
+                    show_current_as_primary: false
+                    name: Увлажнитель
+                  - type: entity
+                    entity: fan.smartmi_humidifier_rainforest_air_quality_fan
+                    state_color: true
+                    name: Скорость
+                    attribute: percentage
+                    unit: '%'
               - type: thermostat
                 entity: climate.aqara_e1_thermostat_3
                 features:
