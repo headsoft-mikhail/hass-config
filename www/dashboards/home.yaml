@@ -305,9 +305,7 @@ views:
           - entity: switch.ahtom_switch_1_table_light
           - entity: switch.ahtom_switch_2_tv_backlight
           - entity: switch.ahtom_switch_3_kitchen_led
-          - entity: switch.aqara_relay_1ch_1
-            name: Компьютер
-          - entity: switch.ahtom_outlet_1_excrement
+          - entity: switch.aqara_t2_ch1_pc
         show_header_toggle: false
         state_color: true
         title: Ahtom
