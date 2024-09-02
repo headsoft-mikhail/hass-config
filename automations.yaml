@@ -1,41 +1,4 @@
 - id: "0001"
-  alias: click_pc_button
-  description: Нажать и отжать кнопку компьютера
-  trigger:
-    - platform: state
-      entity_id:
-        - switch.aqara_relay_1ch_1
-      to: "on"
-  condition: []
-  action:
-    - delay:
-        milliseconds: 400
-    - service: switch.turn_off
-      target:
-        entity_id: switch.aqara_relay_1ch_1
-      data: {}
-  mode: single
-- id: "0002"
-  alias: experiment
-  description: Экскремент
-  trigger:
-    - platform: state
-      entity_id:
-        - switch.ahtom_outlet_1_excrement
-      to: "on"
-  condition: []
-  action:
-    - delay:
-        milliseconds: 500
-    - service: switch.turn_off
-      target:
-        entity_id: switch.ahtom_outlet_1_excrement
-      data: {}
-    - service: notify.notify
-      data:
-        message: Экскремент завершен
-  mode: single
-- id: "0003"
   alias: notify_about_download_completed
   description: Уведомление о завершении загрузки
   trigger:
@@ -53,7 +16,7 @@
         id: "{{trigger.event.data.id}}"
         delete_data: false
   mode: single
-- id: "0004"
+- id: "0002"
   alias: run_speedtest
   description: Run SpeedTest
   trigger:
@@ -69,7 +32,7 @@
           - sensor.speedtest_download
           - sensor.speedtest_upload
   mode: single
-- id: "0005"
+- id: "0003"
   alias: notify_about_homeassistant_started
   description: ""
   trigger:
@@ -83,7 +46,7 @@
         title: Homeassistant запущен
         message: Ура!
   mode: single
-- id: "0006"
+- id: "0004"
   alias: notify_about_homeassistant_stopped
   description: ""
   trigger:
