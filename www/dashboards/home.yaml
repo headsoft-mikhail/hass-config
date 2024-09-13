@@ -317,6 +317,14 @@ views:
         title: Meross
         show_header_toggle: false
         state_color: true
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: light.tuya_lava_lamp
+            show_header_toggle: false
+            state_color: true
+            title: Tuya
       - type: entities
         entities:
           - entity: switch.relay1
@@ -324,7 +332,6 @@ views:
         title: ModBus
         show_header_toggle: true
       - type: horizontal-stack
-        title: MQTT
         cards:
           - type: vertical-stack
             cards:
@@ -346,6 +353,7 @@ views:
                 entities:
                   - entity: switch.4ch_switch_l4
                     name: CH4
+        title: MQTT
   - title: Энергия
     path: energy
     icon: mdi:battery-80
