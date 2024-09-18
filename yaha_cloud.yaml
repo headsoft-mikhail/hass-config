@@ -1,0 +1,76 @@
+settings:
+  beta: true
+filter:
+  include_entities:
+    - switch.meross_power_outlet_1
+    - humidifier.smartmi_humidifier_rainforest_hum_dehum
+    - light.tuya_lava_lamp
+    - sensor.aqara_tvoc_sensor_temperature
+  include_entity_globs:
+    - light.meross_ambient_light_*
+    - switch.ahtom_switch_*
+    - climate.aqara_e1_thermostat_*
+entity_config:
+  humidifier.smartmi_humidifier_rainforest_hum_dehum:
+    name: Увлажнитель
+    room: Спальня
+    type: devices.types.humidifier
+  # light
+  light.meross_ambient_light_1:
+    name: Светильник на столе
+    room: Спальня
+    type: devices.types.light
+  light.meross_ambient_light_2:
+    name: Светильник у телевизора
+    room: Спальня
+    type: devices.types.light
+  light.tuya_lava_lamp:
+    name: Лавалампа
+    room: Спальня
+    type: devices.types.light
+  switch.ahtom_switch_1_table_light:
+    name: Свет у компьютера
+    room: Спальня
+    type: devices.types.light
+  switch.ahtom_switch_2_tv_backlight:
+    name: Ночник
+    room: Спальня
+    type: devices.types.light.strip
+  switch.ahtom_switch_3_kitchen_led:
+    name: Свет на кухне
+    room: Кухня
+    type: devices.types.light
+  # climate
+  switch.meross_power_outlet_1:
+    name: Кондиционер
+    room: Балкон
+    type: devices.types.socket
+    properties:
+      - type: power
+        entity: sensor.meross_power_outlet_1_power
+  climate.aqara_e1_thermostat_1:
+    name: Батарея у рабочего места
+    room: Спальня
+    type: devices.types.thermostat
+  climate.aqara_e1_thermostat_2:
+    name: Батарея в спальне
+    room: Спальня
+    type: devices.types.thermostat
+  climate.aqara_e1_thermostat_3:
+    name: Батарея на кухне
+    room: Кухня
+    type: devices.types.thermostat
+  # sensors
+  sensor.aqara_tvoc_sensor_temperature:
+    name: Погода в комнате
+    properties:
+      - type: temperature
+        entity: sensor.aqara_tvoc_sensor_temperature
+      - type: humidity
+        entity: sensor.aqara_tvoc_sensor_humidity
+      - type: co2_level
+        entity: sensor.qingping_air_monitor_lite_co2_carbon_dioxide
+      - type: tvoc
+        entity: sensor.aqara_tvoc_sensor_volatile_organic_compound_density
+      - type: pm10_density
+        entity: sensor.qingping_air_monitor_lite_pm10_density
