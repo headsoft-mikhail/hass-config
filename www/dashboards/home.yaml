@@ -359,6 +359,16 @@ views:
     icon: mdi:battery-80
     badges: []
     cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - binary_sensor.aqara_t1_220v_sensor
+            state_color: true
+            show_header_toggle: false
+          - type: history-graph
+            entities:
+              - entity: binary_sensor.aqara_t1_220v_sensor
       - type: entities
         entities:
           - entity: sensor.aqara_tvoc_sensor_battery
@@ -377,6 +387,8 @@ views:
             name: Aqara Термостат E1_3 Кухня
           - entity: sensor.qingping_air_monitor_lite_battery
             name: Qingping Air Monitor Lite
+          - entity: sensor.aqara_t1_220v_sensor_battery
+            name: Aqara T1 Датчик 220В
       - type: entities
         entities:
           - entity: sensor.iphone_xs_battery_level
