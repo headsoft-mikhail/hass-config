@@ -25,7 +25,7 @@
         - input_button.run_speedtest
   condition: []
   action:
-    - service: homeassistant.update_entity
+    - action: homeassistant.update_entity
       data: {}
       target:
         entity_id:
@@ -59,4 +59,46 @@
       data:
         title: Homeassistant остановлен
         message: Грустняшка
+  mode: single
+- id: "0005"
+  alias: notify_about_power_off
+  description: ""
+  trigger:
+    - type: not_powered
+      platform: device
+      device_id: 22b74f3e55d94cb56434765df7dd1a9c
+      entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
+  condition: []
+  action:
+    - action: notify.notify
+      metadata: {}
+      data:
+        title: Отключение электричества
+        message: Грустняшка
+  mode: single
+- id: "0006"
+  alias: notify_about_power_on
+  description: ""
+  trigger:
+    - type: powered
+      platform: device
+      device_id: 22b74f3e55d94cb56434765df7dd1a9c
+      entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
+  condition: []
+  action:
+    - action: notify.notify
+      metadata: {}
+      data:
+        title: Электричество восстановлено
+        message: Ура!
   mode: single
