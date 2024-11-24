@@ -36,7 +36,7 @@
   alias: notify_about_homeassistant_started
   description: ""
   trigger:
-    - platform: homeassistant
+    - trigger: homeassistant
       event: start
   condition: []
   action:
@@ -50,7 +50,7 @@
   alias: notify_about_homeassistant_stopped
   description: ""
   trigger:
-    - platform: homeassistant
+    - trigger: homeassistant
       event: shutdown
   condition: []
   action:
@@ -63,16 +63,16 @@
 - id: "0005"
   alias: notify_about_power_off
   description: ""
-  trigger:
+  triggers:
     - type: not_powered
-      platform: device
+      trigger: device
       device_id: 22b74f3e55d94cb56434765df7dd1a9c
       entity_id: 8226d5c5decc1b6022c3cec88f6980ba
       domain: binary_sensor
       for:
         hours: 0
         minutes: 0
-        seconds: 5
+        seconds: 1
   condition: []
   action:
     - action: notify.notify
@@ -84,9 +84,9 @@
 - id: "0006"
   alias: notify_about_power_on
   description: ""
-  trigger:
+  triggers:
     - type: powered
-      platform: device
+      trigger: device
       device_id: 22b74f3e55d94cb56434765df7dd1a9c
       entity_id: 8226d5c5decc1b6022c3cec88f6980ba
       domain: binary_sensor
@@ -101,4 +101,46 @@
       data:
         title: Электричество восстановлено
         message: Ура!
+  mode: single
+- id: "0007"
+  alias: notify_about_ping_google_fail
+  description: ""
+  triggers:
+    - type: not_connected
+      device_id: de24bbb7ba721126a7555841647841ff
+      entity_id: f12857c8ff696bdf0ab48605cb66fee1
+      domain: binary_sensor
+      trigger: device
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+  conditions: []
+  actions:
+    - action: notify.notify
+      metadata: {}
+      data:
+        message: Грустняшка
+        title: Интернет отвалился
+  mode: single
+- id: "0008"
+  alias: notify_about_ping_google_ok
+  description: ""
+  triggers:
+    - type: connected
+      device_id: de24bbb7ba721126a7555841647841ff
+      entity_id: f12857c8ff696bdf0ab48605cb66fee1
+      domain: binary_sensor
+      trigger: device
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
+  conditions: []
+  actions:
+    - action: notify.notify
+      metadata: {}
+      data:
+        message: Ура!
+        title: Интернет снова работает
   mode: single
