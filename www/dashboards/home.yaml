@@ -251,10 +251,6 @@ views:
                 show_indicator: true
                 show_state: true
                 show_legend: true
-              - entity: sensor.smartmi_humidifier_rainforest_current_humidity
-                name: Smartmi
-                show_indicator: true
-                show_state: true
           - type: custom:mini-graph-card
             name: CO2
             hour24: true
