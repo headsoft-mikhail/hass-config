@@ -3,7 +3,6 @@ settings:
 filter:
   include_entities:
     - switch.meross_power_outlet_1
-    - humidifier.smartmi_humidifier_rainforest_hum_dehum
     - light.tuya_lava_lamp
     - sensor.aqara_tvoc_sensor_temperature
     - light.meross_ambient_light_1
@@ -12,13 +11,6 @@ filter:
     - switch.ahtom_switch_*
     - climate.aqara_e1_thermostat_*
 entity_config:
-  humidifier.smartmi_humidifier_rainforest_hum_dehum:
-    name: Увлажнитель
-    room: Спальня
-    type: devices.types.humidifier
-    properties:
-      - type: humidity
-        entity: sensor.smartmi_humidifier_rainforest_current_humidity
   # light
   light.meross_ambient_light_1:
     name: Светильник на столе
