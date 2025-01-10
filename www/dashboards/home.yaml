@@ -195,7 +195,7 @@ views:
                       - heat
                       - 'off'
               - type: humidifier
-                entity: humidifier.custom_switch_humidifier
+                entity: humidifier.switch_humidifier
                 features:
                   - type: humidifier-toggle
                 name: Увлажнитель
