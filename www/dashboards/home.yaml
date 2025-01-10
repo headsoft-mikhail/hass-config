@@ -194,8 +194,10 @@ views:
                     hvac_modes:
                       - heat
                       - 'off'
-              - type: vertical-stack
-                cards: []
+              - type: humidifier
+                entity: humidifier.custom_switch_humidifier
+                features:
+                  - type: humidifier-toggle
       - type: vertical-stack
         cards:
           - type: custom:mini-graph-card
@@ -361,12 +363,16 @@ views:
         entities:
           - entity: sensor.aqara_tvoc_sensor_battery
             name: Aqara TVOC Спальня
-          - entity: sensor.aqara_t1_sensor_2_battery
-            name: Aqara T1 Кухня
-          - entity: sensor.aqara_t1_sensor_3_battery
-            name: Aqara T1 Коридор
+            secondary_info: none
           - entity: sensor.aqara_t1_sensor_1_battery
+            name: Aqara T1 Коридор
+            secondary_info: none
+          - entity: sensor.aqara_t1_sensor_3_battery
+            name: Aqara T1 Кухня
+            secondary_info: none
+          - entity: sensor.aqara_t1_sensor_2_battery
             name: Aqara T1 Балкон
+            secondary_info: none
           - entity: sensor.aqara_e1_thermostat_1_battery
             name: Aqara Термостат E1_1 Рабочее место
           - entity: sensor.aqara_e1_thermostat_2_battery

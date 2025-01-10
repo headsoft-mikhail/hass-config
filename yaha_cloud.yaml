@@ -7,6 +7,7 @@ filter:
     - sensor.aqara_tvoc_sensor_temperature
     - light.meross_ambient_light_1
     - light.meross_ambient_light_2
+    - humidifier.custom_switch_humidifier
   include_entity_globs:
     - switch.ahtom_switch_*
     - climate.aqara_e1_thermostat_*
@@ -56,6 +57,10 @@ entity_config:
     name: Батарея на кухне
     room: Кухня
     type: devices.types.thermostat
+  humidifier.custom_switch_humidifier:
+    name: Увлажнитель
+    room: Спальня
+    type: devices.types.humidifier
   # sensors
   sensor.aqara_tvoc_sensor_temperature:
     name: Погода в комнате

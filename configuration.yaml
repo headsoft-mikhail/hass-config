@@ -14,6 +14,17 @@ yandex_station: !include yandex_station.yaml
 yandex_smart_home: !include yaha_cloud.yaml
 modbus: !include modbus.yaml
 
+# Custom entities
+
 input_button:
   run_speedtest:
     name: "Run SpeedTest"
+
+humidifier:
+  - platform: switch_humidifier
+    name: custom_switch_humidifier
+    switch_id: switch.ahtom_outlet_humidifier
+    sensor_id: sensor.qingping_air_monitor_lite_humidity
+    type: humidifier
+    start_delta: 1
+    stop_delta: 1

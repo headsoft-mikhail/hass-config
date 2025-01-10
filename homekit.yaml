@@ -29,6 +29,7 @@
       - climate.aqara_e1_thermostat_1
       - climate.aqara_e1_thermostat_2
       - climate.aqara_e1_thermostat_3
+      - humidifier.custom_switch_humidifier
   entity_config:
     # свет
     light.tuya_lava_lamp:
@@ -118,3 +119,6 @@
       name: Кухня Термостат 3
       linked_battery_sensor: sensor.aqara_e1_thermostat_3_battery
       low_battery_threshold: 30
+    humidifier.custom_switch_humidifier:
+      name: "Увлажнитель"
+      linked_humidity_sensor: sensor.qingping_air_monitor_lite_humidity
