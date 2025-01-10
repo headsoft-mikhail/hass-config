@@ -198,6 +198,8 @@ views:
                 entity: humidifier.custom_switch_humidifier
                 features:
                   - type: humidifier-toggle
+                name: Увлажнитель
+                show_current_as_primary: false
       - type: vertical-stack
         cards:
           - type: custom:mini-graph-card
