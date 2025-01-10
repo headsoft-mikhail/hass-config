@@ -20,11 +20,20 @@ input_button:
   run_speedtest:
     name: "Run SpeedTest"
 
-humidifier:
-  - platform: switch_humidifier
-    name: custom_switch_humidifier
-    switch_id: switch.ahtom_outlet_humidifier
-    sensor_id: sensor.qingping_air_monitor_lite_humidity
-    type: humidifier
-    start_delta: 1
-    stop_delta: 1
+generic_hygrostat:
+  - name: switch_humidifier
+    humidifier: switch.ahtom_outlet_humidifier
+    target_sensor: sensor.qingping_air_monitor_lite_humidity
+    min_humidity: 30
+    max_humidity: 70
+    target_humidity: 50
+    dry_tolerance: 1
+    wet_tolerance: 1
+    device_class: "humidifier"
+    min_cycle_duration:
+      seconds: 15
+    keep_alive:
+      hours: 1
+    initial_state: true
+    sensor_stale_duration:
+      minutes: 30
