@@ -317,35 +317,6 @@ views:
             show_header_toggle: false
             state_color: true
             title: Tuya
-      - type: entities
-        entities:
-          - entity: switch.relay1
-          - entity: switch.relay2
-        title: ModBus
-        show_header_toggle: true
-      - type: horizontal-stack
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: entities
-                entities:
-                  - entity: switch.4ch_switch_l1
-                    name: CH1
-              - type: entities
-                entities:
-                  - entity: switch.4ch_switch_l3
-                    name: CH3
-          - type: vertical-stack
-            cards:
-              - type: entities
-                entities:
-                  - entity: switch.4ch_switch_l2
-                    name: CH2
-              - type: entities
-                entities:
-                  - entity: switch.4ch_switch_l4
-                    name: CH4
-        title: MQTT
   - title: Энергия
     path: energy
     icon: mdi:battery-80
