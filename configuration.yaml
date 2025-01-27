@@ -12,7 +12,7 @@ scene: !include scenes.yaml
 homekit: !include homekit.yaml
 yandex_station: !include yandex_station.yaml
 yandex_smart_home: !include yaha_cloud.yaml
-modbus: !include modbus.yaml
+# modbus: !include modbus.yaml
 
 # Custom entities
 
