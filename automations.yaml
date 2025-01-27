@@ -2,7 +2,7 @@
   alias: notify_about_download_completed
   description: Уведомление о завершении загрузки
   trigger:
-  - platform: event
+  - trigger: event
     event_type: transmission_downloaded_torrent
   condition: []
   action:
@@ -20,7 +20,7 @@
   alias: run_speedtest
   description: Run SpeedTest
   trigger:
-  - platform: state
+  - trigger: state
     entity_id:
     - input_button.run_speedtest
   condition: []
@@ -123,7 +123,7 @@
       message: Грустняшка
       title: Интернет отвалился
   mode: single
-- id: 0008
+- id: '0008'
   alias: notify_about_ping_google_ok
   description: ''
   triggers:
