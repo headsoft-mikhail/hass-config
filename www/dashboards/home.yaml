@@ -138,6 +138,7 @@ views:
       - type: entities
         entities:
           - entity: sensor.backup_state
+            icon: mdi:cloud-upload
           - entity: sensor.home_assistant_core_cpu_percent
             name: HA Core Использование CPU
             icon: mdi:cpu-64-bit
