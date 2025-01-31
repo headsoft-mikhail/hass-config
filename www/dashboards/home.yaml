@@ -176,7 +176,7 @@ views:
                 from: 50
                 to: 100
           - entity: sensor.home_assistant_core_memory_percent
-            name: HA Core Использование ROM
+            name: HA Core Использование RAM
             icon: mdi:memory
             type: custom:bar-card
             decimal: 2
@@ -194,7 +194,7 @@ views:
                 from: 50
                 to: 100
           - entity: sensor.home_assistant_supervisor_memory_percent
-            name: HA Supervisor Использование ROM
+            name: HA Supervisor Использование RAM
             icon: mdi:memory
             type: custom:bar-card
             decimal: 2
