@@ -501,7 +501,7 @@ views:
                 customLowText: 30
                 medBrightness: 102
                 customMedText: 40
-                hiBrightness: 254
+                hiBrightness: 255
                 customHiText: 100
                 customOffText: 'OFF'
                 width: 35px
