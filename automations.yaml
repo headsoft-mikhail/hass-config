@@ -1,160 +1,209 @@
-- id: "0001"
+- id: '0001'
   alias: notify_about_download_completed
   description: Уведомление о завершении загрузки
   trigger:
-    - trigger: event
-      event_type: transmission_downloaded_torrent
+  - trigger: event
+    event_type: transmission_downloaded_torrent
   condition: []
   action:
-    - action: notify.notify
-      data:
-        title: Загрузка завершена
-        message: "{{trigger.event.data.name}}"
-    - action: transmission.remove_torrent
-      data:
-        entry_id: 97082637855de2c974fdf46142760427
-        id: "{{trigger.event.data.id}}"
-        delete_data: false
+  - action: notify.notify
+    data:
+      title: Загрузка завершена
+      message: '{{trigger.event.data.name}}'
+  - action: transmission.remove_torrent
+    data:
+      entry_id: 97082637855de2c974fdf46142760427
+      id: '{{trigger.event.data.id}}'
+      delete_data: false
   mode: single
-- id: "0002"
+- id: '0002'
   alias: run_speedtest
   description: Run SpeedTest
   trigger:
-    - trigger: state
+  - trigger: state
+    entity_id:
+    - input_button.run_speedtest
+  condition: []
+  action:
+  - action: homeassistant.update_entity
+    data: {}
+    target:
       entity_id:
-        - input_button.run_speedtest
-  condition: []
-  action:
-    - action: homeassistant.update_entity
-      data: {}
-      target:
-        entity_id:
-          - sensor.speedtest_download
-          - sensor.speedtest_upload
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
   mode: single
-- id: "0003"
+- id: '0003'
   alias: notify_about_homeassistant_started
-  description: ""
+  description: ''
   trigger:
-    - trigger: homeassistant
-      event: start
+  - trigger: homeassistant
+    event: start
   condition: []
   action:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Homeassistant запущен
-        message: Ура!
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Homeassistant запущен
+      message: Ура!
   mode: single
-- id: "0004"
+- id: '0004'
   alias: notify_about_homeassistant_stopped
-  description: ""
+  description: ''
   trigger:
-    - trigger: homeassistant
-      event: shutdown
+  - trigger: homeassistant
+    event: shutdown
   condition: []
   action:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Homeassistant остановлен
-        message: Грустняшка
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Homeassistant остановлен
+      message: Грустняшка
   mode: single
-- id: "0005"
+- id: '0005'
   alias: notify_about_power_off
-  description: ""
+  description: ''
   triggers:
-    - type: not_powered
-      trigger: device
-      device_id: 22b74f3e55d94cb56434765df7dd1a9c
-      entity_id: 8226d5c5decc1b6022c3cec88f6980ba
-      domain: binary_sensor
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 1
+  - type: not_powered
+    trigger: device
+    device_id: 22b74f3e55d94cb56434765df7dd1a9c
+    entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   condition: []
   action:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Отключение электричества
-        message: Грустняшка
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Отключение электричества
+      message: Грустняшка
   mode: single
-- id: "0006"
+- id: '0006'
   alias: notify_about_power_on
-  description: ""
+  description: ''
   triggers:
-    - type: powered
-      trigger: device
-      device_id: 22b74f3e55d94cb56434765df7dd1a9c
-      entity_id: 8226d5c5decc1b6022c3cec88f6980ba
-      domain: binary_sensor
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 5
+  - type: powered
+    trigger: device
+    device_id: 22b74f3e55d94cb56434765df7dd1a9c
+    entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
   condition: []
   action:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Электричество восстановлено
-        message: Ура!
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Электричество восстановлено
+      message: Ура!
   mode: single
-- id: "0007"
+- id: '0007'
   alias: notify_about_ping_google_fail
-  description: ""
+  description: ''
   triggers:
-    - type: not_connected
-      device_id: de24bbb7ba721126a7555841647841ff
-      entity_id: f12857c8ff696bdf0ab48605cb66fee1
-      domain: binary_sensor
-      trigger: device
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 1
+  - type: not_connected
+    device_id: de24bbb7ba721126a7555841647841ff
+    entity_id: f12857c8ff696bdf0ab48605cb66fee1
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        message: Грустняшка
-        title: Интернет отвалился
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Грустняшка
+      title: Интернет отвалился
   mode: single
-- id: "0008"
+- id: '0008'
   alias: notify_about_ping_google_ok
-  description: ""
+  description: ''
   triggers:
-    - type: connected
-      device_id: de24bbb7ba721126a7555841647841ff
-      entity_id: f12857c8ff696bdf0ab48605cb66fee1
-      domain: binary_sensor
-      trigger: device
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 1
+  - type: connected
+    device_id: de24bbb7ba721126a7555841647841ff
+    entity_id: f12857c8ff696bdf0ab48605cb66fee1
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        message: Ура!
-        title: Интернет снова работает
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Ура!
+      title: Интернет снова работает
   mode: single
-- id: "0009"
+- id: '0009'
   alias: end_lavalamp_warming
-  trigger:
-    - trigger: template
-      value_template: "{{ state_attr('light.tuya_lava_lamp', 'brightness') | int > 244 }}"
-      for:
-        minutes: 90
-  action:
-    - action: light.turn_on
-      target:
-        entity_id: light.tuya_lava_lamp
-      data:
-        brightness: 102
+  triggers:
+  - trigger: template
+    value_template: '{{ state_attr("light.tuya_lava_lamp", "brightness") | default(0)
+      | int > 244 }}'
+    for:
+      minutes: 90
+  actions:
+  - action: light.turn_on
+    target:
+      entity_id: light.tuya_lava_lamp
+    data:
+      brightness: 102
   mode: restart
+- id: '0010'
+  alias: change_sound_signal_source
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_select.sound_signal_source
+  action:
+  - choose:
+    - conditions: '{{ trigger.to_state.state == "Optical" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: test_command_optical
+    - conditions: '{{ trigger.to_state.state == "Bluetooth" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: test_command_bluetooth
+    - conditions: '{{ trigger.to_state.state == "Line 1" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: test_command_line1
+    - conditions: '{{ trigger.to_state.state == "Line 2" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: test_command_line_2
+    - conditions: '{{ trigger.to_state.state == "Coax" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: test_command_coax
+      - type: toggle
+        device_id: 5bb8442ffaf12259d768e69dfb8e9487
+        entity_id: e57d96bf56feb0be99bbf8ecea37bd79
+        domain: light

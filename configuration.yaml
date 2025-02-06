@@ -20,6 +20,18 @@ input_button:
   run_speedtest:
     name: "Run SpeedTest"
 
+input_select:
+  sound_signal_source:
+    name: "Источник сигнала колонок"
+    options: 
+      - "Optical"
+      - "Bluetooth"
+      - "Line 1"
+      - "Line 2"
+      - "Coax"
+    initial: "Optical"
+    icon: "mdi:soundbar"
+
 generic_hygrostat:
   - name: switch_humidifier
     humidifier: switch.ahtom_outlet_humidifier
