@@ -39,7 +39,7 @@ generic_hygrostat:
     target_sensor: sensor.qingping_air_monitor_lite_humidity
     min_humidity: 30
     max_humidity: 70
-    target_humidity: 50
+    target_humidity: 60
     dry_tolerance: 1
     wet_tolerance: 1
     device_class: "humidifier"
