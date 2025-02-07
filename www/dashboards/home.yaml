@@ -470,7 +470,7 @@ views:
     badges: []
     cards:
       - type: media-control
-        entity: media_player.yandex_station_mini
+        entity: media_player.yandex_station_mini_red
       - type: entities
         entities:
           - entity: switch.ahtom_switch_1_table_light
