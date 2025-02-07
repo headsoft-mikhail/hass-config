@@ -149,8 +149,7 @@
   triggers:
     - trigger: template
       value_template:
-        '{{ state_attr("light.tuya_lava_lamp", "brightness") | default(0)
-        | int > 244 }}'
+        '{{ state_attr("light.tuya_lava_lamp", "brightness") | int(0) > 244 }}'
       for:
         minutes: 90
   actions:
