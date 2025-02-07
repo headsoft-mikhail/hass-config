@@ -159,59 +159,59 @@
       data:
         brightness: 102
   mode: restart
-# - id: "0010"
-#   alias: change_sound_signal_source
-#   description: ""
-#   triggers:
-#     - trigger: state
-#       entity_id:
-#         - input_select.sound_signal_source
-#   action:
-#     - choose:
-#         - conditions: '{{ trigger.to_state.state == "Off" }}'
-#           sequence:
-#             - type: set_value
-#               device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-#               entity_id: 887bfc51f053379291c3c944c6d7b291
-#               domain: text
-#               value: test_command_off
-#         - conditions: '{{ trigger.to_state.state == "Optical" }}'
-#           sequence:
-#             - type: set_value
-#               device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-#               entity_id: 887bfc51f053379291c3c944c6d7b291
-#               domain: text
-#               value: test_command_optical
-#         - conditions: '{{ trigger.to_state.state == "Bluetooth" }}'
-#           sequence:
-#             - type: set_value
-#               device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-#               entity_id: 887bfc51f053379291c3c944c6d7b291
-#               domain: text
-#               value: test_command_bluetooth
-#         - conditions: '{{ trigger.to_state.state == "Line 1" }}'
-#           sequence:
-#             - type: set_value
-#               device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-#               entity_id: 887bfc51f053379291c3c944c6d7b291
-#               domain: text
-#               value: test_command_line1
-#         - conditions: '{{ trigger.to_state.state == "Line 2" }}'
-#           sequence:
-#             - type: set_value
-#               device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-#               entity_id: 887bfc51f053379291c3c944c6d7b291
-#               domain: text
-#               value: test_command_line_2
-#         - conditions: '{{ trigger.to_state.state == "Coax" }}'
-#           sequence:
-#             - type: set_value
-#               device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-#               entity_id: 887bfc51f053379291c3c944c6d7b291
-#               domain: text
-#               value: test_command_coax
-#             - type: toggle
-#               device_id: 5bb8442ffaf12259d768e69dfb8e9487
-#               entity_id: e57d96bf56feb0be99bbf8ecea37bd79
-#               domain: light
-#   mode: single
+- id: "0010"
+  alias: change_sound_signal_source
+  description: ""
+  triggers:
+    - trigger: state
+      entity_id:
+        - input_select.sound_signal_source
+  action:
+    - choose:
+        - conditions: '{{ trigger.to_state.state == "Off" }}'
+          sequence:
+            - type: set_value
+              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+              entity_id: 887bfc51f053379291c3c944c6d7b291
+              domain: text
+              value: test_command_off
+        - conditions: '{{ trigger.to_state.state == "Optical" }}'
+          sequence:
+            - type: set_value
+              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+              entity_id: 887bfc51f053379291c3c944c6d7b291
+              domain: text
+              value: test_command_optical
+        - conditions: '{{ trigger.to_state.state == "Bluetooth" }}'
+          sequence:
+            - type: set_value
+              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+              entity_id: 887bfc51f053379291c3c944c6d7b291
+              domain: text
+              value: test_command_bluetooth
+        - conditions: '{{ trigger.to_state.state == "Line 1" }}'
+          sequence:
+            - type: set_value
+              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+              entity_id: 887bfc51f053379291c3c944c6d7b291
+              domain: text
+              value: test_command_line1
+        - conditions: '{{ trigger.to_state.state == "Line 2" }}'
+          sequence:
+            - type: set_value
+              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+              entity_id: 887bfc51f053379291c3c944c6d7b291
+              domain: text
+              value: test_command_line_2
+        - conditions: '{{ trigger.to_state.state == "Coax" }}'
+          sequence:
+            - type: set_value
+              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+              entity_id: 887bfc51f053379291c3c944c6d7b291
+              domain: text
+              value: test_command_coax
+            - type: toggle
+              device_id: 5bb8442ffaf12259d768e69dfb8e9487
+              entity_id: e57d96bf56feb0be99bbf8ecea37bd79
+              domain: light
+  mode: single
