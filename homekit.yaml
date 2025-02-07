@@ -2,6 +2,7 @@
   port: 56320
   filter:
     include_entities:
+      # - input_select.sound_signal_source
       # свет
       - light.tuya_lava_lamp
       # переключатели, розетки
@@ -31,6 +32,8 @@
       - climate.aqara_e1_thermostat_3
       - humidifier.switch_humidifier
   entity_config:
+    # input_select.soundbar_source:
+    #   name: "Источник звука"
     # свет
     light.tuya_lava_lamp:
       name: "Лава-лампа"
