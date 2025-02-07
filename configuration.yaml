@@ -33,20 +33,6 @@ input_select:
     initial: "Optical"
     icon: "mdi:soundbar"
 
-media_player:
-  - platform: universal
-    name: "Проектор"
-    unique_id: edifier_media_player
-    state_template: "on" # Всегда включён
-    attributes:
-      source: "{{ states('input_select.sound_signal_source') }}"
-      source_list: "{{ state_attr('input_select.sound_signal_source', 'options') }}"
-    select_source:
-      service: input_select.select_option
-      data:
-        entity_id: input_select.sound_signal_source
-        option: "{{ source }}"
-
 generic_hygrostat:
   - name: switch_humidifier
     humidifier: switch.ahtom_outlet_humidifier
