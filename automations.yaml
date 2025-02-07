@@ -1,6 +1,6 @@
 - id: '0001'
   alias: notify_about_download_completed
-  description: Уведомление о завершении загрузки
+  description: 'Уведомление о завершении загрузки transmission'
   trigger:
   - trigger: event
     event_type: transmission_downloaded_torrent
@@ -18,7 +18,7 @@
   mode: single
 - id: '0002'
   alias: run_speedtest
-  description: Run SpeedTest
+  description: 'Запуск теста скорости при нажатии input_button.run_speedtest'
   trigger:
   - trigger: state
     entity_id:
@@ -34,7 +34,7 @@
   mode: single
 - id: '0003'
   alias: notify_about_homeassistant_started
-  description: ''
+  description: 'Уведомление о запуске Homeassistant'
   trigger:
   - trigger: homeassistant
     event: start
@@ -48,7 +48,7 @@
   mode: single
 - id: '0004'
   alias: notify_about_homeassistant_stopped
-  description: ''
+  description: 'Уведомление об остановке Homeassistant'
   trigger:
   - trigger: homeassistant
     event: shutdown
@@ -62,7 +62,7 @@
   mode: single
 - id: '0005'
   alias: notify_about_power_off
-  description: ''
+  description: 'Уведомление об отключении электричества'
   triggers:
   - type: not_powered
     trigger: device
@@ -83,7 +83,7 @@
   mode: single
 - id: '0006'
   alias: notify_about_power_on
-  description: ''
+  description: 'Уведомление о восстановлении электричества'
   triggers:
   - type: powered
     trigger: device
@@ -104,7 +104,7 @@
   mode: single
 - id: '0007'
   alias: notify_about_ping_google_fail
-  description: ''
+  description: 'Уведомление об отключении интернета'
   triggers:
   - type: not_connected
     device_id: de24bbb7ba721126a7555841647841ff
@@ -123,9 +123,9 @@
       message: Грустняшка
       title: Интернет отвалился
   mode: single
-- id: "0008"
+- id: '0008'
   alias: notify_about_ping_google_ok
-  description: ''
+  description: 'Уведомление о восстановлении интернета'
   triggers:
   - type: connected
     device_id: de24bbb7ba721126a7555841647841ff
@@ -146,6 +146,7 @@
   mode: single
 - id: '0009'
   alias: end_lavalamp_warming
+  description: 'Переключить яркость лавалампы на 40% после 90 минут на 100%'
   triggers:
     - trigger: template
       value_template:
@@ -159,9 +160,9 @@
       data:
         brightness: 102
   mode: restart
-- id: "0010"
+- id: '0010'
   alias: change_sound_signal_source
-  description: ""
+  description: 'Передать ИК-сигнал при изменении input_select.sound_signal_source'
   triggers:
     - trigger: state
       entity_id:
