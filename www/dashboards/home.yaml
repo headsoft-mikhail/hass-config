@@ -58,7 +58,7 @@ views:
             title_template: Ping Google
             icon_adaptive_color: true
             title_adaptive_color: true
-            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+            average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
             bar:
               height: 20
               round: 3
@@ -356,14 +356,14 @@ views:
                   - type: climate-hvac-modes
                     hvac_modes:
                       - heat
-                      - 'off'
+                      - "off"
               - type: thermostat
                 entity: climate.aqara_e1_thermostat_2
                 features:
                   - type: climate-hvac-modes
                     hvac_modes:
                       - heat
-                      - 'off'
+                      - "off"
           - type: horizontal-stack
             cards:
               - type: thermostat
@@ -372,7 +372,7 @@ views:
                   - type: climate-hvac-modes
                     hvac_modes:
                       - heat
-                      - 'off'
+                      - "off"
               - type: humidifier
                 entity: humidifier.switch_humidifier
                 features:
@@ -464,6 +464,35 @@ views:
                 name: PM10
                 show_indicator: true
                 show_state: true
+      - type: custom:uptime-card
+        title_adaptive_color: true
+        entity: binary_sensor.meross_power_outlet_1_activity
+        status_adaptive_color: true
+        icon_adaptive_color: true
+        icon: mdi:radiator
+        ko_icon: mdi:radiator-off
+        none_icon: mdi:wifi-strength-off-outlne
+        tooltip_adaptive_color: false
+        average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
+        show:
+          status: false
+        alignment:
+          header: center
+        bar:
+          height: 25
+          round: 0
+          spacing: 0
+          amount: 480
+        duration:
+          quantity: 24
+          unit: hour
+        color:
+          ok: "#C66445"
+          ko: var(--state-icon-color)
+          half: "#C6B145"
+        tap_action:
+          action: more-info
+          entity: sensor.meross_power_outlet_1_power
   - title: Устройства
     path: device-control
     icon: mdi:apps
@@ -503,7 +532,7 @@ views:
                 customMedText: 40
                 hiBrightness: 255
                 customHiText: 100
-                customOffText: 'OFF'
+                customOffText: "OFF"
                 width: 35px
                 height: 35px
             show_header_toggle: false
@@ -529,7 +558,7 @@ views:
             title_template: Сеть 220В
             icon_adaptive_color: true
             title_adaptive_color: true
-            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+            average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
             bar:
               height: 20
               round: 3

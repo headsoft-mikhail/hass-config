@@ -1,0 +1,2 @@
+binary_sensor.meross_power_outlet_1_activity:
+  icon: mdi:radiator

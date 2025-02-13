@@ -26,6 +26,7 @@
       - sensor.qingping_air_monitor_lite_pm2_5_density
       - sensor.qingping_air_monitor_lite_pm10_density
       - binary_sensor.aqara_leak_sensor_1
+      - binary_sensor.meross_power_outlet_1_activity
       # термостаты
       - climate.aqara_e1_thermostat_1
       - climate.aqara_e1_thermostat_2
@@ -107,9 +108,11 @@
       linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
       low_battery_threshold: 30
     binary_sensor.aqara_leak_sensor_1:
-      name: Leakage 1
+      name: Подоконник
       linked_battery_sensor: sensor.aqara_leak_sensor_1_battery
       low_battery_threshold: 30
+    binary_sensor.meross_power_outlet_1_activity:
+      name: Обогрев балкона
     climate.aqara_e1_thermostat_1:
       name: Рабочее место
       linked_battery_sensor: sensor.aqara_e1_thermostat_1_battery

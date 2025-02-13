@@ -5,6 +5,9 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
+homeassistant:
+  customize: !include customize.yaml
+
 logger: !include logger.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
@@ -50,3 +53,13 @@ generic_hygrostat:
     initial_state: true
     sensor_stale_duration:
       minutes: 30
+
+binary_sensor:
+  - platform: template
+    sensors:
+      meross_power_outlet_1_activity:
+        friendly_name: "Обогрев балкона"
+        device_class: motion
+        delay_off:
+          seconds: 10
+        value_template: '{{ states("sensor.meross_power_outlet_1_power")|float > 50 }}'
