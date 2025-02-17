@@ -2,155 +2,154 @@
   alias: notify_about_download_completed
   description: 'Уведомление о завершении загрузки transmission'
   trigger:
-  - trigger: event
-    event_type: transmission_downloaded_torrent
+    - trigger: event
+      event_type: transmission_downloaded_torrent
   condition: []
   action:
-  - action: notify.notify
-    data:
-      title: Загрузка завершена
-      message: '{{trigger.event.data.name}}'
-  - action: transmission.remove_torrent
-    data:
-      entry_id: 97082637855de2c974fdf46142760427
-      id: '{{trigger.event.data.id}}'
-      delete_data: false
+    - action: notify.notify
+      data:
+        title: Загрузка завершена
+        message: '{{trigger.event.data.name}}'
+    - action: transmission.remove_torrent
+      data:
+        entry_id: 97082637855de2c974fdf46142760427
+        id: '{{trigger.event.data.id}}'
+        delete_data: false
   mode: single
 - id: '0002'
   alias: run_speedtest
   description: 'Запуск теста скорости при нажатии input_button.run_speedtest'
   trigger:
-  - trigger: state
-    entity_id:
-    - input_button.run_speedtest
+    - trigger: state
+      entity_id:
+        - input_button.run_speedtest
   condition: []
   action:
-  - action: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id:
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
+    - action: homeassistant.update_entity
+      data: {}
+      target:
+        entity_id:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
   mode: single
 - id: '0003'
   alias: notify_about_homeassistant_started
   description: 'Уведомление о запуске Homeassistant'
   trigger:
-  - trigger: homeassistant
-    event: start
+    - trigger: homeassistant
+      event: start
   condition: []
   action:
-  - action: notify.notify
-    metadata: {}
-    data:
-      title: Homeassistant запущен
-      message: Ура!
+    - action: notify.notify
+      metadata: {}
+      data:
+        title: Homeassistant запущен
+        message: Ура!
   mode: single
 - id: '0004'
   alias: notify_about_homeassistant_stopped
   description: 'Уведомление об остановке Homeassistant'
   trigger:
-  - trigger: homeassistant
-    event: shutdown
+    - trigger: homeassistant
+      event: shutdown
   condition: []
   action:
-  - action: notify.notify
-    metadata: {}
-    data:
-      title: Homeassistant остановлен
-      message: Грустняшка
+    - action: notify.notify
+      metadata: {}
+      data:
+        title: Homeassistant остановлен
+        message: Грустняшка
   mode: single
 - id: '0005'
   alias: notify_about_power_off
   description: 'Уведомление об отключении электричества'
   triggers:
-  - type: not_powered
-    trigger: device
-    device_id: 22b74f3e55d94cb56434765df7dd1a9c
-    entity_id: 8226d5c5decc1b6022c3cec88f6980ba
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
+    - type: not_powered
+      trigger: device
+      device_id: 22b74f3e55d94cb56434765df7dd1a9c
+      entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
   condition: []
   action:
-  - action: notify.notify
-    metadata: {}
-    data:
-      title: Отключение электричества
-      message: Грустняшка
+    - action: notify.notify
+      metadata: {}
+      data:
+        title: Отключение электричества
+        message: Грустняшка
   mode: single
 - id: '0006'
   alias: notify_about_power_on
   description: 'Уведомление о восстановлении электричества'
   triggers:
-  - type: powered
-    trigger: device
-    device_id: 22b74f3e55d94cb56434765df7dd1a9c
-    entity_id: 8226d5c5decc1b6022c3cec88f6980ba
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
+    - type: powered
+      trigger: device
+      device_id: 22b74f3e55d94cb56434765df7dd1a9c
+      entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
   condition: []
   action:
-  - action: notify.notify
-    metadata: {}
-    data:
-      title: Электричество восстановлено
-      message: Ура!
+    - action: notify.notify
+      metadata: {}
+      data:
+        title: Электричество восстановлено
+        message: Ура!
   mode: single
 - id: '0007'
   alias: notify_about_ping_google_fail
   description: 'Уведомление об отключении интернета'
   triggers:
-  - type: not_connected
-    device_id: de24bbb7ba721126a7555841647841ff
-    entity_id: f12857c8ff696bdf0ab48605cb66fee1
-    domain: binary_sensor
-    trigger: device
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
+    - type: not_connected
+      device_id: de24bbb7ba721126a7555841647841ff
+      entity_id: f12857c8ff696bdf0ab48605cb66fee1
+      domain: binary_sensor
+      trigger: device
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
   conditions: []
   actions:
-  - action: notify.notify
-    metadata: {}
-    data:
-      message: Грустняшка
-      title: Интернет отвалился
+    - action: notify.notify
+      metadata: {}
+      data:
+        message: Грустняшка
+        title: Интернет отвалился
   mode: single
 - id: '0008'
   alias: notify_about_ping_google_ok
   description: 'Уведомление о восстановлении интернета'
   triggers:
-  - type: connected
-    device_id: de24bbb7ba721126a7555841647841ff
-    entity_id: f12857c8ff696bdf0ab48605cb66fee1
-    domain: binary_sensor
-    trigger: device
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
+    - type: connected
+      device_id: de24bbb7ba721126a7555841647841ff
+      entity_id: f12857c8ff696bdf0ab48605cb66fee1
+      domain: binary_sensor
+      trigger: device
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 1
   conditions: []
   actions:
-  - action: notify.notify
-    metadata: {}
-    data:
-      message: Ура!
-      title: Интернет снова работает
+    - action: notify.notify
+      metadata: {}
+      data:
+        message: Ура!
+        title: Интернет снова работает
   mode: single
 - id: '0009'
   alias: end_lavalamp_warming
   description: 'Переключить яркость лавалампы на 40% после 90 минут на 100%'
   triggers:
     - trigger: template
-      value_template:
-        '{{ state_attr("light.tuya_lava_lamp", "brightness") | int(0) > 244 }}'
+      value_template: '{{ state_attr("light.tuya_lava_lamp", "brightness") | int(0) > 244 }}'
       for:
         minutes: 90
   actions:
@@ -215,4 +214,18 @@
               device_id: 5bb8442ffaf12259d768e69dfb8e9487
               entity_id: e57d96bf56feb0be99bbf8ecea37bd79
               domain: light
+  mode: single
+- id: '0011'
+  alias: full_daily_backup
+  description: Создание ежедневного бэкапа Home Assistant
+  triggers:
+    - trigger: time
+      at: '03:00:00'
+  actions:
+    - action: hassio.backup_full
+      metadata: {}
+      data:
+        compressed: true
+        name: "Daily Full Backup {{ now().strftime('%Y-%m-%d') }}"
+        homeassistant_exclude_database: false
   mode: single
