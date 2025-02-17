@@ -229,6 +229,17 @@ views:
               - color: Red
                 from: 150
                 to: 225
+          - type: custom:mini-graph-card
+            name: RPi CPU Temperature
+            hour24: true
+            points_per_hour: 60
+            hours_to_show: 6
+            lower_bound: 40
+            higher_bound: 60
+            font_size: 70
+            entities:
+              - entity: sensor.rpi_cpu_temperature
+                name: CPU
         title: Home Assistant
   - title: Микроклимат
     path: climate
