@@ -139,6 +139,25 @@ views:
         entities:
           - entity: sensor.backup_state
             icon: mdi:cloud-upload
+          - entity: sensor.sql_query_db_volume
+          - entity: sensor.home_assistant_host_disk_used
+            name: HA Host Использовано памяти
+            icon: mdi:database-outline
+            type: custom:bar-card
+            decimal: 2
+            entity_row: true
+            min: 0
+            max: 225
+            severity:
+              - color: Green
+                from: 0
+                to: 50
+              - color: Orange
+                from: 50
+                to: 150
+              - color: Red
+                from: 150
+                to: 225
           - entity: sensor.home_assistant_core_cpu_percent
             name: HA Core Использование CPU
             icon: mdi:cpu-64-bit
@@ -211,27 +230,8 @@ views:
               - color: Red
                 from: 50
                 to: 100
-          - entity: sensor.home_assistant_host_disk_used
-            name: HA Host Использовано памяти
-            icon: mdi:database-outline
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 225
-            severity:
-              - color: Green
-                from: 0
-                to: 50
-              - color: Orange
-                from: 50
-                to: 150
-              - color: Red
-                from: 150
-                to: 225
-          - entity: sensor.sql_query_db_volume
           - type: custom:mini-graph-card
-            name: RPi CPU Temperature
+            name: CPU Temperature
             hour24: true
             points_per_hour: 60
             hours_to_show: 6
@@ -240,7 +240,7 @@ views:
             font_size: 70
             entities:
               - entity: sensor.rpi_cpu_temperature
-                name: CPU
+                name: CPU Temperature
         title: Home Assistant
   - title: Микроклимат
     path: climate
