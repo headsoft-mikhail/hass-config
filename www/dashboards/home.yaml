@@ -229,6 +229,7 @@ views:
               - color: Red
                 from: 150
                 to: 225
+          - entity: sensor.sql_query_db_volume
           - type: custom:mini-graph-card
             name: RPi CPU Temperature
             hour24: true
