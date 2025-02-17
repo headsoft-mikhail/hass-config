@@ -5,6 +5,8 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
+recorder: !include recorder.yaml
+
 homeassistant:
   customize: !include customize.yaml
 
@@ -21,23 +23,24 @@ yandex_smart_home: !include yaha_cloud.yaml
 
 input_button:
   run_speedtest:
-    name: "Run SpeedTest"
+    name: 'Run SpeedTest'
 
 input_select:
   sound_signal_source:
-    name: "Источник сигнала колонок"
+    name: 'Источник сигнала колонок'
     options:
-      - "Off"
-      - "Optical"
-      - "Bluetooth"
-      - "Line 1"
-      - "Line 2"
-      - "Coax"
-    initial: "Optical"
-    icon: "mdi:soundbar"
+      - 'Off'
+      - 'Optical'
+      - 'Bluetooth'
+      - 'Line 1'
+      - 'Line 2'
+      - 'Coax'
+    initial: 'Optical'
+    icon: 'mdi:soundbar'
 
 generic_hygrostat:
   - name: switch_humidifier
+    unique_id: switch_humidifier
     humidifier: switch.ahtom_outlet_humidifier
     target_sensor: sensor.qingping_air_monitor_lite_humidity
     min_humidity: 30
@@ -45,7 +48,7 @@ generic_hygrostat:
     target_humidity: 60
     dry_tolerance: 1
     wet_tolerance: 1
-    device_class: "humidifier"
+    device_class: 'humidifier'
     min_cycle_duration:
       seconds: 15
     keep_alive:
@@ -58,8 +61,19 @@ binary_sensor:
   - platform: template
     sensors:
       meross_power_outlet_1_activity:
-        friendly_name: "Обогрев балкона"
+        friendly_name: 'Обогрев балкона'
+        unique_id: meross_power_outlet_1_activity
         device_class: motion
         delay_off:
           seconds: 10
         value_template: '{{ states("sensor.meross_power_outlet_1_power")|float > 50 }}'
+
+command_line:
+  - sensor:
+      command: 'cat /sys/class/thermal/thermal_zone0/temp'
+      name: RPi CPU Temperature
+      unique_id: rpi_cpu_temperature
+      device_class: temperature
+      unit_of_measurement: '°C'
+      value_template: '{{ (value | int) / 1000 }}'
+      scan_interval: 60

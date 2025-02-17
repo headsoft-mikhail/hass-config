@@ -1,0 +1,5 @@
+# https://www.home-assistant.io/integrations/recorder/  
+
+db_url: !secret db_link
+purge_keep_days: 31  # Store 31 days data in database
+commit_interval: 5  # Commit data to database every 5 seconds
