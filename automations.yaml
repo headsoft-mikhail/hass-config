@@ -215,3 +215,17 @@
               entity_id: e57d96bf56feb0be99bbf8ecea37bd79
               domain: light
   mode: single
+- id: '0011'
+  alias: full_daily_backup
+  description: Создание ежедневного бэкапа Home Assistant
+  triggers:
+    - trigger: time
+      at: '03:00:00'
+  actions:
+    - action: hassio.backup_full
+      metadata: {}
+      data:
+        compressed: true
+        name: "Daily Full Backup {{ now().strftime('%Y-%m-%d') }}"
+        homeassistant_exclude_database: false
+  mode: single
