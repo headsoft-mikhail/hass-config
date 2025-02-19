@@ -24,6 +24,10 @@ yandex_smart_home: !include yaha_cloud.yaml
 input_button:
   run_speedtest:
     name: 'Run SpeedTest'
+  petkit_feeder_1_act:
+    name: 'Petkit Feeder 1 - Act'
+  petkit_feeder_2_act:
+    name: 'Petkit Feeder 2 - Act'
 
 input_select:
   sound_signal_source:

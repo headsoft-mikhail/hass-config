@@ -550,37 +550,6 @@ views:
             show_header_toggle: false
             state_color: true
             title: Tuya
-      - type: entities
-        entities:
-          - entity: switch.eversweet_3_pro_uvc_power
-            name: Питание
-          - entity: binary_sensor.eversweet_3_pro_uvc_water_level
-            name: Уровень воды
-          - entity: sensor.eversweet_3_pro_uvc_filter
-            name: Фильтр
-            icon: mdi:filter
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 100
-            severity:
-              - color: Red
-                from: 0
-                to: 25
-              - color: Orange
-                from: 25
-                to: 50
-              - color: Green
-                from: 50
-                to: 100
-          - entity: button.eversweet_3_pro_uvc_reset_filter
-            name: Сброс фильтра
-          - entity: sensor.eversweet_3_pro_uvc_energy_usage
-            name: Энергопотребление
-        title: Petkit Eversweet 3 Pro UVC
-        show_header_toggle: false
-        state_color: true
   - title: Энергия
     path: energy
     icon: mdi:battery-80
@@ -792,3 +761,123 @@ views:
         aggregate_func: max
         show:
           graph: bar
+  - title: Питомцы
+    path: pets
+    icon: mdi:cat
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: input_button.petkit_feeder_1_act
+            name: Выдать порцию
+          - name: Выдано еды
+            type: custom:bar-card
+            entity_row: true
+            entity: sensor.fresh_element_solo_1_dispensed
+            min: 0
+            max: 50
+          - entity: binary_sensor.fresh_element_solo_1_food_level
+            name: Уровень пищи
+            secondary_info: none
+          - entity: sensor.fresh_element_solo_1_error
+            name: Ошибка
+        title: Кормилка 1
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: input_button.petkit_feeder_2_act
+            name: Выдать порцию
+          - name: Выдано еды
+            type: custom:bar-card
+            entity_row: true
+            min: 0
+            max: 50
+            entities:
+              - entity: sensor.fresh_element_solo_1_dispensed
+          - entity: binary_sensor.fresh_element_solo_2_food_level
+            name: Уровень пищи
+            secondary_info: none
+          - entity: sensor.fresh_element_solo_2_error
+            name: Ошибка
+        title: Кормилка 2
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: switch.eversweet_3_pro_uvc_power
+            name: Подача воды
+            icon: mdi:water-pump
+          - entity: binary_sensor.eversweet_3_pro_uvc_water_level
+            name: Уровень воды
+        title: Питьевой фонтан
+        show_header_toggle: false
+        state_color: true
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.eversweet_3_pro_uvc_filter
+                name: Фильтр
+                icon: mdi:filter
+                type: custom:bar-card
+                decimal: 2
+                entity_row: true
+                min: 0
+                max: 100
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 25
+                  - color: Orange
+                    from: 25
+                    to: 50
+                  - color: Green
+                    from: 50
+                    to: 100
+              - entity: button.eversweet_3_pro_uvc_reset_filter
+                name: Сброс фильтра
+            title: Питьевой фонтан
+          - type: entities
+            entities:
+              - name: Осталось влагопоглотителя
+                type: custom:bar-card
+                entity_row: true
+                entity: sensor.fresh_element_solo_1_desiccant_days_remaining
+                min: 0
+                max: 30
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 5
+                  - color: Orange
+                    from: 5
+                    to: 10
+                  - color: Green
+                    from: 10
+                    to: 35
+              - entity: button.fresh_element_solo_1_reset_desiccant
+                name: Сброс влагопоглотителя
+            title: Кормилка 1
+          - type: entities
+            entities:
+              - name: Осталось влагопоглотителя
+                type: custom:bar-card
+                entity_row: true
+                entity: sensor.fresh_element_solo_2_desiccant_days_remaining
+                min: 0
+                max: 30
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 5
+                  - color: Orange
+                    from: 5
+                    to: 10
+                  - color: Green
+                    from: 10
+                    to: 35
+              - entity: button.fresh_element_solo_2_reset_desiccant
+                name: Сброс влагопоглотителя
+            title: Кормилка 2
+        title: Расходники
