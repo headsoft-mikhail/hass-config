@@ -27,41 +27,14 @@ views:
                   <img src="/local/images/icon_github.svg" width="150" height="100">
                 </a>
               </div>
-      - type: vertical-stack
-        cards:
-          - type: entities
-            entities:
-              - entity: binary_sensor.ping_8_8_8_8
-              - entity: binary_sensor.zyxel_gateway_wan_status
-                name: Состояние WAN
-              - entity: sensor.zyxel_gateway_external_ip
-                name: Внешний IP
-                icon: mdi:ip
-              - entity: sensor.zyxel_gateway_download_speed
-                name: Текущая скорость загрузки
-                icon: mdi:speedometer
-                type: custom:bar-card
-                decimal: 2
-                entity_row: true
-                min: 0
-                max: 100
-              - entity: sensor.zyxel_gateway_upload_speed
-                name: Текущая скорость передачи
-                icon: mdi:speedometer
-                type: custom:bar-card
-                decimal: 2
-                entity_row: true
-                min: 0
-                max: 100
-            show_header_toggle: false
-            title: Zyxel Gateway
-            state_color: true
+      - type: entities
+        entities:
           - type: custom:uptime-card
             entity: binary_sensor.ping_8_8_8_8
             icon: mdi:check-network-outline
             ko_icon: mdi:close-network-outline
             none_icon: mdi:wifi-strength-off-outline
-            title_template: Ping Google
+            title_template: ''
             icon_adaptive_color: true
             title_adaptive_color: true
             average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
@@ -72,7 +45,7 @@ views:
               amount: 96
             show:
               status: false
-              icon: true
+              icon: false
             alignment:
               status: spaced
               header: center
@@ -81,62 +54,88 @@ views:
               unit: hour
             tap_action:
               action: more-info
-          - type: entities
-            title: SpeedTest
-            entities:
-              - type: custom:mod-card
-                style:
-                  hui-horizontal-stack-card$: |
-                    hui-button-card {
-                      margin-right: 10px !important;
-                      margin-bottom: 10px !important;
-                      flex: auto !important; 
-                    }
-                    hui-vertical-stack-card {
-                      margin-left: 10px !important;
-                      margin-right: 10px !important;
-                      margin-bottom: 10px !important;
-                      width: 350%;
-                      flex: auto !important; 
-                    }
-                    bar-card {
-                      margin-left: 10px !important;
-                      margin-right: 10px !important;
-                      margin-bottom: 10px !important;
-                      width: 350%;
-                      flex: auto !important; 
-                    }
-                card:
-                  type: horizontal-stack
+          - entity: binary_sensor.ping_8_8_8_8
+            name: Google
+          - entity: binary_sensor.zyxel_gateway_wan_status
+            name: WAN
+          - entity: sensor.zyxel_gateway_external_ip
+            name: Внешний IP
+            icon: mdi:ip
+          - entity: sensor.zyxel_gateway_download_speed
+            name: Текущая скорость загрузки
+            icon: mdi:speedometer
+            type: custom:bar-card
+            decimal: 2
+            entity_row: true
+            min: 0
+            max: 100
+          - entity: sensor.zyxel_gateway_upload_speed
+            name: Текущая скорость передачи
+            icon: mdi:speedometer
+            type: custom:bar-card
+            decimal: 2
+            entity_row: true
+            min: 0
+            max: 100
+        show_header_toggle: false
+        title: Zyxel Gateway
+        state_color: true
+      - type: entities
+        title: SpeedTest
+        entities:
+          - type: custom:mod-card
+            style:
+              hui-horizontal-stack-card$: |
+                hui-button-card {
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  flex: auto !important; 
+                }
+                hui-vertical-stack-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width: 350%;
+                  flex: auto !important; 
+                }
+                bar-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width: 350%;
+                  flex: auto !important; 
+                }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: vertical-stack
                   cards:
-                    - type: vertical-stack
-                      cards:
-                        - name: Загрузка
-                          type: custom:bar-card
-                          entity_row: true
-                          entity: sensor.speedtest_download
-                          icon: mdi:speedometer
-                          decimal: 2
-                          min: 0
-                          max: 100
-                        - name: Передача
-                          type: custom:bar-card
-                          entity_row: true
-                          entity: sensor.speedtest_upload
-                          icon: mdi:speedometer
-                          decimal: 2
-                          min: 0
-                          max: 100
-                    - show_name: false
-                      show_icon: true
-                      type: button
-                      entity: input_button.run_speedtest
-                      icon_height: 40px
-                      icon: mdi:play-speed
-                      hold_action:
-                        action: toggle
-                      tap_action:
-                        action: none
+                    - name: Загрузка
+                      type: custom:bar-card
+                      entity_row: true
+                      entity: sensor.speedtest_download
+                      icon: mdi:speedometer
+                      decimal: 2
+                      min: 0
+                      max: 100
+                    - name: Передача
+                      type: custom:bar-card
+                      entity_row: true
+                      entity: sensor.speedtest_upload
+                      icon: mdi:speedometer
+                      decimal: 2
+                      min: 0
+                      max: 100
+                - show_name: false
+                  show_icon: true
+                  type: button
+                  entity: input_button.run_speedtest
+                  icon_height: 40px
+                  icon: mdi:play-speed
+                  hold_action:
+                    action: toggle
+                  tap_action:
+                    action: none
       - type: vertical-stack
         cards:
           - type: custom:transmission-card
@@ -998,7 +997,7 @@ views:
                   decimal: 0
                   entity_row: true
                   min: 0
-                  max: 100
+                  max: 30
                   severity:
                     - color: Red
                       from: 0
@@ -1043,7 +1042,7 @@ views:
                   decimal: 0
                   entity_row: true
                   min: 0
-                  max: 100
+                  max: 30
                   severity:
                     - color: Red
                       from: 0
