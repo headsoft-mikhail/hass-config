@@ -7,20 +7,26 @@ views:
       - type: horizontal-stack
         cards:
           - type: markdown
-            content: >-
-              [<img
-              src='http://homeassistant.local:8123/local/images/icon_keenetic.svg'
-              height=100>](http://192.168.1.1/dashboard)
+            content: |-
+              <div style="display: flex; justify-content: center;">
+                <a href="http://192.168.1.1/dashboard">
+                  <img src="/local/images/icon_keenetic.svg" width="150" height="100">
+                </a>
+              </div>
           - type: markdown
-            content: >-
-              [<img
-              src='http://homeassistant.local:8123/local/images/icon_transmission.svg'
-              height=120>](http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer)
+            content: |-
+              <div style="text-align: center;">
+                <a href="http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer">
+                  <img src="/local/images/icon_transmission.svg" width="150" height="100">
+                </a>
+              </div>
           - type: markdown
-            content: >-
-              [<img
-              src='http://homeassistant.local:8123/local/images/icon_github.svg'
-              height=100>](https://github.com/headsoft-mikhail/hass-config)
+            content: |-
+              <div style="text-align: center;">
+                <a href="https://github.com/headsoft-mikhail/hass-config">
+                  <img src="/local/images/icon_github.svg" width="150" height="100">
+                </a>
+              </div>
       - type: vertical-stack
         cards:
           - type: entities
@@ -78,22 +84,59 @@ views:
           - type: entities
             title: SpeedTest
             entities:
-              - entity: input_button.run_speedtest
-                name: Запуск теста
-              - entity: sensor.speedtest_download
-                name: Загрузка
-                type: custom:bar-card
-                decimal: 2
-                entity_row: true
-                min: 0
-                max: 100
-              - entity: sensor.speedtest_upload
-                name: Передача
-                type: custom:bar-card
-                decimal: 2
-                entity_row: true
-                min: 0
-                max: 100
+              - type: custom:mod-card
+                style:
+                  hui-horizontal-stack-card$: |
+                    hui-button-card {
+                      margin-right: 10px !important;
+                      margin-bottom: 10px !important;
+                      flex: auto !important; 
+                    }
+                    hui-vertical-stack-card {
+                      margin-left: 10px !important;
+                      margin-right: 10px !important;
+                      margin-bottom: 10px !important;
+                      width: 350%;
+                      flex: auto !important; 
+                    }
+                    bar-card {
+                      margin-left: 10px !important;
+                      margin-right: 10px !important;
+                      margin-bottom: 10px !important;
+                      width: 350%;
+                      flex: auto !important; 
+                    }
+                card:
+                  type: horizontal-stack
+                  cards:
+                    - type: vertical-stack
+                      cards:
+                        - name: Загрузка
+                          type: custom:bar-card
+                          entity_row: true
+                          entity: sensor.speedtest_download
+                          icon: mdi:speedometer
+                          decimal: 2
+                          min: 0
+                          max: 100
+                        - name: Передача
+                          type: custom:bar-card
+                          entity_row: true
+                          entity: sensor.speedtest_upload
+                          icon: mdi:speedometer
+                          decimal: 2
+                          min: 0
+                          max: 100
+                    - show_name: false
+                      show_icon: true
+                      type: button
+                      entity: input_button.run_speedtest
+                      icon_height: 40px
+                      icon: mdi:play-speed
+                      hold_action:
+                        action: toggle
+                      tap_action:
+                        action: none
       - type: vertical-stack
         cards:
           - type: custom:transmission-card
@@ -750,38 +793,115 @@ views:
     cards:
       - type: entities
         entities:
-          - entity: input_button.petkit_feeder_1_act
-            name: Выдать порцию
-          - name: Выдано еды
-            type: custom:bar-card
-            entity_row: true
-            entity: sensor.fresh_element_solo_1_dispensed
-            min: 0
-            max: 50
-          - entity: binary_sensor.fresh_element_solo_1_food_level
-            name: Уровень пищи
-            secondary_info: none
-          - entity: sensor.fresh_element_solo_1_error
-            name: Ошибка
+          - type: custom:mod-card
+            style:
+              hui-horizontal-stack-card$: |
+                hui-button-card {
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  flex: auto !important; 
+                }
+                bar-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width:500%;
+                  flex: auto !important; 
+                }
+            card:
+              type: horizontal-stack
+              cards:
+                - name: Выдано еды
+                  type: custom:bar-card
+                  entity_row: true
+                  entity: sensor.fresh_element_solo_1_dispensed
+                  min: 0
+                  max: 50
+                - show_name: false
+                  show_icon: true
+                  type: button
+                  entity: input_button.petkit_feeder_1_act
+                  icon_height: 35px
+                  icon: mdi:hamburger-plus
+                  hold_action:
+                    action: toggle
+                  tap_action:
+                    action: none
+          - type: custom:auto-entities
+            card:
+              type: entities
+              title: ⚠️
+            entities: null
+            filter:
+              include:
+                - entity_id: binary_sensor.fresh_element_solo_1_food_level
+                - entity_id: sensor.fresh_element_solo_1_error
+                - entity_id: sensor.fresh_element_solo_1_status
+              exclude:
+                - entity_id: binary_sensor.fresh_element_solo_1_food_level
+                  state: 'off'
+                - entity_id: sensor.fresh_element_solo_1_error
+                  state: no_error
+                - entity_id: sensor.fresh_element_solo_1_status
+                  state: online
+            show_empty: false
         title: Кормилка 1
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - entity: input_button.petkit_feeder_2_act
-            name: Выдать порцию
-          - name: Выдано еды
-            type: custom:bar-card
-            entity_row: true
-            min: 0
-            max: 50
-            entities:
-              - entity: sensor.fresh_element_solo_1_dispensed
-          - entity: binary_sensor.fresh_element_solo_2_food_level
-            name: Уровень пищи
-            secondary_info: none
-          - entity: sensor.fresh_element_solo_2_error
-            name: Ошибка
+          - type: custom:mod-card
+            style:
+              hui-horizontal-stack-card$: |
+                hui-button-card {
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  flex: auto !important; 
+                }
+                bar-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width:500%;
+                  flex: auto !important; 
+                }
+            card:
+              type: horizontal-stack
+              cards:
+                - name: Выдано еды
+                  type: custom:bar-card
+                  entity_row: true
+                  entity: sensor.fresh_element_solo_2_dispensed
+                  min: 0
+                  max: 50
+                - show_name: false
+                  show_icon: true
+                  type: button
+                  entity: input_button.petkit_feeder_2_act
+                  icon_height: 35px
+                  icon: mdi:hamburger-plus
+                  hold_action:
+                    action: toggle
+                  tap_action:
+                    action: none
+          - type: custom:auto-entities
+            card:
+              type: entities
+              title: ⚠️
+            entities: null
+            filter:
+              include:
+                - entity_id: binary_sensor.fresh_element_solo_2_food_level
+                - entity_id: sensor.fresh_element_solo_2_error
+                - entity_id: sensor.fresh_element_solo_2_status
+              exclude:
+                - entity_id: binary_sensor.fresh_element_solo_2_food_level
+                  state: 'off'
+                - entity_id: sensor.fresh_element_solo_2_error
+                  state: no_error
+                - entity_id: sensor.fresh_element_solo_2_status
+                  state: online
+            show_empty: false
         title: Кормилка 2
         show_header_toggle: false
         state_color: true
@@ -790,76 +910,157 @@ views:
           - entity: switch.eversweet_3_pro_uvc_power
             name: Подача воды
             icon: mdi:water-pump
-          - entity: binary_sensor.eversweet_3_pro_uvc_water_level
-            name: Уровень воды
+          - type: custom:auto-entities
+            card:
+              type: entities
+              title: ⚠️
+            entities: null
+            filter:
+              include:
+                - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
+              exclude:
+                - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
+                  state: 'off'
+            show_empty: false
         title: Питьевой фонтан
         show_header_toggle: false
         state_color: true
-      - type: vertical-stack
-        cards:
-          - type: entities
-            entities:
-              - entity: sensor.eversweet_3_pro_uvc_filter
-                name: Фильтр
-                icon: mdi:filter
-                type: custom:bar-card
-                decimal: 2
-                entity_row: true
-                min: 0
-                max: 100
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 25
-                  - color: Orange
-                    from: 25
-                    to: 50
-                  - color: Green
-                    from: 50
-                    to: 100
-              - entity: button.eversweet_3_pro_uvc_reset_filter
-                name: Сброс фильтра
-            title: Питьевой фонтан
-          - type: entities
-            entities:
-              - name: Осталось влагопоглотителя
-                type: custom:bar-card
-                entity_row: true
-                entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                min: 0
-                max: 30
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 5
-                  - color: Orange
-                    from: 5
-                    to: 10
-                  - color: Green
-                    from: 10
-                    to: 35
-              - entity: button.fresh_element_solo_1_reset_desiccant
-                name: Сброс влагопоглотителя
-            title: Кормилка 1
-          - type: entities
-            entities:
-              - name: Осталось влагопоглотителя
-                type: custom:bar-card
-                entity_row: true
-                entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                min: 0
-                max: 30
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 5
-                  - color: Orange
-                    from: 5
-                    to: 10
-                  - color: Green
-                    from: 10
-                    to: 35
-              - entity: button.fresh_element_solo_2_reset_desiccant
-                name: Сброс влагопоглотителя
-            title: Кормилка 2
+      - type: entities
         title: Расходники
+        entities:
+          - type: custom:mod-card
+            style:
+              hui-horizontal-stack-card$: |
+                hui-button-card {
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  flex: auto !important; 
+                }
+                bar-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width:500%;
+                  flex: auto !important; 
+                }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: custom:bar-card
+                  entity: sensor.eversweet_3_pro_uvc_filter
+                  name: 'Питьевой фонтан: Фильтр'
+                  icon: mdi:filter
+                  decimal: 0
+                  entity_row: true
+                  min: 0
+                  max: 100
+                  severity:
+                    - color: Red
+                      from: 0
+                      to: 25
+                    - color: Orange
+                      from: 25
+                      to: 50
+                    - color: Green
+                      from: 50
+                      to: 100
+                - show_name: false
+                  show_icon: true
+                  type: button
+                  entity: button.eversweet_3_pro_uvc_reset_filter
+                  icon_height: 30px
+                  icon: mdi:refresh-circle
+                  hold_action:
+                    action: toggle
+                  tap_action:
+                    action: none
+          - type: custom:mod-card
+            style:
+              hui-horizontal-stack-card$: |
+                hui-button-card {
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  flex: auto !important; 
+                }
+                bar-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width:500%;
+                  flex: auto !important; 
+                }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: custom:bar-card
+                  entity: sensor.fresh_element_solo_1_desiccant_days_remaining
+                  name: 'Кормилка 1: Влагопоглотитель'
+                  decimal: 0
+                  entity_row: true
+                  min: 0
+                  max: 100
+                  severity:
+                    - color: Red
+                      from: 0
+                      to: 7
+                    - color: Orange
+                      from: 7
+                      to: 15
+                    - color: Green
+                      from: 15
+                      to: 30
+                - show_name: false
+                  show_icon: true
+                  type: button
+                  entity: button.fresh_element_solo_1_reset_desiccant
+                  icon_height: 30px
+                  icon: mdi:refresh-circle
+                  hold_action:
+                    action: toggle
+                  tap_action:
+                    action: none
+          - type: custom:mod-card
+            style:
+              hui-horizontal-stack-card$: |
+                hui-button-card {
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  flex: auto !important; 
+                }
+                bar-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width:500%;
+                  flex: auto !important; 
+                }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: custom:bar-card
+                  entity: sensor.fresh_element_solo_2_desiccant_days_remaining
+                  name: 'Кормилка 2: Влагопоглотитель'
+                  decimal: 0
+                  entity_row: true
+                  min: 0
+                  max: 100
+                  severity:
+                    - color: Red
+                      from: 0
+                      to: 7
+                    - color: Orange
+                      from: 7
+                      to: 15
+                    - color: Green
+                      from: 15
+                      to: 30
+                - show_name: false
+                  show_icon: true
+                  type: button
+                  entity: button.fresh_element_solo_2_reset_desiccant
+                  icon_height: 30px
+                  icon: mdi:refresh-circle
+                  hold_action:
+                    action: toggle
+                  tap_action:
+                    action: none
