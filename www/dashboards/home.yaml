@@ -96,45 +96,27 @@ views:
                 max: 100
       - type: vertical-stack
         cards:
-          - type: entities
-            entities:
-              - entity: sensor.transmission_status
-                name: Статус
-                secondary_info: last-updated
-              - entity: switch.transmission_switch
-                name: Загрузка
-                icon: mdi:power
-              - entity: sensor.transmission_download_speed
-                name: Скорость загрузки
-                icon: mdi:speedometer
-                type: custom:bar-card
-                decimal: 2
-                min: 0
-                max: 50
-                entity_row: true
-                secondary_info: none
-            title: Transmission
-            state_color: true
-            show_header_toggle: false
-          - type: markdown
-            content: >-
-              {% set payload = state_attr('sensor.transmission_total_torrents',
-              'torrent_info') %}
-
-              | <!-- --> | <!-- --> | <!-- --> |
-
-              | :------: | :------- | :------: |
-
-              {% for torrent in payload.items() %}{% set name = torrent[0] %} {%
-              set data = torrent[1] %} {% if name %}| <ha-icon icon="mdi:{% if
-              data.status=="downloading" %}arrow-down-bold{% else %}pause{%
-              endif %}"></ha-icon>|{{ name|truncate(30) }} > |  ```{{
-              data.percent_done }}%```| {% endif %}
-
-              {% endfor %}
-
-              {% if not payload.items() %} загрузок нет {% endif %}
-            title: null
+          - type: custom:transmission-card
+            header_text: Transmission
+            no_torrent_label: ''
+            hide_header: false
+            hide_status: false
+            hide_turtle: true
+            hide_startstop: false
+            hide_type: true
+            hide_delete_torrent: false
+            hide_delete_torrent_full: false
+            default_type: total
+            display_mode: compact
+            default_sort: name
+            hide_sort: true
+            default_order: decending
+            hide_order: true
+            sensor_entity_id: transmission
+            hide_add_torrent: true
+            hide_upload_speed: false
+            hide_download_speed: false
+            force_status_newline: true
       - type: entities
         entities:
           - entity: sensor.backup_state
