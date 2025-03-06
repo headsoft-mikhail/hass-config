@@ -34,7 +34,7 @@ views:
             icon: mdi:check-network-outline
             ko_icon: mdi:close-network-outline
             none_icon: mdi:wifi-strength-off-outline
-            title_template: ''
+            title_template: Internet
             icon_adaptive_color: true
             title_adaptive_color: true
             average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
@@ -45,7 +45,7 @@ views:
               amount: 96
             show:
               status: false
-              icon: false
+              icon: true
             alignment:
               status: spaced
               header: center
@@ -54,10 +54,6 @@ views:
               unit: hour
             tap_action:
               action: more-info
-          - entity: binary_sensor.ping_8_8_8_8
-            name: Google
-          - entity: binary_sensor.zyxel_gateway_wan_status
-            name: WAN
           - entity: sensor.zyxel_gateway_external_ip
             name: Внешний IP
             icon: mdi:ip
@@ -161,9 +157,31 @@ views:
             force_status_newline: true
       - type: entities
         entities:
-          - entity: sensor.backup_state
-            icon: mdi:cloud-upload
+          - type: custom:mod-card
+            card:
+              type: horizontal-stack
+              cards:
+                - type: tile
+                  entity: sensor.backup_state
+                  icon: mdi:cloud-upload
+                - type: tile
+                  entity: sensor.rpi_cpu_temperature
           - entity: sensor.sql_query_db_volume
+            type: custom:bar-card
+            decimal: 2
+            entity_row: true
+            min: 0
+            max: 3000
+            severity:
+              - color: Green
+                from: 0
+                to: 1500
+              - color: Orange
+                from: 1500
+                to: 2500
+              - color: Red
+                from: 2500
+                to: 3000
           - entity: sensor.home_assistant_host_disk_used
             name: HA Host Использовано памяти
             icon: mdi:database-outline
@@ -254,17 +272,6 @@ views:
               - color: Red
                 from: 50
                 to: 100
-          - type: custom:mini-graph-card
-            name: CPU Temperature
-            hour24: true
-            points_per_hour: 60
-            hours_to_show: 6
-            lower_bound: 40
-            higher_bound: 60
-            font_size: 70
-            entities:
-              - entity: sensor.rpi_cpu_temperature
-                name: CPU Temperature
         title: Home Assistant
   - title: Микроклимат
     path: climate
@@ -273,12 +280,47 @@ views:
     cards:
       - type: vertical-stack
         cards:
-          - show_current: true
-            show_forecast: true
-            type: weather-forecast
+          - type: custom:weather-chart-card
             entity: weather.home_assistant
-            forecast_type: hourly
-            name: Gismeteo
+            show_main: true
+            show_temperature: true
+            show_current_condition: true
+            show_attributes: true
+            show_time: false
+            show_time_seconds: false
+            show_day: true
+            show_date: true
+            show_humidity: true
+            show_pressure: true
+            show_wind_direction: true
+            show_wind_speed: true
+            show_sun: true
+            show_feels_like: true
+            show_dew_point: false
+            show_wind_gust_speed: false
+            show_visibility: false
+            show_last_changed: false
+            use_12hour_format: false
+            icons_size: '45'
+            animated_icons: true
+            icon_style: style2
+            autoscroll: true
+            forecast:
+              precipitation_type: rainfall
+              show_probability: false
+              labels_font_size: '12'
+              precip_bar_size: '100'
+              style: style2
+              show_wind_forecast: true
+              condition_icons: true
+              round_temp: false
+              type: daily
+              number_of_forecasts: '7'
+              disable_animation: true
+            locale: ru
+            units:
+              speed: ''
+              pressure: mmHg
           - type: custom:mini-graph-card
             name: Температура
             hour24: true
@@ -305,66 +347,50 @@ views:
                 label: Night
               - value: above_horizon
                 label: Day
-          - type: custom:mini-graph-card
-            name: Влажность
-            hour24: true
-            points_per_hour: 2
-            font_size: 70
-            entities:
-              - entity: sensor.home_assistant_humidity
-                name: Влажность
-              - entity: sun.sun
-                color: white
-                name: Солнце
-                show_line: false
-                show_points: false
-                show_legend: false
-                y_axis: secondary
-            state_map:
-              - value: below_horizon
-                label: Night
-              - value: above_horizon
-                label: Day
-          - type: custom:mini-graph-card
-            name: Скорость ветра
-            hour24: true
-            points_per_hour: 2
-            font_size: 70
-            entities:
+            tap_action: none
+          - type: custom:windrose-card
+            title: Ветер
+            data_period:
+              hours_to_show: 720
+            refresh_interval: 300
+            windspeed_bar_location: right
+            wind_direction_entity:
+              entity: sensor.home_assistant_wind_bearing
+              use_statistics: false
+              direction_compensation: 0
+            windspeed_entities:
               - entity: sensor.home_assistant_wind_speed
                 name: Скорость ветра
-              - entity: sun.sun
-                color: white
-                name: Солнце
-                show_line: false
-                show_points: false
-                show_legend: false
-                y_axis: secondary
-            state_map:
-              - value: below_horizon
-                label: Night
-              - value: above_horizon
-                label: Day
-          - type: custom:mini-graph-card
-            name: Атмосферное давление
-            hour24: true
-            points_per_hour: 2
-            font_size: 70
-            entities:
-              - entity: sensor.home_assistant_pressure
-                name: Давление
-              - entity: sun.sun
-                color: white
-                name: Солнце
-                show_line: false
-                show_points: false
-                show_legend: false
-                y_axis: secondary
-            state_map:
-              - value: below_horizon
-                label: Night
-              - value: above_horizon
-                label: Day
+                speed_unit: mps
+                use_statistics: true
+                statistics_period: month
+                windspeed_bar_full: true
+                output_speed_unit: mps
+                speed_range_beaufort: false
+                speed_range_step: 2
+                speed_range_max: 15
+            direction_labels:
+              cardinal_direction_letters: СВЮЗ
+            windrose_draw_north_offset: 0
+            current_direction:
+              show_arrow: true
+              arrow_size: 80
+              center_circle_size: 30
+            compass_direction:
+              auto_rotate: false
+              entity: ''
+            cardinal_direction_letters: С,В,Ю,З
+            matching_strategy: direction-first
+            center_calm_percentage: true
+            actions:
+              windrose:
+                tap_action:
+                  entity: sensor.home_assistant_wind_speed
+                  action: more-info
+              speed_bar_1:
+                tap_action:
+                  entity: sensor.home_assistant_wind_speed
+                  action: more-info
       - type: custom:horizon-card
         title: null
         moon: true
@@ -415,6 +441,35 @@ views:
                   - type: humidifier-toggle
                 name: Увлажнитель
                 show_current_as_primary: false
+          - type: custom:uptime-card
+            title_adaptive_color: true
+            entity: binary_sensor.meross_power_outlet_1_activity
+            status_adaptive_color: true
+            icon_adaptive_color: true
+            icon: mdi:radiator
+            ko_icon: mdi:radiator-off
+            none_icon: mdi:wifi-strength-off-outlne
+            tooltip_adaptive_color: false
+            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+            show:
+              status: false
+            alignment:
+              header: center
+            bar:
+              height: 25
+              round: 0
+              spacing: 0
+              amount: 480
+            duration:
+              quantity: 24
+              unit: hour
+            color:
+              ok: '#C66445'
+              ko: var(--state-icon-color)
+              half: '#C6B145'
+            tap_action:
+              action: more-info
+              entity: sensor.meross_power_outlet_1_power
       - type: vertical-stack
         cards:
           - type: custom:mini-graph-card
@@ -422,6 +477,7 @@ views:
             hour24: true
             points_per_hour: 1
             font_size: 70
+            tap_action: none
             entities:
               - entity: sensor.qingping_air_monitor_lite_temperature
                 name: QingPing
@@ -448,6 +504,7 @@ views:
             hour24: true
             points_per_hour: 1
             font_size: 70
+            tap_action: none
             entities:
               - entity: sensor.qingping_air_monitor_lite_humidity
                 name: QingPing
@@ -475,6 +532,7 @@ views:
             hour24: true
             points_per_hour: 2
             font_size: 70
+            tap_action: none
             entities:
               - entity: sensor.qingping_air_monitor_lite_co2_carbon_dioxide
                 name: QingPing
@@ -483,6 +541,7 @@ views:
             hour24: true
             points_per_hour: 1
             font_size: 70
+            tap_action: none
             entities:
               - entity: sensor.aqara_tvoc_sensor_volatile_organic_compound_density
                 name: S1
@@ -491,6 +550,7 @@ views:
             hour24: true
             points_per_hour: 1
             font_size: 70
+            tap_action: none
             entities:
               - entity: sensor.qingping_air_monitor_lite_pm2_5_density
                 name: PM2.5
@@ -500,35 +560,6 @@ views:
                 name: PM10
                 show_indicator: true
                 show_state: true
-      - type: custom:uptime-card
-        title_adaptive_color: true
-        entity: binary_sensor.meross_power_outlet_1_activity
-        status_adaptive_color: true
-        icon_adaptive_color: true
-        icon: mdi:radiator
-        ko_icon: mdi:radiator-off
-        none_icon: mdi:wifi-strength-off-outlne
-        tooltip_adaptive_color: false
-        average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
-        show:
-          status: false
-        alignment:
-          header: center
-        bar:
-          height: 25
-          round: 0
-          spacing: 0
-          amount: 480
-        duration:
-          quantity: 24
-          unit: hour
-        color:
-          ok: '#C66445'
-          ko: var(--state-icon-color)
-          half: '#C6B145'
-        tap_action:
-          action: more-info
-          entity: sensor.meross_power_outlet_1_power
   - title: Устройства
     path: device-control
     icon: mdi:apps
@@ -579,200 +610,103 @@ views:
     icon: mdi:battery-80
     badges: []
     cards:
-      - type: vertical-stack
-        cards:
-          - type: entities
-            entities:
-              - binary_sensor.aqara_t1_220v_sensor
-            state_color: true
-            show_header_toggle: false
-          - type: custom:uptime-card
-            entity: binary_sensor.aqara_t1_220v_sensor
-            icon: mdi:power-plug-outline
-            ko_icon: mdi:power-plug-off-outline
-            none_icon: mdi:wifi-strength-off-outline
-            title_template: Сеть 220В
-            icon_adaptive_color: true
-            title_adaptive_color: true
-            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
-            bar:
-              height: 20
-              round: 3
-              spacing: 1
-              amount: 96
-            show:
-              status: false
-              icon: true
-            alignment:
-              status: spaced
-              header: center
-            duration:
-              quantity: 24
-              unit: hour
-            tap_action:
-              action: more-info
-      - type: entities
-        entities:
-          - entity: sensor.aqara_tvoc_sensor_battery
-            name: Aqara TVOC Спальня
-            secondary_info: none
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.aqara_t1_sensor_1_battery
-            name: Aqara T1 Коридор
-            secondary_info: none
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.aqara_t1_sensor_3_battery
-            name: Aqara T1 Кухня
-            secondary_info: none
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.aqara_t1_sensor_2_battery
-            name: Aqara T1 Балкон
-            secondary_info: none
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.aqara_e1_thermostat_1_battery
-            name: Aqara Термостат E1_1 Рабочее место
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.aqara_e1_thermostat_2_battery
-            name: Aqara Термостат E1_2 Спальня
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.aqara_e1_thermostat_3_battery
-            name: Aqara Термостат E1_3 Кухня
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.qingping_air_monitor_lite_battery
-            name: Qingping Air Monitor Lite
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-          - entity: sensor.aqara_t1_220v_sensor_battery
-            name: Aqara T1 Датчик 220В
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 40
-              - color: Orange
-                from: 40
-                to: 80
-              - color: Green
-                from: 80
-                to: 100
-      - type: entities
-        entities:
-          - entity: sensor.iphone_xs_battery_level
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 30
-              - color: Orange
-                from: 30
-                to: 60
-              - color: Green
-                from: 60
-                to: 100
-          - entity: sensor.iphone_xs_battery_state
-          - entity: sensor.ipad_battery_level
-            entity_row: true
-            type: custom:bar-card
-            severity:
-              - color: Red
-                from: 0
-                to: 30
-              - color: Orange
-                from: 30
-                to: 60
-              - color: Green
-                from: 60
-                to: 100
-          - entity: sensor.ipad_battery_state
+      - type: custom:uptime-card
+        entity: binary_sensor.aqara_t1_220v_sensor
+        icon: mdi:power-plug-outline
+        ko_icon: mdi:power-plug-off-outline
+        none_icon: mdi:wifi-strength-off-outline
+        title_template: Сеть 220В
+        icon_adaptive_color: true
+        title_adaptive_color: true
+        average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+        bar:
+          height: 20
+          round: 3
+          spacing: 1
+          amount: 96
+        show:
+          status: false
+          icon: true
+        alignment:
+          status: spaced
+          header: center
+        duration:
+          quantity: 24
+          unit: hour
+        tap_action:
+          action: more-info
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Батареи
+        filter:
+          include:
+            - domain: sensor
+              attributes:
+                device_class: battery
+              state: < 75
+              options:
+                type: custom:bar-card
+                entity_row: true
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 50
+                  - color: Orange
+                    from: 50
+                    to: 80
+                  - color: Green
+                    from: 80
+                    to: 100
+            - domain: sensor
+              attributes:
+                device_class: battery
+              state: unknown
+              options:
+                type: custom:bar-card
+                entity_row: true
+            - domain: sensor
+              attributes:
+                device_class: battery
+              state: unavailable
+              options:
+                type: custom:bar-card
+                entity_row: true
+            - entity_id: sensor.*_battery_status
+              state: < 75
+              options:
+                type: custom:bar-card
+                secondary_info: none
+                entity_row: true
+                min: 0
+                max: 100
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 50
+                  - color: Orange
+                    from: 50
+                    to: 80
+                  - color: Green
+                    from: 80
+                    to: 100
+            - entity_id: sensor.*_battery_status
+              state: unknown
+              options:
+                type: custom:bar-card
+                entity_row: true
+            - entity_id: sensor.*_battery_status
+              state: unavailable
+              options:
+                type: custom:bar-card
+                entity_row: true
+          exclude:
+            - entity_id: sensor.contact_sensor_battery_sensor
+            - entity_id: sensor.ik_pult_battery
+        sort:
+          method: state
+          numeric: true
+        show_empty: true
       - type: custom:mini-graph-card
         entities:
           - entity: sensor.meross_power_outlet_1_energy
@@ -797,13 +731,13 @@ views:
               hui-horizontal-stack-card$: |
                 hui-button-card {
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
+                  margin-bottom: 5px !important;
                   flex: auto !important; 
                 }
                 bar-card {
                   margin-left: 10px !important;
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
+                  margin-bottom: 5px !important;
                   width:500%;
                   flex: auto !important; 
                 }
@@ -845,7 +779,6 @@ views:
                   state: online
             show_empty: false
         title: Кормилка 1
-        show_header_toggle: false
         state_color: true
       - type: entities
         entities:
@@ -854,13 +787,13 @@ views:
               hui-horizontal-stack-card$: |
                 hui-button-card {
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
+                  margin-bottom: 5px !important;
                   flex: auto !important; 
                 }
                 bar-card {
                   margin-left: 10px !important;
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
+                  margin-bottom: 5px !important;
                   width:500%;
                   flex: auto !important; 
                 }
@@ -902,7 +835,6 @@ views:
                   state: online
             show_empty: false
         title: Кормилка 2
-        show_header_toggle: false
         state_color: true
       - type: entities
         entities:
@@ -932,13 +864,11 @@ views:
               hui-horizontal-stack-card$: |
                 hui-button-card {
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   flex: auto !important; 
                 }
                 bar-card {
                   margin-left: 10px !important;
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   width:500%;
                   flex: auto !important; 
                 }
@@ -978,13 +908,11 @@ views:
               hui-horizontal-stack-card$: |
                 hui-button-card {
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   flex: auto !important; 
                 }
                 bar-card {
                   margin-left: 10px !important;
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   width:500%;
                   flex: auto !important; 
                 }
@@ -1024,13 +952,11 @@ views:
               hui-horizontal-stack-card$: |
                 hui-button-card {
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   flex: auto !important; 
                 }
                 bar-card {
                   margin-left: 10px !important;
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   width:500%;
                   flex: auto !important; 
                 }
@@ -1070,13 +996,11 @@ views:
               hui-horizontal-stack-card$: |
                 hui-button-card {
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   flex: auto !important; 
                 }
                 bar-card {
                   margin-left: 10px !important;
                   margin-right: 10px !important;
-                  margin-bottom: 10px !important;
                   width:500%;
                   flex: auto !important; 
                 }
