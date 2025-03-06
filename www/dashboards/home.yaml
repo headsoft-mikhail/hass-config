@@ -994,6 +994,7 @@ views:
                 - type: custom:bar-card
                   entity: sensor.fresh_element_solo_1_desiccant_days_remaining
                   name: 'Кормилка 1: Влагопоглотитель'
+                  icon: mdi:water-remove
                   decimal: 0
                   entity_row: true
                   min: 0
@@ -1039,6 +1040,7 @@ views:
                 - type: custom:bar-card
                   entity: sensor.fresh_element_solo_2_desiccant_days_remaining
                   name: 'Кормилка 2: Влагопоглотитель'
+                  icon: mdi:water-remove
                   decimal: 0
                   entity_row: true
                   min: 0
@@ -1061,5 +1063,51 @@ views:
                   icon: mdi:refresh-circle
                   hold_action:
                     action: toggle
+                  tap_action:
+                    action: none
+          - type: custom:mod-card
+            style:
+              hui-horizontal-stack-card$: |
+                hui-button-card {
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  flex: auto !important; 
+                }
+                bar-card {
+                  margin-left: 10px !important;
+                  margin-right: 10px !important;
+                  margin-bottom: 10px !important;
+                  width:500%;
+                  flex: auto !important; 
+                }
+            card:
+              type: horizontal-stack
+              cards:
+                - type: custom:bar-card
+                  entity: sensor.petkit_pura_air_filter_days_left
+                  name: 'Освежитель лотка: Фильтр'
+                  icon: mdi:air-filter
+                  decimal: 0
+                  entity_row: true
+                  min: 0
+                  max: 90
+                  severity:
+                    - color: Red
+                      from: 0
+                      to: 7
+                    - color: Orange
+                      from: 7
+                      to: 30
+                    - color: Green
+                      from: 30
+                      to: 90
+                - show_name: false
+                  show_icon: true
+                  type: button
+                  icon_height: 30px
+                  icon: mdi:refresh-circle
+                  hold_action:
+                    action: call-service
+                    service: script.reset_petkit_pura_air_filter
                   tap_action:
                     action: none
