@@ -1,0 +1,7 @@
+reset_petkit_pura_air_filter:
+  alias: "Petkit Pura Air - Сбросить фильтр"
+  sequence:
+    - action: input_datetime.set_datetime
+      data:
+        entity_id: input_datetime.petkit_pura_air_filter_replaced
+        date: "{{ now().strftime('%Y-%m-%d') }}"

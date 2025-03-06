@@ -42,6 +42,29 @@ input_select:
     initial: 'Optical'
     icon: 'mdi:soundbar'
 
+input_datetime:
+  petkit_pura_air_filter_replaced:
+    name: 'Petkit Pura Air - Filter - Reset date'
+    has_date: true
+    has_time: false
+
+template:
+  - sensor:
+      - name: 'petkit_pura_air_filter_days_left'
+        unique_id: 'petkit_pura_air_filter_days_left'
+        unit_of_measurement: 'd'
+        state: >
+          {% set start = states('input_datetime.petkit_pura_air_filter_replaced') %}
+          {% if start not in ['unknown', 'unavailable'] %}
+            {% set days_left = 90 - ((now().date() - as_datetime(start).date()).days) %}
+            {{ [days_left, 0] | max }}
+          {% else %}
+            90
+          {% endif %}
+        attributes:
+          last_update: '{{ now() }}'
+        availability: "{{ states('input_datetime.petkit_pura_air_filter_replaced') not in ['unknown', 'unavailable'] }}"
+
 generic_hygrostat:
   - name: switch_humidifier
     unique_id: switch_humidifier
