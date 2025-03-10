@@ -123,7 +123,7 @@
       message: Грустняшка
       title: Интернет отвалился
   mode: single
-- id: 0008
+- id: '0008'
   alias: notify_about_ping_google_ok
   description: Уведомление о восстановлении интернета
   triggers:
@@ -144,7 +144,7 @@
       message: Ура!
       title: Интернет снова работает
   mode: single
-- id: 0009
+- id: '0009'
   alias: end_lavalamp_warming
   description: Переключить яркость лавалампы на 40% после 90 минут на 100%
   triggers:
