@@ -292,9 +292,9 @@ views:
             show_date: true
             show_humidity: true
             show_pressure: true
-            show_wind_direction: true
-            show_wind_speed: true
-            show_sun: true
+            show_wind_direction: false
+            show_wind_speed: false
+            show_sun: false
             show_feels_like: true
             show_dew_point: false
             show_wind_gust_speed: false
@@ -303,7 +303,7 @@ views:
             use_12hour_format: false
             icons_size: '45'
             animated_icons: true
-            icon_style: style2
+            icon_style: style1
             autoscroll: true
             forecast:
               precipitation_type: rainfall
@@ -317,10 +317,12 @@ views:
               type: daily
               number_of_forecasts: '7'
               disable_animation: true
+              chart_height: '180'
             locale: ru
             units:
               speed: ''
               pressure: mmHg
+            show_uv: false
           - type: custom:mini-graph-card
             name: Температура
             hour24: true
@@ -352,8 +354,9 @@ views:
             title: Ветер
             data_period:
               hours_to_show: 720
+              time_interval: 60
             refresh_interval: 300
-            windspeed_bar_location: right
+            windspeed_bar_location: bottom
             wind_direction_entity:
               entity: sensor.home_assistant_wind_bearing
               use_statistics: false
@@ -363,29 +366,37 @@ views:
                 name: Скорость ветра
                 speed_unit: mps
                 use_statistics: true
-                statistics_period: month
-                windspeed_bar_full: true
+                statistics_period: hour
+                windspeed_bar_full: false
                 output_speed_unit: mps
                 speed_range_beaufort: false
-                speed_range_step: 2
+                speed_range_step: 1
                 speed_range_max: 15
+                current_speed_arrow: true
             direction_labels:
               cardinal_direction_letters: СВЮЗ
+            wind_direction_count: 8
             windrose_draw_north_offset: 0
             current_direction:
               show_arrow: true
-              arrow_size: 80
+              arrow_size: 50
               center_circle_size: 30
+              hide_direction_below_speed: 0
             compass_direction:
               auto_rotate: false
               entity: ''
             cardinal_direction_letters: С,В,Ю,З
-            matching_strategy: direction-first
-            center_calm_percentage: true
+            matching_strategy: time-frame
+            center_calm_percentage: false
+            corner_info:
+              top_right:
+                entity: sensor.home_assistant_wind_speed
+                unit: ' м/с'
+                color: white
             actions:
               windrose:
                 tap_action:
-                  entity: sensor.home_assistant_wind_speed
+                  entity: sensor.home_assistant_wind_bearing
                   action: more-info
               speed_bar_1:
                 tap_action:
