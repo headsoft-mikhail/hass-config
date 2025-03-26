@@ -166,22 +166,23 @@ views:
                   icon: mdi:cloud-upload
                 - type: tile
                   entity: sensor.rpi_cpu_temperature
-          - entity: sensor.sql_query_db_volume
-            type: custom:bar-card
+          - type: custom:bar-card
             decimal: 2
             entity_row: true
             min: 0
-            max: 3000
+            max: 5000
             severity:
               - color: Green
                 from: 0
-                to: 1500
+                to: 2500
               - color: Orange
-                from: 1500
+                from: 2500
                 to: 2500
               - color: Red
-                from: 2500
-                to: 3000
+                from: 4000
+                to: 5000
+            entities:
+              - entity: sensor.sql_query_db_volume
           - entity: sensor.home_assistant_host_disk_used
             name: HA Host Использовано памяти
             icon: mdi:database-outline
@@ -571,13 +572,61 @@ views:
                 name: PM10
                 show_indicator: true
                 show_state: true
+      - type: entities
+        entities:
+          - type: custom:mod-card
+            card:
+              type: horizontal-stack
+              cards:
+                - type: tile
+                  name: Температура
+                  entity: sensor.airmonitor2_temperature
+                - type: tile
+                  name: Влажность
+                  entity: sensor.airmonitor2_humidity
+          - type: custom:mod-card
+            card:
+              type: horizontal-stack
+              cards:
+                - type: tile
+                  name: CO2
+                  entity: sensor.airmonitor2_co2
+                - type: tile
+                  name: eTVOC
+                  entity: sensor.airmonitor2_etvoc
+          - type: custom:mod-card
+            card:
+              type: horizontal-stack
+              cards:
+                - type: tile
+                  name: PM2.5
+                  entity: sensor.airmonitor2_pm25
+                - type: tile
+                  name: PM10
+                  entity: sensor.airmonitor2_pm10
+          - type: custom:mod-card
+            card:
+              type: horizontal-stack
+              cards:
+                - type: tile
+                  name: Шум
+                  entity: sensor.airmonitor2_noise
+                - type: tile
+                  name: Заряд
+                  entity: sensor.airmonitor2_battery
+        title: Air Monitor
   - title: Устройства
     path: device-control
     icon: mdi:apps
     badges: []
     cards:
-      - type: media-control
-        entity: media_player.yandex_station_mini_red
+      - type: vertical-stack
+        cards:
+          - type: media-control
+            entity: media_player.yandex_station_mini_red
+          - type: entities
+            entities:
+              - entity: input_select.sound_signal_source
       - type: entities
         entities:
           - entity: switch.ahtom_switch_1_table_light
