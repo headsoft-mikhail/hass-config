@@ -17,14 +17,12 @@
       - sensor.aqara_t1_sensor_2_humidity
       - sensor.aqara_t1_sensor_3_temperature
       - sensor.aqara_t1_sensor_3_humidity
-      - sensor.aqara_tvoc_sensor_temperature
-      - sensor.aqara_tvoc_sensor_humidity
-      - sensor.aqara_tvoc_sensor_volatile_organic_compound_density
-      - sensor.qingping_air_monitor_lite_temperature
-      - sensor.qingping_air_monitor_lite_humidity
-      - sensor.qingping_air_monitor_lite_co2_carbon_dioxide
-      - sensor.qingping_air_monitor_lite_pm2_5_density
-      - sensor.qingping_air_monitor_lite_pm10_density
+      - sensor.airmonitor2_temperature
+      - sensor.airmonitor2_humidity
+      - sensor.airmonitor2_co2
+      - sensor.airmonitor2_pm25
+      - sensor.airmonitor2_pm10
+      - sensor.airmonitor2_etvoc_converted
       - binary_sensor.aqara_leak_sensor_1
       - binary_sensor.meross_power_outlet_1_activity
       # термостаты
@@ -75,37 +73,29 @@
       name: T1 Кухня
       linked_battery_sensor: sensor.aqara_t1_sensor_3_battery
       low_battery_threshold: 30
-    sensor.aqara_tvoc_sensor_temperature:
-      name: S1
-      linked_battery_sensor: sensor.aqara_tvoc_sensor_battery
+    sensor.airmonitor2_temperature:
+      name: AirMonitor2
+      linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
-    sensor.aqara_tvoc_sensor_humidity:
-      name: S1
-      linked_battery_sensor: sensor.aqara_tvoc_sensor_battery
+    sensor.airmonitor2_humidity:
+      name: AirMonitor2
+      linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
-    sensor.aqara_tvoc_sensor_volatile_organic_compound_density:
-      name: TVOC
-      linked_battery_sensor: sensor.aqara_tvoc_sensor_battery
-      low_battery_threshold: 30
-    sensor.qingping_air_monitor_lite_temperature:
-      name: QingPing
-      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
-      low_battery_threshold: 30
-    sensor.qingping_air_monitor_lite_humidity:
-      name: QingPing
-      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
-      low_battery_threshold: 30
-    sensor.qingping_air_monitor_lite_co2_carbon_dioxide:
+    sensor.airmonitor2_co2:
       name: CO2
-      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
-    sensor.qingping_air_monitor_lite_pm2_5_density:
+    sensor.airmonitor2_pm25:
       name: PM2.5
-      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
-    sensor.qingping_air_monitor_lite_pm10_density:
+    sensor.airmonitor2_pm10:
       name: PM10
-      linked_battery_sensor: sensor.qingping_air_monitor_lite_battery
+      linked_battery_sensor: sensor.airmonitor2_battery
+      low_battery_threshold: 30
+    sensor.airmonitor2_etvoc_converted:
+      name: eTVOC
+      linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
     binary_sensor.aqara_leak_sensor_1:
       name: Подоконник
@@ -127,4 +117,4 @@
       low_battery_threshold: 30
     humidifier.switch_humidifier:
       name: "Увлажнитель"
-      linked_humidity_sensor: sensor.qingping_air_monitor_lite_humidity
+      linked_humidity_sensor: sensor.airmonitor2_humidity

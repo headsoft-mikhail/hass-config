@@ -4,7 +4,6 @@ filter:
   include_entities:
     - switch.meross_power_outlet_1
     - light.tuya_lava_lamp
-    - sensor.aqara_tvoc_sensor_temperature
     - light.meross_ambient_light_1
     - light.meross_ambient_light_2
     - humidifier.switch_humidifier
@@ -61,17 +60,3 @@ entity_config:
     name: Увлажнитель
     room: Спальня
     type: devices.types.humidifier
-  # sensors
-  sensor.aqara_tvoc_sensor_temperature:
-    name: Погода в комнате
-    properties:
-      - type: temperature
-        entity: sensor.aqara_tvoc_sensor_temperature
-      - type: humidity
-        entity: sensor.aqara_tvoc_sensor_humidity
-      - type: co2_level
-        entity: sensor.qingping_air_monitor_lite_co2_carbon_dioxide
-      - type: tvoc
-        entity: sensor.aqara_tvoc_sensor_volatile_organic_compound_density
-      - type: pm10_density
-        entity: sensor.qingping_air_monitor_lite_pm10_density

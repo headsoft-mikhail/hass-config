@@ -37,7 +37,7 @@ views:
             title_template: Internet
             icon_adaptive_color: true
             title_adaptive_color: true
-            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+            average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
             bar:
               height: 20
               round: 3
@@ -136,7 +136,7 @@ views:
         cards:
           - type: custom:transmission-card
             header_text: Transmission
-            no_torrent_label: ''
+            no_torrent_label: ""
             hide_header: false
             hide_status: false
             hide_turtle: true
@@ -302,26 +302,26 @@ views:
             show_visibility: false
             show_last_changed: false
             use_12hour_format: false
-            icons_size: '45'
+            icons_size: "45"
             animated_icons: true
             icon_style: style1
             autoscroll: true
             forecast:
               precipitation_type: rainfall
               show_probability: false
-              labels_font_size: '12'
-              precip_bar_size: '100'
+              labels_font_size: "12"
+              precip_bar_size: "100"
               style: style2
               show_wind_forecast: true
               condition_icons: true
               round_temp: false
               type: daily
-              number_of_forecasts: '7'
+              number_of_forecasts: "7"
               disable_animation: true
-              chart_height: '180'
+              chart_height: "180"
             locale: ru
             units:
-              speed: ''
+              speed: ""
               pressure: mmHg
             show_uv: false
           - type: custom:mini-graph-card
@@ -385,14 +385,14 @@ views:
               hide_direction_below_speed: 0
             compass_direction:
               auto_rotate: false
-              entity: ''
+              entity: ""
             cardinal_direction_letters: С,В,Ю,З
             matching_strategy: time-frame
             center_calm_percentage: false
             corner_info:
               top_right:
                 entity: sensor.home_assistant_wind_speed
-                unit: ' м/с'
+                unit: " м/с"
                 color: white
             actions:
               windrose:
@@ -430,14 +430,14 @@ views:
                   - type: climate-hvac-modes
                     hvac_modes:
                       - heat
-                      - 'off'
+                      - "off"
               - type: thermostat
                 entity: climate.aqara_e1_thermostat_2
                 features:
                   - type: climate-hvac-modes
                     hvac_modes:
                       - heat
-                      - 'off'
+                      - "off"
           - type: horizontal-stack
             cards:
               - type: thermostat
@@ -446,7 +446,7 @@ views:
                   - type: climate-hvac-modes
                     hvac_modes:
                       - heat
-                      - 'off'
+                      - "off"
               - type: humidifier
                 entity: humidifier.switch_humidifier
                 features:
@@ -462,7 +462,7 @@ views:
             ko_icon: mdi:radiator-off
             none_icon: mdi:wifi-strength-off-outlne
             tooltip_adaptive_color: false
-            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+            average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
             show:
               status: false
             alignment:
@@ -476,9 +476,9 @@ views:
               quantity: 24
               unit: hour
             color:
-              ok: '#C66445'
+              ok: "#C66445"
               ko: var(--state-icon-color)
-              half: '#C6B145'
+              half: "#C6B145"
             tap_action:
               action: more-info
               entity: sensor.meross_power_outlet_1_power
@@ -491,11 +491,7 @@ views:
             font_size: 70
             tap_action: none
             entities:
-              - entity: sensor.qingping_air_monitor_lite_temperature
-                name: QingPing
-                show_indicator: true
-                show_state: true
-              - entity: sensor.aqara_tvoc_sensor_temperature
+              - entity: sensor.airmonitor2_temperature
                 name: Спальня
                 show_indicator: true
                 show_state: true
@@ -518,11 +514,7 @@ views:
             font_size: 70
             tap_action: none
             entities:
-              - entity: sensor.qingping_air_monitor_lite_humidity
-                name: QingPing
-                show_indicator: true
-                show_state: true
-              - entity: sensor.aqara_tvoc_sensor_humidity
+              - entity: sensor.airmonitor2_lite_humidity
                 name: Спальня
                 show_indicator: true
                 show_state: true
@@ -546,17 +538,17 @@ views:
             font_size: 70
             tap_action: none
             entities:
-              - entity: sensor.qingping_air_monitor_lite_co2_carbon_dioxide
-                name: QingPing
+              - entity: sensor.airmonitor2_co2
+                name: AirMonitor2
           - type: custom:mini-graph-card
-            name: TVOC
+            name: eTVOC
             hour24: true
             points_per_hour: 1
             font_size: 70
             tap_action: none
             entities:
-              - entity: sensor.aqara_tvoc_sensor_volatile_organic_compound_density
-                name: S1
+              - entity: sensor.airmonitor2_etvoc
+                name: AirMonitor2
           - type: custom:mini-graph-card
             name: PM
             hour24: true
@@ -564,11 +556,11 @@ views:
             font_size: 70
             tap_action: none
             entities:
-              - entity: sensor.qingping_air_monitor_lite_pm2_5_density
+              - entity: sensor.airmonitor2_pm25
                 name: PM2.5
                 show_indicator: true
                 show_state: true
-              - entity: sensor.qingping_air_monitor_lite_pm10_density
+              - entity: sensor.airmonitor2_pm10
                 name: PM10
                 show_indicator: true
                 show_state: true
@@ -659,7 +651,7 @@ views:
                 customMedText: 40
                 hiBrightness: 255
                 customHiText: 100
-                customOffText: 'OFF'
+                customOffText: "OFF"
                 width: 35px
                 height: 35px
             show_header_toggle: false
@@ -678,7 +670,7 @@ views:
         title_template: Сеть 220В
         icon_adaptive_color: true
         title_adaptive_color: true
-        average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+        average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
         bar:
           height: 20
           round: 3
@@ -832,7 +824,7 @@ views:
                 - entity_id: sensor.fresh_element_solo_1_status
               exclude:
                 - entity_id: binary_sensor.fresh_element_solo_1_food_level
-                  state: 'off'
+                  state: "off"
                 - entity_id: sensor.fresh_element_solo_1_error
                   state: no_error
                 - entity_id: sensor.fresh_element_solo_1_status
@@ -888,7 +880,7 @@ views:
                 - entity_id: sensor.fresh_element_solo_2_status
               exclude:
                 - entity_id: binary_sensor.fresh_element_solo_2_food_level
-                  state: 'off'
+                  state: "off"
                 - entity_id: sensor.fresh_element_solo_2_error
                   state: no_error
                 - entity_id: sensor.fresh_element_solo_2_status
@@ -911,7 +903,7 @@ views:
                 - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
               exclude:
                 - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
-                  state: 'off'
+                  state: "off"
             show_empty: false
         title: Питьевой фонтан
         show_header_toggle: false
@@ -937,7 +929,7 @@ views:
               cards:
                 - type: custom:bar-card
                   entity: sensor.eversweet_3_pro_uvc_filter
-                  name: 'Питьевой фонтан: Фильтр'
+                  name: "Питьевой фонтан: Фильтр"
                   icon: mdi:filter
                   decimal: 0
                   entity_row: true
@@ -981,7 +973,7 @@ views:
               cards:
                 - type: custom:bar-card
                   entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                  name: 'Кормилка 1: Влагопоглотитель'
+                  name: "Кормилка 1: Влагопоглотитель"
                   icon: mdi:water-remove
                   decimal: 0
                   entity_row: true
@@ -1025,7 +1017,7 @@ views:
               cards:
                 - type: custom:bar-card
                   entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                  name: 'Кормилка 2: Влагопоглотитель'
+                  name: "Кормилка 2: Влагопоглотитель"
                   icon: mdi:water-remove
                   decimal: 0
                   entity_row: true
@@ -1069,7 +1061,7 @@ views:
               cards:
                 - type: custom:bar-card
                   entity: sensor.petkit_pura_air_filter_days_left
-                  name: 'Освежитель лотка: Фильтр'
+                  name: "Освежитель лотка: Фильтр"
                   icon: mdi:air-filter
                   decimal: 0
                   entity_row: true
