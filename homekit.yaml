@@ -23,6 +23,14 @@
       - sensor.airmonitor2_pm25
       - sensor.airmonitor2_pm10
       - sensor.airmonitor2_etvoc_converted
+      - sensor.efekta_smart_aq_box_temperature
+      - sensor.efekta_smart_aq_box_humidity
+      - sensor.efekta_smart_aq_box_co2
+      - sensor.efekta_smart_aq_box_pm1
+      - sensor.efekta_smart_aq_box_pm25
+      - sensor.efekta_smart_aq_box_pm10
+      - sensor.efekta_smart_aq_box_voc_index
+      - sensor.efekta_smart_aq_box_pressure
       - binary_sensor.aqara_leak_sensor_1
       - binary_sensor.meross_power_outlet_1_activity
       # термостаты
@@ -97,6 +105,16 @@
       name: eTVOC
       linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
+    sensor.efekta_smart_aq_box_temperature:
+      name: Efekta
+    sensor.efekta_smart_aq_box_humidity:
+      name: Efekta
+    sensor.efekta_smart_aq_box_co2:
+      name: Efekta
+    sensor.efekta_smart_aq_box_pm25:
+      name: Efekta
+    sensor.efekta_smart_aq_box_pm10:
+      name: Efekta
     binary_sensor.aqara_leak_sensor_1:
       name: Подоконник
       linked_battery_sensor: sensor.aqara_leak_sensor_1_battery
