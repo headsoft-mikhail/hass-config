@@ -57,22 +57,34 @@ views:
           - entity: sensor.zyxel_gateway_external_ip
             name: Внешний IP
             icon: mdi:ip
-          - entity: sensor.zyxel_gateway_download_speed
-            name: Текущая скорость загрузки
-            icon: mdi:speedometer
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 100
-          - entity: sensor.zyxel_gateway_upload_speed
-            name: Текущая скорость передачи
-            icon: mdi:speedometer
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 100
+          - type: custom:mod-card
+            style:
+              hui-vertical-stack-card$:
+                bar-card:
+                  $: |
+                    :host {
+                      --icon-color: var(--state-icon-color);
+                      flex: auto !important;
+                    }
+            card:
+              type: vertical-stack
+              cards:
+                - entity: sensor.zyxel_gateway_download_speed
+                  name: Текущая скорость загрузки
+                  icon: mdi:speedometer
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 100
+                - entity: sensor.zyxel_gateway_upload_speed
+                  name: Текущая скорость передачи
+                  icon: mdi:speedometer
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 100
         show_header_toggle: false
         title: Zyxel Gateway
         state_color: true
@@ -81,26 +93,25 @@ views:
         entities:
           - type: custom:mod-card
             style:
-              hui-horizontal-stack-card$: |
-                hui-button-card {
-                  margin-right: 10px !important;
-                  margin-bottom: 10px !important;
-                  flex: auto !important; 
-                }
-                hui-vertical-stack-card {
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  margin-bottom: 10px !important;
-                  width: 350%;
-                  flex: auto !important; 
-                }
-                bar-card {
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  margin-bottom: 10px !important;
-                  width: 350%;
-                  flex: auto !important; 
-                }
+              hui-horizontal-stack-card$:
+                hui-vertical-stack-card:
+                  $: |
+                    bar-card {
+                      --icon-color: var(--state-icon-color);
+                      margin-bottom: 10px !important;
+                    }
+                    :host {
+                      margin-left: 10px !important;
+                      margin-right: 10px !important;
+                      width: 350%;
+                      flex: auto !important;
+                    }
+                hui-button-card:
+                  $: |
+                    :host {
+                      margin-right: 10px !important;
+                      flex: auto !important;
+                    }
             card:
               type: horizontal-stack
               cards:
@@ -166,113 +177,124 @@ views:
                   icon: mdi:cloud-upload
                 - type: tile
                   entity: sensor.rpi_cpu_temperature
-          - type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 5000
-            severity:
-              - color: Green
-                from: 0
-                to: 2500
-              - color: Orange
-                from: 2500
-                to: 2500
-              - color: Red
-                from: 4000
-                to: 5000
-            entities:
-              - entity: sensor.sql_query_db_volume
-          - entity: sensor.home_assistant_host_disk_used
-            name: HA Host Использовано памяти
-            icon: mdi:database-outline
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 225
-            severity:
-              - color: Green
-                from: 0
-                to: 50
-              - color: Orange
-                from: 50
-                to: 150
-              - color: Red
-                from: 150
-                to: 225
-          - entity: sensor.home_assistant_core_cpu_percent
-            name: HA Core Использование CPU
-            icon: mdi:cpu-64-bit
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 100
-            severity:
-              - color: Green
-                from: 0
-                to: 25
-              - color: Orange
-                from: 25
-                to: 50
-              - color: Red
-                from: 50
-                to: 100
-          - entity: sensor.home_assistant_supervisor_cpu_percent
-            name: HA Supervisor Использование CPU
-            icon: mdi:cpu-64-bit
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 100
-            severity:
-              - color: Green
-                from: 0
-                to: 25
-              - color: Orange
-                from: 25
-                to: 50
-              - color: Red
-                from: 50
-                to: 100
-          - entity: sensor.home_assistant_core_memory_percent
-            name: HA Core Использование RAM
-            icon: mdi:memory
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 100
-            severity:
-              - color: Green
-                from: 0
-                to: 25
-              - color: Orange
-                from: 25
-                to: 50
-              - color: Red
-                from: 50
-                to: 100
-          - entity: sensor.home_assistant_supervisor_memory_percent
-            name: HA Supervisor Использование RAM
-            icon: mdi:memory
-            type: custom:bar-card
-            decimal: 2
-            entity_row: true
-            min: 0
-            max: 100
-            severity:
-              - color: Green
-                from: 0
-                to: 25
-              - color: Orange
-                from: 25
-                to: 50
-              - color: Red
-                from: 50
-                to: 100
+          - type: custom:mod-card
+            style:
+              hui-vertical-stack-card$:
+                bar-card:
+                  $: |
+                    :host {
+                      --icon-color: var(--state-icon-color);
+                      flex: auto !important;
+                    }
+            card:
+              type: vertical-stack
+              cards:
+                - entity: sensor.sql_query_db_volume
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 5000
+                  severity:
+                    - color: Green
+                      from: 0
+                      to: 2500
+                    - color: Orange
+                      from: 2500
+                      to: 2500
+                    - color: Red
+                      from: 4000
+                      to: 5000
+                - entity: sensor.home_assistant_host_disk_used
+                  name: HA Host Использовано памяти
+                  icon: mdi:database-outline
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 225
+                  severity:
+                    - color: Green
+                      from: 0
+                      to: 50
+                    - color: Orange
+                      from: 50
+                      to: 150
+                    - color: Red
+                      from: 150
+                      to: 225
+                - entity: sensor.home_assistant_core_cpu_percent
+                  name: HA Core Использование CPU
+                  icon: mdi:cpu-64-bit
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 100
+                  severity:
+                    - color: Green
+                      from: 0
+                      to: 25
+                    - color: Orange
+                      from: 25
+                      to: 50
+                    - color: Red
+                      from: 50
+                      to: 100
+                - entity: sensor.home_assistant_supervisor_cpu_percent
+                  name: HA Supervisor Использование CPU
+                  icon: mdi:cpu-64-bit
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 100
+                  severity:
+                    - color: Green
+                      from: 0
+                      to: 25
+                    - color: Orange
+                      from: 25
+                      to: 50
+                    - color: Red
+                      from: 50
+                      to: 100
+                - entity: sensor.home_assistant_core_memory_percent
+                  name: HA Core Использование RAM
+                  icon: mdi:memory
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 100
+                  severity:
+                    - color: Green
+                      from: 0
+                      to: 25
+                    - color: Orange
+                      from: 25
+                      to: 50
+                    - color: Red
+                      from: 50
+                      to: 100
+                - entity: sensor.home_assistant_supervisor_memory_percent
+                  name: HA Supervisor Использование RAM
+                  icon: mdi:memory
+                  type: custom:bar-card
+                  decimal: 2
+                  entity_row: true
+                  min: 0
+                  max: 100
+                  severity:
+                    - color: Green
+                      from: 0
+                      to: 25
+                    - color: Orange
+                      from: 25
+                      to: 50
+                    - color: Red
+                      from: 50
+                      to: 100
         title: Home Assistant
   - title: Микроклимат
     path: climate
@@ -787,6 +809,7 @@ views:
                   flex: auto !important; 
                 }
                 bar-card {
+                  --icon-color: var(--state-icon-color);
                   margin-left: 10px !important;
                   margin-right: 10px !important;
                   margin-bottom: 5px !important;
@@ -843,6 +866,7 @@ views:
                   flex: auto !important; 
                 }
                 bar-card {
+                  --icon-color: var(--state-icon-color);
                   margin-left: 10px !important;
                   margin-right: 10px !important;
                   margin-bottom: 5px !important;
@@ -913,177 +937,143 @@ views:
         entities:
           - type: custom:mod-card
             style:
-              hui-horizontal-stack-card$: |
-                hui-button-card {
-                  margin-right: 10px !important;
-                  flex: auto !important; 
-                }
-                bar-card {
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  width:500%;
-                  flex: auto !important; 
-                }
+              hui-vertical-stack-card$:
+                hui-horizontal-stack-card$:
+                  bar-card:
+                    $: |
+                      :host {
+                        --icon-color: var(--state-icon-color);
+                        margin-left: 10px !important;
+                        margin-right: 10px !important;
+                        width: 500%;
+                        flex: auto !important;
+                      }
+                  hui-button-card:
+                    $: |
+                      :host {
+                        margin-right: 10px !important;
+                        flex: auto !important;
+                      }
             card:
-              type: horizontal-stack
+              type: vertical-stack
               cards:
-                - type: custom:bar-card
-                  entity: sensor.eversweet_3_pro_uvc_filter
-                  name: 'Питьевой фонтан: Фильтр'
-                  icon: mdi:filter
-                  decimal: 0
-                  entity_row: true
-                  min: 0
-                  max: 100
-                  severity:
-                    - color: Red
-                      from: 0
-                      to: 25
-                    - color: Orange
-                      from: 25
-                      to: 50
-                    - color: Green
-                      from: 50
-                      to: 100
-                - show_name: false
-                  show_icon: true
-                  type: button
-                  entity: button.eversweet_3_pro_uvc_reset_filter
-                  icon_height: 30px
-                  icon: mdi:refresh-circle
-                  hold_action:
-                    action: toggle
-                  tap_action:
-                    action: none
-          - type: custom:mod-card
-            style:
-              hui-horizontal-stack-card$: |
-                hui-button-card {
-                  margin-right: 10px !important;
-                  flex: auto !important; 
-                }
-                bar-card {
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  width:500%;
-                  flex: auto !important; 
-                }
-            card:
-              type: horizontal-stack
-              cards:
-                - type: custom:bar-card
-                  entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                  name: 'Кормилка 1: Влагопоглотитель'
-                  icon: mdi:water-remove
-                  decimal: 0
-                  entity_row: true
-                  min: 0
-                  max: 30
-                  severity:
-                    - color: Red
-                      from: 0
-                      to: 7
-                    - color: Orange
-                      from: 7
-                      to: 15
-                    - color: Green
-                      from: 15
-                      to: 30
-                - show_name: false
-                  show_icon: true
-                  type: button
-                  entity: button.fresh_element_solo_1_reset_desiccant
-                  icon_height: 30px
-                  icon: mdi:refresh-circle
-                  hold_action:
-                    action: toggle
-                  tap_action:
-                    action: none
-          - type: custom:mod-card
-            style:
-              hui-horizontal-stack-card$: |
-                hui-button-card {
-                  margin-right: 10px !important;
-                  flex: auto !important; 
-                }
-                bar-card {
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  width:500%;
-                  flex: auto !important; 
-                }
-            card:
-              type: horizontal-stack
-              cards:
-                - type: custom:bar-card
-                  entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                  name: 'Кормилка 2: Влагопоглотитель'
-                  icon: mdi:water-remove
-                  decimal: 0
-                  entity_row: true
-                  min: 0
-                  max: 30
-                  severity:
-                    - color: Red
-                      from: 0
-                      to: 7
-                    - color: Orange
-                      from: 7
-                      to: 15
-                    - color: Green
-                      from: 15
-                      to: 30
-                - show_name: false
-                  show_icon: true
-                  type: button
-                  entity: button.fresh_element_solo_2_reset_desiccant
-                  icon_height: 30px
-                  icon: mdi:refresh-circle
-                  hold_action:
-                    action: toggle
-                  tap_action:
-                    action: none
-          - type: custom:mod-card
-            style:
-              hui-horizontal-stack-card$: |
-                hui-button-card {
-                  margin-right: 10px !important;
-                  flex: auto !important; 
-                }
-                bar-card {
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  width:500%;
-                  flex: auto !important; 
-                }
-            card:
-              type: horizontal-stack
-              cards:
-                - type: custom:bar-card
-                  entity: sensor.petkit_pura_air_filter_days_left
-                  name: 'Освежитель лотка: Фильтр'
-                  icon: mdi:air-filter
-                  decimal: 0
-                  entity_row: true
-                  min: 0
-                  max: 90
-                  severity:
-                    - color: Red
-                      from: 0
-                      to: 7
-                    - color: Orange
-                      from: 7
-                      to: 30
-                    - color: Green
-                      from: 30
-                      to: 90
-                - show_name: false
-                  show_icon: true
-                  type: button
-                  icon_height: 30px
-                  icon: mdi:refresh-circle
-                  hold_action:
-                    action: call-service
-                    service: script.reset_petkit_pura_air_filter
-                  tap_action:
-                    action: none
+                - type: horizontal-stack
+                  cards:
+                    - type: custom:bar-card
+                      entity: sensor.eversweet_3_pro_uvc_filter
+                      name: 'Питьевой фонтан: Фильтр'
+                      icon: mdi:filter
+                      decimal: 0
+                      entity_row: true
+                      min: 0
+                      max: 100
+                      severity:
+                        - color: Red
+                          from: 0
+                          to: 25
+                        - color: Orange
+                          from: 25
+                          to: 50
+                        - color: Green
+                          from: 50
+                          to: 100
+                    - show_name: false
+                      show_icon: true
+                      type: button
+                      entity: button.eversweet_3_pro_uvc_reset_filter
+                      icon_height: 30px
+                      icon: mdi:refresh-circle
+                      hold_action:
+                        action: toggle
+                      tap_action:
+                        action: none
+                - type: horizontal-stack
+                  cards:
+                    - type: custom:bar-card
+                      entity: sensor.fresh_element_solo_1_desiccant_days_remaining
+                      name: 'Кормилка 1: Влагопоглотитель'
+                      icon: mdi:water-remove
+                      decimal: 0
+                      entity_row: true
+                      min: 0
+                      max: 30
+                      severity:
+                        - color: Red
+                          from: 0
+                          to: 7
+                        - color: Orange
+                          from: 7
+                          to: 15
+                        - color: Green
+                          from: 15
+                          to: 30
+                    - show_name: false
+                      show_icon: true
+                      type: button
+                      entity: button.fresh_element_solo_1_reset_desiccant
+                      icon_height: 30px
+                      icon: mdi:refresh-circle
+                      hold_action:
+                        action: toggle
+                      tap_action:
+                        action: none
+                - type: horizontal-stack
+                  cards:
+                    - type: custom:bar-card
+                      entity: sensor.fresh_element_solo_2_desiccant_days_remaining
+                      name: 'Кормилка 2: Влагопоглотитель'
+                      icon: mdi:water-remove
+                      decimal: 0
+                      entity_row: true
+                      min: 0
+                      max: 30
+                      severity:
+                        - color: Red
+                          from: 0
+                          to: 7
+                        - color: Orange
+                          from: 7
+                          to: 15
+                        - color: Green
+                          from: 15
+                          to: 30
+                    - show_name: false
+                      show_icon: true
+                      type: button
+                      entity: button.fresh_element_solo_2_reset_desiccant
+                      icon_height: 30px
+                      icon: mdi:refresh-circle
+                      hold_action:
+                        action: toggle
+                      tap_action:
+                        action: none
+                - type: horizontal-stack
+                  cards:
+                    - type: custom:bar-card
+                      entity: sensor.petkit_pura_air_filter_days_left
+                      name: 'Освежитель лотка: Фильтр'
+                      icon: mdi:air-filter
+                      decimal: 0
+                      entity_row: true
+                      min: 0
+                      max: 90
+                      severity:
+                        - color: Red
+                          from: 0
+                          to: 7
+                        - color: Orange
+                          from: 7
+                          to: 30
+                        - color: Green
+                          from: 30
+                          to: 90
+                    - show_name: false
+                      show_icon: true
+                      type: button
+                      icon_height: 30px
+                      icon: mdi:refresh-circle
+                      hold_action:
+                        action: call-service
+                        service: script.reset_petkit_pura_air_filter
+                      tap_action:
+                        action: none
