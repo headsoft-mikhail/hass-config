@@ -4,37 +4,41 @@ views:
     icon: mdi:web
     badges: []
     cards:
-      - type: horizontal-stack
+      - type: grid
+        title: Интернет
+        columns: 1
+        square: false
         cards:
-          - type: markdown
-            content: |-
-              <div style="display: flex; justify-content: center;">
-                <a href="http://192.168.1.1/dashboard">
-                  <img src="/local/images/icon_keenetic.svg" width="150" height="100">
-                </a>
-              </div>
-          - type: markdown
-            content: |-
-              <div style="text-align: center;">
-                <a href="http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer">
-                  <img src="/local/images/icon_transmission.svg" width="150" height="100">
-                </a>
-              </div>
-          - type: markdown
-            content: |-
-              <div style="text-align: center;">
-                <a href="https://github.com/headsoft-mikhail/hass-config">
-                  <img src="/local/images/icon_github.svg" width="150" height="100">
-                </a>
-              </div>
-      - type: entities
-        entities:
+          - type: grid
+            square: false
+            cards:
+              - type: markdown
+                content: |-
+                  <div style="display: flex; justify-content: center;">
+                    <a href="http://192.168.1.1/dashboard">
+                      <img src="/local/images/icon_keenetic.svg" width="150" height="100">
+                    </a>
+                  </div>
+              - type: markdown
+                content: |-
+                  <div style="text-align: center;">
+                    <a href="http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer">
+                      <img src="/local/images/icon_transmission.svg" width="150" height="100">
+                    </a>
+                  </div>
+              - type: markdown
+                content: |-
+                  <div style="text-align: center;">
+                    <a href="https://github.com/headsoft-mikhail/hass-config">
+                      <img src="/local/images/icon_github.svg" width="150" height="100">
+                    </a>
+                  </div>
           - type: custom:uptime-card
             entity: binary_sensor.ping_8_8_8_8
             icon: mdi:check-network-outline
             ko_icon: mdi:close-network-outline
             none_icon: mdi:wifi-strength-off-outline
-            title_template: Internet
+            title_template: Доступность
             icon_adaptive_color: true
             title_adaptive_color: true
             average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
@@ -46,51 +50,26 @@ views:
             show:
               status: false
               icon: true
+              title: true
             alignment:
               status: spaced
-              header: center
             duration:
               quantity: 24
               unit: hour
             tap_action:
               action: more-info
-          - entity: sensor.zyxel_gateway_external_ip
-            name: Внешний IP
-            icon: mdi:ip
-          - type: custom:mod-card
-            style:
-              hui-vertical-stack-card$:
-                bar-card:
-                  $: |
-                    :host {
-                      --icon-color: var(--state-icon-color);
-                      flex: auto !important;
-                    }
-            card:
-              type: vertical-stack
-              cards:
-                - entity: sensor.zyxel_gateway_download_speed
-                  name: Текущая скорость загрузки
-                  icon: mdi:speedometer
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 100
-                - entity: sensor.zyxel_gateway_upload_speed
-                  name: Текущая скорость передачи
-                  icon: mdi:speedometer
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 100
-        show_header_toggle: false
-        title: Zyxel Gateway
-        state_color: true
-      - type: entities
-        title: SpeedTest
-        entities:
+          - type: grid
+            square: false
+            columns: 2
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: sensor.zyxel_gateway_download_speed
+                name: Cкорость загрузки
+                icon: mdi:download
+              - type: custom:mushroom-entity-card
+                entity: sensor.zyxel_gateway_upload_speed
+                name: Cкорость передачи
+                icon: mdi:upload
           - type: custom:mod-card
             style:
               hui-horizontal-stack-card$:
@@ -98,18 +77,9 @@ views:
                   $: |
                     bar-card {
                       --icon-color: var(--state-icon-color);
-                      margin-bottom: 10px !important;
                     }
                     :host {
-                      margin-left: 10px !important;
-                      margin-right: 10px !important;
-                      width: 350%;
-                      flex: auto !important;
-                    }
-                hui-button-card:
-                  $: |
-                    :host {
-                      margin-right: 10px !important;
+                      width: 65%;
                       flex: auto !important;
                     }
             card:
@@ -117,36 +87,29 @@ views:
               cards:
                 - type: vertical-stack
                   cards:
-                    - name: Загрузка
-                      type: custom:bar-card
-                      entity_row: true
-                      entity: sensor.speedtest_download
+                    - type: custom:bar-card
+                      height: 32
+                      entities:
+                        - sensor.speedtest_upload
+                        - sensor.speedtest_download
                       icon: mdi:speedometer
-                      decimal: 2
-                      min: 0
-                      max: 100
-                    - name: Передача
-                      type: custom:bar-card
-                      entity_row: true
-                      entity: sensor.speedtest_upload
-                      icon: mdi:speedometer
-                      decimal: 2
                       min: 0
                       max: 100
                 - show_name: false
-                  show_icon: true
                   type: button
                   entity: input_button.run_speedtest
-                  icon_height: 40px
                   icon: mdi:play-speed
                   hold_action:
                     action: toggle
                   tap_action:
                     action: none
-      - type: vertical-stack
+      - type: grid
+        columns: 1
+        square: false
+        title: Transmission
         cards:
           - type: custom:transmission-card
-            header_text: Transmission
+            header_text: ''
             no_torrent_label: ''
             hide_header: false
             hide_status: false
@@ -166,136 +129,50 @@ views:
             hide_upload_speed: false
             hide_download_speed: false
             force_status_newline: true
-      - type: entities
-        entities:
-          - type: custom:mod-card
-            card:
-              type: horizontal-stack
-              cards:
-                - type: tile
-                  entity: sensor.backup_state
-                  icon: mdi:cloud-upload
-                - type: tile
-                  entity: sensor.rpi_cpu_temperature
-          - type: custom:mod-card
-            style:
-              hui-vertical-stack-card$:
-                bar-card:
-                  $: |
-                    :host {
-                      --icon-color: var(--state-icon-color);
-                      flex: auto !important;
-                    }
-            card:
-              type: vertical-stack
-              cards:
-                - entity: sensor.sql_query_db_volume
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 5000
-                  severity:
-                    - color: Green
-                      from: 0
-                      to: 2500
-                    - color: Orange
-                      from: 2500
-                      to: 2500
-                    - color: Red
-                      from: 4000
-                      to: 5000
-                - entity: sensor.home_assistant_host_disk_used
-                  name: HA Host Использовано памяти
-                  icon: mdi:database-outline
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 225
-                  severity:
-                    - color: Green
-                      from: 0
-                      to: 50
-                    - color: Orange
-                      from: 50
-                      to: 150
-                    - color: Red
-                      from: 150
-                      to: 225
-                - entity: sensor.home_assistant_core_cpu_percent
-                  name: HA Core Использование CPU
-                  icon: mdi:cpu-64-bit
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 100
-                  severity:
-                    - color: Green
-                      from: 0
-                      to: 25
-                    - color: Orange
-                      from: 25
-                      to: 50
-                    - color: Red
-                      from: 50
-                      to: 100
-                - entity: sensor.home_assistant_supervisor_cpu_percent
-                  name: HA Supervisor Использование CPU
-                  icon: mdi:cpu-64-bit
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 100
-                  severity:
-                    - color: Green
-                      from: 0
-                      to: 25
-                    - color: Orange
-                      from: 25
-                      to: 50
-                    - color: Red
-                      from: 50
-                      to: 100
-                - entity: sensor.home_assistant_core_memory_percent
-                  name: HA Core Использование RAM
-                  icon: mdi:memory
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 100
-                  severity:
-                    - color: Green
-                      from: 0
-                      to: 25
-                    - color: Orange
-                      from: 25
-                      to: 50
-                    - color: Red
-                      from: 50
-                      to: 100
-                - entity: sensor.home_assistant_supervisor_memory_percent
-                  name: HA Supervisor Использование RAM
-                  icon: mdi:memory
-                  type: custom:bar-card
-                  decimal: 2
-                  entity_row: true
-                  min: 0
-                  max: 100
-                  severity:
-                    - color: Green
-                      from: 0
-                      to: 25
-                    - color: Orange
-                      from: 25
-                      to: 50
-                    - color: Red
-                      from: 50
-                      to: 100
+      - type: grid
         title: Home Assistant
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.backup_state
+            icon: mdi:cloud-upload
+            features_position: bottom
+            vertical: false
+          - type: custom:mushroom-entity-card
+            entity: sensor.rpi_cpu_temperature
+          - type: gauge
+            name: DB volume
+            entity: sensor.sql_query_db_volume
+            min: 0
+            max: 2500
+            severity:
+              green: 0
+              yellow: 1500
+              red: 2000
+            needle: false
+          - type: gauge
+            name: Core disk usage
+            entity: sensor.home_assistant_host_disk_used
+            min: 0
+            max: 225
+            severity:
+              green: 0
+              yellow: 50
+              red: 150
+            needle: false
+          - type: custom:mushroom-entity-card
+            name: Core CPU usage
+            entity: sensor.home_assistant_core_cpu_percent
+          - type: custom:mushroom-entity-card
+            name: Supervisor CPU usage
+            entity: sensor.home_assistant_supervisor_cpu_percent
+          - type: custom:mushroom-entity-card
+            name: Core RAM usage
+            entity: sensor.home_assistant_core_memory_percent
+          - type: custom:mushroom-entity-card
+            name: Supervisor RAM usage
+            entity: sensor.home_assistant_supervisor_memory_percent
   - title: Микроклимат
     path: climate
     icon: mdi:home-thermometer-outline
@@ -343,7 +220,7 @@ views:
               chart_height: '180'
             locale: ru
             units:
-              speed: ''
+              speed: m/s
               pressure: mmHg
             show_uv: false
           - type: custom:mini-graph-card
@@ -373,58 +250,57 @@ views:
               - value: above_horizon
                 label: Day
             tap_action: none
-          - type: custom:windrose-card
-            title: Ветер
-            data_period:
-              hours_to_show: 720
-              time_interval: 60
-            refresh_interval: 300
-            windspeed_bar_location: bottom
-            wind_direction_entity:
+      - type: custom:windrose-card
+        data_period:
+          hours_to_show: 720
+          time_interval: 60
+        refresh_interval: 300
+        windspeed_bar_location: bottom
+        wind_direction_entity:
+          entity: sensor.home_assistant_wind_bearing
+          use_statistics: false
+          direction_compensation: 0
+        windspeed_entities:
+          - entity: sensor.home_assistant_wind_speed
+            name: Скорость ветра
+            speed_unit: mps
+            use_statistics: true
+            statistics_period: hour
+            windspeed_bar_full: false
+            output_speed_unit: mps
+            speed_range_beaufort: false
+            speed_range_step: 1
+            speed_range_max: 15
+            current_speed_arrow: true
+        direction_labels:
+          cardinal_direction_letters: СВЮЗ
+        wind_direction_count: 8
+        windrose_draw_north_offset: 0
+        current_direction:
+          show_arrow: true
+          arrow_size: 50
+          center_circle_size: 30
+          hide_direction_below_speed: 0
+        compass_direction:
+          auto_rotate: false
+          entity: ''
+        cardinal_direction_letters: С,В,Ю,З
+        matching_strategy: time-frame
+        center_calm_percentage: false
+        corner_info:
+          top_right:
+            entity: sensor.home_assistant_wind_speed
+            unit: ' м/с'
+            color: white
+        actions:
+          windrose:
+            tap_action:
               entity: sensor.home_assistant_wind_bearing
-              use_statistics: false
-              direction_compensation: 0
-            windspeed_entities:
-              - entity: sensor.home_assistant_wind_speed
-                name: Скорость ветра
-                speed_unit: mps
-                use_statistics: true
-                statistics_period: hour
-                windspeed_bar_full: false
-                output_speed_unit: mps
-                speed_range_beaufort: false
-                speed_range_step: 1
-                speed_range_max: 15
-                current_speed_arrow: true
-            direction_labels:
-              cardinal_direction_letters: СВЮЗ
-            wind_direction_count: 8
-            windrose_draw_north_offset: 0
-            current_direction:
-              show_arrow: true
-              arrow_size: 50
-              center_circle_size: 30
-              hide_direction_below_speed: 0
-            compass_direction:
-              auto_rotate: false
-              entity: ''
-            cardinal_direction_letters: С,В,Ю,З
-            matching_strategy: time-frame
-            center_calm_percentage: false
-            corner_info:
-              top_right:
-                entity: sensor.home_assistant_wind_speed
-                unit: ' м/с'
-                color: white
-            actions:
-              windrose:
-                tap_action:
-                  entity: sensor.home_assistant_wind_bearing
-                  action: more-info
-              speed_bar_1:
-                tap_action:
-                  entity: sensor.home_assistant_wind_speed
-                  action: more-info
+              action: more-info
+          speed_bar_1:
+            tap_action:
+              entity: sensor.home_assistant_wind_speed
+              action: more-info
       - type: custom:horizon-card
         title: null
         moon: true
@@ -442,111 +318,6 @@ views:
           moonrise: true
           moonset: true
           moon_phase: true
-      - type: entities
-        entities:
-          - type: custom:mod-card
-            card:
-              type: horizontal-stack
-              cards:
-                - type: tile
-                  name: Температура
-                  entity: sensor.airmonitor2_temperature
-                - type: tile
-                  name: Влажность
-                  entity: sensor.airmonitor2_humidity
-          - type: custom:mod-card
-            card:
-              type: horizontal-stack
-              cards:
-                - type: tile
-                  name: CO2
-                  entity: sensor.airmonitor2_co2
-                - type: tile
-                  name: eTVOC
-                  entity: sensor.airmonitor2_etvoc
-          - type: custom:mod-card
-            card:
-              type: horizontal-stack
-              cards:
-                - type: tile
-                  name: PM2.5
-                  entity: sensor.airmonitor2_pm25
-                - type: tile
-                  name: PM10
-                  entity: sensor.airmonitor2_pm10
-          - type: custom:mod-card
-            card:
-              type: horizontal-stack
-              cards:
-                - type: tile
-                  name: Шум
-                  entity: sensor.airmonitor2_noise
-                - type: tile
-                  name: Заряд
-                  entity: sensor.airmonitor2_battery
-        title: Air Monitor
-      - type: vertical-stack
-        cards:
-          - type: horizontal-stack
-            cards:
-              - type: thermostat
-                entity: climate.aqara_e1_thermostat_1
-                features:
-                  - type: climate-hvac-modes
-                    hvac_modes:
-                      - heat
-                      - 'off'
-              - type: thermostat
-                entity: climate.aqara_e1_thermostat_2
-                features:
-                  - type: climate-hvac-modes
-                    hvac_modes:
-                      - heat
-                      - 'off'
-          - type: horizontal-stack
-            cards:
-              - type: thermostat
-                entity: climate.aqara_e1_thermostat_3
-                features:
-                  - type: climate-hvac-modes
-                    hvac_modes:
-                      - heat
-                      - 'off'
-              - type: humidifier
-                entity: humidifier.switch_humidifier
-                features:
-                  - type: humidifier-toggle
-                name: Увлажнитель
-                show_current_as_primary: false
-          - type: custom:uptime-card
-            title_adaptive_color: true
-            entity: binary_sensor.meross_power_outlet_1_activity
-            status_adaptive_color: true
-            icon_adaptive_color: true
-            icon: mdi:radiator
-            ko_icon: mdi:radiator-off
-            none_icon: mdi:wifi-strength-off-outlne
-            tooltip_adaptive_color: false
-            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
-            show:
-              status: false
-            alignment:
-              header: center
-            bar:
-              height: 25
-              round: 0
-              spacing: 0
-              amount: 480
-            duration:
-              quantity: 24
-              unit: hour
-            color:
-              ok: '#C66445'
-              ko: var(--state-icon-color)
-              half: '#C6B145'
-            tap_action:
-              action: more-info
-              entity: sensor.meross_power_outlet_1_power
       - type: vertical-stack
         cards:
           - type: custom:mini-graph-card
@@ -596,39 +367,6 @@ views:
                 show_indicator: true
                 show_state: true
                 show_legend: true
-          - type: custom:mini-graph-card
-            name: CO2
-            hour24: true
-            points_per_hour: 2
-            font_size: 70
-            tap_action: none
-            entities:
-              - entity: sensor.airmonitor2_co2
-                name: AirMonitor2
-          - type: custom:mini-graph-card
-            name: TVOC
-            hour24: true
-            points_per_hour: 1
-            font_size: 70
-            tap_action: none
-            entities:
-              - entity: sensor.airmonitor2_etvoc
-                name: AirMonitor2
-          - type: custom:mini-graph-card
-            name: PM
-            hour24: true
-            points_per_hour: 1
-            font_size: 70
-            tap_action: none
-            entities:
-              - entity: sensor.airmonitor2_pm25
-                name: PM2.5
-                show_indicator: true
-                show_state: true
-              - entity: sensor.airmonitor2_pm10
-                name: PM10
-                show_indicator: true
-                show_state: true
   - title: Устройства
     path: device-control
     icon: mdi:apps
@@ -637,169 +375,467 @@ views:
       - type: vertical-stack
         cards:
           - type: media-control
-            entity: media_player.yandex_station_mini_red
-          - type: entities
-            entities:
-              - entity: input_select.sound_signal_source
-      - type: entities
-        entities:
-          - entity: switch.ahtom_switch_1_table_light
-          - entity: switch.ahtom_switch_2_tv_backlight
-          - entity: switch.ahtom_switch_3_kitchen_led
-          - entity: switch.aqara_t2_ch1_pc
-        show_header_toggle: false
-        state_color: true
+            entity: media_player.yandex_station_m101k3a00pba6r
+          - features:
+              - type: custom:service-call
+                entries:
+                  - type: selector
+                    entity_id: input_select.sound_signal_source
+                    options:
+                      - entity_id: input_select.sound_signal_source
+                        option: 'Off'
+                        tap_action:
+                          action: perform-action
+                          perform_action: input_select.select_option
+                          data:
+                            option: 'Off'
+                          target:
+                            entity_id: input_select.sound_signal_source
+                        label: 'Off'
+                        icon: mdi:power-off
+                        styles: |
+                          :host {
+                            --mdc-icon-size: 25px;
+                            --color: grey;
+                            {% if (states(config.entity) or "") != config.option %}
+                            --icon-color: grey;
+                            --label-color: grey;
+                            {% endif %}
+                          }
+                      - entity_id: input_select.sound_signal_source
+                        option: Optical
+                        tap_action:
+                          action: perform-action
+                          perform_action: input_select.select_option
+                          data:
+                            option: Optical
+                          target:
+                            entity_id: input_select.sound_signal_source
+                        label: Optical
+                        icon: mdi:toslink
+                        styles: |
+                          :host {
+                            --mdc-icon-size: 25px;
+                            --color: orange;
+                            {% if (states(config.entity) or "") != config.option %}
+                            --icon-color: orange;
+                            --label-color: orange;
+                            {% endif %}
+                          }
+                      - entity_id: input_select.sound_signal_source
+                        option: Bluetooth
+                        tap_action:
+                          action: perform-action
+                          perform_action: input_select.select_option
+                          data:
+                            option: Bluetooth
+                          target:
+                            entity_id: input_select.sound_signal_source
+                        label: BT
+                        icon: mdi:bluetooth-audio
+                        styles: |
+                          :host {
+                            --mdc-icon-size: 25px;
+                            --color: blue;
+                            {% if (states(config.entity) or "") != config.option %}
+                            --icon-color: blue;
+                            --label-color: blue;
+                            {% endif %}
+                          }
+                      - entity_id: input_select.sound_signal_source
+                        option: Line 1
+                        tap_action:
+                          action: perform-action
+                          perform_action: input_select.select_option
+                          data:
+                            option: Line 1
+                          target:
+                            entity_id: input_select.sound_signal_source
+                        label: Line 1
+                        icon: mdi:numeric-1-box
+                        styles: |
+                          :host {
+                            --mdc-icon-size: 25px;
+                            --color: green;
+                            {% if (states(config.entity) or "") != config.option %}
+                            --icon-color: green;
+                            --label-color: green;
+                            {% endif %}
+                          }
+                      - entity_id: input_select.sound_signal_source
+                        option: Line 2
+                        tap_action:
+                          action: perform-action
+                          perform_action: input_select.select_option
+                          data:
+                            option: Line 2
+                          target:
+                            entity_id: input_select.sound_signal_source
+                        label: Line 2
+                        icon: mdi:numeric-2-box
+                        styles: |
+                          :host {
+                            --mdc-icon-size: 25px;
+                            --color: green;
+                            {% if (states(config.entity) or "") != config.option %}
+                            --icon-color: green;
+                            --label-color: green;
+                            {% endif %}
+                          }
+                      - entity_id: input_select.sound_signal_source
+                        option: Coax
+                        tap_action:
+                          action: perform-action
+                          perform_action: input_select.select_option
+                          data:
+                            option: Coax
+                          target:
+                            entity_id: input_select.sound_signal_source
+                        label: Coax
+                        icon: mdi:audio-input-stereo-minijack
+                        styles: |
+                          :host {
+                            --mdc-icon-size: 25px;
+                            --color: magenta;
+                            {% if (states(config.entity) or "") != config.option %}
+                            --icon-color: magenta;
+                            --label-color: magenta;
+                            {% endif %}
+                          }
+                    autofill_entity_id: true
+            type: tile
+            entity: input_select.sound_signal_source
+            features_position: bottom
+            vertical: false
+            hide_state: true
+      - type: grid
         title: Ahtom
-      - type: entities
-        entities:
-          - entity: light.meross_ambient_light_1
-          - entity: light.meross_ambient_light_2
-          - entity: switch.meross_power_outlet_1
-        title: Meross
-        show_header_toggle: false
-        state_color: true
-      - type: vertical-stack
+        square: false
+        columns: 2
         cards:
-          - type: entities
-            entities:
-              - entity: light.tuya_lava_lamp
-                type: custom:light-brightness-preset-row
-                name: Лава-лампа
-                customSetpoints: true
-                reverseButtons: true
-                lowBrightness: 76
-                customLowText: 30
-                medBrightness: 102
-                customMedText: 40
-                hiBrightness: 255
-                customHiText: 100
-                customOffText: 'OFF'
-                width: 35px
-                height: 35px
-            show_header_toggle: false
-            state_color: true
-            title: Tuya
+          - type: tile
+            entity: switch.ahtom_switch_1_table_light
+          - type: tile
+            entity: switch.ahtom_switch_2_tv_backlight
+          - type: tile
+            entity: switch.ahtom_switch_3_kitchen_led
+          - type: tile
+            entity: switch.aqara_t2_ch1_pc
+      - type: grid
+        square: false
+        columns: 1
+        title: Tuya
+        cards:
+          - features:
+              - type: custom:service-call
+                entries:
+                  - type: selector
+                    options:
+                      - label: 'Off'
+                        tap_action:
+                          action: perform-action
+                          perform_action: light.turn_on
+                          target:
+                            entity_id:
+                              - light.tuya_lava_lamp
+                          data:
+                            brightness: 0
+                        styles: |
+                          :host {
+                            {% if state_attr("light.tuya_lava_lamp", "brightness") == None %}
+                            background: grey;
+                            {% else %}
+                            --color: grey;
+                            --label-color: grey;
+                            {% endif %}
+                          }
+                        entity_id: light.tuya_lava_lamp
+                      - option: 102
+                        label: Relax
+                        tap_action:
+                          action: perform-action
+                          perform_action: light.turn_on
+                          target:
+                            entity_id:
+                              - light.tuya_lava_lamp
+                          data:
+                            brightness: 102
+                        styles: |
+                          :host {
+                            {% if  
+                              state_attr("light.tuya_lava_lamp", "brightness") <= config.option + 10 
+                              and 
+                              state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10
+                            %}
+                            background: orange;
+                            {% else %}
+                            --color: orange;
+                            --label-color: orange;
+                            {% endif %}
+                          }
+                        entity_id: light.tuya_lava_lamp
+                      - option: 255
+                        label: Heat
+                        tap_action:
+                          action: perform-action
+                          perform_action: light.turn_on
+                          target:
+                            entity_id:
+                              - light.tuya_lava_lamp
+                          data:
+                            brightness: 255
+                        styles: |
+                          :host {
+                            {% if state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10 %}
+                            background: red;
+                            {% else %}
+                            --color: red;
+                            --label-color: red;
+                            {% endif %}
+                          }
+                        entity_id: light.tuya_lava_lamp
+                    entity_id: light.tuya_lava_lamp
+            type: tile
+            entity: light.tuya_lava_lamp
+            features_position: inline
+            vertical: false
+            show_entity_picture: false
+            hide_state: false
+            icon_tap_action:
+              action: toggle
+          - square: false
+            type: grid
+            columns: 2
+            cards:
+              - type: custom:mushroom-climate-card
+                entity: climate.towel_dryer
+                show_temperature_control: true
+                collapsible_controls: false
+                fill_container: true
+                layout: vertical
+                hvac_modes:
+                  - heat
+                  - 'off'
+      - type: grid
+        columns: 2
+        square: false
+        title: Meross
+        cards:
+          - type: tile
+            entity: light.meross_ambient_light_1
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: light.meross_ambient_light_2
+          - type: tile
+            entity: switch.meross_power_outlet_1
+            features_position: bottom
+            vertical: false
+          - type: custom:mushroom-entity-card
+            entity: binary_sensor.meross_power_outlet_1_activity
+            icon_color: red
+            icon_type: icon
+      - type: grid
+        square: false
+        columns: 2
+        title: Климат
+        cards:
+          - type: custom:mushroom-climate-card
+            entity: climate.aqara_e1_thermostat_1
+            layout: vertical
+            fill_container: true
+            show_temperature_control: true
+            hvac_modes:
+              - heat
+              - 'off'
+          - type: custom:mushroom-climate-card
+            entity: climate.aqara_e1_thermostat_2
+            layout: vertical
+            fill_container: true
+            hvac_modes:
+              - heat
+              - 'off'
+          - type: custom:mushroom-climate-card
+            entity: climate.aqara_e1_thermostat_3
+            fill_container: true
+            layout: vertical
+            hvac_modes:
+              - heat
+              - 'off'
+          - type: custom:mushroom-humidifier-card
+            entity: humidifier.switch_humidifier
+            fill_container: false
+            layout: vertical
+            show_target_humidity_control: true
+            collapsible_controls: false
+            primary_info: name
+            secondary_info: state
+      - type: grid
+        title: Air Monitor
+        square: false
+        columns: 3
+        cards:
+          - type: custom:mushroom-entity-card
+            name: Температура
+            entity: sensor.airmonitor2_temperature
+            features_position: bottom
+            vertical: false
+          - type: custom:mushroom-entity-card
+            name: Влажность
+            entity: sensor.airmonitor2_humidity
+          - type: custom:mushroom-entity-card
+            name: CO2
+            entity: sensor.airmonitor2_co2
+          - type: custom:mushroom-entity-card
+            name: eTVOC
+            entity: sensor.airmonitor2_etvoc
+          - type: custom:mushroom-entity-card
+            name: PM2.5
+            entity: sensor.airmonitor2_pm25
+          - type: custom:mushroom-entity-card
+            name: PM10
+            entity: sensor.airmonitor2_pm10
+          - type: custom:mushroom-entity-card
+            name: Шум
+            entity: sensor.airmonitor2_noise
+      - square: false
+        type: grid
+        columns: 3
+        cards:
+          - type: custom:mushroom-entity-card
+            name: Температура
+            entity: sensor.efekta_smart_aq_box_temperature
+            features_position: bottom
+            vertical: false
+          - type: custom:mushroom-entity-card
+            name: Влажность
+            entity: sensor.efekta_smart_aq_box_humidity
+          - type: custom:mushroom-entity-card
+            name: CO2
+            entity: sensor.efekta_smart_aq_box_co2
+          - type: custom:mushroom-entity-card
+            name: VOC Index
+            entity: sensor.efekta_smart_aq_box_voc_index
+          - type: custom:mushroom-entity-card
+            name: PM2.5
+            entity: sensor.efekta_smart_aq_box_pm25
+          - type: custom:mushroom-entity-card
+            name: PM10
+            entity: sensor.efekta_smart_aq_box_pm10
+          - type: custom:mushroom-entity-card
+            name: Давление
+            entity: sensor.efekta_smart_aq_box_pressure
+        title: Efekta
   - title: Энергия
     path: energy
     icon: mdi:battery-80
     badges: []
     cards:
-      - type: custom:uptime-card
-        entity: binary_sensor.aqara_t1_220v_sensor
-        icon: mdi:power-plug-outline
-        ko_icon: mdi:power-plug-off-outline
-        none_icon: mdi:wifi-strength-off-outline
-        title_template: Сеть 220В
-        icon_adaptive_color: true
-        title_adaptive_color: true
-        average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
-        bar:
-          height: 20
-          round: 3
-          spacing: 1
-          amount: 96
-        show:
-          status: false
-          icon: true
-        alignment:
-          status: spaced
-          header: center
-        duration:
-          quantity: 24
-          unit: hour
-        tap_action:
-          action: more-info
-      - type: custom:auto-entities
-        card:
-          type: entities
-          title: Батареи
-        filter:
-          include:
-            - domain: sensor
-              attributes:
-                device_class: battery
-              state: < 75
-              options:
-                type: custom:bar-card
-                entity_row: true
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 50
-                  - color: Orange
-                    from: 50
-                    to: 80
-                  - color: Green
-                    from: 80
-                    to: 100
-            - domain: sensor
-              attributes:
-                device_class: battery
-              state: unknown
-              options:
-                type: custom:bar-card
-                entity_row: true
-            - domain: sensor
-              attributes:
-                device_class: battery
-              state: unavailable
-              options:
-                type: custom:bar-card
-                entity_row: true
-            - entity_id: sensor.*_battery_status
-              state: < 75
-              options:
-                type: custom:bar-card
-                secondary_info: none
-                entity_row: true
-                min: 0
-                max: 100
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 50
-                  - color: Orange
-                    from: 50
-                    to: 80
-                  - color: Green
-                    from: 80
-                    to: 100
-            - entity_id: sensor.*_battery_status
-              state: unknown
-              options:
-                type: custom:bar-card
-                entity_row: true
-            - entity_id: sensor.*_battery_status
-              state: unavailable
-              options:
-                type: custom:bar-card
-                entity_row: true
-          exclude:
-            - entity_id: sensor.contact_sensor_battery_sensor
-            - entity_id: sensor.ik_pult_battery
-        sort:
-          method: state
-          numeric: true
-        show_empty: true
-      - type: custom:mini-graph-card
-        entities:
-          - entity: sensor.meross_power_outlet_1_energy
-        name: Обогрев балкона
-        hours_to_show: 168
-        lower_bound: 0
-        group: true
-        hour24: true
-        group_by: date
-        aggregate_func: max
-        show:
-          graph: bar
+      - type: grid
+        title: Электричество
+        square: false
+        columns: 1
+        cards:
+          - type: custom:uptime-card
+            entity: binary_sensor.aqara_t1_220v_sensor
+            icon: mdi:power-plug-outline
+            ko_icon: mdi:power-plug-off-outline
+            none_icon: mdi:wifi-strength-off-outline
+            title_template: Сеть 220В
+            icon_adaptive_color: true
+            title_adaptive_color: true
+            average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+            bar:
+              height: 20
+              round: 3
+              spacing: 1
+              amount: 96
+            show:
+              status: false
+              icon: true
+            alignment:
+              status: spaced
+            duration:
+              quantity: 24
+              unit: hour
+            tap_action:
+              action: more-info
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.meross_power_outlet_1_energy
+            name: Обогрев балкона
+            hours_to_show: 168
+            lower_bound: 0
+            group: true
+            hour24: true
+            group_by: date
+            aggregate_func: max
+            show:
+              graph: bar
+      - type: grid
+        title: Батареи
+        columns: 1
+        square: false
+        cards:
+          - type: custom:auto-entities
+            card:
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-template-columns: repeat(2, minmax(50%, 50%))
+            filter:
+              include:
+                - domain: sensor
+                  attributes:
+                    device_class: battery
+                  state: < 75
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                    tap_action:
+                      action: more-info
+                - domain: sensor
+                  attributes:
+                    device_class: battery
+                  state: unknown
+                  options:
+                    type: custom:mushroom-entity-card
+                - domain: sensor
+                  attributes:
+                    device_class: battery
+                  state: unavailable
+                  options:
+                    type: custom:mushroom-entity-card
+                - entity_id: sensor.*_battery_status
+                  state: < 75
+                  options:
+                    type: custom:mushroom-entity-card
+                    tap_action:
+                      action: more-info
+                - entity_id: sensor.*_battery_status
+                  state: unknown
+                  options:
+                    type: custom:mushroom-entity-card
+                - entity_id: sensor.*_battery_status
+                  state: unavailable
+                  options:
+                    type: custom:mushroom-entity-card
+              exclude:
+                - entity_id: sensor.contact_sensor_battery_sensor
+                - entity_id: sensor.ik_pult_battery
+            sort:
+              method: state
+              numeric: true
+            show_empty: true
   - title: Питомцы
     path: pets
     icon: mdi:cat
     badges: []
     cards:
-      - type: entities
-        entities:
+      - type: grid
+        columns: 1
+        square: false
+        cards:
           - type: custom:mod-card
             style:
               hui-horizontal-stack-card$: |
@@ -837,14 +873,25 @@ views:
                     action: none
           - type: custom:auto-entities
             card:
-              type: entities
-              title: ⚠️
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-template-columns: repeat(2, minmax(50%, 50%))
             entities: null
             filter:
               include:
                 - entity_id: binary_sensor.fresh_element_solo_1_food_level
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
                 - entity_id: sensor.fresh_element_solo_1_error
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
                 - entity_id: sensor.fresh_element_solo_1_status
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
               exclude:
                 - entity_id: binary_sensor.fresh_element_solo_1_food_level
                   state: 'off'
@@ -852,11 +899,11 @@ views:
                   state: no_error
                 - entity_id: sensor.fresh_element_solo_1_status
                   state: online
-            show_empty: false
         title: Кормилка 1
-        state_color: true
-      - type: entities
-        entities:
+      - type: grid
+        columns: 1
+        square: false
+        cards:
           - type: custom:mod-card
             style:
               hui-horizontal-stack-card$: |
@@ -885,7 +932,7 @@ views:
                 - show_name: false
                   show_icon: true
                   type: button
-                  entity: input_button.petkit_feeder_2_act
+                  entity: input_button.petkit_feeder_1_act
                   icon_height: 35px
                   icon: mdi:hamburger-plus
                   hold_action:
@@ -894,14 +941,25 @@ views:
                     action: none
           - type: custom:auto-entities
             card:
-              type: entities
-              title: ⚠️
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-template-columns: repeat(2, minmax(50%, 50%))
             entities: null
             filter:
               include:
                 - entity_id: binary_sensor.fresh_element_solo_2_food_level
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
                 - entity_id: sensor.fresh_element_solo_2_error
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
                 - entity_id: sensor.fresh_element_solo_2_status
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
               exclude:
                 - entity_id: binary_sensor.fresh_element_solo_2_food_level
                   state: 'off'
@@ -909,32 +967,39 @@ views:
                   state: no_error
                 - entity_id: sensor.fresh_element_solo_2_status
                   state: online
-            show_empty: false
         title: Кормилка 2
-        state_color: true
-      - type: entities
-        entities:
-          - entity: switch.eversweet_3_pro_uvc_power
+      - type: grid
+        title: Питьевой фонтан
+        square: false
+        columns: 1
+        cards:
+          - type: tile
+            entity: switch.eversweet_3_pro_uvc_power
             name: Подача воды
             icon: mdi:water-pump
+            features_position: bottom
+            vertical: false
+            color: primary
           - type: custom:auto-entities
             card:
-              type: entities
-              title: ⚠️
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-template-columns: repeat(2, minmax(50%, 50%))
             entities: null
             filter:
               include:
                 - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
-              exclude:
-                - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
-                  state: 'off'
+                  options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                  state: 'on'
             show_empty: false
-        title: Питьевой фонтан
-        show_header_toggle: false
-        state_color: true
-      - type: entities
+      - type: grid
         title: Расходники
-        entities:
+        square: false
+        columns: 1
+        cards:
           - type: custom:mod-card
             style:
               hui-vertical-stack-card$:
