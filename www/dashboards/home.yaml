@@ -33,14 +33,50 @@ views:
                       <img src="/local/images/icon_github.svg" width="150" height="100">
                     </a>
                   </div>
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                entity: binary_sensor.ping_8_8_8_8
+                icon_color: |-
+                  {% if is_state(entity, 'on') %}
+                    green
+                  {% elif is_state(entity, 'off') %}
+                    red
+                  {% else %}
+                    orange
+                  {% endif %}
+                content: |-
+                  {% if is_state(entity, 'on') %}
+                    Подключено
+                  {% elif is_state(entity, 'off') %}
+                    Отключено
+                  {% else %}
+                    Недоступно
+                  {% endif %}
+                icon: |-
+                  {% if is_state(entity, 'on') %}
+                    mdi:check-network-outline
+                  {% elif is_state(entity, 'off') %}
+                    mdi:close-network-outline
+                  {% else %}
+                    mdi:help-circle-outline
+                  {% endif %}
+                tap_action:
+                  action: more-info
+              - type: spacer
+              - type: entity
+                entity: sensor.zyxel_gateway_upload_speed
+                icon: mdi:upload
+                icon_color: blue
+              - type: entity
+                entity: sensor.zyxel_gateway_download_speed
+                icon: mdi:download
+                icon_color: blue
           - type: custom:uptime-card
             entity: binary_sensor.ping_8_8_8_8
             icon: mdi:check-network-outline
             ko_icon: mdi:close-network-outline
             none_icon: mdi:wifi-strength-off-outline
-            title_template: Доступность
-            icon_adaptive_color: true
-            title_adaptive_color: true
             average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
             bar:
               height: 20
@@ -49,60 +85,47 @@ views:
               amount: 96
             show:
               status: false
-              icon: true
-              title: true
-            alignment:
-              status: spaced
+              icon: false
+              title: false
             duration:
               quantity: 24
               unit: hour
-            tap_action:
-              action: more-info
           - type: grid
             square: false
-            columns: 2
+            columns: 1
             cards:
-              - type: custom:mushroom-entity-card
-                entity: sensor.zyxel_gateway_download_speed
-                name: Cкорость загрузки
-                icon: mdi:download
-              - type: custom:mushroom-entity-card
-                entity: sensor.zyxel_gateway_upload_speed
-                name: Cкорость передачи
-                icon: mdi:upload
-          - type: custom:mod-card
-            style:
-              hui-horizontal-stack-card$:
-                hui-vertical-stack-card:
-                  $: |
-                    bar-card {
-                      --icon-color: var(--state-icon-color);
-                    }
-                    :host {
-                      width: 65%;
-                      flex: auto !important;
-                    }
-            card:
-              type: horizontal-stack
-              cards:
-                - type: vertical-stack
-                  cards:
-                    - type: custom:bar-card
-                      height: 32
-                      entities:
-                        - sensor.speedtest_upload
-                        - sensor.speedtest_download
-                      icon: mdi:speedometer
-                      min: 0
-                      max: 100
-                - show_name: false
-                  type: button
-                  entity: input_button.run_speedtest
-                  icon: mdi:play-speed
-                  hold_action:
-                    action: toggle
-                  tap_action:
-                    action: none
+              - type: custom:layout-card
+                layout_type: custom:grid-layout
+                cards:
+                  - type: grid
+                    square: false
+                    columns: 2
+                    cards:
+                      - type: gauge
+                        entity: sensor.speedtest_download
+                        min: 0
+                        max: 100
+                      - type: gauge
+                        entity: sensor.speedtest_upload
+                        min: 0
+                        max: 100
+                  - type: custom:mushroom-entity-card
+                    entity: input_button.run_speedtest
+                    name: ' '
+                    icon: mdi:play-speed
+                    primary_info: name
+                    secondary_info: last-changed
+                    tap_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    hold_action:
+                      action: toggle
+                    fill_container: true
+                    layout: vertical
+                layout:
+                  grid-template-columns: auto 20%
+                  margin: 0px
       - type: grid
         columns: 1
         square: false
@@ -142,7 +165,7 @@ views:
           - type: custom:mushroom-entity-card
             entity: sensor.rpi_cpu_temperature
           - type: gauge
-            name: DB volume
+            name: DataBase volume
             entity: sensor.sql_query_db_volume
             min: 0
             max: 2500
@@ -178,51 +201,77 @@ views:
     icon: mdi:home-thermometer-outline
     badges: []
     cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: weather
+            entity: weather.home_assistant
+            show_conditions: true
+            show_temperature: true
+          - type: template
+            entity: sensor.home_assistant_apparent_temperature
+            content: Ощущуается как {{ states(entity)}} °C
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.home_assistant_precipitation
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.home_assistant_cloud_coverage
+            icon_color: light-grey
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.home_assistant_wind_bearing_2
+            icon_color: cyan
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.home_assistant_wind_speed
+            icon_color: cyan
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.home_assistant_humidity
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.home_assistant_pressure
+            content_info: state
+            icon_color: grey
+            tap_action:
+              action: more-info
+      - type: custom:hourly-weather
+        entity: weather.home_assistant
+        icons: true
+        show_wind: 'false'
+        show_date: 'false'
+        show_precipitation_amounts: true
+        show_precipitation_probability: false
+        num_segments: '12'
+        label_spacing: '2'
+        name: ' '
+      - type: custom:clock-weather-card
+        entity: weather.home_assistant
+        hide_today_section: true
+        forecast_rows: 7
+        weather_icon_type: fill
       - type: vertical-stack
         cards:
-          - type: custom:weather-chart-card
-            entity: weather.home_assistant
-            show_main: true
-            show_temperature: true
-            show_current_condition: true
-            show_attributes: true
-            show_time: false
-            show_time_seconds: false
-            show_day: true
-            show_date: true
-            show_humidity: true
-            show_pressure: true
-            show_wind_direction: false
-            show_wind_speed: false
-            show_sun: false
-            show_feels_like: true
-            show_dew_point: false
-            show_wind_gust_speed: false
-            show_visibility: false
-            show_last_changed: false
-            use_12hour_format: false
-            icons_size: '45'
-            animated_icons: true
-            icon_style: style1
-            autoscroll: true
-            forecast:
-              precipitation_type: rainfall
-              show_probability: false
-              labels_font_size: '12'
-              precip_bar_size: '100'
-              style: style2
-              show_wind_forecast: true
-              condition_icons: true
-              round_temp: false
-              type: daily
-              number_of_forecasts: '7'
-              disable_animation: true
-              chart_height: '180'
-            locale: ru
-            units:
-              speed: m/s
-              pressure: mmHg
-            show_uv: false
           - type: custom:mini-graph-card
             name: Температура
             hour24: true
@@ -736,14 +785,38 @@ views:
         square: false
         columns: 1
         cards:
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                entity: binary_sensor.aqara_t1_220v_sensor
+                icon_color: |-
+                  {% if is_state(entity, 'on') %}
+                    green
+                  {% elif is_state(entity, 'off') %}
+                    red
+                  {% else %}
+                    orange
+                  {% endif %}
+                content: |-
+                  {% if is_state(entity, 'on') %}
+                    Подключено
+                  {% elif is_state(entity, 'off') %}
+                    Отключено
+                  {% else %}
+                    Недоступно
+                  {% endif %}
+                icon: |-
+                  {% if is_state(entity, 'on') %}
+                    mdi:power-plug-outline
+                  {% elif is_state(entity, 'off') %}
+                    mdi:power-plug-off-outline
+                  {% else %}
+                    mdi:help-circle-outline
+                  {% endif %}
+                tap_action:
+                  action: more-info
           - type: custom:uptime-card
             entity: binary_sensor.aqara_t1_220v_sensor
-            icon: mdi:power-plug-outline
-            ko_icon: mdi:power-plug-off-outline
-            none_icon: mdi:wifi-strength-off-outline
-            title_template: Сеть 220В
-            icon_adaptive_color: true
-            title_adaptive_color: true
             average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
             bar:
               height: 20
@@ -752,18 +825,16 @@ views:
               amount: 96
             show:
               status: false
-              icon: true
-            alignment:
-              status: spaced
+              icon: false
+              title: false
             duration:
               quantity: 24
               unit: hour
-            tap_action:
-              action: more-info
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.meross_power_outlet_1_energy
             name: Обогрев балкона
+            icon: mdi:radiator
             hours_to_show: 168
             lower_bound: 0
             group: true
@@ -832,51 +903,44 @@ views:
     icon: mdi:cat
     badges: []
     cards:
-      - type: grid
+      - square: false
+        type: grid
         columns: 1
-        square: false
         cards:
-          - type: custom:mod-card
-            style:
-              hui-horizontal-stack-card$: |
-                hui-button-card {
-                  margin-right: 10px !important;
-                  margin-bottom: 5px !important;
-                  flex: auto !important; 
-                }
-                bar-card {
-                  --icon-color: var(--state-icon-color);
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  margin-bottom: 5px !important;
-                  width:500%;
-                  flex: auto !important; 
-                }
-            card:
-              type: horizontal-stack
-              cards:
-                - name: Выдано еды
-                  type: custom:bar-card
-                  entity_row: true
-                  entity: sensor.fresh_element_solo_1_dispensed
-                  min: 0
-                  max: 50
-                - show_name: false
-                  show_icon: true
-                  type: button
-                  entity: input_button.petkit_feeder_1_act
-                  icon_height: 35px
-                  icon: mdi:hamburger-plus
-                  hold_action:
-                    action: toggle
-                  tap_action:
-                    action: none
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-columns: auto 30%
+              margin: 0px
+            cards:
+              - type: gauge
+                entity: sensor.fresh_element_solo_1_dispensed
+                name: Выдано еды
+                min: 0
+                max: 50
+                needle: false
+                tap_action:
+                  action: none
+              - type: custom:mushroom-entity-card
+                entity: input_button.petkit_feeder_1_act
+                icon: mdi:hamburger-plus
+                name: Кормить
+                tap_action:
+                  action: none
+                hold_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                secondary_info: last-changed
+                fill_container: true
+                layout: vertical
           - type: custom:auto-entities
             card:
               type: custom:layout-card
               layout_type: grid
               layout:
                 grid-template-columns: repeat(2, minmax(50%, 50%))
+                margin: 0px
             entities: null
             filter:
               include:
@@ -900,51 +964,44 @@ views:
                 - entity_id: sensor.fresh_element_solo_1_status
                   state: online
         title: Кормилка 1
-      - type: grid
+      - square: false
+        type: grid
         columns: 1
-        square: false
         cards:
-          - type: custom:mod-card
-            style:
-              hui-horizontal-stack-card$: |
-                hui-button-card {
-                  margin-right: 10px !important;
-                  margin-bottom: 5px !important;
-                  flex: auto !important; 
-                }
-                bar-card {
-                  --icon-color: var(--state-icon-color);
-                  margin-left: 10px !important;
-                  margin-right: 10px !important;
-                  margin-bottom: 5px !important;
-                  width:500%;
-                  flex: auto !important; 
-                }
-            card:
-              type: horizontal-stack
-              cards:
-                - name: Выдано еды
-                  type: custom:bar-card
-                  entity_row: true
-                  entity: sensor.fresh_element_solo_2_dispensed
-                  min: 0
-                  max: 50
-                - show_name: false
-                  show_icon: true
-                  type: button
-                  entity: input_button.petkit_feeder_1_act
-                  icon_height: 35px
-                  icon: mdi:hamburger-plus
-                  hold_action:
-                    action: toggle
-                  tap_action:
-                    action: none
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-columns: auto 30%
+              margin: 0px
+            cards:
+              - type: gauge
+                entity: sensor.fresh_element_solo_2_dispensed
+                name: Выдано еды
+                min: 0
+                max: 50
+                needle: false
+                tap_action:
+                  action: none
+              - type: custom:mushroom-entity-card
+                entity: input_button.petkit_feeder_1_act
+                icon: mdi:hamburger-plus
+                name: Кормить
+                tap_action:
+                  action: none
+                hold_action:
+                  action: toggle
+                double_tap_action:
+                  action: none
+                secondary_info: last-changed
+                fill_container: true
+                layout: vertical
           - type: custom:auto-entities
             card:
               type: custom:layout-card
               layout_type: grid
               layout:
                 grid-template-columns: repeat(2, minmax(50%, 50%))
+              margin: 0px
             entities: null
             filter:
               include:
@@ -996,149 +1053,125 @@ views:
                   state: 'on'
             show_empty: false
       - type: grid
-        title: Расходники
-        square: false
         columns: 1
+        square: false
+        title: Расходники
         cards:
-          - type: custom:mod-card
-            style:
-              hui-vertical-stack-card$:
-                hui-horizontal-stack-card$:
-                  bar-card:
-                    $: |
-                      :host {
-                        --icon-color: var(--state-icon-color);
-                        margin-left: 10px !important;
-                        margin-right: 10px !important;
-                        width: 500%;
-                        flex: auto !important;
-                      }
-                  hui-button-card:
-                    $: |
-                      :host {
-                        margin-right: 10px !important;
-                        flex: auto !important;
-                      }
-            card:
-              type: vertical-stack
-              cards:
-                - type: horizontal-stack
-                  cards:
-                    - type: custom:bar-card
-                      entity: sensor.eversweet_3_pro_uvc_filter
-                      name: 'Питьевой фонтан: Фильтр'
-                      icon: mdi:filter
-                      decimal: 0
-                      entity_row: true
-                      min: 0
-                      max: 100
-                      severity:
-                        - color: Red
-                          from: 0
-                          to: 25
-                        - color: Orange
-                          from: 25
-                          to: 50
-                        - color: Green
-                          from: 50
-                          to: 100
-                    - show_name: false
-                      show_icon: true
-                      type: button
-                      entity: button.eversweet_3_pro_uvc_reset_filter
-                      icon_height: 30px
-                      icon: mdi:refresh-circle
-                      hold_action:
-                        action: toggle
-                      tap_action:
-                        action: none
-                - type: horizontal-stack
-                  cards:
-                    - type: custom:bar-card
-                      entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                      name: 'Кормилка 1: Влагопоглотитель'
-                      icon: mdi:water-remove
-                      decimal: 0
-                      entity_row: true
-                      min: 0
-                      max: 30
-                      severity:
-                        - color: Red
-                          from: 0
-                          to: 7
-                        - color: Orange
-                          from: 7
-                          to: 15
-                        - color: Green
-                          from: 15
-                          to: 30
-                    - show_name: false
-                      show_icon: true
-                      type: button
-                      entity: button.fresh_element_solo_1_reset_desiccant
-                      icon_height: 30px
-                      icon: mdi:refresh-circle
-                      hold_action:
-                        action: toggle
-                      tap_action:
-                        action: none
-                - type: horizontal-stack
-                  cards:
-                    - type: custom:bar-card
-                      entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                      name: 'Кормилка 2: Влагопоглотитель'
-                      icon: mdi:water-remove
-                      decimal: 0
-                      entity_row: true
-                      min: 0
-                      max: 30
-                      severity:
-                        - color: Red
-                          from: 0
-                          to: 7
-                        - color: Orange
-                          from: 7
-                          to: 15
-                        - color: Green
-                          from: 15
-                          to: 30
-                    - show_name: false
-                      show_icon: true
-                      type: button
-                      entity: button.fresh_element_solo_2_reset_desiccant
-                      icon_height: 30px
-                      icon: mdi:refresh-circle
-                      hold_action:
-                        action: toggle
-                      tap_action:
-                        action: none
-                - type: horizontal-stack
-                  cards:
-                    - type: custom:bar-card
-                      entity: sensor.petkit_pura_air_filter_days_left
-                      name: 'Освежитель лотка: Фильтр'
-                      icon: mdi:air-filter
-                      decimal: 0
-                      entity_row: true
-                      min: 0
-                      max: 90
-                      severity:
-                        - color: Red
-                          from: 0
-                          to: 7
-                        - color: Orange
-                          from: 7
-                          to: 30
-                        - color: Green
-                          from: 30
-                          to: 90
-                    - show_name: false
-                      show_icon: true
-                      type: button
-                      icon_height: 30px
-                      icon: mdi:refresh-circle
-                      hold_action:
-                        action: call-service
-                        service: script.reset_petkit_pura_air_filter
-                      tap_action:
-                        action: none
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-columns: auto 20%
+            cards:
+              - type: custom:bar-card
+                name: 'Питьевой фонтан: Фильтр'
+                icon: mdi:filter
+                decimal: 0
+                entity_row: true
+                min: 0
+                max: 100
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 25
+                  - color: Orange
+                    from: 25
+                    to: 50
+                  - color: Green
+                    from: 50
+                    to: 100
+                entities:
+                  - entity: sensor.eversweet_3_pro_uvc_filter
+              - show_name: false
+                show_icon: true
+                type: button
+                entity: button.eversweet_3_pro_uvc_reset_filter
+                icon_height: 30px
+                icon: mdi:refresh-circle
+                hold_action:
+                  action: toggle
+                tap_action:
+                  action: none
+              - type: custom:bar-card
+                entity: sensor.fresh_element_solo_1_desiccant_days_remaining
+                name: 'Кормилка 1: Влагопоглотитель'
+                icon: mdi:water-remove
+                decimal: 0
+                entity_row: true
+                min: 0
+                max: 30
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 7
+                  - color: Orange
+                    from: 7
+                    to: 15
+                  - color: Green
+                    from: 15
+                    to: 30
+              - show_name: false
+                show_icon: true
+                type: button
+                entity: button.fresh_element_solo_1_reset_desiccant
+                icon_height: 30px
+                icon: mdi:refresh-circle
+                hold_action:
+                  action: toggle
+                tap_action:
+                  action: none
+              - type: custom:bar-card
+                entity: sensor.fresh_element_solo_2_desiccant_days_remaining
+                name: 'Кормилка 2: Влагопоглотитель'
+                icon: mdi:water-remove
+                decimal: 0
+                entity_row: true
+                min: 0
+                max: 30
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 7
+                  - color: Orange
+                    from: 7
+                    to: 15
+                  - color: Green
+                    from: 15
+                    to: 30
+              - show_name: false
+                show_icon: true
+                type: button
+                entity: button.fresh_element_solo_2_reset_desiccant
+                icon_height: 30px
+                icon: mdi:refresh-circle
+                hold_action:
+                  action: toggle
+                tap_action:
+                  action: none
+              - type: custom:bar-card
+                entity: sensor.petkit_pura_air_filter_days_left
+                name: 'Освежитель лотка: Фильтр'
+                icon: mdi:air-filter
+                decimal: 0
+                entity_row: true
+                min: 0
+                max: 90
+                severity:
+                  - color: Red
+                    from: 0
+                    to: 7
+                  - color: Orange
+                    from: 7
+                    to: 30
+                  - color: Green
+                    from: 30
+                    to: 90
+              - show_name: false
+                show_icon: true
+                type: button
+                icon_height: 30px
+                icon: mdi:refresh-circle
+                hold_action:
+                  action: call-service
+                  service: script.reset_petkit_pura_air_filter
+                tap_action:
+                  action: none
