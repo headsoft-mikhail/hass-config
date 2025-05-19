@@ -157,13 +157,16 @@ views:
         columns: 2
         square: false
         cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.backup_state
-            icon: mdi:cloud-upload
-            features_position: bottom
-            vertical: false
-          - type: custom:mushroom-entity-card
-            entity: sensor.rpi_cpu_temperature
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.backup_state
+                icon: mdi:cloud-upload
+                icon_color: blue
+              - type: entity
+                entity: sensor.rpi_cpu_temperature
+                icon_color: orange
+          - type: custom:mushroom-empty-card
           - type: gauge
             name: DataBase volume
             entity: sensor.sql_query_db_volume
