@@ -1086,12 +1086,11 @@ views:
               grid-template-columns: auto 30%
               margin: 0px
             cards:
-              - type: gauge
+              - type: custom:mushroom-bar-card
                 entity: sensor.fresh_element_solo_1_dispensed
                 name: Выдано еды
                 min: 0
                 max: 50
-                needle: false
                 tap_action:
                   action: none
               - type: custom:mushroom-entity-card
@@ -1147,12 +1146,11 @@ views:
               grid-template-columns: auto 30%
               margin: 0px
             cards:
-              - type: gauge
+              - type: custom:mushroom-bar-card
                 entity: sensor.fresh_element_solo_2_dispensed
                 name: Выдано еды
                 min: 0
                 max: 50
-                needle: false
                 tap_action:
                   action: none
               - type: custom:mushroom-entity-card
@@ -1233,7 +1231,6 @@ views:
           - type: custom:mushroom-bar-card
             entity: sensor.eversweet_3_pro_uvc_filter
             name: 'Питьевой фонтан: Фильтр'
-            icon: ''
             min: 0
             max: 100
             enable_color_severity: true
