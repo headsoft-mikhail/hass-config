@@ -65,12 +65,12 @@ views:
                   action: more-info
               - type: spacer
               - type: entity
-                entity: sensor.zyxel_gateway_upload_speed
-                icon: mdi:upload
-                icon_color: blue
-              - type: entity
                 entity: sensor.zyxel_gateway_download_speed
                 icon: mdi:download
+                icon_color: blue
+              - type: entity
+                entity: sensor.zyxel_gateway_upload_speed
+                icon: mdi:upload
                 icon_color: blue
           - type: custom:uptime-card
             entity: binary_sensor.ping_8_8_8_8
@@ -167,38 +167,29 @@ views:
                 icon: mdi:cloud-upload
                 icon_color: blue
           - type: custom:mushroom-empty-card
-          - type: gauge
-            name: DataBase volume
+          - type: custom:mushroom-bar-card
             entity: sensor.sql_query_db_volume
             min: 0
             max: 2500
-            severity:
-              green: 0
-              yellow: 1500
-              red: 2000
-            needle: false
-          - type: gauge
+            enable_color_severity: true
+          - type: custom:mushroom-bar-card
             name: Core disk usage
             entity: sensor.home_assistant_host_disk_used
             min: 0
             max: 225
-            severity:
-              green: 0
-              yellow: 50
-              red: 150
-            needle: false
-          - type: custom:mushroom-entity-card
-            name: Core CPU usage
-            entity: sensor.home_assistant_core_cpu_percent
+            enable_color_severity: true
           - type: custom:mushroom-entity-card
             name: Supervisor CPU usage
             entity: sensor.home_assistant_supervisor_cpu_percent
           - type: custom:mushroom-entity-card
-            name: Core RAM usage
-            entity: sensor.home_assistant_core_memory_percent
+            name: Core CPU usage
+            entity: sensor.home_assistant_core_cpu_percent
           - type: custom:mushroom-entity-card
             name: Supervisor RAM usage
             entity: sensor.home_assistant_supervisor_memory_percent
+          - type: custom:mushroom-entity-card
+            name: Core RAM usage
+            entity: sensor.home_assistant_core_memory_percent
   - title: Микроклимат
     path: climate
     icon: mdi:home-thermometer-outline
@@ -212,7 +203,9 @@ views:
             show_temperature: true
           - type: template
             entity: sensor.home_assistant_apparent_temperature
-            content: Ощущуается как {{ states(entity)}} °C
+            content: >-
+              Ощущуается как {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
             icon: mdi:thermometer
             icon_color: |-
               {% set temp = states(entity) | float(0) %}
@@ -265,9 +258,9 @@ views:
         show_date: 'false'
         show_precipitation_amounts: true
         show_precipitation_probability: false
-        num_segments: '12'
         label_spacing: '2'
         name: ' '
+        num_segments: '8'
       - type: custom:clock-weather-card
         entity: weather.home_assistant
         hide_today_section: true
@@ -424,7 +417,163 @@ views:
     icon: mdi:apps
     badges: []
     cards:
-      - type: vertical-stack
+      - square: false
+        type: grid
+        columns: 1
+        cards:
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                name: Температура
+                entity: sensor.airmonitor2_temperature
+                icon_color: deep-orange
+              - type: entity
+                name: Влажность
+                entity: sensor.airmonitor2_humidity
+                icon_color: blue
+              - type: template
+                entity: sensor.airmonitor2_pm25
+                icon_color: |-
+                  {% set tvoc = states(entity) | float(0) %}
+                  {% if tvoc < 75 %}
+                    green
+                  {% elif tvoc < 150 %}
+                    lime
+                  {% elif tvoc < 250 %}
+                    deep-orange
+                  {% else %}
+                    red
+                  {% endif %}
+                icon: mdi:grain
+                content: >-
+                  {{ states(entity) }} {{ state_attr(entity,
+                  'unit_of_measurement') }}
+                tap_action:
+                  action: more-info
+              - type: template
+                entity: sensor.airmonitor2_tvoc_ug
+                icon: mdi:molecule
+                icon_color: |-
+                  {% set tvoc = states(entity) | float(0) %}
+                  {% if tvoc < 300 %}
+                    teal
+                  {% elif tvoc < 1000 %}
+                    green
+                  {% elif tvoc < 3000 %}
+                    lime
+                  {% elif tvoc < 9000 %}
+                    deep-orange
+                  {% else %}
+                    red
+                  {% endif %}
+                content: >-
+                  {{ states(entity) }} {{ state_attr(entity,
+                  'unit_of_measurement') }}
+                tap_action:
+                  action: more-info
+              - type: template
+                entity: sensor.airmonitor2_co2
+                icon: mdi:molecule-co2
+                icon_color: |-
+                  {% set tvoc = states(entity) | float(0) %}
+                  {% if tvoc < 1000 %}
+                    green
+                  {% elif tvoc < 2000 %}
+                    amber
+                  {% else %}
+                    red
+                  {% endif %}
+                content: >-
+                  {{ states(entity) }} {{ state_attr(entity,
+                  'unit_of_measurement') }}
+                tap_action:
+                  action: more-info
+              - type: entity
+                name: Давление
+                entity: sensor.airmonitor2_noise
+                icon_color: grey
+        title: Спальня
+      - square: false
+        type: grid
+        columns: 1
+        title: Кухня
+        cards:
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                name: Температура
+                entity: sensor.efekta_smart_aq_box_temperature
+                icon_color: deep-orange
+              - type: entity
+                name: Влажность
+                entity: sensor.efekta_smart_aq_box_humidity
+                icon_color: blue
+              - type: template
+                entity: sensor.efekta_smart_aq_box_pm25
+                icon_color: |-
+                  {% set tvoc = states(entity) | float(0) %}
+                  {% if tvoc < 75 %}
+                    green
+                  {% elif tvoc < 150 %}
+                    lime
+                  {% elif tvoc < 250 %}
+                    deep-orange
+                  {% else %}
+                    red
+                  {% endif %}
+                icon: mdi:grain
+                content: >-
+                  {{ states(entity) }} {{ state_attr(entity,
+                  'unit_of_measurement') }}
+                tap_action:
+                  action: more-info
+              - type: template
+                entity: sensor.efekta_smart_aq_box_tvoc_ug
+                icon: mdi:molecule
+                icon_color: |-
+                  {% set tvoc = states(entity) | float(0) %}
+                  {% if tvoc < 300 %}
+                    teal
+                  {% elif tvoc < 1000 %}
+                    green
+                  {% elif tvoc < 3000 %}
+                    lime
+                  {% elif tvoc < 9000 %}
+                    deep-orange
+                  {% else %}
+                    red
+                  {% endif %}
+                content: >-
+                  {{ states(entity) }} {{ state_attr(entity,
+                  'unit_of_measurement') }}
+                tap_action:
+                  action: more-info
+              - type: template
+                entity: sensor.efekta_smart_aq_box_co2
+                icon: mdi:molecule-co2
+                icon_color: |-
+                  {% set tvoc = states(entity) | float(0) %}
+                  {% if tvoc < 1000 %}
+                    green
+                  {% elif tvoc < 2000 %}
+                    amber
+                  {% else %}
+                    red
+                  {% endif %}
+                content: >-
+                  {{ states(entity) }} {{ state_attr(entity,
+                  'unit_of_measurement') }}
+                tap_action:
+                  action: more-info
+              - type: entity
+                name: Давление
+                entity: sensor.efekta_smart_aq_box_pressure
+                icon: mdi:gauge
+                icon_color: grey
+      - type: grid
+        columns: 1
+        square: false
+        title: Медиа
         cards:
           - type: custom:mushroom-media-player-card
             entity: media_player.yandex_station_m101k3a00pba6r
@@ -733,62 +882,72 @@ views:
             collapsible_controls: false
             primary_info: name
             secondary_info: state
-      - type: grid
-        title: Air Monitor
-        square: false
-        columns: 3
-        cards:
-          - type: custom:mushroom-entity-card
-            name: Температура
-            entity: sensor.airmonitor2_temperature
+          - features:
+              - type: custom:service-call
+                entries:
+                  - type: spinbox
+                    icon: mdi:thermometer
+                    label: '{{ value }}{{ unit }}'
+                    step: 1
+                    debounceTime: 1000
+                    range:
+                      - '{{ state_attr(config.entity, ''min_temp'') }}'
+                      - '{{ state_attr(config.entity, ''max_temp'') }}'
+                    value_attribute: temperature
+                    unit_of_measurement: °C
+                    hold_action:
+                      action: repeat
+                    entity_id: climate.aqara_e1_thermostat_3
+                    styles: |-
+                      :host {
+                        --background: var(--feature-color);
+                        --icon-color: var(--feature-color);
+                        flex-flow: row;
+                      }
+                    tap_action:
+                      action: perform-action
+                      perform_action: climate.set_temperature
+                      target:
+                        entity_id: climate.aqara_e1_thermostat_3
+                      data:
+                        temperature: '{{ value }}'
+            type: tile
+            entity: climate.aqara_e1_thermostat_3
             features_position: bottom
             vertical: false
-          - type: custom:mushroom-entity-card
-            name: Влажность
-            entity: sensor.airmonitor2_humidity
-          - type: custom:mushroom-entity-card
-            name: CO2
-            entity: sensor.airmonitor2_co2
-          - type: custom:mushroom-entity-card
-            name: eTVOC
-            entity: sensor.airmonitor2_etvoc
-          - type: custom:mushroom-entity-card
-            name: PM2.5
-            entity: sensor.airmonitor2_pm25
-          - type: custom:mushroom-entity-card
-            name: PM10
-            entity: sensor.airmonitor2_pm10
-          - type: custom:mushroom-entity-card
-            name: Шум
-            entity: sensor.airmonitor2_noise
-      - square: false
-        type: grid
-        columns: 3
-        cards:
-          - type: custom:mushroom-entity-card
-            name: Температура
-            entity: sensor.efekta_smart_aq_box_temperature
+          - type: tile
+            entity: humidifier.switch_humidifier
+            features:
+              - type: custom:service-call
+                entries:
+                  - type: spinbox
+                    icon: mdi:water-percent
+                    label: '{{ value }}{{ unit }}'
+                    step: 1
+                    debounceTime: 1000
+                    range:
+                      - '{{ state_attr(config.entity, ''min_humidity'') }}'
+                      - '{{ state_attr(config.entity, ''max_humidity'') }}'
+                    value_attribute: humidity
+                    unit_of_measurement: '%'
+                    hold_action:
+                      action: repeat
+                    entity_id: humidifier.switch_humidifier
+                    styles: |-
+                      :host {
+                        --background: var(--feature-color);;
+                        --icon-color: var(--feature-color);;
+                        flex-flow: row;
+                      }
+                    tap_action:
+                      action: perform-action
+                      perform_action: humidifier.set_humidity
+                      target:
+                        entity_id: humidifier.switch_humidifier
+                      data:
+                        humidity: '{{ value }}'
             features_position: bottom
-            vertical: false
-          - type: custom:mushroom-entity-card
-            name: Влажность
-            entity: sensor.efekta_smart_aq_box_humidity
-          - type: custom:mushroom-entity-card
-            name: CO2
-            entity: sensor.efekta_smart_aq_box_co2
-          - type: custom:mushroom-entity-card
-            name: VOC Index
-            entity: sensor.efekta_smart_aq_box_voc_index
-          - type: custom:mushroom-entity-card
-            name: PM2.5
-            entity: sensor.efekta_smart_aq_box_pm25
-          - type: custom:mushroom-entity-card
-            name: PM10
-            entity: sensor.efekta_smart_aq_box_pm10
-          - type: custom:mushroom-entity-card
-            name: Давление
-            entity: sensor.efekta_smart_aq_box_pressure
-        title: Efekta
+            vertical: true
   - title: Энергия
     path: energy
     icon: mdi:battery-80
@@ -1050,7 +1209,7 @@ views:
             icon: mdi:water-pump
             features_position: bottom
             vertical: false
-            color: primary
+            color: blue
           - type: custom:auto-entities
             card:
               type: custom:layout-card
@@ -1066,126 +1225,77 @@ views:
                     icon_color: red
                   state: 'on'
             show_empty: false
-      - type: grid
+      - square: false
+        type: grid
         columns: 1
-        square: false
         title: Расходники
         cards:
-          - type: custom:layout-card
-            layout_type: custom:grid-layout
-            layout:
-              grid-template-columns: auto 20%
-            cards:
-              - type: custom:bar-card
-                name: 'Питьевой фонтан: Фильтр'
-                icon: mdi:filter
-                decimal: 0
-                entity_row: true
-                min: 0
-                max: 100
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 25
-                  - color: Orange
-                    from: 25
-                    to: 50
-                  - color: Green
-                    from: 50
-                    to: 100
-                entities:
-                  - entity: sensor.eversweet_3_pro_uvc_filter
-              - show_name: false
-                show_icon: true
-                type: button
-                entity: button.eversweet_3_pro_uvc_reset_filter
-                icon_height: 30px
-                icon: mdi:refresh-circle
-                hold_action:
-                  action: toggle
-                tap_action:
-                  action: none
-              - type: custom:bar-card
-                entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                name: 'Кормилка 1: Влагопоглотитель'
-                icon: mdi:water-remove
-                decimal: 0
-                entity_row: true
-                min: 0
-                max: 30
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 7
-                  - color: Orange
-                    from: 7
-                    to: 15
-                  - color: Green
-                    from: 15
-                    to: 30
-              - show_name: false
-                show_icon: true
-                type: button
-                entity: button.fresh_element_solo_1_reset_desiccant
-                icon_height: 30px
-                icon: mdi:refresh-circle
-                hold_action:
-                  action: toggle
-                tap_action:
-                  action: none
-              - type: custom:bar-card
-                entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                name: 'Кормилка 2: Влагопоглотитель'
-                icon: mdi:water-remove
-                decimal: 0
-                entity_row: true
-                min: 0
-                max: 30
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 7
-                  - color: Orange
-                    from: 7
-                    to: 15
-                  - color: Green
-                    from: 15
-                    to: 30
-              - show_name: false
-                show_icon: true
-                type: button
-                entity: button.fresh_element_solo_2_reset_desiccant
-                icon_height: 30px
-                icon: mdi:refresh-circle
-                hold_action:
-                  action: toggle
-                tap_action:
-                  action: none
-              - type: custom:bar-card
-                entity: sensor.petkit_pura_air_filter_days_left
-                name: 'Освежитель лотка: Фильтр'
-                icon: mdi:air-filter
-                decimal: 0
-                entity_row: true
-                min: 0
-                max: 90
-                severity:
-                  - color: Red
-                    from: 0
-                    to: 7
-                  - color: Orange
-                    from: 7
-                    to: 30
-                  - color: Green
-                    from: 30
-                    to: 90
-              - show_name: false
-                show_icon: true
-                type: button
-                icon_height: 30px
-                icon: mdi:refresh-circle
-                hold_action:
-                  action: call-service
-                  service: script.reset_petkit_pura_air_filter
-                tap_action:
-                  action: none
+          - type: custom:mushroom-bar-card
+            entity: sensor.eversweet_3_pro_uvc_filter
+            name: 'Питьевой фонтан: Фильтр'
+            icon: ''
+            min: 0
+            max: 100
+            enable_color_severity: true
+            severity_direction: reverse
+            layout: horizontal
+            hold_action:
+              action: perform-action
+              perform_action: button.press
+              target:
+                entity_id: button.eversweet_3_pro_uvc_reset_filter
+            tap_action:
+              action: none
+            double_tap_action:
+              action: none
+          - type: custom:mushroom-bar-card
+            entity: sensor.fresh_element_solo_1_desiccant_days_remaining
+            name: 'Кормилка 1: Влагопоглотитель'
+            icon: mdi:water-remove
+            min: 0
+            max: 30
+            enable_color_severity: true
+            severity_direction: reverse
+            layout: horizontal
+            hold_action:
+              action: perform-action
+              perform_action: button.press
+              target:
+                entity_id: button.fresh_element_solo_1_reset_desiccant
+            tap_action:
+              action: none
+            double_tap_action:
+              action: none
+          - type: custom:mushroom-bar-card
+            entity: sensor.fresh_element_solo_2_desiccant_days_remaining
+            name: 'Кормилка 2: Влагопоглотитель'
+            icon: mdi:water-remove
+            min: 0
+            max: 30
+            severity_direction: reverse
+            enable_color_severity: true
+            layout: horizontal
+            tap_action:
+              action: none
+            hold_action:
+              action: perform-action
+              perform_action: button.press
+              target:
+                entity_id: button.fresh_element_solo_2_reset_desiccant
+            double_tap_action:
+              action: none
+          - type: custom:mushroom-bar-card
+            entity: sensor.petkit_pura_air_filter_days_left
+            name: 'Освежитель лотка: Фильтр'
+            icon: mdi:air-filter
+            min: 0
+            max: 90
+            enable_color_severity: true
+            severity_direction: reverse
+            layout: horizontal
+            hold_action:
+              action: perform-action
+              perform_action: script.reset_petkit_pura_air_filter
+              target: {}
+            double_tap_action:
+              action: none

@@ -65,10 +65,26 @@ template:
         last_update: '{{ now() }}'
       availability: "{{ states('input_datetime.petkit_pura_air_filter_replaced') not in ['unknown', 'unavailable'] }}"
   - sensor:
-    - name: 'airmonitor2_etvoc_converted'
-      unique_id: 'airmonitor2_etvoc_converted'
+    - name: 'airmonitor2_tvoc_ug'
+      unique_id: 'airmonitor2_tvoc_ug'
       unit_of_measurement: "µg/m³"
-      state: '{{ (states("sensor.airmonitor2_etvoc") | float(0) * 1000) | round(2) }}'
+      state: '{{ (states("sensor.airmonitor2_etvoc") | float(0) * 1000) | round(0) }}'
+      attributes:
+        device_class: volatile_organic_compounds
+    - name: 'efekta_smart_aq_box_tvoc_ug'
+      unique_id: 'efekta_smart_aq_box_tvoc_ug'
+      unit_of_measurement: 'µg/m³'
+      state: >
+        {% set x = states('sensor.efekta_smart_aq_box_voc_index') | float(0) %}
+        {{ ((
+              -0.03196 +
+              0.01081 * x +
+              0.0003349 * x**2 -
+              0.000003332 * x**3 +
+              0.000000009259 * x**4 -
+              0.000000000007215 * x**5
+            ) * 1000) | round(0) 
+        }}
       attributes:
         device_class: volatile_organic_compounds
 

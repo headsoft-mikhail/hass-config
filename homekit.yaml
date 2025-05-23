@@ -22,15 +22,13 @@
       - sensor.airmonitor2_co2
       - sensor.airmonitor2_pm25
       - sensor.airmonitor2_pm10
-      - sensor.airmonitor2_etvoc_converted
+      - sensor.airmonitor2_tvoc_ug
       - sensor.efekta_smart_aq_box_temperature
       - sensor.efekta_smart_aq_box_humidity
       - sensor.efekta_smart_aq_box_co2
-      - sensor.efekta_smart_aq_box_pm1
       - sensor.efekta_smart_aq_box_pm25
       - sensor.efekta_smart_aq_box_pm10
-      - sensor.efekta_smart_aq_box_voc_index
-      - sensor.efekta_smart_aq_box_pressure
+      - sensor.efekta_smart_aq_box_tvoc_ug
       - binary_sensor.aqara_leak_sensor_1
       - binary_sensor.meross_power_outlet_1_activity
       # термостаты
@@ -90,19 +88,19 @@
       linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
     sensor.airmonitor2_co2:
-      name: CO2
+      name: CO2 AM2
       linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
     sensor.airmonitor2_pm25:
-      name: PM2.5
+      name: PM2.5 AM2
       linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
     sensor.airmonitor2_pm10:
-      name: PM10
+      name: PM10 AM2
       linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
-    sensor.airmonitor2_etvoc_converted:
-      name: eTVOC
+    sensor.airmonitor2_tvoc_ug:
+      name: TVOC AM2
       linked_battery_sensor: sensor.airmonitor2_battery
       low_battery_threshold: 30
     sensor.efekta_smart_aq_box_temperature:
@@ -110,11 +108,13 @@
     sensor.efekta_smart_aq_box_humidity:
       name: Efekta
     sensor.efekta_smart_aq_box_co2:
-      name: Efekta
+      name: CO2 Efekta
     sensor.efekta_smart_aq_box_pm25:
-      name: Efekta
+      name: PM2.5 Efekta
     sensor.efekta_smart_aq_box_pm10:
-      name: Efekta
+      name: PM10 Efekta
+    sensor.efekta_smart_aq_box_tvoc_ug:
+      name: TVOC Efekta
     binary_sensor.aqara_leak_sensor_1:
       name: Подоконник
       linked_battery_sensor: sensor.aqara_leak_sensor_1_battery
