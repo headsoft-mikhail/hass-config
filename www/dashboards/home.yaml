@@ -160,13 +160,22 @@ views:
           - type: custom:mushroom-chips-card
             chips:
               - type: entity
-                entity: sensor.rpi_cpu_temperature
-                icon_color: orange
-              - type: entity
                 entity: sensor.backup_state
                 icon: mdi:cloud-upload
                 icon_color: blue
-          - type: custom:mushroom-empty-card
+              - type: entity
+                entity: sensor.rpi_cpu_temperature
+                icon_color: orange
+          - type: custom:mushroom-climate-card
+            entity: climate.rpi_cooling_system
+            icon: mdi:fan
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            double_tap_action:
+              action: none
+            secondary_info: none
           - type: custom:mushroom-bar-card
             entity: sensor.sql_query_db_volume
             min: 0
@@ -204,7 +213,7 @@ views:
           - type: template
             entity: sensor.home_assistant_apparent_temperature
             content: >-
-              Ощущуается как {{ states(entity).replace('.', ',') }} {{
+              Ощущается как {{ states(entity).replace('.', ',') }} {{
               state_attr(entity, 'unit_of_measurement') }}
             icon: mdi:thermometer
             icon_color: |-
@@ -220,11 +229,12 @@ views:
               {% endif %}
             tap_action:
               action: more-info
-          - type: entity
+          - type: template
             entity: sensor.home_assistant_precipitation
-            icon_color: blue
-            tap_action:
-              action: more-info
+            icon: mdi:weather-snowy-rainy
+            content: >-
+              {{ states(entity) + " mm" if states(entity) not in ['unknown',
+              'unavailable', 'none', '', None] else '-' }}
           - type: entity
             entity: sensor.home_assistant_cloud_coverage
             icon_color: light-grey
@@ -948,6 +958,14 @@ views:
                         humidity: '{{ value }}'
             features_position: bottom
             vertical: true
+      - square: true
+        type: grid
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: binary_sensor.aqara_tilt_sensor_vibration
+            name: Вибрация
+        columns: 2
+        title: Z2M
   - title: Энергия
     path: energy
     icon: mdi:battery-80

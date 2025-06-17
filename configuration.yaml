@@ -133,6 +133,7 @@ generic_hygrostat:
 climate:
   - platform: generic_thermostat
     name: Охлаждение RPi
+    unique_id: rpi_cooling_system
     heater: switch.rpi_cooling_fan
     target_sensor: sensor.rpi_cpu_temperature
     min_temp: 40
