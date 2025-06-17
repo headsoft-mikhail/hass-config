@@ -21,6 +21,23 @@ yandex_smart_home: !include yaha_cloud.yaml
 
 # Custom entities
 
+command_line:
+  - sensor:
+      command: 'cat /sys/class/thermal/thermal_zone0/temp'
+      name: RPi CPU Temperature
+      unique_id: rpi_cpu_temperature
+      device_class: temperature
+      unit_of_measurement: '°C'
+      value_template: '{{ (value | float / 1000) | round(1) }}'
+      scan_interval: 60
+
+switch:
+  - platform: rpi_gpio
+    switches:
+      - port: 17
+        name: RPi cooling fan
+        unique_id: rpi_cooling_fan
+
 input_button:
   run_speedtest:
     name: 'Run SpeedTest'
@@ -64,10 +81,9 @@ template:
       attributes:
         last_update: '{{ now() }}'
       availability: "{{ states('input_datetime.petkit_pura_air_filter_replaced') not in ['unknown', 'unavailable'] }}"
-  - sensor:
     - name: 'airmonitor2_tvoc_ug'
       unique_id: 'airmonitor2_tvoc_ug'
-      unit_of_measurement: "µg/m³"
+      unit_of_measurement: 'µg/m³'
       state: '{{ (states("sensor.airmonitor2_etvoc") | float(0) * 1000) | round(0) }}'
       attributes:
         device_class: volatile_organic_compounds
@@ -87,7 +103,13 @@ template:
         }}
       attributes:
         device_class: volatile_organic_compounds
-
+  - binary_sensor:
+    - name: 'Обогрев балкона'
+      unique_id: meross_power_outlet_1_activity
+      device_class: motion
+      state: '{{ states("sensor.meross_power_outlet_1_power")|float(0) > 50 }}'
+      delay_off:
+        seconds: 10
 
 generic_hygrostat:
   - name: switch_humidifier
@@ -108,23 +130,14 @@ generic_hygrostat:
     sensor_stale_duration:
       minutes: 30
 
-binary_sensor:
-  - platform: template
-    sensors:
-      meross_power_outlet_1_activity:
-        friendly_name: 'Обогрев балкона'
-        unique_id: meross_power_outlet_1_activity
-        device_class: motion
-        delay_off:
-          seconds: 10
-        value_template: '{{ states("sensor.meross_power_outlet_1_power")|float > 50 }}'
-
-command_line:
-  - sensor:
-      command: 'cat /sys/class/thermal/thermal_zone0/temp'
-      name: RPi CPU Temperature
-      unique_id: rpi_cpu_temperature
-      device_class: temperature
-      unit_of_measurement: '°C'
-      value_template: '{{ (value | float / 1000) | round(1) }}'
-      scan_interval: 60
+climate:
+  - platform: generic_thermostat
+    name: Охлаждение RPi
+    heater: switch.rpi_cooling_fan
+    target_sensor: sensor.rpi_cpu_temperature
+    min_temp: 40
+    max_temp: 80
+    target_temp: 60
+    cold_tolerance: 5
+    hot_tolerance: 5
+    ac_mode: true
