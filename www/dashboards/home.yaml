@@ -154,7 +154,7 @@ views:
             force_status_newline: true
       - type: grid
         title: Home Assistant
-        columns: 2
+        columns: 1
         square: false
         cards:
           - type: custom:mushroom-chips-card
@@ -166,39 +166,61 @@ views:
               - type: entity
                 entity: sensor.rpi_cpu_temperature
                 icon_color: orange
-          - type: custom:mushroom-climate-card
-            entity: climate.rpi_cooling_system
-            icon: mdi:fan
-            tap_action:
-              action: toggle
-            hold_action:
-              action: more-info
-            double_tap_action:
-              action: none
-            secondary_info: none
-          - type: custom:mushroom-bar-card
-            entity: sensor.sql_query_db_volume
-            min: 0
-            max: 2500
-            enable_color_severity: true
-          - type: custom:mushroom-bar-card
-            name: Core disk usage
-            entity: sensor.home_assistant_host_disk_used
-            min: 0
-            max: 225
-            enable_color_severity: true
-          - type: custom:mushroom-entity-card
-            name: Supervisor CPU usage
-            entity: sensor.home_assistant_supervisor_cpu_percent
-          - type: custom:mushroom-entity-card
-            name: Core CPU usage
-            entity: sensor.home_assistant_core_cpu_percent
-          - type: custom:mushroom-entity-card
-            name: Supervisor RAM usage
-            entity: sensor.home_assistant_supervisor_memory_percent
-          - type: custom:mushroom-entity-card
-            name: Core RAM usage
-            entity: sensor.home_assistant_core_memory_percent
+              - type: template
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: toggle
+                content: |-
+                  {% set action = state_attr(entity, 'hvac_action') %}
+                  {{ {
+                    'off': 'Выключено',
+                    'idle': 'Ожидание',
+                    'cooling': 'Охлаждение',
+                  }[action] if action else 'Неизвестно' }}
+                entity: climate.rpi_cooling_system
+                icon: |+
+                  {% set action = state_attr(entity,  'hvac_action') %}
+                  {{ {
+                    'off': 'mdi:fan-off',
+                    'idle': 'mdi:fan-clock',
+                    'cooling': 'mdi:fan',
+                  }[action] if action else 'mdi:help-circle-outline' }}
+
+                icon_color: |
+                  {% set action = state_attr(entity,  'hvac_action') %}
+                  {{ {
+                    'off': 'grey',
+                    'idle': 'cyan',
+                    'cooling': 'cyan',
+                  }[action] if action else 'orange' }}
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: custom:mushroom-bar-card
+                entity: sensor.sql_query_db_volume
+                min: 0
+                max: 2500
+                enable_color_severity: true
+              - type: custom:mushroom-bar-card
+                name: Core disk usage
+                entity: sensor.home_assistant_host_disk_used
+                min: 0
+                max: 225
+                enable_color_severity: true
+              - type: custom:mushroom-entity-card
+                name: Supervisor CPU usage
+                entity: sensor.home_assistant_supervisor_cpu_percent
+              - type: custom:mushroom-entity-card
+                name: Core CPU usage
+                entity: sensor.home_assistant_core_cpu_percent
+              - type: custom:mushroom-entity-card
+                name: Supervisor RAM usage
+                entity: sensor.home_assistant_supervisor_memory_percent
+              - type: custom:mushroom-entity-card
+                name: Core RAM usage
+                entity: sensor.home_assistant_core_memory_percent
   - title: Микроклимат
     path: climate
     icon: mdi:home-thermometer-outline
@@ -235,6 +257,8 @@ views:
             content: >-
               {{ states(entity) + " mm" if states(entity) not in ['unknown',
               'unavailable', 'none', '', None] else '-' }}
+            tap_action:
+              action: more-info
           - type: entity
             entity: sensor.home_assistant_cloud_coverage
             icon_color: light-grey
