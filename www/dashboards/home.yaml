@@ -159,10 +159,50 @@ views:
         cards:
           - type: custom:mushroom-chips-card
             chips:
-              - type: entity
+              - type: template
+                content: '{{ states(entity) }}'
+                icon_color: |-
+                  {% if states(entity) == 'backed_up' %}
+                    light-blue
+                  {% else %}
+                    red
+                  {% endif %}
+                icon: |-
+                  {% if states(entity) == 'backed_up' %}
+                    mdi:cloud-upload
+                  {% else %}
+                    mdi:cloud-alert
+                  {% endif %}
                 entity: sensor.backup_state
-                icon: mdi:cloud-upload
-                icon_color: blue
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+              - type: template
+                content: >-
+                  {{ as_datetime(state_attr(entity,
+                  'last_backup')).strftime('%d.%m.%Y') }}
+                icon_color: light-blue
+                icon: mdi:cloud-clock
+                entity: sensor.backup_state
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+              - type: template
+                content: >-
+
+                  {{ state_attr(entity, 'backups')[-1]['size'] }} / {{
+                  state_attr(entity, 'size_in_google_drive') }} / {{
+                  state_attr(entity, 'free_space_in_google_drive') }}
+                icon_color: teal
+                icon: mdi:cloud-braces
+                entity: sensor.backup_state
+                picture: ''
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
               - type: entity
                 entity: sensor.rpi_cpu_temperature
                 icon_color: orange
@@ -255,10 +295,11 @@ views:
             entity: sensor.home_assistant_precipitation
             icon: mdi:weather-snowy-rainy
             content: >-
-              {{ states(entity) + " mm" if states(entity) not in ['unknown',
-              'unavailable', 'none', '', None] else '-' }}
+              {{ states(entity) | float | round(1) ~ ' mm' if states(entity) not
+              in ['unknown', 'unavailable', 'none', '', None] else '-' }}
             tap_action:
               action: more-info
+            icon_color: light-blue
           - type: entity
             entity: sensor.home_assistant_cloud_coverage
             icon_color: light-grey
@@ -682,10 +723,10 @@ views:
                         styles: |
                           :host {
                             --mdc-icon-size: 25px;
-                            --color: blue;
+                            --color: cyan;
                             {% if (states(config.entity) or "") != config.option %}
-                            --icon-color: blue;
-                            --label-color: blue;
+                            --icon-color: cyan;
+                            --label-color: cyan;
                             {% endif %}
                           }
                       - entity_id: input_select.sound_signal_source
