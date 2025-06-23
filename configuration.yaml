@@ -56,7 +56,7 @@ input_select:
       - 'Line 1'
       - 'Line 2'
       - 'Coax'
-    initial: 'Optical'
+    initial: 'Off'
     icon: 'mdi:soundbar'
 
 input_datetime:
