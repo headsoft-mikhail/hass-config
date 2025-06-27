@@ -124,7 +124,7 @@ views:
                     fill_container: true
                     layout: vertical
                 layout:
-                  grid-template-columns: auto 20%
+                  grid-template-columns: auto 25%
                   margin: 0px
       - type: grid
         columns: 1
@@ -159,6 +159,14 @@ views:
         cards:
           - type: custom:mushroom-chips-card
             chips:
+              - type: entity
+                entity: sensor.home_assistant_operating_system_version
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon: mdi:home
+                icon_color: light-blue
               - type: template
                 content: '{{ states(entity) }}'
                 icon_color: |-
@@ -239,28 +247,101 @@ views:
             square: false
             cards:
               - type: custom:mushroom-bar-card
+                entity: sensor.home_assistant_host_disk_used
+                min: 0
+                max: 234
+                enable_color_severity: true
+                name: Использование ROM
+              - type: custom:mushroom-bar-card
                 entity: sensor.sql_query_db_volume
                 min: 0
                 max: 2500
                 enable_color_severity: true
-              - type: custom:mushroom-bar-card
-                name: Core disk usage
-                entity: sensor.home_assistant_host_disk_used
-                min: 0
-                max: 225
-                enable_color_severity: true
-              - type: custom:mushroom-entity-card
-                name: Supervisor CPU usage
-                entity: sensor.home_assistant_supervisor_cpu_percent
-              - type: custom:mushroom-entity-card
-                name: Core CPU usage
-                entity: sensor.home_assistant_core_cpu_percent
-              - type: custom:mushroom-entity-card
-                name: Supervisor RAM usage
-                entity: sensor.home_assistant_supervisor_memory_percent
-              - type: custom:mushroom-entity-card
-                name: Core RAM usage
-                entity: sensor.home_assistant_core_memory_percent
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-bar-card
+                    entity: sensor.total_cpu_usage
+                    icon: mdi:cpu-64-bit
+                    enable_color_severity: true
+                    name: Использование CPU
+                  - type: custom:apexcharts-card
+                    chart_type: donut
+                    apex_config:
+                      dataLabels:
+                        enabled: false
+                      legend:
+                        show: false
+                    all_series_config:
+                      fill_raw: zero
+                      group_by:
+                        duration: 1min
+                    update_interval: 1min
+                    series:
+                      - entity: sensor.home_assistant_core_cpu_percent
+                        name: HA Core
+                      - entity: sensor.home_assistant_supervisor_cpu_percent
+                        name: HA Supervisor
+                      - entity: sensor.mariadb_cpu_percent
+                        name: MariaDB
+                      - entity: sensor.zigbee2mqtt_cpu_percent
+                        name: Zigbee2MQTT
+                      - entity: sensor.mosquitto_broker_cpu_percent
+                        name: Mosquitto
+                      - entity: sensor.home_assistant_google_drive_backup_cpu_percent
+                        name: Backup
+                      - entity: sensor.studio_code_server_cpu_percent
+                        name: Studio Code
+                      - entity: sensor.advanced_ssh_web_terminal_cpu_percent
+                        name: SSH Terminal
+                      - entity: sensor.silicon_labs_flasher_cpu_percent
+                        name: Flasher
+                      - entity: sensor.adguard_home_cpu_percent
+                        name: AdGuard
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-bar-card
+                    entity: sensor.total_ram_usage
+                    name: Использование RAM
+                    icon: mdi:memory
+                    enable_color_severity: true
+                  - type: custom:apexcharts-card
+                    chart_type: donut
+                    apex_config:
+                      dataLabels:
+                        enabled: false
+                      legend:
+                        show: false
+                    all_series_config:
+                      fill_raw: zero
+                      group_by:
+                        duration: 1min
+                    update_interval: 1min
+                    series:
+                      - entity: sensor.home_assistant_core_memory_percent
+                        name: HA Core
+                      - entity: sensor.home_assistant_supervisor_memory_percent
+                        name: HA Supervisor
+                      - entity: sensor.mariadb_memory_percent
+                        name: MariaDB
+                      - entity: sensor.zigbee2mqtt_memory_percent
+                        name: Zigbee2MQTT
+                      - entity: sensor.mosquitto_broker_memory_percent
+                        name: Mosquitto
+                      - entity: >-
+                          sensor.home_assistant_google_drive_backup_memory_percent
+                        name: Backup
+                      - entity: sensor.studio_code_server_memory_percent
+                        name: Studio Code
+                      - entity: sensor.advanced_ssh_web_terminal_memory_percent
+                        name: SSH Terminal
+                      - entity: sensor.silicon_labs_flasher_memory_percent
+                        name: Flasher
+                      - entity: sensor.adguard_home_memory_percent
+                        name: AdGuard
   - title: Микроклимат
     path: climate
     icon: mdi:home-thermometer-outline
@@ -957,78 +1038,15 @@ views:
             collapsible_controls: false
             primary_info: name
             secondary_info: state
-          - features:
-              - type: custom:service-call
-                entries:
-                  - type: spinbox
-                    icon: mdi:thermometer
-                    label: '{{ value }}{{ unit }}'
-                    step: 1
-                    debounceTime: 1000
-                    range:
-                      - '{{ state_attr(config.entity, ''min_temp'') }}'
-                      - '{{ state_attr(config.entity, ''max_temp'') }}'
-                    value_attribute: temperature
-                    unit_of_measurement: °C
-                    hold_action:
-                      action: repeat
-                    entity_id: climate.aqara_e1_thermostat_3
-                    styles: |-
-                      :host {
-                        --background: var(--feature-color);
-                        --icon-color: var(--feature-color);
-                        flex-flow: row;
-                      }
-                    tap_action:
-                      action: perform-action
-                      perform_action: climate.set_temperature
-                      target:
-                        entity_id: climate.aqara_e1_thermostat_3
-                      data:
-                        temperature: '{{ value }}'
-            type: tile
-            entity: climate.aqara_e1_thermostat_3
-            features_position: bottom
-            vertical: false
-          - type: tile
-            entity: humidifier.switch_humidifier
-            features:
-              - type: custom:service-call
-                entries:
-                  - type: spinbox
-                    icon: mdi:water-percent
-                    label: '{{ value }}{{ unit }}'
-                    step: 1
-                    debounceTime: 1000
-                    range:
-                      - '{{ state_attr(config.entity, ''min_humidity'') }}'
-                      - '{{ state_attr(config.entity, ''max_humidity'') }}'
-                    value_attribute: humidity
-                    unit_of_measurement: '%'
-                    hold_action:
-                      action: repeat
-                    entity_id: humidifier.switch_humidifier
-                    styles: |-
-                      :host {
-                        --background: var(--feature-color);;
-                        --icon-color: var(--feature-color);;
-                        flex-flow: row;
-                      }
-                    tap_action:
-                      action: perform-action
-                      perform_action: humidifier.set_humidity
-                      target:
-                        entity_id: humidifier.switch_humidifier
-                      data:
-                        humidity: '{{ value }}'
-            features_position: bottom
-            vertical: true
-      - square: true
+      - square: false
         type: grid
         cards:
           - type: custom:mushroom-entity-card
             entity: binary_sensor.aqara_tilt_sensor_vibration
             name: Вибрация
+          - type: custom:mushroom-entity-card
+            entity: binary_sensor.motion_sensor_occupancy
+            name: Занятость
         columns: 2
         title: Z2M
   - title: Энергия

@@ -104,6 +104,48 @@
       title: Электричество восстановлено
       message: Ура!
   mode: single
+- id: '0007'
+  alias: notify_about_ping_google_fail
+  description: Уведомление об отключении интернета
+  triggers:
+  - type: not_connected
+    device_id: de24bbb7ba721126a7555841647841ff
+    entity_id: f12857c8ff696bdf0ab48605cb66fee1
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  conditions: []
+  actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Грустняшка
+      title: Интернет отвалился
+  mode: single
+- id: '0008'
+  alias: notify_about_ping_google_ok
+  description: Уведомление о восстановлении интернета
+  triggers:
+  - type: connected
+    device_id: de24bbb7ba721126a7555841647841ff
+    entity_id: f12857c8ff696bdf0ab48605cb66fee1
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  conditions: []
+  actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Ура!
+      title: Интернет снова работает
+  mode: single
 - id: '0009'
   alias: end_lavalamp_warming
   description: Переключить яркость лавалампы на 40% после 90 минут на 100%
@@ -218,45 +260,4 @@
     type: select_option
     option: 1/10th Cup (10g)
   mode: single
-- id: '0013'
-  alias: notify_about_ping_google_fail
-  description: Уведомление об отключении интернета
-  triggers:
-  - type: not_connected
-    device_id: de24bbb7ba721126a7555841647841ff
-    entity_id: f12857c8ff696bdf0ab48605cb66fee1
-    domain: binary_sensor
-    trigger: device
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
-  conditions: []
-  actions:
-  - action: notify.notify
-    metadata: {}
-    data:
-      message: Грустняшка
-      title: Интернет отвалился
-  mode: single
-- id: '0014'
-  alias: notify_about_ping_google_ok
-  description: Уведомление о восстановлении интернета
-  triggers:
-  - type: connected
-    device_id: de24bbb7ba721126a7555841647841ff
-    entity_id: f12857c8ff696bdf0ab48605cb66fee1
-    domain: binary_sensor
-    trigger: device
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
-  conditions: []
-  actions:
-  - action: notify.notify
-    metadata: {}
-    data:
-      message: Ура!
-      title: Интернет снова работает
-  mode: single
+

@@ -67,6 +67,42 @@ input_datetime:
 
 template:
   - sensor:
+    - name: "Total CPU Usage"
+      unique_id: 'total_cpu_usage'
+      unit_of_measurement: "%"
+      state: >
+        {{ 
+          (
+            states('sensor.zigbee2mqtt_cpu_percent') | float(0) +
+            states('sensor.studio_code_server_cpu_percent') | float(0) +
+            states('sensor.silicon_labs_flasher_cpu_percent') | float(0) +
+            states('sensor.mosquitto_broker_cpu_percent') | float(0) +
+            states('sensor.mariadb_cpu_percent') | float(0) +
+            states('sensor.home_assistant_supervisor_cpu_percent') | float(0) +
+            states('sensor.home_assistant_google_drive_backup_cpu_percent') | float(0) +
+            states('sensor.home_assistant_core_cpu_percent') | float(0) +
+            states('sensor.advanced_ssh_web_terminal_cpu_percent') | float(0) +
+            states('sensor.adguard_home_cpu_percent') | float(0)
+          ) | round(2) 
+        }}    
+    - name: "Total RAM Usage"
+      unique_id: 'total_ram_usage'
+      unit_of_measurement: "%"
+      state: >
+        {{ 
+          (
+            states('sensor.zigbee2mqtt_memory_percent') | float(0) +
+            states('sensor.studio_code_server_memory_percent') | float(0) +
+            states('sensor.silicon_labs_flasher_memory_percent') | float(0) +
+            states('sensor.mosquitto_broker_memory_percent') | float(0) +
+            states('sensor.mariadb_memory_percent') | float(0) +
+            states('sensor.home_assistant_supervisor_memory_percent') | float(0) +
+            states('sensor.home_assistant_google_drive_backup_memory_percent') | float(0) +
+            states('sensor.home_assistant_core_memory_percent') | float(0) +
+            states('sensor.advanced_ssh_web_terminal_memory_percent') | float(0) +
+            states('sensor.adguard_home_memory_percent') | float(0)
+          ) | round(2) 
+        }}
     - name: 'petkit_pura_air_filter_days_left'
       unique_id: 'petkit_pura_air_filter_days_left'
       unit_of_measurement: 'd'
