@@ -18,13 +18,15 @@
   mode: single
 - id: '0002'
   alias: run_speedtest
-  description: Запуск теста скорости при нажатии input_button.run_speedtest
-  trigger:
+  description: Запуск теста скорости
+  triggers:
   - trigger: state
     entity_id:
     - input_button.run_speedtest
-  condition: []
-  action:
+  - trigger: time
+    at: 04:00:00
+  conditions: []
+  actions:
   - action: homeassistant.update_entity
     data: {}
     target:

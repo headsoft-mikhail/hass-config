@@ -116,8 +116,8 @@ generic_hygrostat:
     unique_id: switch_humidifier
     humidifier: switch.ahtom_outlet_humidifier
     target_sensor: sensor.airmonitor2_humidity
-    min_humidity: 30
-    max_humidity: 70
+    min_humidity: 40
+    max_humidity: 60
     target_humidity: 60
     dry_tolerance: 1
     wet_tolerance: 1
