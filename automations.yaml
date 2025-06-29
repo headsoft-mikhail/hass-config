@@ -20,11 +20,10 @@
   alias: run_speedtest
   description: Запуск теста скорости
   triggers:
-  - trigger: state
-    entity_id:
-    - input_button.run_speedtest
   - trigger: time
-    at: 04:00:00
+    at: 07:00:00
+  - trigger: time
+    at: 02:00:00
   conditions: []
   actions:
   - action: homeassistant.update_entity
@@ -260,4 +259,3 @@
     type: select_option
     option: 1/10th Cup (10g)
   mode: single
-

@@ -110,19 +110,21 @@ views:
                         min: 0
                         max: 100
                   - type: custom:mushroom-entity-card
-                    entity: input_button.run_speedtest
-                    name: ' '
+                    entity: automation.run_speedtest
                     icon: mdi:play-speed
-                    primary_info: name
-                    secondary_info: last-changed
-                    tap_action:
-                      action: none
-                    double_tap_action:
-                      action: none
                     hold_action:
-                      action: toggle
+                      action: perform-action
+                      perform_action: automation.trigger
+                      target:
+                        entity_id: automation.run_speedtest
+                      data:
+                        skip_condition: true
+                    secondary_info: last-changed
                     fill_container: true
                     layout: vertical
+                    tap_action:
+                      action: none
+                    name: ' '
                 layout:
                   grid-template-columns: auto 25%
                   margin: 0px
@@ -352,7 +354,26 @@ views:
           - type: weather
             entity: weather.home_assistant
             show_conditions: true
-            show_temperature: true
+            show_temperature: false
+          - type: template
+            entity: sensor.home_assistant_temperature
+            content: >-
+              {{ states(entity).replace('.', ',') }} {{ state_attr(entity,
+              'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
           - type: template
             entity: sensor.home_assistant_apparent_temperature
             content: >-
@@ -1107,8 +1128,8 @@ views:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.meross_power_outlet_1_energy
-            name: Обогрев балкона
-            icon: mdi:radiator
+            name: '` Обогрев балкона'
+            icon: mdi:lightning-bolt
             hours_to_show: 168
             lower_bound: 0
             group: true
