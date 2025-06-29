@@ -119,7 +119,7 @@ views:
                         entity_id: automation.run_speedtest
                       data:
                         skip_condition: true
-                    secondary_info: last-changed
+                    secondary_info: last-updated
                     fill_container: true
                     layout: vertical
                     tap_action:
