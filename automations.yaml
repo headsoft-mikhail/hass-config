@@ -21,17 +21,16 @@
   description: Запуск теста скорости
   triggers:
   - trigger: time
-    at: 07:00:00
+    at: 01:30:00
   - trigger: time
-    at: 02:00:00
+    at: 07:00:00
   conditions: []
   actions:
   - action: homeassistant.update_entity
     data: {}
     target:
       entity_id:
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
+      - sensor.speedtest_ping
   mode: single
 - id: '0003'
   alias: notify_about_homeassistant_started
