@@ -19,11 +19,7 @@
 - id: '0002'
   alias: run_speedtest
   description: Запуск теста скорости
-  triggers:
-  - trigger: time
-    at: 01:30:00
-  - trigger: time
-    at: 07:00:00
+  triggers: []
   conditions: []
   actions:
   - action: homeassistant.update_entity
