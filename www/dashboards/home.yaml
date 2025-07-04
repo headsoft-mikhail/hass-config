@@ -90,46 +90,40 @@ views:
             duration:
               quantity: 24
               unit: hour
-          - type: grid
-            square: false
-            columns: 1
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
             cards:
-              - type: custom:layout-card
-                layout_type: custom:grid-layout
+              - type: grid
+                square: false
+                columns: 2
                 cards:
-                  - type: grid
-                    square: false
-                    columns: 2
-                    cards:
-                      - type: gauge
-                        entity: sensor.speedtest_download
-                        min: 0
-                        max: 100
-                        name: Загрузка
-                      - type: gauge
-                        entity: sensor.speedtest_upload
-                        min: 0
-                        max: 100
-                        name: Передача
-                  - type: custom:mushroom-entity-card
-                    entity: automation.run_speedtest
-                    icon: mdi:play-speed
-                    hold_action:
-                      action: perform-action
-                      perform_action: automation.trigger
-                      target:
-                        entity_id: automation.run_speedtest
-                      data:
-                        skip_condition: true
-                    secondary_info: last-updated
-                    fill_container: true
-                    layout: vertical
-                    tap_action:
-                      action: none
-                    name: ' '
-                layout:
-                  grid-template-columns: auto 25%
-                  margin: 0px
+                  - type: gauge
+                    entity: sensor.speedtest_download
+                    name: Загрузка
+                    layout: horizontal
+                  - type: gauge
+                    entity: sensor.speedtest_upload
+                    name: Передача
+                    layout: horizontal
+              - type: custom:mushroom-entity-card
+                entity: automation.run_speedtest
+                icon: mdi:play-speed
+                hold_action:
+                  action: perform-action
+                  perform_action: automation.trigger
+                  target:
+                    entity_id: automation.run_speedtest
+                  data:
+                    skip_condition: true
+                secondary_info: last-updated
+                fill_container: true
+                layout: vertical
+                tap_action:
+                  action: none
+                name: ' '
+            layout:
+              grid-template-columns: auto 25%
+              margin: 0px
       - type: grid
         columns: 1
         square: false
@@ -251,101 +245,27 @@ views:
             square: false
             cards:
               - type: custom:mushroom-bar-card
+                entity: sensor.total_ram_usage
+                name: RAM
+                icon: mdi:memory
+                enable_color_severity: true
+              - type: custom:mushroom-bar-card
                 entity: sensor.home_assistant_host_disk_used
                 min: 0
                 max: 234
                 enable_color_severity: true
-                name: Использование ROM
+                name: ROM
+              - type: custom:mushroom-bar-card
+                entity: sensor.total_cpu_usage
+                icon: mdi:cpu-64-bit
+                enable_color_severity: true
+                name: CPU
               - type: custom:mushroom-bar-card
                 entity: sensor.sql_query_db_volume
                 min: 0
                 max: 2500
                 enable_color_severity: true
-              - type: grid
-                columns: 1
-                square: false
-                cards:
-                  - type: custom:mushroom-bar-card
-                    entity: sensor.total_cpu_usage
-                    icon: mdi:cpu-64-bit
-                    enable_color_severity: true
-                    name: Использование CPU
-                  - type: custom:apexcharts-card
-                    chart_type: donut
-                    apex_config:
-                      dataLabels:
-                        enabled: false
-                      legend:
-                        show: false
-                    all_series_config:
-                      fill_raw: zero
-                      group_by:
-                        duration: 1min
-                    update_interval: 1min
-                    series:
-                      - entity: sensor.home_assistant_core_cpu_percent
-                        name: HA Core
-                      - entity: sensor.home_assistant_supervisor_cpu_percent
-                        name: HA Supervisor
-                      - entity: sensor.mariadb_cpu_percent
-                        name: MariaDB
-                      - entity: sensor.zigbee2mqtt_cpu_percent
-                        name: Zigbee2MQTT
-                      - entity: sensor.mosquitto_broker_cpu_percent
-                        name: Mosquitto
-                      - entity: sensor.home_assistant_google_drive_backup_cpu_percent
-                        name: Backup
-                      - entity: sensor.studio_code_server_cpu_percent
-                        name: Studio Code
-                      - entity: sensor.advanced_ssh_web_terminal_cpu_percent
-                        name: SSH Terminal
-                      - entity: sensor.silicon_labs_flasher_cpu_percent
-                        name: Flasher
-                      - entity: sensor.adguard_home_cpu_percent
-                        name: AdGuard
-              - type: grid
-                columns: 1
-                square: false
-                cards:
-                  - type: custom:mushroom-bar-card
-                    entity: sensor.total_ram_usage
-                    name: Использование RAM
-                    icon: mdi:memory
-                    enable_color_severity: true
-                  - type: custom:apexcharts-card
-                    chart_type: donut
-                    apex_config:
-                      dataLabels:
-                        enabled: false
-                      legend:
-                        show: false
-                    all_series_config:
-                      fill_raw: zero
-                      group_by:
-                        duration: 1min
-                    update_interval: 1min
-                    series:
-                      - entity: sensor.home_assistant_core_memory_percent
-                        name: HA Core
-                      - entity: sensor.home_assistant_supervisor_memory_percent
-                        name: HA Supervisor
-                      - entity: sensor.mariadb_memory_percent
-                        name: MariaDB
-                      - entity: sensor.zigbee2mqtt_memory_percent
-                        name: Zigbee2MQTT
-                      - entity: sensor.mosquitto_broker_memory_percent
-                        name: Mosquitto
-                      - entity: >-
-                          sensor.home_assistant_google_drive_backup_memory_percent
-                        name: Backup
-                      - entity: sensor.studio_code_server_memory_percent
-                        name: Studio Code
-                      - entity: sensor.advanced_ssh_web_terminal_memory_percent
-                        name: SSH Terminal
-                      - entity: sensor.silicon_labs_flasher_memory_percent
-                        name: Flasher
-                      - entity: sensor.adguard_home_memory_percent
-                        name: AdGuard
+                name: DB
   - title: Микроклимат
     path: climate
     icon: mdi:home-thermometer-outline

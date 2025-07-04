@@ -38,12 +38,6 @@ switch:
         name: RPi cooling fan
         unique_id: rpi_cooling_fan
 
-input_button:
-  petkit_feeder_1_act:
-    name: 'Petkit Feeder 1 - Act'
-  petkit_feeder_2_act:
-    name: 'Petkit Feeder 2 - Act'
-
 input_select:
   sound_signal_source:
     name: 'Источник сигнала колонок'
@@ -82,7 +76,18 @@ template:
             states('sensor.advanced_ssh_web_terminal_cpu_percent') | float(0) +
             states('sensor.adguard_home_cpu_percent') | float(0)
           ) | round(2) 
-        }}    
+        }}         
+      attributes:
+        HA_Core: "{{ states('sensor.home_assistant_core_cpu_percent') }}"
+        HA_Supervisor: "{{ states('sensor.home_assistant_supervisor_cpu_percent') }}"
+        Maria_DB: "{{ states('sensor.mariadb_cpu_percent') }}"
+        Mosqitto_broker: "{{ states('sensor.mosquitto_broker_cpu_percent') }}"
+        Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_cpu_percent') }}"
+        Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_cpu_percent') }}"
+        Studio_Code_server: "{{ states('sensor.studio_code_server_cpu_percent') }}"
+        SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_cpuy_percent') }}"
+        AdGuard_home: "{{ states('sensor.adguard_home_cpu_percent') }}"
+        Silicon_labs_flasher: "{{ states('sensor.silicon_labs_flashe_cpu_percent')  }}"
     - name: "Total RAM Usage"
       unique_id: 'total_ram_usage'
       unit_of_measurement: "%"
@@ -101,6 +106,17 @@ template:
             states('sensor.adguard_home_memory_percent') | float(0)
           ) | round(2) 
         }}
+      attributes:
+        HA_Core: "{{ states('sensor.home_assistant_core_memory_percent')  }}"
+        HA_Supervisor: "{{ states('sensor.home_assistant_supervisor_memory_percent')  }}"
+        Maria_DB: "{{ states('sensor.mariadb_memory_percent')  }}"
+        Mosqitto_broker: "{{ states('sensor.mosquitto_broker_memory_percent')  }}"
+        Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_memory_percent')  }}"
+        Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_memory_percent')  }}"
+        Studio_Code_server: "{{ states('sensor.studio_code_server_memory_percent')  }}"
+        SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_memory_percent')  }}"
+        AdGuard_home: "{{ states('sensor.adguard_home_memory_percent')  }}"
+        Silicon_labs_flasher: "{{ states('sensor.silicon_labs_flasher_memory_percent')  }}"
     - name: 'petkit_pura_air_filter_days_left'
       unique_id: 'petkit_pura_air_filter_days_left'
       unit_of_measurement: 'd'

@@ -227,10 +227,7 @@
 - id: '0011'
   alias: petkit_feeder_1_act
   description: Выдать порцию еды Petkit Feeder 1
-  triggers:
-  - trigger: state
-    entity_id:
-    - input_button.petkit_feeder_1_act
+  triggers: []
   conditions: []
   actions:
   - device_id: 81a094e022d2b74f6460993e1d717bfc
@@ -242,10 +239,7 @@
 - id: '0012'
   alias: petkit_feeder_2_act
   description: Выдать порцию еды Petkit Feeder 2
-  triggers:
-  - trigger: state
-    entity_id:
-    - input_button.petkit_feeder_2_act
+  triggers: []
   conditions: []
   actions:
   - device_id: 72e9542e1e36f6df0e408762c518bf8c
