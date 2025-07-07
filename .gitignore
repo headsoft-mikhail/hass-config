@@ -4,6 +4,7 @@ custom_components
 www/community
 zigbee2mqtt
 themes
+qrcode.svg
 
 *.log*
 *.db*

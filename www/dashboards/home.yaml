@@ -9,30 +9,35 @@ views:
         columns: 1
         square: false
         cards:
-          - type: grid
-            square: false
-            cards:
-              - type: markdown
-                content: |-
-                  <div style="display: flex; justify-content: center;">
-                    <a href="http://192.168.1.1/dashboard">
-                      <img src="/local/images/icon_keenetic.svg" width="150" height="100">
-                    </a>
-                  </div>
-              - type: markdown
-                content: |-
-                  <div style="text-align: center;">
-                    <a href="http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer">
-                      <img src="/local/images/icon_transmission.svg" width="150" height="100">
-                    </a>
-                  </div>
-              - type: markdown
-                content: |-
-                  <div style="text-align: center;">
-                    <a href="https://github.com/headsoft-mikhail/hass-config">
-                      <img src="/local/images/icon_github.svg" width="150" height="100">
-                    </a>
-                  </div>
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: template
+                tap_action:
+                  action: url
+                  url_path: http://192.168.1.1/dashboard
+                icon: mdi:router-wireless
+                icon_color: blue
+                content: Keenetic
+              - type: template
+                tap_action:
+                  action: url
+                  url_path: >-
+                    http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer
+                picture: /local/images/icon_transmission.svg
+                content: Transmission
+              - type: template
+                tap_action:
+                  action: url
+                  url_path: https://github.com/headsoft-mikhail/hass-config
+                picture: /local/images/icon_github.svg
+                content: GitHub
+              - type: spacer
+              - type: template
+                tap_action:
+                  action: url
+                  url_path: /local/images/qrcode.svg
+                icon: mdi:qrcode
+                content: ''
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -1126,9 +1131,6 @@ views:
         cards:
           - type: custom:layout-card
             layout_type: custom:grid-layout
-            layout:
-              grid-template-columns: auto 30%
-              margin: 0px
             cards:
               - type: custom:mushroom-bar-card
                 entity: sensor.fresh_element_solo_1_dispensed
@@ -1138,18 +1140,24 @@ views:
                 tap_action:
                   action: none
               - type: custom:mushroom-entity-card
-                entity: input_button.petkit_feeder_1_act
+                entity: automation.petkit_feeder_1_act
                 icon: mdi:hamburger-plus
-                name: Кормить
-                tap_action:
-                  action: none
                 hold_action:
-                  action: toggle
-                double_tap_action:
-                  action: none
-                secondary_info: last-changed
+                  action: perform-action
+                  perform_action: automation.trigger
+                  target:
+                    entity_id: automation.petkit_feeder_1_act
+                  data:
+                    skip_condition: true
+                secondary_info: last-updated
                 fill_container: true
                 layout: vertical
+                tap_action:
+                  action: none
+                name: Кормить
+            layout:
+              grid-template-columns: auto 30%
+              margin: 0px
           - type: custom:auto-entities
             card:
               type: custom:layout-card
@@ -1186,9 +1194,6 @@ views:
         cards:
           - type: custom:layout-card
             layout_type: custom:grid-layout
-            layout:
-              grid-template-columns: auto 30%
-              margin: 0px
             cards:
               - type: custom:mushroom-bar-card
                 entity: sensor.fresh_element_solo_2_dispensed
@@ -1198,18 +1203,24 @@ views:
                 tap_action:
                   action: none
               - type: custom:mushroom-entity-card
-                entity: input_button.petkit_feeder_1_act
+                entity: automation.petkit_feeder_2_act
                 icon: mdi:hamburger-plus
-                name: Кормить
-                tap_action:
-                  action: none
                 hold_action:
-                  action: toggle
-                double_tap_action:
-                  action: none
-                secondary_info: last-changed
+                  action: perform-action
+                  perform_action: automation.trigger
+                  target:
+                    entity_id: automation.petkit_feeder_2_act
+                  data:
+                    skip_condition: true
+                secondary_info: last-updated
                 fill_container: true
                 layout: vertical
+                tap_action:
+                  action: none
+                name: Кормить
+            layout:
+              grid-template-columns: auto 30%
+              margin: 0px
           - type: custom:auto-entities
             card:
               type: custom:layout-card
@@ -1220,24 +1231,27 @@ views:
             entities: null
             filter:
               include:
-                - entity_id: binary_sensor.fresh_element_solo_2_food_level
-                  options:
+                - options:
                     type: custom:mushroom-entity-card
                     icon_color: red
-                - entity_id: sensor.fresh_element_solo_2_error
-                  options:
+                  entity_id: binary_sensor.fresh_element_solo_2_food_level
+                - options:
                     type: custom:mushroom-entity-card
                     icon_color: red
-                - entity_id: sensor.fresh_element_solo_2_status
-                  options:
+                  entity_id: sensor.fresh_element_solo_2_error
+                - options:
                     type: custom:mushroom-entity-card
                     icon_color: red
+                  entity_id: sensor.fresh_element_solo_2_status
               exclude:
-                - entity_id: binary_sensor.fresh_element_solo_2_food_level
+                - options: {}
+                  entity_id: binary_sensor.fresh_element_solo_2_food_level
                   state: 'off'
-                - entity_id: sensor.fresh_element_solo_2_error
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_2_error
                   state: no_error
-                - entity_id: sensor.fresh_element_solo_2_status
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_2_status
                   state: online
         title: Кормилка 2
       - type: grid
