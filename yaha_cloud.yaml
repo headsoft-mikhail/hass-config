@@ -7,6 +7,7 @@ filter:
     - light.meross_ambient_light_1
     - light.meross_ambient_light_2
     - humidifier.switch_humidifier
+    - climate.conditioner
   include_entity_globs:
     - switch.ahtom_switch_*
     - climate.aqara_e1_thermostat_*
@@ -60,3 +61,7 @@ entity_config:
     name: Увлажнитель
     room: Спальня
     type: devices.types.humidifier
+  climate.conditioner:
+    name: Кондиционер
+    room: Спальня
+    type: devices.types.thermostat

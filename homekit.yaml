@@ -36,6 +36,7 @@
       - climate.aqara_e1_thermostat_2
       - climate.aqara_e1_thermostat_3
       - humidifier.switch_humidifier
+      - climate.conditioner
   entity_config:
     # input_select.soundbar_source:
     #   name: "Источник звука"
@@ -120,7 +121,7 @@
       linked_battery_sensor: sensor.aqara_leak_sensor_1_battery
       low_battery_threshold: 30
     binary_sensor.meross_power_outlet_1_activity:
-      name: Обогрев балкона
+      name: Климат балкона
     climate.aqara_e1_thermostat_1:
       name: Рабочее место
       linked_battery_sensor: sensor.aqara_e1_thermostat_1_battery
@@ -134,5 +135,8 @@
       linked_battery_sensor: sensor.aqara_e1_thermostat_3_battery
       low_battery_threshold: 30
     humidifier.switch_humidifier:
-      name: "Увлажнитель"
+      name: Увлажнитель
       linked_humidity_sensor: sensor.airmonitor2_humidity
+    climate.conditioner:
+      name: Кондиционер
+

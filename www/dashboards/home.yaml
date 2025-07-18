@@ -70,12 +70,12 @@ views:
                   action: more-info
               - type: spacer
               - type: entity
-                entity: sensor.zyxel_gateway_download_speed
-                icon: mdi:download
-                icon_color: blue
+                entity: sensor.snmp_router_download_speed
+                icon: mdi:arrow-down-bold
+                icon_color: orange
               - type: entity
-                entity: sensor.zyxel_gateway_upload_speed
-                icon: mdi:upload
+                entity: sensor.snmp_router_upload_speed
+                icon: mdi:arrow-up-bold
                 icon_color: blue
           - type: custom:uptime-card
             entity: binary_sensor.ping_8_8_8_8
@@ -95,6 +95,17 @@ views:
             duration:
               quantity: 24
               unit: hour
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: spacer
+              - type: entity
+                entity: sensor.snmp_router_incoming_bytes_monthly
+                icon: mdi:tray-arrow-down
+                icon_color: orange
+              - type: entity
+                entity: sensor.snmp_router_outgoing_bytes_monthly
+                icon: mdi:tray-arrow-up
+                icon_color: light-blue
           - type: custom:layout-card
             layout_type: custom:grid-layout
             cards:
@@ -986,6 +997,11 @@ views:
             collapsible_controls: false
             primary_info: name
             secondary_info: state
+          - type: custom:mushroom-climate-card
+            entity: climate.conditioner
+            show_temperature_control: true
+            hvac_modes: []
+            layout: vertical
       - square: false
         type: grid
         cards:
