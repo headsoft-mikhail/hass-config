@@ -39,7 +39,7 @@ sensor:
     community: "public"
     baseoid: 1.3.6.1.2.1.31.1.1.1.6.9 # ifHCInOctets.9
     version: 2c
-    scan_interval: 10
+    scan_interval: 30
     unit_of_measurement: B
     device_class: data_size
     state_class: total_increasing
@@ -51,7 +51,7 @@ sensor:
     community: "public"
     baseoid: 1.3.6.1.2.1.31.1.1.1.10.9 # ifHCOutOctets.9
     version: 2c
-    scan_interval: 10
+    scan_interval: 30
     unit_of_measurement: B
     device_class: data_size
     state_class: total_increasing
@@ -63,8 +63,8 @@ sensor:
     unit: B/s
     round: 2
 
-  - name: "SNMP Router Outgoing Bytes Derivative"
-    platform: derivative
+  - platform: derivative
+    name: "SNMP Router Outgoing Bytes Derivative"
     source: sensor.snmp_router_outgoing_bytes
     unit_time: s
     unit: B/s

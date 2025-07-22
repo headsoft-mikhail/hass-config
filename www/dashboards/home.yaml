@@ -97,6 +97,10 @@ views:
               unit: hour
           - type: custom:mushroom-chips-card
             chips:
+              - type: entity
+                entity: sensor.zyxel_gateway_uptime
+                icon: mdi:clock
+                icon_color: grey
               - type: spacer
               - type: entity
                 entity: sensor.snmp_router_incoming_bytes_monthly
