@@ -1019,9 +1019,17 @@ views:
           - type: custom:mushroom-entity-card
             entity: binary_sensor.aqara_tilt_sensor_vibration
             name: Вибрация
+            fill_container: false
           - type: custom:mushroom-entity-card
             entity: binary_sensor.motion_sensor_occupancy
             name: Занятость
+          - type: custom:mushroom-bar-card
+            entity: sensor.luminance_sensor_illuminance
+            enable_color_severity: true
+            severity_direction: reverse
+            max: 1000
+            min: 0
+            primary_info: name
         columns: 2
         title: Z2M
   - title: Энергия
