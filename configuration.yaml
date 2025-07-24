@@ -91,6 +91,11 @@ switch:
         name: RPi cooling fan
         unique_id: rpi_cooling_fan
 
+input_button:
+  wifi_qr:
+    name: Wi-Fi QR
+    icon: mdi:qrcode
+
 input_select:
   sound_signal_source:
     name: "Источник сигнала колонок"

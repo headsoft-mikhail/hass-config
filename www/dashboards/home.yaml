@@ -32,12 +32,9 @@ views:
                 picture: /local/images/icon_github.svg
                 content: GitHub
               - type: spacer
-              - type: template
-                tap_action:
-                  action: url
-                  url_path: /local/images/qrcode.svg
-                icon: mdi:qrcode
-                content: ''
+              - type: entity
+                entity: input_button.wifi_qr
+                content_info: none
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -286,6 +283,16 @@ views:
                 max: 2500
                 enable_color_severity: true
                 name: DB
+      - type: custom:popup-card
+        entity: input_button.wifi_qr
+        popup_card_all_views: false
+        allow_nested_more_info: false
+        right_button: close
+        card:
+          type: picture
+          image: /local/images/qrcode.svg
+          tap_action:
+            action: none
   - title: Микроклимат
     path: climate
     icon: mdi:home-thermometer-outline
