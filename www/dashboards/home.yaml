@@ -107,40 +107,6 @@ views:
                 entity: sensor.snmp_router_outgoing_bytes_monthly
                 icon: mdi:tray-arrow-up
                 icon_color: light-blue
-          - type: custom:layout-card
-            layout_type: custom:grid-layout
-            cards:
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: gauge
-                    entity: sensor.speedtest_download
-                    name: Загрузка
-                    layout: horizontal
-                  - type: gauge
-                    entity: sensor.speedtest_upload
-                    name: Передача
-                    layout: horizontal
-              - type: custom:mushroom-entity-card
-                entity: automation.run_speedtest
-                icon: mdi:play-speed
-                hold_action:
-                  action: perform-action
-                  perform_action: automation.trigger
-                  target:
-                    entity_id: automation.run_speedtest
-                  data:
-                    skip_condition: true
-                secondary_info: last-updated
-                fill_container: true
-                layout: vertical
-                tap_action:
-                  action: none
-                name: ' '
-            layout:
-              grid-template-columns: auto 25%
-              margin: 0px
       - type: grid
         columns: 1
         square: false

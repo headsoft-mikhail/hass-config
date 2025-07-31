@@ -16,18 +16,6 @@
       id: '{{trigger.event.data.id}}'
       delete_data: false
   mode: single
-- id: '0002'
-  alias: run_speedtest
-  description: Запуск теста скорости
-  triggers: []
-  conditions: []
-  actions:
-  - action: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id:
-      - sensor.speedtest_ping
-  mode: single
 - id: '0003'
   alias: notify_about_homeassistant_started
   description: Уведомление о запуске Homeassistant

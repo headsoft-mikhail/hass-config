@@ -117,112 +117,112 @@ input_datetime:
 
 template:
   - sensor:
-      - name: "Total CPU Usage"
-        unique_id: "total_cpu_usage"
-        unit_of_measurement: "%"
-        state: >
-          {{ 
-            (
-              states('sensor.zigbee2mqtt_cpu_percent') | float(0) +
-              states('sensor.studio_code_server_cpu_percent') | float(0) +
-              states('sensor.silicon_labs_flasher_cpu_percent') | float(0) +
-              states('sensor.mosquitto_broker_cpu_percent') | float(0) +
-              states('sensor.mariadb_cpu_percent') | float(0) +
-              states('sensor.home_assistant_supervisor_cpu_percent') | float(0) +
-              states('sensor.home_assistant_google_drive_backup_cpu_percent') | float(0) +
-              states('sensor.home_assistant_core_cpu_percent') | float(0) +
-              states('sensor.advanced_ssh_web_terminal_cpu_percent') | float(0) +
-              states('sensor.adguard_home_cpu_percent') | float(0)
-            ) | round(2) 
-          }}
-        attributes:
-          HA_Core: "{{ states('sensor.home_assistant_core_cpu_percent') }}"
-          HA_Supervisor: "{{ states('sensor.home_assistant_supervisor_cpu_percent') }}"
-          Maria_DB: "{{ states('sensor.mariadb_cpu_percent') }}"
-          Mosqitto_broker: "{{ states('sensor.mosquitto_broker_cpu_percent') }}"
-          Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_cpu_percent') }}"
-          Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_cpu_percent') }}"
-          Studio_Code_server: "{{ states('sensor.studio_code_server_cpu_percent') }}"
-          SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_cpuy_percent') }}"
-          AdGuard_home: "{{ states('sensor.adguard_home_cpu_percent') }}"
-          Silicon_labs_flasher: "{{ states('sensor.silicon_labs_flashe_cpu_percent')  }}"
-      - name: "Total RAM Usage"
-        unique_id: "total_ram_usage"
-        unit_of_measurement: "%"
-        state: >
-          {{ 
-            (
-              states('sensor.zigbee2mqtt_memory_percent') | float(0) +
-              states('sensor.studio_code_server_memory_percent') | float(0) +
-              states('sensor.silicon_labs_flasher_memory_percent') | float(0) +
-              states('sensor.mosquitto_broker_memory_percent') | float(0) +
-              states('sensor.mariadb_memory_percent') | float(0) +
-              states('sensor.home_assistant_supervisor_memory_percent') | float(0) +
-              states('sensor.home_assistant_google_drive_backup_memory_percent') | float(0) +
-              states('sensor.home_assistant_core_memory_percent') | float(0) +
-              states('sensor.advanced_ssh_web_terminal_memory_percent') | float(0) +
-              states('sensor.adguard_home_memory_percent') | float(0)
-            ) | round(2) 
-          }}
-        attributes:
-          HA_Core: "{{ states('sensor.home_assistant_core_memory_percent')  }}"
-          HA_Supervisor: "{{ states('sensor.home_assistant_supervisor_memory_percent')  }}"
-          Maria_DB: "{{ states('sensor.mariadb_memory_percent')  }}"
-          Mosqitto_broker: "{{ states('sensor.mosquitto_broker_memory_percent')  }}"
-          Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_memory_percent')  }}"
-          Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_memory_percent')  }}"
-          Studio_Code_server: "{{ states('sensor.studio_code_server_memory_percent')  }}"
-          SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_memory_percent')  }}"
-          AdGuard_home: "{{ states('sensor.adguard_home_memory_percent')  }}"
-          Silicon_labs_flasher: "{{ states('sensor.silicon_labs_flasher_memory_percent')  }}"
-      - name: "petkit_pura_air_filter_days_left"
-        unique_id: "petkit_pura_air_filter_days_left"
-        unit_of_measurement: "d"
-        state: >
-          {% set start = states('input_datetime.petkit_pura_air_filter_replaced') %}
-          {% if start not in ['unknown', 'unavailable'] %}
-            {% set days_left = 90 - ((now().date() - as_datetime(start).date()).days) %}
-            {{ [days_left, 0] | max }}
-          {% else %}
-            90
-          {% endif %}
-        attributes:
-          last_update: "{{ now() }}"
-        availability: "{{ states('input_datetime.petkit_pura_air_filter_replaced') not in ['unknown', 'unavailable'] }}"
-      - name: "airmonitor2_tvoc_ug"
-        unique_id: "airmonitor2_tvoc_ug"
-        unit_of_measurement: "µg/m³"
-        state: '{{ (states("sensor.airmonitor2_etvoc") | float(0) * 1000) | round(0) }}'
-        attributes:
-          device_class: volatile_organic_compounds
-      - name: "efekta_smart_aq_box_tvoc_ug"
-        unique_id: "efekta_smart_aq_box_tvoc_ug"
-        unit_of_measurement: "µg/m³"
-        state: >
-          {% set x = states('sensor.efekta_smart_aq_box_voc_index') | float(0) %}
-          {{ ((
-                -0.03196 +
-                0.01081 * x +
-                0.0003349 * x**2 -
-                0.000003332 * x**3 +
-                0.000000009259 * x**4 -
-                0.000000000007215 * x**5
-              ) * 1000) | round(0) 
-          }}
-        attributes:
-          device_class: volatile_organic_compounds
-      - name: "SNMP Router Download Speed"
-        unique_id: snmp_router_download_speed
-        unit_of_measurement: "Mbit/s"
-        device_class: data_rate
-        state_class: measurement
-        state: "{{(8 * states('sensor.snmp_router_incoming_bytes_derivative') | float(0) / 1000000) | round(2)}}"
-      - name: "SNMP Router Upload Speed"
-        unique_id: snmp_router_upload_speed
-        unit_of_measurement: "Mbit/s"
-        device_class: data_rate
-        state_class: measurement
-        state: "{{(8 * states('sensor.snmp_router_outgoing_bytes_derivative') | float(0) / 1000000) | round(2)}}"
+    - name: "Total CPU Usage"
+      unique_id: "total_cpu_usage"
+      unit_of_measurement: "%"
+      state: >
+        {{ 
+          (
+            states('sensor.zigbee2mqtt_cpu_percent') | float(0) +
+            states('sensor.studio_code_server_cpu_percent') | float(0) +
+            states('sensor.silicon_labs_flasher_cpu_percent') | float(0) +
+            states('sensor.mosquitto_broker_cpu_percent') | float(0) +
+            states('sensor.mariadb_cpu_percent') | float(0) +
+            states('sensor.home_assistant_supervisor_cpu_percent') | float(0) +
+            states('sensor.home_assistant_google_drive_backup_cpu_percent') | float(0) +
+            states('sensor.home_assistant_core_cpu_percent') | float(0) +
+            states('sensor.advanced_ssh_web_terminal_cpu_percent') | float(0) +
+            states('sensor.adguard_home_cpu_percent') | float(0)
+          ) | round(2) 
+        }}
+      attributes:
+        HA_Core: "{{ states('sensor.home_assistant_core_cpu_percent') }}"
+        HA_Supervisor: "{{ states('sensor.home_assistant_supervisor_cpu_percent') }}"
+        Maria_DB: "{{ states('sensor.mariadb_cpu_percent') }}"
+        Mosqitto_broker: "{{ states('sensor.mosquitto_broker_cpu_percent') }}"
+        Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_cpu_percent') }}"
+        Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_cpu_percent') }}"
+        Studio_Code_server: "{{ states('sensor.studio_code_server_cpu_percent') }}"
+        SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_cpuy_percent') }}"
+        AdGuard_home: "{{ states('sensor.adguard_home_cpu_percent') }}"
+        Silicon_labs_flasher: "{{ states('sensor.silicon_labs_flashe_cpu_percent')  }}"
+    - name: "Total RAM Usage"
+      unique_id: "total_ram_usage"
+      unit_of_measurement: "%"
+      state: >
+        {{ 
+          (
+            states('sensor.zigbee2mqtt_memory_percent') | float(0) +
+            states('sensor.studio_code_server_memory_percent') | float(0) +
+            states('sensor.silicon_labs_flasher_memory_percent') | float(0) +
+            states('sensor.mosquitto_broker_memory_percent') | float(0) +
+            states('sensor.mariadb_memory_percent') | float(0) +
+            states('sensor.home_assistant_supervisor_memory_percent') | float(0) +
+            states('sensor.home_assistant_google_drive_backup_memory_percent') | float(0) +
+            states('sensor.home_assistant_core_memory_percent') | float(0) +
+            states('sensor.advanced_ssh_web_terminal_memory_percent') | float(0) +
+            states('sensor.adguard_home_memory_percent') | float(0)
+          ) | round(2) 
+        }}
+      attributes:
+        HA_Core: "{{ states('sensor.home_assistant_core_memory_percent')  }}"
+        HA_Supervisor: "{{ states('sensor.home_assistant_supervisor_memory_percent')  }}"
+        Maria_DB: "{{ states('sensor.mariadb_memory_percent')  }}"
+        Mosqitto_broker: "{{ states('sensor.mosquitto_broker_memory_percent')  }}"
+        Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_memory_percent')  }}"
+        Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_memory_percent')  }}"
+        Studio_Code_server: "{{ states('sensor.studio_code_server_memory_percent')  }}"
+        SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_memory_percent')  }}"
+        AdGuard_home: "{{ states('sensor.adguard_home_memory_percent')  }}"
+        Silicon_labs_flasher: "{{ states('sensor.silicon_labs_flasher_memory_percent')  }}"
+    - name: "petkit_pura_air_filter_days_left"
+      unique_id: "petkit_pura_air_filter_days_left"
+      unit_of_measurement: "d"
+      state: >
+        {% set start = states('input_datetime.petkit_pura_air_filter_replaced') %}
+        {% if start not in ['unknown', 'unavailable'] %}
+          {% set days_left = 90 - ((now().date() - as_datetime(start).date()).days) %}
+          {{ [days_left, 0] | max }}
+        {% else %}
+          90
+        {% endif %}
+      attributes:
+        last_update: "{{ now() }}"
+      availability: "{{ states('input_datetime.petkit_pura_air_filter_replaced') not in ['unknown', 'unavailable'] }}"
+    - name: "airmonitor2_tvoc_ug"
+      unique_id: "airmonitor2_tvoc_ug"
+      unit_of_measurement: "µg/m³"
+      state: '{{ (states("sensor.airmonitor2_etvoc") | float(0) * 1000) | round(0) }}'
+      attributes:
+        device_class: volatile_organic_compounds
+    - name: "efekta_smart_aq_box_tvoc_ug"
+      unique_id: "efekta_smart_aq_box_tvoc_ug"
+      unit_of_measurement: "µg/m³"
+      state: >
+        {% set x = states('sensor.efekta_smart_aq_box_voc_index') | float(0) %}
+        {{ ((
+              -0.03196 +
+              0.01081 * x +
+              0.0003349 * x**2 -
+              0.000003332 * x**3 +
+              0.000000009259 * x**4 -
+              0.000000000007215 * x**5
+            ) * 1000) | round(0) 
+        }}
+      attributes:
+        device_class: volatile_organic_compounds
+    - name: "SNMP Router Download Speed"
+      unique_id: snmp_router_download_speed
+      unit_of_measurement: "Mbit/s"
+      device_class: data_rate
+      state_class: measurement
+      state: "{{(8 * states('sensor.snmp_router_incoming_bytes_derivative') | float(0) / 1000000) | round(2)}}"
+    - name: "SNMP Router Upload Speed"
+      unique_id: snmp_router_upload_speed
+      unit_of_measurement: "Mbit/s"
+      device_class: data_rate
+      state_class: measurement
+      state: "{{(8 * states('sensor.snmp_router_outgoing_bytes_derivative') | float(0) / 1000000) | round(2)}}"
 
   - binary_sensor:
     - name: "Обогрев балкона"
