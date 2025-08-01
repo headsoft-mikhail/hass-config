@@ -128,6 +128,8 @@ template:
             states('sensor.silicon_labs_flasher_cpu_percent') | float(0) +
             states('sensor.mosquitto_broker_cpu_percent') | float(0) +
             states('sensor.mariadb_cpu_percent') | float(0) +
+            states('sensor.matter_server_cpu_percent') | float(0) +
+            states('sensor.openthread_border_router_cpu_percent') | float(0) +
             states('sensor.home_assistant_supervisor_cpu_percent') | float(0) +
             states('sensor.home_assistant_google_drive_backup_cpu_percent') | float(0) +
             states('sensor.home_assistant_core_cpu_percent') | float(0) +
@@ -141,6 +143,8 @@ template:
         Maria_DB: "{{ states('sensor.mariadb_cpu_percent') }}"
         Mosqitto_broker: "{{ states('sensor.mosquitto_broker_cpu_percent') }}"
         Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_cpu_percent') }}"
+        Matter_Server: "{{ states('sensor.matter_server_cpu_percent') }}"
+        OpenThread_Border_Router: "{{ states('sensor.openthread_border_router_cpu_percent') }}"
         Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_cpu_percent') }}"
         Studio_Code_server: "{{ states('sensor.studio_code_server_cpu_percent') }}"
         SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_cpuy_percent') }}"
@@ -157,6 +161,8 @@ template:
             states('sensor.silicon_labs_flasher_memory_percent') | float(0) +
             states('sensor.mosquitto_broker_memory_percent') | float(0) +
             states('sensor.mariadb_memory_percent') | float(0) +
+            states('sensor.matter_server_memory_percent') | float(0) +
+            states('sensor.openthread_border_router_memory_percent') | float(0) +
             states('sensor.home_assistant_supervisor_memory_percent') | float(0) +
             states('sensor.home_assistant_google_drive_backup_memory_percent') | float(0) +
             states('sensor.home_assistant_core_memory_percent') | float(0) +
@@ -170,6 +176,8 @@ template:
         Maria_DB: "{{ states('sensor.mariadb_memory_percent')  }}"
         Mosqitto_broker: "{{ states('sensor.mosquitto_broker_memory_percent')  }}"
         Zigbee2mqtt: "{{ states('sensor.zigbee2mqtt_memory_percent')  }}"
+        Matter_Server: "{{ states('sensor.matter_server_memory_percent') }}"
+        OpenThread_Border_Router: "{{ states('sensor.openthread_border_router_memory_percent') }}"
         Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_memory_percent')  }}"
         Studio_Code_server: "{{ states('sensor.studio_code_server_memory_percent')  }}"
         SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_memory_percent')  }}"
