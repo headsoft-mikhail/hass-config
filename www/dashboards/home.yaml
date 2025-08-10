@@ -998,6 +998,13 @@ views:
             primary_info: name
         columns: 2
         title: Z2M
+      - square: false
+        type: grid
+        cards:
+          - type: custom:mushroom-lock-card
+            entity: lock.aqara_smart_lock_u200
+        columns: 2
+        title: Matter
   - title: Энергия
     path: energy
     icon: mdi:battery-80

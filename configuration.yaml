@@ -268,8 +268,8 @@ climate:
     min_temp: 40
     max_temp: 80
     target_temp: 60
-    cold_tolerance: 5
-    hot_tolerance: 5
+    cold_tolerance: 2.5
+    hot_tolerance: 2.5
     ac_mode: true
   - platform: generic_thermostat
     name: Кондиционер
@@ -279,8 +279,8 @@ climate:
     min_temp: 15
     max_temp: 30
     target_temp: 25
-    cold_tolerance: 1
-    hot_tolerance: 1
+    cold_tolerance: 0.5
+    hot_tolerance: 0.5
     ac_mode: true
     initial_hvac_mode: "cool"
     min_cycle_duration:
