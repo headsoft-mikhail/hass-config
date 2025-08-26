@@ -4,6 +4,7 @@ filter:
   include_entities:
     - switch.meross_power_outlet_1
     - light.tuya_lava_lamp
+    - light.tuya_stars_projector
     - light.meross_ambient_light_1
     - light.meross_ambient_light_2
     - humidifier.switch_humidifier
@@ -23,6 +24,10 @@ entity_config:
     type: devices.types.light
   light.tuya_lava_lamp:
     name: Лавалампа
+    room: Спальня
+    type: devices.types.light
+  light.tuya_stars_projector:
+    name: Звезды
     room: Спальня
     type: devices.types.light
   switch.ahtom_switch_1_table_light:
