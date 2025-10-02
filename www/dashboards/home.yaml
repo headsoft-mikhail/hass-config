@@ -227,28 +227,34 @@ views:
             columns: 2
             square: false
             cards:
-              - type: custom:mushroom-bar-card
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                palette: green_to_red
+                icon_color: light-blue
                 entity: sensor.total_ram_usage
-                name: RAM
-                icon: mdi:memory
-                enable_color_severity: true
-              - type: custom:mushroom-bar-card
+                title: RAM
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                palette: green_to_red
+                icon_color: light-blue
                 entity: sensor.home_assistant_host_disk_used
                 min: 0
                 max: 234
-                enable_color_severity: true
-                name: ROM
-              - type: custom:mushroom-bar-card
+                title: ROM
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                palette: green_to_red
+                icon_color: light-blue
                 entity: sensor.total_cpu_usage
-                icon: mdi:cpu-64-bit
-                enable_color_severity: true
-                name: CPU
-              - type: custom:mushroom-bar-card
+                title: CPU
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                palette: green_to_red
+                icon_color: light-blue
                 entity: sensor.sql_query_db_volume
                 min: 0
                 max: 2500
-                enable_color_severity: true
-                name: DB
+                title: DB
       - type: custom:popup-card
         entity: input_button.wifi_qr
         popup_card_all_views: false
@@ -907,8 +913,22 @@ views:
             hide_state: false
             icon_tap_action:
               action: toggle
-          - square: false
-            type: grid
+          - type: custom:mushroom-light-card
+            entity: light.tuya_stars_projector
+            icon: mdi:star-four-points-outline
+            show_color_temp_control: false
+            show_color_control: true
+            show_brightness_control: false
+            use_light_color: true
+            collapsible_controls: false
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            fill_container: true
+            layout: horizontal
+          - type: grid
+            square: false
             columns: 2
             cards:
               - type: custom:mushroom-climate-card
@@ -989,13 +1009,12 @@ views:
           - type: custom:mushroom-entity-card
             entity: binary_sensor.motion_sensor_occupancy
             name: Занятость
-          - type: custom:mushroom-bar-card
+          - type: custom:bar-sensor-card
             entity: sensor.luminance_sensor_illuminance
-            enable_color_severity: true
-            severity_direction: reverse
-            max: 1000
+            enable_dynamic_icon_color: true
+            enable_dynamic_bar_color: true
+            max: 500
             min: 0
-            primary_info: name
         columns: 2
         title: Z2M
       - square: false
@@ -1086,44 +1105,45 @@ views:
                 grid-template-columns: repeat(2, minmax(50%, 50%))
             filter:
               include:
-                - domain: sensor
+                - options:
+                    type: custom:bar-sensor-card
+                    enable_dynamic_icon_color: true
+                    display_mode: icon
+                  domain: sensor
                   attributes:
                     device_class: battery
-                  state: < 75
-                  options:
+                  state: < 50
+                - options:
                     type: custom:mushroom-entity-card
-                    icon_color: red
-                    tap_action:
-                      action: more-info
-                - domain: sensor
+                  domain: sensor
                   attributes:
                     device_class: battery
                   state: unknown
-                  options:
+                - options:
                     type: custom:mushroom-entity-card
-                - domain: sensor
+                  domain: sensor
                   attributes:
                     device_class: battery
                   state: unavailable
-                  options:
+                - options:
+                    type: custom:bar-sensor-card
+                    enable_dynamic_icon_color: true
+                    display_mode: icon
+                  entity_id: sensor.*_battery_status
+                  state: < 50
+                - options:
                     type: custom:mushroom-entity-card
-                - entity_id: sensor.*_battery_status
-                  state: < 75
-                  options:
-                    type: custom:mushroom-entity-card
-                    tap_action:
-                      action: more-info
-                - entity_id: sensor.*_battery_status
+                  entity_id: sensor.*_battery_status
                   state: unknown
-                  options:
+                - options:
                     type: custom:mushroom-entity-card
-                - entity_id: sensor.*_battery_status
+                  entity_id: sensor.*_battery_status
                   state: unavailable
-                  options:
-                    type: custom:mushroom-entity-card
               exclude:
-                - entity_id: sensor.contact_sensor_battery_sensor
-                - entity_id: sensor.ik_pult_battery
+                - options: {}
+                  entity_id: sensor.contact_sensor_battery_sensor
+                - options: {}
+                  entity_id: sensor.ik_pult_battery
             sort:
               method: state
               numeric: true
@@ -1140,13 +1160,14 @@ views:
           - type: custom:layout-card
             layout_type: custom:grid-layout
             cards:
-              - type: custom:mushroom-bar-card
+              - type: custom:bar-sensor-card
+                palette: green_to_red
+                color: light-blue
                 entity: sensor.fresh_element_solo_1_dispensed
-                name: Выдано еды
+                title: Выдано еды
                 min: 0
                 max: 50
-                tap_action:
-                  action: none
+                tap_action: none
               - type: custom:mushroom-entity-card
                 entity: automation.petkit_feeder_1_act
                 icon: mdi:hamburger-plus
@@ -1157,11 +1178,11 @@ views:
                     entity_id: automation.petkit_feeder_1_act
                   data:
                     skip_condition: true
+                tap_action:
+                  action: none
                 secondary_info: last-updated
                 fill_container: true
                 layout: vertical
-                tap_action:
-                  action: none
                 name: Кормить
             layout:
               grid-template-columns: auto 30%
@@ -1176,24 +1197,27 @@ views:
             entities: null
             filter:
               include:
-                - entity_id: binary_sensor.fresh_element_solo_1_food_level
-                  options:
+                - options:
                     type: custom:mushroom-entity-card
                     icon_color: red
-                - entity_id: sensor.fresh_element_solo_1_error
-                  options:
+                  entity_id: binary_sensor.fresh_element_solo_1_food_level
+                - options:
                     type: custom:mushroom-entity-card
                     icon_color: red
-                - entity_id: sensor.fresh_element_solo_1_status
-                  options:
+                  entity_id: sensor.fresh_element_solo_1_error
+                - options:
                     type: custom:mushroom-entity-card
                     icon_color: red
+                  entity_id: sensor.fresh_element_solo_1_status
               exclude:
-                - entity_id: binary_sensor.fresh_element_solo_1_food_level
+                - options: {}
+                  entity_id: binary_sensor.fresh_element_solo_1_food_level
                   state: 'off'
-                - entity_id: sensor.fresh_element_solo_1_error
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_1_error
                   state: no_error
-                - entity_id: sensor.fresh_element_solo_1_status
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_1_status
                   state: online
         title: Кормилка 1
       - square: false
@@ -1203,13 +1227,14 @@ views:
           - type: custom:layout-card
             layout_type: custom:grid-layout
             cards:
-              - type: custom:mushroom-bar-card
+              - type: custom:bar-sensor-card
+                palette: green_to_red
+                color: light-blue
                 entity: sensor.fresh_element_solo_2_dispensed
-                name: Выдано еды
+                title: Выдано еды
                 min: 0
                 max: 50
-                tap_action:
-                  action: none
+                tap_action: none
               - type: custom:mushroom-entity-card
                 entity: automation.petkit_feeder_2_act
                 icon: mdi:hamburger-plus
@@ -1294,71 +1319,59 @@ views:
         columns: 1
         title: Расходники
         cards:
-          - type: custom:mushroom-bar-card
+          - type: custom:bar-sensor-card
+            enable_dynamic_bar_color: true
+            icon_color: light-blue
+            bar_position: right
             entity: sensor.eversweet_3_pro_uvc_filter
-            name: 'Питьевой фонтан: Фильтр'
-            min: 0
-            max: 100
-            enable_color_severity: true
-            severity_direction: reverse
-            layout: horizontal
+            title: 'Питьевой фонтан: Фильтр'
+            tap_action: none
             hold_action:
               action: perform-action
               perform_action: button.press
               target:
                 entity_id: button.eversweet_3_pro_uvc_reset_filter
-            tap_action:
-              action: none
-            double_tap_action:
-              action: none
-          - type: custom:mushroom-bar-card
+          - type: custom:bar-sensor-card
+            enable_dynamic_bar_color: true
+            icon_color: light-blue
+            bar_position: right
             entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-            name: 'Кормилка 1: Влагопоглотитель'
+            title: 'Кормилка 1: Влагопоглотитель'
             icon: mdi:water-remove
             min: 0
             max: 30
-            enable_color_severity: true
-            severity_direction: reverse
-            layout: horizontal
+            tap_action: none
             hold_action:
               action: perform-action
               perform_action: button.press
               target:
                 entity_id: button.fresh_element_solo_1_reset_desiccant
-            tap_action:
-              action: none
-            double_tap_action:
-              action: none
-          - type: custom:mushroom-bar-card
+          - type: custom:bar-sensor-card
+            enable_dynamic_bar_color: true
+            icon_color: light-blue
+            bar_position: right
             entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-            name: 'Кормилка 2: Влагопоглотитель'
+            title: 'Кормилка 2: Влагопоглотитель'
             icon: mdi:water-remove
             min: 0
             max: 30
-            severity_direction: reverse
-            enable_color_severity: true
-            layout: horizontal
-            tap_action:
-              action: none
+            tap_action: none
             hold_action:
               action: perform-action
               perform_action: button.press
               target:
                 entity_id: button.fresh_element_solo_2_reset_desiccant
-            double_tap_action:
-              action: none
-          - type: custom:mushroom-bar-card
+          - type: custom:bar-sensor-card
+            enable_dynamic_bar_color: true
+            icon_color: light-blue
+            bar_position: right
             entity: sensor.petkit_pura_air_filter_days_left
-            name: 'Освежитель лотка: Фильтр'
+            title: 'Освежитель лотка: Фильтр'
             icon: mdi:air-filter
             min: 0
             max: 90
-            enable_color_severity: true
-            severity_direction: reverse
-            layout: horizontal
+            tap_action: none
             hold_action:
               action: perform-action
               perform_action: script.reset_petkit_pura_air_filter
               target: {}
-            double_tap_action:
-              action: none
