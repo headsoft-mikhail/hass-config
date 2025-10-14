@@ -251,7 +251,7 @@ views:
                 enable_dynamic_bar_color: true
                 palette: green_to_red
                 icon_color: light-blue
-                entity: sensor.sql_query_db_volume
+                entity: sensor.database_size_sqlite
                 min: 0
                 max: 2500
                 title: DB
