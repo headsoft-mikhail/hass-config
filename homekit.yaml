@@ -7,9 +7,6 @@
       - light.tuya_lava_lamp
       - light.tuya_stars_projector
       # переключатели, розетки
-      - switch.ahtom_switch_1_table_light
-      - switch.ahtom_switch_2_tv_backlight
-      - switch.ahtom_switch_3_kitchen_led
       - switch.aqara_t2_ch1_pc
       # датчики
       - sensor.aqara_t1_sensor_1_temperature
@@ -47,15 +44,6 @@
     light.tuya_stars_projector:
       name: "Звездное небо"
     # переключатели, розетки
-    switch.ahtom_switch_1_table_light:
-      name: "Свет у компьютера"
-      type: outlet
-    switch.ahtom_switch_2_tv_backlight:
-      name: "Ночник"
-      type: outlet
-    switch.ahtom_switch_3_kitchen_led:
-      name: "Свет на кухне"
-      type: outlet
     switch.aqara_t2_ch1_pc:
       name: "Компьютер"
     # датчики

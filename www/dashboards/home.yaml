@@ -74,6 +74,14 @@ views:
                 entity: sensor.snmp_router_upload_speed
                 icon: mdi:arrow-up-bold
                 icon_color: blue
+              - type: entity
+                entity: sensor.zyxel_gateway_download_speed
+                icon: mdi:arrow-down-bold
+                icon_color: orange
+              - type: entity
+                entity: sensor.zyxel_gateway_upload_speed
+                icon: mdi:arrow-up-bold
+                icon_color: blue
           - type: custom:uptime-card
             entity: binary_sensor.ping_8_8_8_8
             icon: mdi:check-network-outline
@@ -273,11 +281,11 @@ views:
       - type: custom:mushroom-chips-card
         chips:
           - type: weather
-            entity: weather.home_assistant
+            entity: weather.gismeteo
             show_conditions: true
             show_temperature: false
           - type: template
-            entity: sensor.home_assistant_temperature
+            entity: sensor.gismeteo_temperature
             content: >-
               {{ states(entity).replace('.', ',') }} {{ state_attr(entity,
               'unit_of_measurement') }}
@@ -296,7 +304,7 @@ views:
             tap_action:
               action: more-info
           - type: template
-            entity: sensor.home_assistant_apparent_temperature
+            entity: sensor.gismeteo_apparent_temperature
             content: >-
               Ощущается как {{ states(entity).replace('.', ',') }} {{
               state_attr(entity, 'unit_of_measurement') }}
@@ -315,7 +323,7 @@ views:
             tap_action:
               action: more-info
           - type: template
-            entity: sensor.home_assistant_precipitation
+            entity: sensor.gismeteo_precipitation
             icon: mdi:weather-snowy-rainy
             content: >-
               {{ states(entity) | float | round(1) ~ ' mm' if states(entity) not
@@ -324,33 +332,33 @@ views:
               action: more-info
             icon_color: light-blue
           - type: entity
-            entity: sensor.home_assistant_cloud_coverage
+            entity: sensor.gismeteo_cloud_coverage
             icon_color: light-grey
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.home_assistant_wind_bearing_2
+            entity: sensor.gismeteo_wind_bearing_2
             icon_color: cyan
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.home_assistant_wind_speed
+            entity: sensor.gismeteo_wind_speed
             icon_color: cyan
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.home_assistant_humidity
+            entity: sensor.gismeteo_humidity
             icon_color: blue
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.home_assistant_pressure
+            entity: sensor.gismeteo_pressure
             content_info: state
             icon_color: grey
             tap_action:
               action: more-info
       - type: custom:hourly-weather
-        entity: weather.home_assistant
+        entity: weather.gismeteo
         icons: true
         show_wind: 'false'
         show_date: 'false'
@@ -360,7 +368,7 @@ views:
         name: ' '
         num_segments: '8'
       - type: custom:clock-weather-card
-        entity: weather.home_assistant
+        entity: weather.gismeteo
         hide_today_section: true
         forecast_rows: 7
         weather_icon_type: fill
@@ -400,11 +408,11 @@ views:
         refresh_interval: 300
         windspeed_bar_location: bottom
         wind_direction_entity:
-          entity: sensor.home_assistant_wind_bearing
+          entity: sensor.gismeteo_wind_bearing
           use_statistics: false
           direction_compensation: 0
         windspeed_entities:
-          - entity: sensor.home_assistant_wind_speed
+          - entity: sensor.gismeteo_wind_speed
             name: Скорость ветра
             speed_unit: mps
             use_statistics: true
@@ -432,17 +440,17 @@ views:
         center_calm_percentage: false
         corner_info:
           top_right:
-            entity: sensor.home_assistant_wind_speed
+            entity: sensor.gismeteo_wind_speed
             unit: ' м/с'
             color: white
         actions:
           windrose:
             tap_action:
-              entity: sensor.home_assistant_wind_bearing
+              entity: sensor.gismeteo_wind_bearing
               action: more-info
           speed_bar_1:
             tap_action:
-              entity: sensor.home_assistant_wind_speed
+              entity: sensor.gismeteo_wind_speed
               action: more-info
       - type: custom:horizon-card
         title: null
@@ -590,6 +598,187 @@ views:
                 name: Давление
                 entity: sensor.airmonitor2_noise
                 icon_color: grey
+          - type: grid
+            square: false
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.bedroom_dimmed_light
+                icon_color: orange
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.bedroom_bright_light
+                icon_color: orange
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.bedroom_mirror_backlight
+                icon_color: orange
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.bedroom_desktop_dimmed_light
+                icon_color: orange
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.bedroom_desktop_bright_light
+                icon_color: orange
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.pc_power_switch
+                icon_color: blue
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.bedroom_track_l
+                icon_color: orange
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.bedroom_track_r
+                icon_color: orange
+                tap_action:
+                  action: toggle
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: tile
+                entity: light.tuya_lava_lamp
+                color: pink
+                show_entity_picture: false
+                hide_state: false
+                vertical: false
+                icon_tap_action:
+                  action: toggle
+                features:
+                  - type: custom:service-call
+                    entries:
+                      - type: selector
+                        options:
+                          - label: 'Off'
+                            tap_action:
+                              action: perform-action
+                              perform_action: light.turn_on
+                              target:
+                                entity_id:
+                                  - light.tuya_lava_lamp
+                              data:
+                                brightness: 0
+                            styles: |
+                              :host {
+                                {% if state_attr("light.tuya_lava_lamp", "brightness") == None %}
+                                background: grey;
+                                {% else %}
+                                --color: grey;
+                                --label-color: grey;
+                                {% endif %}
+                              }
+                            entity_id: light.tuya_lava_lamp
+                          - option: 102
+                            label: Relax
+                            tap_action:
+                              action: perform-action
+                              perform_action: light.turn_on
+                              target:
+                                entity_id:
+                                  - light.tuya_lava_lamp
+                              data:
+                                brightness: 102
+                            styles: |
+                              :host {
+                                {% if  
+                                  state_attr("light.tuya_lava_lamp", "brightness") <= config.option + 10 
+                                  and 
+                                  state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10
+                                %}
+                                background: orange;
+                                {% else %}
+                                --color: orange;
+                                --label-color: orange;
+                                {% endif %}
+                              }
+                            entity_id: light.tuya_lava_lamp
+                          - option: 255
+                            label: Heat
+                            tap_action:
+                              action: perform-action
+                              perform_action: light.turn_on
+                              target:
+                                entity_id:
+                                  - light.tuya_lava_lamp
+                              data:
+                                brightness: 255
+                            styles: |
+                              :host {
+                                {% if state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10 %}
+                                background: red;
+                                {% else %}
+                                --color: red;
+                                --label-color: red;
+                                {% endif %}
+                              }
+                            entity_id: light.tuya_lava_lamp
+                        entity_id: light.tuya_lava_lamp
+                features_position: inline
+              - type: custom:mushroom-light-card
+                entity: light.tuya_stars_projector
+                icon: ''
+                show_color_temp_control: false
+                show_color_control: true
+                show_brightness_control: false
+                use_light_color: true
+                collapsible_controls: false
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+                fill_container: true
+                layout: horizontal
+              - type: grid
+                square: false
+                cards:
+                  - type: custom:mushroom-light-card
+                    entity: light.meross_ambient_light_1
+                  - type: custom:mushroom-light-card
+                    entity: light.meross_ambient_light_2
+          - type: custom:mushroom-media-player-card
+            entity: media_player.yandex_station_m00db3710dqrsg
+            icon: ''
+            volume_controls:
+              - volume_buttons
+            media_controls:
+              - next
+              - play_pause_stop
+            fill_container: false
+            use_media_info: true
+            show_volume_level: true
+            collapsible_controls: true
+            layout: horizontal
+          - type: grid
+            square: false
+            columns: 2
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.humidity_control_4ch_switch_l2
+                tap_action:
+                  action: toggle
+                fill_container: true
+              - type: custom:mushroom-climate-card
+                entity: climate.batareia_v_spalne
+                tap_action:
+                  action: more-info
+                fill_container: false
+                show_temperature_control: true
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                hvac_modes:
+                  - heat
+                  - 'off'
         title: Спальня
       - square: false
         type: grid
@@ -819,114 +1008,10 @@ views:
             vertical: false
             hide_state: true
       - type: grid
-        title: Ahtom
-        square: false
-        columns: 2
-        cards:
-          - type: tile
-            entity: switch.ahtom_switch_1_table_light
-          - type: tile
-            entity: switch.ahtom_switch_2_tv_backlight
-          - type: tile
-            entity: switch.ahtom_switch_3_kitchen_led
-          - type: tile
-            entity: switch.aqara_t2_ch1_pc
-      - type: grid
         square: false
         columns: 1
         title: Tuya
         cards:
-          - features:
-              - type: custom:service-call
-                entries:
-                  - type: selector
-                    options:
-                      - label: 'Off'
-                        tap_action:
-                          action: perform-action
-                          perform_action: light.turn_on
-                          target:
-                            entity_id:
-                              - light.tuya_lava_lamp
-                          data:
-                            brightness: 0
-                        styles: |
-                          :host {
-                            {% if state_attr("light.tuya_lava_lamp", "brightness") == None %}
-                            background: grey;
-                            {% else %}
-                            --color: grey;
-                            --label-color: grey;
-                            {% endif %}
-                          }
-                        entity_id: light.tuya_lava_lamp
-                      - option: 102
-                        label: Relax
-                        tap_action:
-                          action: perform-action
-                          perform_action: light.turn_on
-                          target:
-                            entity_id:
-                              - light.tuya_lava_lamp
-                          data:
-                            brightness: 102
-                        styles: |
-                          :host {
-                            {% if  
-                              state_attr("light.tuya_lava_lamp", "brightness") <= config.option + 10 
-                              and 
-                              state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10
-                            %}
-                            background: orange;
-                            {% else %}
-                            --color: orange;
-                            --label-color: orange;
-                            {% endif %}
-                          }
-                        entity_id: light.tuya_lava_lamp
-                      - option: 255
-                        label: Heat
-                        tap_action:
-                          action: perform-action
-                          perform_action: light.turn_on
-                          target:
-                            entity_id:
-                              - light.tuya_lava_lamp
-                          data:
-                            brightness: 255
-                        styles: |
-                          :host {
-                            {% if state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10 %}
-                            background: red;
-                            {% else %}
-                            --color: red;
-                            --label-color: red;
-                            {% endif %}
-                          }
-                        entity_id: light.tuya_lava_lamp
-                    entity_id: light.tuya_lava_lamp
-            type: tile
-            entity: light.tuya_lava_lamp
-            features_position: inline
-            vertical: false
-            show_entity_picture: false
-            hide_state: false
-            icon_tap_action:
-              action: toggle
-          - type: custom:mushroom-light-card
-            entity: light.tuya_stars_projector
-            icon: mdi:star-four-points-outline
-            show_color_temp_control: false
-            show_color_control: true
-            show_brightness_control: false
-            use_light_color: true
-            collapsible_controls: false
-            tap_action:
-              action: toggle
-            hold_action:
-              action: more-info
-            fill_container: true
-            layout: horizontal
           - type: grid
             square: false
             columns: 2
@@ -940,65 +1025,98 @@ views:
                 hvac_modes:
                   - heat
                   - 'off'
-      - type: grid
-        columns: 2
-        square: false
-        title: Meross
-        cards:
-          - type: tile
-            entity: light.meross_ambient_light_1
-            features_position: bottom
-            vertical: false
-          - type: tile
-            entity: light.meross_ambient_light_2
-          - type: tile
-            entity: switch.meross_power_outlet_1
-            features_position: bottom
-            vertical: false
-          - type: custom:mushroom-entity-card
-            entity: binary_sensor.meross_power_outlet_1_activity
-            icon_color: red
-            icon_type: icon
+                tap_action:
+                  action: more-info
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidity_control_4ch_switch_l1
+                    name: Увлажнение - гостиная
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidity_control_4ch_switch_l2
+                    name: Увлажнение - спальня
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidity_control_4ch_switch_l3
+                    name: Увлажнение - детская
+                    tap_action:
+                      action: toggle
       - type: grid
         square: false
         columns: 2
         title: Климат
         cards:
           - type: custom:mushroom-climate-card
-            entity: climate.aqara_e1_thermostat_1
+            entity: climate.thermostat_living_rroom
+            fill_container: true
+            layout: vertical
+            hvac_modes:
+              - heat
+              - 'off'
+            tap_action:
+              action: more-info
+            show_temperature_control: true
+            name: Батарея в гостиной
+          - type: custom:mushroom-climate-card
+            entity: climate.thermostat_children_room
             layout: vertical
             fill_container: true
             show_temperature_control: true
             hvac_modes:
               - heat
               - 'off'
+            tap_action:
+              action: more-info
+            name: Батарея в детской
           - type: custom:mushroom-climate-card
-            entity: climate.aqara_e1_thermostat_2
+            entity: climate.heat_floor_bathroom
             layout: vertical
             fill_container: true
-            hvac_modes:
-              - heat
-              - 'off'
-          - type: custom:mushroom-climate-card
-            entity: climate.aqara_e1_thermostat_3
-            fill_container: true
-            layout: vertical
-            hvac_modes:
-              - heat
-              - 'off'
-          - type: custom:mushroom-humidifier-card
-            entity: humidifier.switch_humidifier
-            fill_container: false
-            layout: vertical
-            show_target_humidity_control: true
-            collapsible_controls: false
-            primary_info: name
-            secondary_info: state
-          - type: custom:mushroom-climate-card
-            entity: climate.conditioner
             show_temperature_control: true
-            hvac_modes: []
+            hvac_modes:
+              - heat
+              - 'off'
+            tap_action:
+              action: more-info
+            name: Теплый пол - ванная
+          - type: custom:mushroom-climate-card
+            entity: climate.heat_floor_laundry
             layout: vertical
+            fill_container: true
+            show_temperature_control: true
+            hvac_modes:
+              - heat
+              - 'off'
+            tap_action:
+              action: more-info
+            name: Теплый пол - прачечная
+          - type: custom:mushroom-climate-card
+            entity: climate.heat_wall_bathroom
+            layout: vertical
+            fill_container: true
+            show_temperature_control: true
+            hvac_modes:
+              - heat
+              - 'off'
+            tap_action:
+              action: more-info
+            name: Теплая стена - ванная
+          - type: custom:mushroom-climate-card
+            entity: climate.heat_floor_loggia
+            layout: vertical
+            fill_container: true
+            show_temperature_control: true
+            hvac_modes:
+              - heat
+              - 'off'
+            tap_action:
+              action: more-info
+            name: Теплый пол - балкон
       - square: false
         type: grid
         cards:
@@ -1037,7 +1155,7 @@ views:
           - type: custom:mushroom-chips-card
             chips:
               - type: template
-                entity: binary_sensor.aqara_t1_220v_sensor
+                entity: binary_sensor.electricity_outage_sensor
                 icon_color: |-
                   {% if is_state(entity, 'on') %}
                     green
@@ -1064,8 +1182,42 @@ views:
                   {% endif %}
                 tap_action:
                   action: more-info
+              - type: spacer
+              - type: template
+                icon_color: |-
+                  {% if states(entity)|float(0) > 235 %}
+                    red
+                  {% elif states(entity)|float(0) > 230 %}
+                    amber
+                  {% elif states(entity)|float(0) > 220 %}
+                    green
+                  {% elif states(entity)|float(0) > 210 %}
+                    amber
+                  {% else %}
+                    red
+                  {% endif %}
+                entity: sensor.zemismart_smp01_voltage
+                content: |-
+
+                  {{states(entity) | float(0)}} V
+                icon: mdi:sine-wave
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+              - type: entity
+                entity: sensor.zemismart_smp01_ac_frequency
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                icon_color: blue
           - type: custom:uptime-card
-            entity: binary_sensor.aqara_t1_220v_sensor
+            entity: binary_sensor.electricity_outage_sensor
             average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
             bar:
               height: 20
@@ -1079,19 +1231,158 @@ views:
             duration:
               quantity: 24
               unit: hour
+          - type: custom:bar-sensor-card
+            entity: sensor.zemismart_spm01_avg_current
+            min: 0
+            max: 50
+            enable_dynamic_bar_color: true
+            enable_dynamic_icon_color: true
+            display_mode: bar
+            bar_height: 10
+            show_value_inline: true
+            palette: green_to_red
+            title: Ток
+          - type: custom:bar-sensor-card
+            entity: sensor.zemismart_spm01_avg_power
+            min: 0
+            max: 11
+            enable_dynamic_bar_color: true
+            enable_dynamic_icon_color: true
+            display_mode: bar
+            bar_height: 10
+            show_value_inline: true
+            palette: green_to_red
+            title: Мощность
           - type: custom:mini-graph-card
             entities:
-              - entity: sensor.meross_power_outlet_1_energy
-            name: '` Обогрев балкона'
+              - entity: sensor.zemismart_smp01_energy
+                name: '` Расход энергии'
+            name: '` Расход энергии'
             icon: mdi:lightning-bolt
             hours_to_show: 168
             lower_bound: 0
             group: true
             hour24: true
             group_by: date
-            aggregate_func: max
+            aggregate_func: delta
             show:
               graph: bar
+          - type: custom:power-flow-card-plus
+            entities:
+              grid:
+                entity:
+                  consumption: sensor.zemismart_spm01_avg_power
+                secondary_info: {}
+                color_circle: true
+                color_value: true
+              individual:
+                - entity: sensor.ventilation_system_relay_avg_power
+                  icon: mdi:fan
+                  name: Вентиляция
+                  secondary_info: {}
+                - entity: sensor.humidifier_system_relay_power
+                  icon: mdi:air-humidifier
+                  name: Увлажнение
+                - entity: sensor.air_conditioner_system_relay_power
+                  icon: mdi:air-conditioner
+                  name: Кондиционер
+                - entity: sensor.washing_machine_power
+                  name: Стиральная машина
+                  icon: mdi:washing-machine
+                - entity: sensor.drying_machine_power
+                  icon: mdi:tumble-dryer
+                  name: Сушильная машина
+                - entity: sensor.dishwasher_power
+                  name: Посудомоечная машина
+                  icon: mdi:dishwasher
+                - entity: switch.eversweet_3_pro_uvc_power
+                  name: Питьевой фонтан
+                  icon: mdi:fountain
+                - entity: sensor.hallway_socket_power
+                - entity: sensor.kitchen_socket_power
+                - entity: sensor.behind_sofa_socket_power
+                - entity: sensor.vertical_vacuum_cleaner_power
+            clickable_entities: true
+            display_zero_lines: true
+            use_new_flow_rate_model: true
+            w_decimals: 0
+            kw_decimals: 2
+            min_flow_rate: 0.75
+            max_flow_rate: 6
+            max_expected_power: 2000
+            min_expected_power: 0.005
+            watt_threshold: 999
+            transparency_zero_lines: 10
+            sort_individual_devices: false
+      - type: custom:pie-chart-card
+        title: Потребление энергии
+        entities:
+          - entity: sensor.ventilation_system_relay_energy
+            name: Вентиляция
+          - entity: sensor.humidifier_system_relay_energy
+            name: Увлажнение
+          - entity: sensor.air_conditioner_system_relay_energy
+            name: Кондиционеры
+          - entity: sensor.washing_machine_energy
+            name: Стиральная машина
+          - entity: sensor.drying_machine_energy
+            name: Сушильная машина
+          - entity: sensor.dishwasher_energy
+            name: Посудомоечная машина
+          - entity: sensor.hallway_socket_energy
+            name: Розетка под шкафом
+          - entity: sensor.kitchen_socket_energy
+            name: Розетка на кухне
+          - entity: sensor.behind_sofa_socket_energy
+            name: Розетка за диваном
+          - entity: sensor.vertical_vacuum_cleaner_energy
+            name: Розетка в кладовой
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: heading
+            icon: mdi:water
+            heading_style: title
+            heading: Увлажнение
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.humidifier_system_relay_voltage
+              - type: entity
+                entity: sensor.humidifier_system_relay_power
+              - type: entity
+                entity: sensor.humidifier_system_relay_current
+              - type: entity
+                entity: sensor.humidifier_system_relay_energy
+          - type: heading
+            icon: mdi:fan
+            heading_style: title
+            heading: Вентиляция
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.ventilation_system_relay_voltage
+              - type: entity
+                entity: sensor.ventilation_system_relay_power
+              - type: entity
+                entity: sensor.ventilation_system_relay_current
+              - type: entity
+                entity: sensor.ventilation_system_relay_energy
+          - type: heading
+            icon: mdi:snowflake
+            heading_style: title
+            heading: Кондиционирование
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.air_conditioner_system_relay_voltage
+              - type: entity
+                entity: sensor.air_conditioner_system_relay_power
+              - type: entity
+                entity: sensor.air_conditioner_system_relay_current
+              - type: entity
+                entity: sensor.air_conditioner_system_relay_energy
       - type: grid
         title: Батареи
         columns: 1
@@ -1165,6 +1456,7 @@ views:
                 color: light-blue
                 entity: sensor.fresh_element_solo_1_dispensed
                 title: Выдано еды
+                show_value_inline: true
                 min: 0
                 max: 50
                 tap_action: none
@@ -1232,6 +1524,7 @@ views:
                 color: light-blue
                 entity: sensor.fresh_element_solo_2_dispensed
                 title: Выдано еды
+                show_value_inline: true
                 min: 0
                 max: 50
                 tap_action: none
@@ -1322,7 +1615,9 @@ views:
           - type: custom:bar-sensor-card
             enable_dynamic_bar_color: true
             icon_color: light-blue
-            bar_position: right
+            bar_position: bottom
+            bar_height: 30
+            show_value_inline: true
             entity: sensor.eversweet_3_pro_uvc_filter
             title: 'Питьевой фонтан: Фильтр'
             tap_action: none
@@ -1334,7 +1629,9 @@ views:
           - type: custom:bar-sensor-card
             enable_dynamic_bar_color: true
             icon_color: light-blue
-            bar_position: right
+            bar_position: bottom
+            bar_height: 30
+            show_value_inline: true
             entity: sensor.fresh_element_solo_1_desiccant_days_remaining
             title: 'Кормилка 1: Влагопоглотитель'
             icon: mdi:water-remove
@@ -1349,7 +1646,9 @@ views:
           - type: custom:bar-sensor-card
             enable_dynamic_bar_color: true
             icon_color: light-blue
-            bar_position: right
+            bar_position: bottom
+            bar_height: 30
+            show_value_inline: true
             entity: sensor.fresh_element_solo_2_desiccant_days_remaining
             title: 'Кормилка 2: Влагопоглотитель'
             icon: mdi:water-remove
@@ -1364,7 +1663,9 @@ views:
           - type: custom:bar-sensor-card
             enable_dynamic_bar_color: true
             icon_color: light-blue
-            bar_position: right
+            bar_position: bottom
+            bar_height: 30
+            show_value_inline: true
             entity: sensor.petkit_pura_air_filter_days_left
             title: 'Освежитель лотка: Фильтр'
             icon: mdi:air-filter

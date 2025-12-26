@@ -2,24 +2,19 @@ settings:
   beta: true
 filter:
   include_entities:
-    - switch.meross_power_outlet_1
     - light.tuya_lava_lamp
     - light.tuya_stars_projector
     - light.meross_ambient_light_1
     - light.meross_ambient_light_2
-    - humidifier.switch_humidifier
-    - climate.conditioner
   include_entity_globs:
-    - switch.ahtom_switch_*
-    - climate.aqara_e1_thermostat_*
 entity_config:
   # light
   light.meross_ambient_light_1:
-    name: Светильник на столе
+    name: Цветной светильник
     room: Спальня
     type: devices.types.light
   light.meross_ambient_light_2:
-    name: Светильник у телевизора
+    name: Цветной светильник
     room: Спальня
     type: devices.types.light
   light.tuya_lava_lamp:
@@ -30,43 +25,3 @@ entity_config:
     name: Звезды
     room: Спальня
     type: devices.types.light
-  switch.ahtom_switch_1_table_light:
-    name: Свет у компьютера
-    room: Спальня
-    type: devices.types.light
-  switch.ahtom_switch_2_tv_backlight:
-    name: Ночник
-    room: Спальня
-    type: devices.types.light.strip
-  switch.ahtom_switch_3_kitchen_led:
-    name: Свет на кухне
-    room: Кухня
-    type: devices.types.light
-  # climate
-  switch.meross_power_outlet_1:
-    name: Кондиционер
-    room: Балкон
-    type: devices.types.socket
-    properties:
-      - type: power
-        entity: sensor.meross_power_outlet_1_power
-  climate.aqara_e1_thermostat_1:
-    name: Батарея у рабочего места
-    room: Спальня
-    type: devices.types.thermostat
-  climate.aqara_e1_thermostat_2:
-    name: Батарея в спальне
-    room: Спальня
-    type: devices.types.thermostat
-  climate.aqara_e1_thermostat_3:
-    name: Батарея на кухне
-    room: Кухня
-    type: devices.types.thermostat
-  humidifier.switch_humidifier:
-    name: Увлажнитель
-    room: Спальня
-    type: devices.types.humidifier
-  climate.conditioner:
-    name: Кондиционер
-    room: Спальня
-    type: devices.types.thermostat

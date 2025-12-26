@@ -4,8 +4,8 @@
   trigger:
   - trigger: event
     event_type: transmission_downloaded_torrent
-  condition: []
-  action:
+  conditions: []
+  actions:
   - action: notify.notify
     data:
       title: Загрузка завершена
@@ -22,8 +22,8 @@
   trigger:
   - trigger: homeassistant
     event: start
-  condition: []
-  action:
+  conditions: []
+  actions:
   - action: notify.notify
     metadata: {}
     data:
@@ -36,8 +36,8 @@
   trigger:
   - trigger: homeassistant
     event: shutdown
-  condition: []
-  action:
+  conditions: []
+  actions:
   - action: notify.notify
     metadata: {}
     data:
@@ -48,17 +48,17 @@
   alias: notify_about_power_off
   description: Уведомление об отключении электричества
   triggers:
-  - type: not_powered
-    trigger: device
-    device_id: 22b74f3e55d94cb56434765df7dd1a9c
-    entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+  - type: not_opened
+    device_id: 13dd824d27eba323fd3981c6226b3c1b
+    entity_id: f1acf946117249e56b42375c9b5432ea
     domain: binary_sensor
+    trigger: device
     for:
       hours: 0
       minutes: 0
       seconds: 1
-  condition: []
-  action:
+  conditions: []
+  actions:
   - action: notify.notify
     metadata: {}
     data:
@@ -69,17 +69,17 @@
   alias: notify_about_power_on
   description: Уведомление о восстановлении электричества
   triggers:
-  - type: powered
-    trigger: device
-    device_id: 22b74f3e55d94cb56434765df7dd1a9c
-    entity_id: 8226d5c5decc1b6022c3cec88f6980ba
+  - type: opened
+    device_id: 13dd824d27eba323fd3981c6226b3c1b
+    entity_id: f1acf946117249e56b42375c9b5432ea
     domain: binary_sensor
+    trigger: device
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  condition: []
-  action:
+  conditions: []
+  actions:
   - action: notify.notify
     metadata: {}
     data:
