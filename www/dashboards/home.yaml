@@ -1441,6 +1441,35 @@ views:
                 hold_action:
                   action: toggle
         title: Ванная
+      - square: false
+        type: grid
+        columns: 1
+        cards:
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.loggia_temperature
+                icon_color: deep-orange
+              - type: entity
+                entity: sensor.loggia_humidity
+                icon_color: blue
+              - type: entity
+                entity: sensor.loggia_pressure
+                icon_color: light-grey
+                icon: mdi:gauge
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: custom:mushroom-climate-card
+                entity: climate.loggia_heat_floor
+                show_temperature_control: true
+                hvac_modes:
+                  - heat
+                  - 'off'
+                tap_action:
+                  action: more-info
+        title: Балкон
   - title: Энергия
     path: energy
     icon: mdi:battery-80
