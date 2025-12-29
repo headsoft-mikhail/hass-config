@@ -38,7 +38,6 @@ sensor:
     unit_of_measurement: B
     device_class: data_size
     state_class: total_increasing
-
   - platform: snmp
     name: "SNMP Router Outgoing Bytes"
     unique_id: snmp_router_outgoing_bytes
@@ -50,49 +49,78 @@ sensor:
     unit_of_measurement: B
     device_class: data_size
     state_class: total_increasing
-
   - platform: derivative
     name: "SNMP Router Incoming Bytes Derivative"
     source: sensor.snmp_router_incoming_bytes
     unit_time: s
     unit: B/s
     round: 2
-
   - platform: derivative
     name: "SNMP Router Outgoing Bytes Derivative"
     source: sensor.snmp_router_outgoing_bytes
     unit_time: s
     unit: B/s
     round: 2
-
   - platform: statistics
     name: "Ventilation System Relay Avg Power"
     entity_id: sensor.ventilation_system_relay_power
     state_characteristic: mean
     max_age:
       seconds: 120
-
   - platform: statistics
     name: "Ventilation System Relay Avg Current"
     entity_id: sensor.ventilation_system_relay_current
     state_characteristic: mean
     max_age:
       seconds: 120
-
   - platform: statistics
     name: "Zemismart SPM01 Avg Power"
     entity_id: sensor.zemismart_smp01_power
     state_characteristic: mean
     max_age:
-      seconds: 360
-
+      seconds: 600
   - platform: statistics
     name: "Zemismart SPM01 Avg Current"
     entity_id: sensor.zemismart_smp01_current
     state_characteristic: mean
     max_age:
-      seconds: 360
-
+      seconds: 600
+  - platform: integration
+    name: "Bathroom Heat Floor Energy"
+    unique_id: bathroom_heat_floor_energy
+    source: sensor.bathroom_heat_floor_power
+    unit_prefix: k
+    round: 2
+  - platform: integration
+    name: "Bathroom Heat Wall Energy"
+    unique_id: bathroom_heat_wall_energy
+    source: sensor.bathroom_heat_wall_power
+    unit_prefix: k
+    round: 2
+  - platform: integration
+    name: "Towel Dryer Energy"
+    unique_id: towel_dryer_energy
+    source: sensor.towel_dryer_power
+    unit_prefix: k
+    round: 2
+  - platform: integration
+    name: "Laundry Heat Floor Energy"
+    unique_id: laundry_heat_floor_energy
+    source: sensor.laundry_heat_floor_power
+    unit_prefix: k
+    round: 2
+  - platform: integration
+    name: "Loggia Heat Floor Energy"
+    unique_id: loggia_heat_floor_energy
+    source: sensor.loggia_heat_floor_power
+    unit_prefix: k
+    round: 2
+  - platform: derivative
+    name: "Towel Dryer Temperature Direction"
+    source: sensor.towel_dryer_current_temperature
+    unique_id: sensor.towel_dryer_current_temperature_derivative
+    unit_time: min
+    round: 4
 
 utility_meter:
   monthly_download:
@@ -105,6 +133,96 @@ utility_meter:
     name: "SNMP Router Outgoing Bytes Monthly"
     unique_id: snmp_router_outgoing_bytes_monthly
     source: sensor.snmp_router_outgoing_bytes
+    cycle: monthly
+    always_available: true
+  bathroom_heat_floor_energy_monthly:
+    name: Bathroom Heat Floor Energy Monthly
+    unique_id: bathroom_heat_floor_energy_monthly
+    source: sensor.bathroom_heat_floor_energy
+    cycle: monthly
+    always_available: true
+  bathroom_heat_wall_energy_monthly:
+    name: Bathroom Heat Wall Energy Monthly
+    unique_id: bathroom_heat_wall_energy_monthly
+    source: sensor.bathroom_heat_wall_energy
+    cycle: monthly
+    always_available: true
+  towel_dryer_energy_monthly:
+    name: Towel Dryer Energy Monthly
+    unique_id: towel_dryer_energy_monthly
+    source: sensor.towel_dryer_energy
+    cycle: monthly
+    always_available: true
+  laundry_heat_floor_energy_monthly:
+    name: Laundry Heat Floor Energy Monthly
+    unique_id: laundry_heat_floor_energy_monthly
+    source: sensor.laundry_heat_floor_energy
+    cycle: monthly
+    always_available: true
+  loggia_heat_floor_energy_monthly:
+    name: Loggia Heat Floor Energy Monthly
+    unique_id: loggia_heat_floor_energy_monthly
+    source: sensor.loggia_heat_floor_energy
+    cycle: monthly
+    always_available: true
+  ventilation_system_energy_monthly:
+    name: Ventilation System Energy Monthly
+    unique_id: ventilation_system_relay_energy_monthly
+    source: sensor.ventilation_system_relay_energy
+    cycle: monthly
+    always_available: true
+  humidifier_system_energy_monthly:
+    name: Humidifier System Energy Monthly
+    unique_id: humidifier_system_relay_energy_monthly
+    source: sensor.humidifier_system_relay_energy
+    cycle: monthly
+    always_available: true
+  air_conditioner_system_energy_monthly:
+    name: Air Conditioner System Energy Monthly
+    unique_id: air_conditioner_system_relay_energy_monthly
+    source: sensor.air_conditioner_system_relay_energy
+    cycle: monthly
+    always_available: true
+  washing_machine_energy_monthly:
+    name: Washing Machine Energy Monthly
+    unique_id: washing_machine_energy_monthly
+    source: sensor.washing_machine_energy
+    cycle: monthly
+    always_available: true
+  drying_machine_energy_monthly:
+    name: Drying Machine Energy Monthly
+    unique_id: drying_machine_energy_monthly
+    source: sensor.drying_machine_energy
+    cycle: monthly
+    always_available: true
+  dishwasher_energy_monthly:
+    name: Dishwasher Energy Monthly
+    unique_id: dishwasher_energy_monthly
+    source: sensor.dishwasher_energy
+    cycle: monthly
+    always_available: true
+  hall_under_wardrobe_socket_energy_monthly:
+    name: Hall Under Wardrobe Socket Energy Monthly
+    unique_id: hall_under_wardrobe_socket_energy_monthly
+    source: sensor.hall_under_wardrobe_socket_energy
+    cycle: monthly
+    always_available: true
+  kitchen_socket_energy_monthly:
+    name: Kitchen Socket Energy Monthly
+    unique_id: kitchen_socket_energy_monthly
+    source: sensor.kitchen_socket_energy
+    cycle: monthly
+    always_available: true
+  living_room_behind_sofa_socket_energy_monthly:
+    name: Living Room Behind Sofa Socket Energy Monthly
+    unique_id: living_room_behind_sofa_socket_energy_monthly
+    source: sensor.living_room_behind_sofa_socket_energy
+    cycle: monthly
+    always_available: true
+  store_room_socket_energy_monthly:
+    name: Store Room Socket Energy Monthly
+    unique_id: store_room_socket_energy_monthly
+    source: sensor.store_room_socket_energy
     cycle: monthly
     always_available: true
 
@@ -247,14 +365,66 @@ template:
         device_class: data_rate
         state_class: measurement
         state: "{{(8 * states('sensor.snmp_router_outgoing_bytes_derivative') | float(0) / 1000000) | round(2)}}"
-
-  # - binary_sensor:
-  #     - name: "Обогрев балкона"
-  #       unique_id: meross_power_outlet_1_activity
-  #       device_class: motion
-  #       state: "{{ states('sensor.meross_power_outlet_1_power')|float(0) > 50 }}"
-  #       delay_off:
-  #         seconds: 10
+      - name: "Bathroom heat floor power"
+        unique_id: bathroom_heat_floor_power
+        unit_of_measurement: "W"
+        device_class: power
+        state: "{% if state_attr('climate.bathroom_heat_floor', 'hvac_action') == 'heating' %}225{% else %}0{% endif %}"
+      - name: "Bathroom Heat Wall Power"
+        unique_id: bathroom_heat_wall_power
+        unit_of_measurement: "W"
+        device_class: power
+        state: "{% if state_attr('climate.bathroom_heat_wall', 'hvac_action') == 'heating' %}75{% else %}0{% endif %}"
+      - name: "Towel Dryer Power"
+        unique_id: towel_dryer_power
+        unit_of_measurement: "W"
+        device_class: power
+        state: >
+          {% if states('climate.towel_dryer') == 'heat' and states('sensor.towel_dryer_current_temperature_derivative') | float(0) > 0 %}
+            140
+          {% else %}
+            0
+          {% endif %}
+      - name: "Laundry Heat Floor Power"
+        unique_id: laundry_heat_floor_power
+        unit_of_measurement: "W"
+        device_class: power
+        state: "{% if state_attr('climate.laundry_heat_floor', 'hvac_action') == 'heating' %}225{% else %}0{% endif %}"
+      - name: "Loggia Heat Floor Power"
+        unique_id: loggia_heat_floor_power
+        unit_of_measurement: "W"
+        device_class: power
+        state: "{% if state_attr('climate.loggia_heat_floor', 'hvac_action') == 'heating' %}375{% else %}0{% endif %}"
+      - name: Towel Dryer Current Temperature
+        unique_id: towel_dryer_current_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state: "{{ state_attr('climate.towel_dryer', 'current_temperature') | float(0) }}" 
+  - binary_sensor:
+      - name: "Посудомойка работает"
+        unique_id: dishwasher_activity
+        device_class: motion
+        state: "{{ states('sensor.dishwasher_current')|float(0) > 0.2 }}"
+        delay_off:
+          seconds: 300
+        delay_on:
+          seconds: 0
+      - name: "Идет стирка"
+        unique_id: ashing_machine_activity
+        device_class: motion
+        state: "{{ states('sensor.washing_machine_current')|float(0) > 0.2 }}"
+        delay_off:
+          seconds: 180
+        delay_on:
+          seconds: 0
+      - name: "Идет сушка"
+        unique_id: drying_machine_activity
+        device_class: motion
+        state: "{{ states('sensor.drying_machine_current')|float(0) > 0.2 }}"
+        delay_off:
+          seconds: 90
+        delay_on:
+          seconds: 0
 
 climate:
   - platform: generic_thermostat
@@ -264,7 +434,7 @@ climate:
     target_sensor: sensor.rpi_cpu_temperature
     min_temp: 40
     max_temp: 80
-    target_temp: 60
+    target_temp: 62.5
     cold_tolerance: 2.5
     hot_tolerance: 2.5
     ac_mode: true
