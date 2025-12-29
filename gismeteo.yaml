@@ -1,0 +1,5 @@
+black_river:
+  name: Black River
+  latitude: !secret black_river_latitude
+  longitude: !secret black_river_longitude
+  add_sensors: yes
