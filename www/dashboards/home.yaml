@@ -281,11 +281,11 @@ views:
       - type: custom:mushroom-chips-card
         chips:
           - type: weather
-            entity: weather.gismeteo
+            entity: weather.black_river
             show_conditions: true
             show_temperature: false
           - type: template
-            entity: sensor.gismeteo_temperature
+            entity: sensor.black_river_temperature
             content: >-
               {{ states(entity).replace('.', ',') }} {{ state_attr(entity,
               'unit_of_measurement') }}
@@ -304,7 +304,7 @@ views:
             tap_action:
               action: more-info
           - type: template
-            entity: sensor.gismeteo_apparent_temperature
+            entity: sensor.black_river_apparent_temperature
             content: >-
               Ощущается как {{ states(entity).replace('.', ',') }} {{
               state_attr(entity, 'unit_of_measurement') }}
@@ -323,7 +323,7 @@ views:
             tap_action:
               action: more-info
           - type: template
-            entity: sensor.gismeteo_precipitation
+            entity: sensor.black_river_precipitation
             icon: mdi:weather-snowy-rainy
             content: >-
               {{ states(entity) | float | round(1) ~ ' mm' if states(entity) not
@@ -332,33 +332,33 @@ views:
               action: more-info
             icon_color: light-blue
           - type: entity
-            entity: sensor.gismeteo_cloud_coverage
+            entity: sensor.black_river_cloud_coverage
             icon_color: light-grey
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.gismeteo_wind_bearing_2
+            entity: sensor.black_river_wind_bearing_2
             icon_color: cyan
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.gismeteo_wind_speed
+            entity: sensor.black_river_wind_speed
             icon_color: cyan
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.gismeteo_humidity
+            entity: sensor.black_river_humidity
             icon_color: blue
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.gismeteo_pressure
+            entity: sensor.black_river_pressure
             content_info: state
             icon_color: grey
             tap_action:
               action: more-info
       - type: custom:hourly-weather
-        entity: weather.gismeteo
+        entity: weather.black_river
         icons: true
         show_wind: 'false'
         show_date: 'false'
@@ -368,7 +368,7 @@ views:
         name: ' '
         num_segments: '8'
       - type: custom:clock-weather-card
-        entity: weather.gismeteo
+        entity: weather.black_river
         hide_today_section: true
         forecast_rows: 7
         weather_icon_type: fill
@@ -408,11 +408,11 @@ views:
         refresh_interval: 300
         windspeed_bar_location: bottom
         wind_direction_entity:
-          entity: sensor.gismeteo_wind_bearing
+          entity: sensor.black_river_wind_bearing
           use_statistics: false
           direction_compensation: 0
         windspeed_entities:
-          - entity: sensor.gismeteo_wind_speed
+          - entity: sensor.black_river_wind_speed
             name: Скорость ветра
             speed_unit: mps
             use_statistics: true
@@ -440,17 +440,17 @@ views:
         center_calm_percentage: false
         corner_info:
           top_right:
-            entity: sensor.gismeteo_wind_speed
+            entity: sensor.black_river_wind_speed
             unit: ' м/с'
             color: white
         actions:
           windrose:
             tap_action:
-              entity: sensor.gismeteo_wind_bearing
+              entity: sensor.black_river_wind_bearing
               action: more-info
           speed_bar_1:
             tap_action:
-              entity: sensor.gismeteo_wind_speed
+              entity: sensor.black_river_wind_speed
               action: more-info
       - type: custom:horizon-card
         title: null
