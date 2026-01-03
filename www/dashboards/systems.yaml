@@ -678,7 +678,6 @@ views:
           - square: false
             type: grid
             columns: 1
-            title: Расходники
             cards:
               - type: custom:bar-sensor-card
                 enable_dynamic_bar_color: true
@@ -758,7 +757,7 @@ views:
             heading_style: title
             icon: mdi:air-humidifier
           - type: grid
-            columns: 1
+            columns: 3
             square: false
             cards:
               - type: grid
@@ -770,22 +769,30 @@ views:
                       - type: entity
                         entity: sensor.kitchen_humidity
                         icon_color: blue
-                      - type: entity
-                        entity: sensor.airmonitor2_humidity
-                        icon_color: blue
-                      - type: entity
-                        entity: sensor.kitchen_humidity
-                        icon_color: blue
-              - type: grid
-                columns: 3
-                square: false
-                cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l1
                     name: Гостиная
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.airmonitor2_humidity
+                        icon_color: blue
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l2
                     name: Спальня
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.kids_room_humidity
+                        icon_color: blue
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l3
                     name: Детская
@@ -795,17 +802,13 @@ views:
             heading: Кухня
             heading_style: title
             icon: mdi:countertop-outline
-          - type: custom:mushroom-cover-card
+          - type: custom:mushroom-entity-card
             entity: cover.kitchen_water_valve
-            secondary_info: state
-            show_buttons_control: false
-            show_position_control: false
-            show_tilt_position_control: false
             tap_action:
-              action: none
+              action: more-info
             hold_action:
-              action: toggle
-            icon: mdi:water-pump
+              action: call-service
+              service: script.kitchen_water_valve_toggle_by_state
           - type: grid
             square: false
             columns: 2
@@ -825,17 +828,13 @@ views:
             heading_style: title
             heading: Прачечная
             icon: mdi:washing-machine
-          - type: custom:mushroom-cover-card
+          - type: custom:mushroom-entity-card
             entity: cover.laundry_water_valve
-            secondary_info: state
-            show_buttons_control: false
-            show_position_control: false
-            show_tilt_position_control: false
             tap_action:
-              action: none
+              action: more-info
             hold_action:
-              action: toggle
-            icon: mdi:water-pump
+              action: call-service
+              service: script.laundry_water_valve_toggle_by_state
           - type: grid
             square: false
             columns: 2
@@ -1093,7 +1092,7 @@ views:
               - entity: sensor.hall_under_wardrobe_socket_energy_monthly
                 name: Розетка под шкафом
               - entity: sensor.fridge_socket_energy_monthly
-                name: Хлолдильник
+                name: Холодильник
               - entity: sensor.kitchen_socket_energy_monthly
                 name: Розетка на кухне
               - entity: sensor.living_room_behind_sofa_socket_energy_monthly
