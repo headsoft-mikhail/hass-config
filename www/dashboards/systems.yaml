@@ -1,0 +1,1186 @@
+views:
+  - title: network
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Internet
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: template
+                    tap_action:
+                      action: url
+                      url_path: http://192.168.1.1/dashboard
+                    icon: mdi:router-wireless
+                    icon_color: blue
+                    content: Keenetic
+                  - type: template
+                    tap_action:
+                      action: url
+                      url_path: >-
+                        http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer
+                    picture: /local/images/icon_transmission.svg
+                    content: Transmission
+                  - type: template
+                    tap_action:
+                      action: url
+                      url_path: https://github.com/headsoft-mikhail/hass-config
+                    picture: /local/images/icon_github.svg
+                    content: GitHub
+                  - type: spacer
+                  - type: entity
+                    entity: input_button.wifi_qr
+                    content_info: none
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: template
+                    entity: binary_sensor.ping_8_8_8_8
+                    icon_color: |-
+                      {% if is_state(entity, 'on') %}
+                        green
+                      {% elif is_state(entity, 'off') %}
+                        red
+                      {% else %}
+                        orange
+                      {% endif %}
+                    content: |-
+                      {% if is_state(entity, 'on') %}
+                        Подключено
+                      {% elif is_state(entity, 'off') %}
+                        Отключено
+                      {% else %}
+                        Недоступно
+                      {% endif %}
+                    icon: |-
+                      {% if is_state(entity, 'on') %}
+                        mdi:check-network-outline
+                      {% elif is_state(entity, 'off') %}
+                        mdi:close-network-outline
+                      {% else %}
+                        mdi:help-circle-outline
+                      {% endif %}
+                    tap_action:
+                      action: more-info
+                  - type: spacer
+                  - type: entity
+                    entity: sensor.snmp_router_download_speed
+                    icon: mdi:arrow-down-bold
+                    icon_color: orange
+                  - type: entity
+                    entity: sensor.snmp_router_upload_speed
+                    icon: mdi:arrow-up-bold
+                    icon_color: blue
+                  - type: entity
+                    entity: sensor.zyxel_gateway_download_speed
+                    icon: mdi:arrow-down-bold
+                    icon_color: orange
+                  - type: entity
+                    entity: sensor.zyxel_gateway_upload_speed
+                    icon: mdi:arrow-up-bold
+                    icon_color: blue
+              - type: custom:uptime-card
+                entity: binary_sensor.ping_8_8_8_8
+                icon: mdi:check-network-outline
+                ko_icon: mdi:close-network-outline
+                none_icon: mdi:wifi-strength-off-outline
+                average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+                bar:
+                  height: 20
+                  round: 3
+                  spacing: 1
+                  amount: 96
+                show:
+                  status: false
+                  icon: false
+                  title: false
+                duration:
+                  quantity: 24
+                  unit: hour
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.zyxel_gateway_uptime
+                    icon: mdi:clock
+                    icon_color: grey
+                  - type: spacer
+                  - type: entity
+                    entity: sensor.snmp_router_incoming_bytes_monthly
+                    icon: mdi:tray-arrow-down
+                    icon_color: orange
+                  - type: entity
+                    entity: sensor.snmp_router_outgoing_bytes_monthly
+                    icon: mdi:tray-arrow-up
+                    icon_color: light-blue
+          - type: custom:popup-card
+            entity: input_button.wifi_qr
+            popup_card_all_views: false
+            allow_nested_more_info: false
+            right_button: close
+            card:
+              type: picture
+              image: /local/images/qrcode.svg
+              tap_action:
+                action: none
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Transmission
+            badges: []
+          - type: custom:transmission-card
+            header_text: ''
+            no_torrent_label: ''
+            hide_header: false
+            hide_status: false
+            hide_turtle: true
+            hide_startstop: false
+            hide_type: true
+            hide_delete_torrent: false
+            hide_delete_torrent_full: false
+            default_type: total
+            display_mode: compact
+            default_sort: name
+            hide_sort: true
+            default_order: decending
+            hide_order: true
+            sensor_entity_id: transmission
+            hide_add_torrent: true
+            hide_upload_speed: false
+            hide_download_speed: false
+            force_status_newline: true
+      - type: grid
+        cards:
+          - type: heading
+            heading: HomeAssistant
+            heading_style: title
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.home_assistant_operating_system_version
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    icon: mdi:home
+                    icon_color: light-blue
+                  - type: template
+                    content: '{{ states(entity) }}'
+                    icon_color: |-
+                      {% if states(entity) == 'backed_up' %}
+                        light-blue
+                      {% else %}
+                        red
+                      {% endif %}
+                    icon: |-
+                      {% if states(entity) == 'backed_up' %}
+                        mdi:cloud-upload
+                      {% else %}
+                        mdi:cloud-alert
+                      {% endif %}
+                    entity: sensor.backup_state
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: none
+                  - type: template
+                    content: >-
+                      {{ as_datetime(state_attr(entity,
+                      'last_backup')).strftime('%d.%m.%Y') }}
+                    icon_color: light-blue
+                    icon: mdi:cloud-clock
+                    entity: sensor.backup_state
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: none
+                  - type: template
+                    content: >-
+
+                      {{ state_attr(entity, 'backups')[-1]['size'] }} / {{
+                      state_attr(entity, 'size_in_google_drive') }} / {{
+                      state_attr(entity, 'free_space_in_google_drive') }}
+                    icon_color: teal
+                    icon: mdi:cloud-braces
+                    entity: sensor.backup_state
+                    picture: ''
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: none
+                  - type: entity
+                    entity: sensor.rpi_cpu_temperature
+                    icon_color: orange
+                  - type: template
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: toggle
+                    content: |-
+                      {% set action = state_attr(entity, 'hvac_action') %}
+                      {{ {
+                        'off': 'Выключено',
+                        'idle': 'Ожидание',
+                        'cooling': 'Охлаждение',
+                      }[action] if action else 'Неизвестно' }}
+                    entity: climate.rpi_cooling_system
+                    icon: |+
+                      {% set action = state_attr(entity,  'hvac_action') %}
+                      {{ {
+                        'off': 'mdi:fan-off',
+                        'idle': 'mdi:fan-clock',
+                        'cooling': 'mdi:fan',
+                      }[action] if action else 'mdi:help-circle-outline' }}
+
+                    icon_color: |
+                      {% set action = state_attr(entity,  'hvac_action') %}
+                      {{ {
+                        'off': 'grey',
+                        'idle': 'cyan',
+                        'cooling': 'cyan',
+                      }[action] if action else 'orange' }}
+              - type: grid
+                columns: 2
+                square: false
+                cards:
+                  - type: custom:bar-sensor-card
+                    enable_dynamic_bar_color: true
+                    palette: green_to_red
+                    icon_color: light-blue
+                    entity: sensor.total_ram_usage
+                    title: RAM
+                  - type: custom:bar-sensor-card
+                    enable_dynamic_bar_color: true
+                    palette: green_to_red
+                    icon_color: light-blue
+                    entity: sensor.home_assistant_host_disk_used
+                    min: 0
+                    max: 234
+                    title: ROM
+                  - type: custom:bar-sensor-card
+                    enable_dynamic_bar_color: true
+                    palette: green_to_red
+                    icon_color: light-blue
+                    entity: sensor.total_cpu_usage
+                    title: CPU
+                  - type: custom:bar-sensor-card
+                    enable_dynamic_bar_color: true
+                    palette: green_to_red
+                    icon_color: light-blue
+                    entity: sensor.database_size_sqlite
+                    min: 0
+                    max: 2500
+                    title: DB
+    type: sections
+    max_columns: 4
+    path: network
+    icon: mdi:web
+    cards: []
+    theme: My Custom Theme
+  - type: sections
+    max_columns: 4
+    icon: mdi:weather-partly-cloudy
+    path: weather
+    title: Погода
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Погода
+            icon: ''
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: weather
+                    entity: weather.black_river
+                    show_conditions: true
+                    show_temperature: false
+                  - type: template
+                    entity: sensor.black_river_temperature
+                    content: >-
+                      {{ states(entity).replace('.', ',') }} {{
+                      state_attr(entity, 'unit_of_measurement') }}
+                    icon: mdi:thermometer
+                    icon_color: |-
+                      {% set temp = states(entity) | float(0) %}
+                      {% if temp < 3 %}
+                        light-blue
+                      {% elif temp < 13 %}
+                        teal
+                      {% elif temp < 23 %}
+                        amber
+                      {% else %}
+                        deep-orange
+                      {% endif %}
+                    tap_action:
+                      action: more-info
+                  - type: template
+                    entity: sensor.black_river_apparent_temperature
+                    content: >-
+                      Ощущается как {{ states(entity).replace('.', ',') }} {{
+                      state_attr(entity, 'unit_of_measurement') }}
+                    icon: mdi:thermometer
+                    icon_color: |-
+                      {% set temp = states(entity) | float(0) %}
+                      {% if temp < 3 %}
+                        light-blue
+                      {% elif temp < 13 %}
+                        teal
+                      {% elif temp < 23 %}
+                        amber
+                      {% else %}
+                        deep-orange
+                      {% endif %}
+                    tap_action:
+                      action: more-info
+                  - type: template
+                    entity: sensor.black_river_precipitation
+                    icon: mdi:weather-snowy-rainy
+                    content: >-
+                      {{ states(entity) | float | round(1) ~ ' mm' if
+                      states(entity) not in ['unknown', 'unavailable', 'none',
+                      '', None] else '-' }}
+                    tap_action:
+                      action: more-info
+                    icon_color: light-blue
+                  - type: entity
+                    entity: sensor.black_river_cloud_coverage
+                    icon_color: light-grey
+                    tap_action:
+                      action: more-info
+                  - type: entity
+                    entity: sensor.black_river_wind_bearing_2
+                    icon_color: cyan
+                    tap_action:
+                      action: more-info
+                  - type: entity
+                    entity: sensor.black_river_wind_speed
+                    icon_color: cyan
+                    tap_action:
+                      action: more-info
+                  - type: entity
+                    entity: sensor.black_river_humidity
+                    icon_color: blue
+                    tap_action:
+                      action: more-info
+                  - type: entity
+                    entity: sensor.black_river_pressure
+                    content_info: state
+                    icon_color: grey
+                    tap_action:
+                      action: more-info
+              - type: custom:hourly-weather
+                entity: weather.black_river
+                icons: true
+                show_wind: 'false'
+                show_date: 'false'
+                show_precipitation_amounts: true
+                show_precipitation_probability: false
+                label_spacing: '2'
+                name: ' '
+                num_segments: '8'
+              - type: custom:clock-weather-card
+                entity: weather.black_river
+                hide_today_section: true
+                forecast_rows: 7
+                weather_icon_type: fill
+          - type: custom:mini-graph-card
+            name: Температура
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.black_river_temperature
+                name: Температура
+                show_indicator: true
+                show_state: true
+              - entity: sensor.black_river_apparent_temperature
+                name: Ощущается
+                show_indicator: true
+                show_state: true
+              - color: white
+                entity: sun.sun
+                name: Солнце
+                show_line: false
+                show_points: false
+                show_legend: false
+                y_axis: secondary
+            state_map:
+              - value: below_horizon
+                label: Night
+              - value: above_horizon
+                label: Day
+            tap_action: none
+          - type: custom:windrose-card
+            data_period:
+              hours_to_show: 720
+              time_interval: 60
+            refresh_interval: 300
+            windspeed_bar_location: bottom
+            wind_direction_entity:
+              entity: sensor.black_river_wind_bearing
+              use_statistics: false
+              direction_compensation: 0
+            windspeed_entities:
+              - entity: sensor.black_river_wind_speed
+                name: Скорость ветра
+                speed_unit: mps
+                use_statistics: true
+                statistics_period: hour
+                windspeed_bar_full: false
+                output_speed_unit: mps
+                speed_range_beaufort: false
+                speed_range_step: 1
+                speed_range_max: 15
+                current_speed_arrow: true
+            direction_labels:
+              cardinal_direction_letters: СВЮЗ
+            wind_direction_count: 8
+            windrose_draw_north_offset: 0
+            current_direction:
+              show_arrow: true
+              arrow_size: 50
+              center_circle_size: 30
+              hide_direction_below_speed: 0
+            compass_direction:
+              auto_rotate: false
+              entity: ''
+            cardinal_direction_letters: С,В,Ю,З
+            matching_strategy: time-frame
+            center_calm_percentage: false
+            corner_info:
+              top_right:
+                entity: sensor.black_river_wind_speed
+                unit: ' м/с'
+                color: white
+            actions:
+              windrose:
+                tap_action:
+                  entity: sensor.black_river_wind_bearing
+                  action: more-info
+              speed_bar_1:
+                tap_action:
+                  entity: sensor.black_river_wind_speed
+                  action: more-info
+          - type: custom:horizon-card
+            title: null
+            moon: true
+            refresh_period: 60
+            fields:
+              sunrise: true
+              sunset: true
+              dawn: true
+              noon: true
+              dusk: true
+              sun_azimuth: true
+              moon_azimuth: true
+              sun_elevation: true
+              moon_elevation: true
+              moonrise: true
+              moonset: true
+              moon_phase: true
+        column_span: 2
+    theme: My Custom Theme
+    cards: []
+    dense_section_placement: true
+  - type: sections
+    max_columns: 4
+    icon: mdi:cat
+    path: pets
+    title: Питомцы
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Фрея
+            icon: mdi:cat
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:layout-card
+                layout_type: custom:grid-layout
+                cards:
+                  - type: custom:bar-sensor-card
+                    palette: green_to_red
+                    color: light-blue
+                    entity: sensor.fresh_element_solo_1_dispensed
+                    title: Выдано еды
+                    show_value_inline: true
+                    min: 0
+                    max: 50
+                    tap_action: none
+                  - type: custom:mushroom-entity-card
+                    entity: automation.petkit_feeder_1_act
+                    icon: mdi:hamburger-plus
+                    hold_action:
+                      action: perform-action
+                      perform_action: automation.trigger
+                      target:
+                        entity_id: automation.petkit_feeder_1_act
+                      data:
+                        skip_condition: true
+                    tap_action:
+                      action: none
+                    secondary_info: last-updated
+                    fill_container: true
+                    layout: vertical
+                    name: Кормить
+                layout:
+                  grid-template-columns: auto 30%
+                  margin: 0px
+              - type: custom:auto-entities
+                card:
+                  type: custom:layout-card
+                  layout_type: grid
+                  layout:
+                    grid-template-columns: repeat(2, minmax(50%, 50%))
+                    margin: 0px
+                entities: null
+                filter:
+                  include:
+                    - options:
+                        type: custom:mushroom-entity-card
+                        icon_color: red
+                      entity_id: binary_sensor.fresh_element_solo_1_food_level
+                    - options:
+                        type: custom:mushroom-entity-card
+                        icon_color: red
+                      entity_id: sensor.fresh_element_solo_1_error
+                    - options:
+                        type: custom:mushroom-entity-card
+                        icon_color: red
+                      entity_id: sensor.fresh_element_solo_1_status
+                  exclude:
+                    - options: {}
+                      entity_id: binary_sensor.fresh_element_solo_1_food_level
+                      state: 'off'
+                    - options: {}
+                      entity_id: sensor.fresh_element_solo_1_error
+                      state: no_error
+                    - options: {}
+                      entity_id: sensor.fresh_element_solo_1_status
+                      state: online
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Шанталь
+            icon: mdi:cat
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:layout-card
+                layout_type: custom:grid-layout
+                cards:
+                  - type: custom:bar-sensor-card
+                    palette: green_to_red
+                    color: light-blue
+                    entity: sensor.fresh_element_solo_2_dispensed
+                    title: Выдано еды
+                    show_value_inline: true
+                    min: 0
+                    max: 50
+                    tap_action: none
+                  - type: custom:mushroom-entity-card
+                    entity: automation.petkit_feeder_2_act
+                    icon: mdi:hamburger-plus
+                    hold_action:
+                      action: perform-action
+                      perform_action: automation.trigger
+                      target:
+                        entity_id: automation.petkit_feeder_2_act
+                      data:
+                        skip_condition: true
+                    secondary_info: last-updated
+                    fill_container: true
+                    layout: vertical
+                    tap_action:
+                      action: none
+                    name: Кормить
+                layout:
+                  grid-template-columns: auto 30%
+                  margin: 0px
+              - type: custom:auto-entities
+                card:
+                  type: custom:layout-card
+                  layout_type: grid
+                  layout:
+                    grid-template-columns: repeat(2, minmax(50%, 50%))
+                  margin: 0px
+                entities: null
+                filter:
+                  include:
+                    - options:
+                        type: custom:mushroom-entity-card
+                        icon_color: red
+                      entity_id: binary_sensor.fresh_element_solo_2_food_level
+                    - options:
+                        type: custom:mushroom-entity-card
+                        icon_color: red
+                      entity_id: sensor.fresh_element_solo_2_error
+                    - options:
+                        type: custom:mushroom-entity-card
+                        icon_color: red
+                      entity_id: sensor.fresh_element_solo_2_status
+                  exclude:
+                    - options: {}
+                      entity_id: binary_sensor.fresh_element_solo_2_food_level
+                      state: 'off'
+                    - options: {}
+                      entity_id: sensor.fresh_element_solo_2_error
+                      state: no_error
+                    - options: {}
+                      entity_id: sensor.fresh_element_solo_2_status
+                      state: online
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            icon: mdi:fountain
+            heading: Питьевой фонтан
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.eversweet_3_pro_uvc_power
+                name: Подача воды
+                icon: mdi:water-pump
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: toggle
+              - type: custom:auto-entities
+                card:
+                  type: custom:layout-card
+                  layout_type: grid
+                  layout:
+                    grid-template-columns: repeat(2, minmax(50%, 50%))
+                entities: null
+                filter:
+                  include:
+                    - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
+                      options:
+                        type: custom:mushroom-entity-card
+                        icon_color: red
+                      state: 'on'
+                show_empty: false
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Расходники
+          - square: false
+            type: grid
+            columns: 1
+            title: Расходники
+            cards:
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                icon_color: light-blue
+                bar_position: bottom
+                bar_height: 30
+                show_value_inline: true
+                entity: sensor.eversweet_3_pro_uvc_filter
+                title: 'Питьевой фонтан: Фильтр'
+                tap_action: none
+                hold_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.eversweet_3_pro_uvc_reset_filter
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                icon_color: light-blue
+                bar_position: bottom
+                bar_height: 30
+                show_value_inline: true
+                entity: sensor.fresh_element_solo_1_desiccant_days_remaining
+                title: 'Кормилка 1: Влагопоглотитель'
+                icon: mdi:water-remove
+                min: 0
+                max: 30
+                tap_action: none
+                hold_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.fresh_element_solo_1_reset_desiccant
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                icon_color: light-blue
+                bar_position: bottom
+                bar_height: 30
+                show_value_inline: true
+                entity: sensor.fresh_element_solo_2_desiccant_days_remaining
+                title: 'Кормилка 2: Влагопоглотитель'
+                icon: mdi:water-remove
+                min: 0
+                max: 30
+                tap_action: none
+                hold_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.fresh_element_solo_2_reset_desiccant
+              - type: custom:bar-sensor-card
+                enable_dynamic_bar_color: true
+                icon_color: light-blue
+                bar_position: bottom
+                bar_height: 30
+                show_value_inline: true
+                entity: sensor.petkit_pura_air_filter_days_left
+                title: 'Освежитель лотка: Фильтр'
+                icon: mdi:air-filter
+                min: 0
+                max: 90
+                tap_action: none
+                hold_action:
+                  action: perform-action
+                  perform_action: script.reset_petkit_pura_air_filter
+                  target: {}
+  - type: sections
+    max_columns: 3
+    title: Безопасность
+    path: water
+    icon: mdi:water
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Система увлажнения
+            heading_style: title
+            icon: mdi:air-humidifier
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.kitchen_humidity
+                        icon_color: blue
+                      - type: entity
+                        entity: sensor.airmonitor2_humidity
+                        icon_color: blue
+                      - type: entity
+                        entity: sensor.kitchen_humidity
+                        icon_color: blue
+              - type: grid
+                columns: 3
+                square: false
+                cards:
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidifier_system_control_switch_l1
+                    name: Гостиная
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidifier_system_control_switch_l2
+                    name: Спальня
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidifier_system_control_switch_l3
+                    name: Детская
+      - type: grid
+        cards:
+          - type: heading
+            heading: Кухня
+            heading_style: title
+            icon: mdi:countertop-outline
+          - type: custom:mushroom-cover-card
+            entity: cover.kitchen_water_valve
+            secondary_info: state
+            show_buttons_control: false
+            show_position_control: false
+            show_tilt_position_control: false
+            tap_action:
+              action: none
+            hold_action:
+              action: toggle
+            icon: mdi:water-pump
+          - type: grid
+            square: false
+            columns: 2
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.hall_collector_water_leak_sensor
+                name: В коллекторе
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.kitchen_sink_water_leak_sensor
+                name: Под раковиной
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.kitchen_dishwasher_water_leak_sensor
+                name: Под посудомойкой
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Прачечная
+            icon: mdi:washing-machine
+          - type: custom:mushroom-cover-card
+            entity: cover.laundry_water_valve
+            secondary_info: state
+            show_buttons_control: false
+            show_position_control: false
+            show_tilt_position_control: false
+            tap_action:
+              action: none
+            hold_action:
+              action: toggle
+            icon: mdi:water-pump
+          - type: grid
+            square: false
+            columns: 2
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.laundry_collector_water_leak_sensor
+                name: В коллекторе
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.laundry_installation_water_leak_sensor
+                name: В инсталляции
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.laundry_humidifier_water_leak_sensor
+                name: В системе увлажнения
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.laundry_washing_machie_water_leak_sensor
+                name: Под стиральной машинкой
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.laundry_sink_water_leak_sensor
+                name: Под раковиной
+          - type: heading
+            heading_style: title
+            heading: Ванная
+            icon: mdi:bathtub-outline
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.barthroom_installation_water_leak_sensor
+                name: В инсталляции
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.bathroom_bath_water_leak_sensor
+                name: Под ванной
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.bathroom_sink_water_leak_sensor
+                name: Под раковиной
+              - type: custom:mushroom-entity-card
+                entity: binary_sensor.bathroom_drain_water_leak_sensor
+                name: У фановой трубы
+    cards: []
+  - type: sections
+    max_columns: 3
+    title: Электричество
+    path: electricity
+    icon: mdi:lightning-bolt
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Электричество
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: template
+                    entity: binary_sensor.electricity_outage_sensor
+                    icon_color: |-
+                      {% if is_state(entity, 'on') %}
+                        green
+                      {% elif is_state(entity, 'off') %}
+                        red
+                      {% else %}
+                        orange
+                      {% endif %}
+                    content: |-
+                      {% if is_state(entity, 'on') %}
+                        Подключено
+                      {% elif is_state(entity, 'off') %}
+                        Отключено
+                      {% else %}
+                        Недоступно
+                      {% endif %}
+                    icon: |-
+                      {% if is_state(entity, 'on') %}
+                        mdi:power-plug-outline
+                      {% elif is_state(entity, 'off') %}
+                        mdi:power-plug-off-outline
+                      {% else %}
+                        mdi:help-circle-outline
+                      {% endif %}
+                    tap_action:
+                      action: more-info
+                  - type: spacer
+                  - type: template
+                    icon_color: |-
+                      {% if states(entity)|float(0) > 235 %}
+                        red
+                      {% elif states(entity)|float(0) > 230 %}
+                        amber
+                      {% elif states(entity)|float(0) > 220 %}
+                        green
+                      {% elif states(entity)|float(0) > 210 %}
+                        amber
+                      {% else %}
+                        red
+                      {% endif %}
+                    entity: sensor.zemismart_smp01_voltage
+                    content: |-
+
+                      {{states(entity) | float(0)}} V
+                    icon: mdi:sine-wave
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                  - type: entity
+                    entity: sensor.zemismart_smp01_ac_frequency
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    icon_color: blue
+                  - type: entity
+                    entity: sensor.zemismart_smp01_energy_monthly
+                    icon: mdi:lightning-bolt
+                    icon_color: deep-orange
+              - type: custom:uptime-card
+                entity: binary_sensor.electricity_outage_sensor
+                average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+                bar:
+                  height: 20
+                  round: 3
+                  spacing: 1
+                  amount: 96
+                show:
+                  status: false
+                  icon: false
+                  title: false
+                duration:
+                  quantity: 24
+                  unit: hour
+              - type: custom:bar-sensor-card
+                entity: sensor.zemismart_spm01_avg_current
+                min: 0
+                max: 50
+                enable_dynamic_bar_color: true
+                enable_dynamic_icon_color: true
+                display_mode: bar
+                bar_height: 10
+                show_value_inline: true
+                palette: green_to_red
+                title: Ток
+              - type: custom:bar-sensor-card
+                entity: sensor.zemismart_spm01_avg_power
+                min: 0
+                max: 11
+                enable_dynamic_bar_color: true
+                enable_dynamic_icon_color: true
+                display_mode: bar
+                bar_height: 10
+                show_value_inline: true
+                palette: green_to_red
+                title: Мощность
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.zemismart_smp01_energy_daily
+                    name: Расход энергии
+                name: Расход энергии
+                icon: mdi:lightning-bolt
+                hours_to_show: 168
+                lower_bound: 0
+                hour24: true
+                group_by: date
+                aggregate_func: max
+                show:
+                  graph: bar
+          - type: custom:power-flow-card-plus
+            entities:
+              grid:
+                entity:
+                  consumption: sensor.zemismart_spm01_avg_power
+                secondary_info: {}
+                color_circle: true
+                color_value: true
+              individual:
+                - entity: sensor.ventilation_system_relay_avg_power
+                  icon: mdi:fan
+                  name: Вентиляция
+                  secondary_info: {}
+                - entity: sensor.humidifier_system_relay_power
+                  icon: mdi:air-humidifier
+                  name: Увлажнение
+                - entity: sensor.air_conditioner_system_relay_power
+                  icon: mdi:air-conditioner
+                  name: Кондиционер
+                - entity: sensor.washing_machine_power
+                  name: Стиральная машина
+                  icon: mdi:washing-machine
+                - entity: sensor.drying_machine_power
+                  icon: mdi:tumble-dryer
+                  name: Сушильная машина
+                - entity: sensor.dishwasher_power
+                  name: Посудомоечная машина
+                  icon: mdi:dishwasher
+                - entity: switch.eversweet_3_pro_uvc_power
+                  name: Питьевой фонтан
+                  icon: mdi:fountain
+                - entity: sensor.hall_under_wardrobe_socket_power
+                  name: Розетка в коридоре под шкафом
+                - entity: sensor.kitchen_socket_power
+                  name: Розетка на кухне
+                - entity: sensor.living_room_behind_sofa_socket_power
+                  name: Розетка за диваном
+                - entity: sensor.store_room_socket_power
+                  name: Розетка в кладовке - пылесос
+                - entity: sensor.fridge_socket_power
+                  name: Холодильник
+                - entity: sensor.bathroom_heat_floor_power
+                  name: Теплый пол в ванной
+                - entity: sensor.bathroom_heat_wall_power
+                  name: Теплая стена в ванной
+                - entity: sensor.towel_dryer_power
+                  name: Полотенцесушитель
+                - entity: sensor.laundry_heat_floor_power
+                  name: Теплый пол в прачечной
+                - entity: sensor.loggia_heat_floor_power
+                  name: Теплый пол на балконе
+              home:
+                secondary_info: {}
+            clickable_entities: true
+            display_zero_lines: true
+            use_new_flow_rate_model: true
+            w_decimals: 0
+            kw_decimals: 2
+            min_flow_rate: 0.75
+            max_flow_rate: 6
+            max_expected_power: 12000
+            min_expected_power: 0.005
+            watt_threshold: 999
+            transparency_zero_lines: 10
+            sort_individual_devices: false
+          - type: custom:pie-chart-card
+            title: ' '
+            entities:
+              - entity: sensor.ventilation_system_relay_energy_monthly
+                name: Вентиляция
+              - entity: sensor.humidifier_system_relay_energy_monthly
+                name: Увлажнение
+              - entity: sensor.air_conditioner_system_relay_energy_monthly
+                name: Кондиционеры
+              - entity: sensor.washing_machine_energy_monthly
+                name: Стиральная машина
+              - entity: sensor.drying_machine_energy_monthly
+                name: Сушильная машина
+              - entity: sensor.dishwasher_energy_monthly
+                name: Посудомоечная машина
+              - entity: sensor.hall_under_wardrobe_socket_energy_monthly
+                name: Розетка под шкафом
+              - entity: sensor.fridge_socket_energy_monthly
+                name: Хлолдильник
+              - entity: sensor.kitchen_socket_energy_monthly
+                name: Розетка на кухне
+              - entity: sensor.living_room_behind_sofa_socket_energy_monthly
+                name: Розетка за диваном
+              - entity: sensor.store_room_socket_energy_monthly
+                name: Розетка в кладовой
+              - entity: sensor.bathroom_heat_floor_energy_monthly
+                name: Теплый пол в ванной
+              - entity: sensor.bathroom_heat_wall_energy_monthly
+                name: Теплая стена в ванной
+              - entity: sensor.towel_dryer_energy_monthly
+                name: Полотенцесушитель
+              - entity: sensor.laundry_heat_floor_energy_monthly
+                name: Теплый пол в прачечной
+              - entity: sensor.loggia_heat_floor_energy_monthly
+                name: Теплый пол на балконе
+        column_span: 3
+      - type: grid
+        cards:
+          - type: heading
+            heading: Батареи
+            heading_style: title
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:auto-entities
+                card:
+                  type: custom:layout-card
+                  layout_type: grid
+                  layout:
+                    grid-template-columns: repeat(2, minmax(50%, 50%))
+                filter:
+                  include:
+                    - options:
+                        type: custom:bar-sensor-card
+                        enable_dynamic_icon_color: true
+                        display_mode: icon
+                      domain: sensor
+                      attributes:
+                        device_class: battery
+                      state: < 50
+                    - options:
+                        type: custom:mushroom-entity-card
+                      domain: sensor
+                      attributes:
+                        device_class: battery
+                      state: unknown
+                    - options:
+                        type: custom:mushroom-entity-card
+                      domain: sensor
+                      attributes:
+                        device_class: battery
+                      state: unavailable
+                    - options:
+                        type: custom:bar-sensor-card
+                        enable_dynamic_icon_color: true
+                        display_mode: icon
+                      entity_id: sensor.*_battery_status
+                      state: < 50
+                    - options:
+                        type: custom:mushroom-entity-card
+                      entity_id: sensor.*_battery_status
+                      state: unknown
+                    - options:
+                        type: custom:mushroom-entity-card
+                      entity_id: sensor.*_battery_status
+                      state: unavailable
+                  exclude:
+                    - options: {}
+                      entity_id: sensor.contact_sensor_battery_sensor
+                    - options: {}
+                      entity_id: sensor.ik_pult_battery
+                sort:
+                  method: state
+                  numeric: true
+                show_empty: true
+    cards: []

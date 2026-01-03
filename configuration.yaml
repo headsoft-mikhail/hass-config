@@ -64,24 +64,28 @@ sensor:
     round: 2
   - platform: statistics
     name: "Ventilation System Relay Avg Power"
+    unique_id: ventilation_system_relay_avg_power
     entity_id: sensor.ventilation_system_relay_power
     state_characteristic: mean
     max_age:
       seconds: 120
   - platform: statistics
     name: "Ventilation System Relay Avg Current"
+    unique_id: ventilation_system_relay_avg_current
     entity_id: sensor.ventilation_system_relay_current
     state_characteristic: mean
     max_age:
       seconds: 120
   - platform: statistics
-    name: "Zemismart SPM01 Avg Power"
+    name: "Zemismart SMP01 Avg Power"
+    unique_id: zemismart_smp01_avg_power
     entity_id: sensor.zemismart_smp01_power
     state_characteristic: mean
     max_age:
       seconds: 600
   - platform: statistics
-    name: "Zemismart SPM01 Avg Current"
+    name: "Zemismart SMP01 Avg Current"
+    unique_id: zemismart_smp01_avg_current
     entity_id: sensor.zemismart_smp01_current
     state_characteristic: mean
     max_age:
@@ -208,6 +212,12 @@ utility_meter:
     source: sensor.hall_under_wardrobe_socket_energy
     cycle: monthly
     always_available: true
+  fridge_socket_energy_monthly:
+    name: Fridge Socket Energy Monthly
+    unique_id: fridge_socket_energy_monthly
+    source: sensor.fridge_socket_energy
+    cycle: monthly
+    always_available: true
   kitchen_socket_energy_monthly:
     name: Kitchen Socket Energy Monthly
     unique_id: kitchen_socket_energy_monthly
@@ -225,6 +235,18 @@ utility_meter:
     unique_id: store_room_socket_energy_monthly
     source: sensor.store_room_socket_energy
     cycle: monthly
+    always_available: true
+  zemismart_smp01_energy_monthly:
+    name: Zemismart SMP01 Energy Monthly
+    unique_id: zemismart_smp01_energy_monthly
+    source: sensor.zemismart_smp01_energy
+    cycle: monthly
+    always_available: true
+  zemismart_smp01_energy_daily:
+    name: Zemismart SMP01 Energy Daily
+    unique_id: zemismart_smp01_energy_daily
+    source: sensor.zemismart_smp01_energy
+    cycle: daily
     always_available: true
 
 switch:
@@ -251,6 +273,23 @@ input_select:
       - "Coax"
     initial: "Off"
     icon: "mdi:soundbar"
+  kitchen_water_valve_state:
+    name: Kitchen water valve state
+    options:
+      - open
+      - closed
+      - opening
+      - closing
+      - error
+  laundry_water_valve_state:
+    name: Laundry water valve state
+    options:
+      - open
+      - closed
+      - opening
+      - closing
+      - error
+
 
 input_datetime:
   petkit_pura_air_filter_replaced:
@@ -400,7 +439,7 @@ template:
         unique_id: towel_dryer_current_temperature
         unit_of_measurement: "°C"
         device_class: temperature
-        state: "{{ state_attr('climate.towel_dryer', 'current_temperature') | float(0) }}" 
+        state: "{{ state_attr('climate.towel_dryer', 'current_temperature') | float(0) }}"
   - binary_sensor:
       - name: "Посудомойка работает"
         unique_id: dishwasher_activity
@@ -411,7 +450,7 @@ template:
         delay_on:
           seconds: 0
       - name: "Идет стирка"
-        unique_id: ashing_machine_activity
+        unique_id: washing_machine_activity
         device_class: motion
         state: "{{ states('sensor.washing_machine_current')|float(0) > 0.2 }}"
         delay_off:
@@ -426,7 +465,64 @@ template:
           seconds: 90
         delay_on:
           seconds: 0
-
+      - name: "Холодильник работает"
+        unique_id: fridge_activity
+        device_class: motion
+        state: "{{ states('sensor.fridge_socket_current')|float(0) > 0.2 }}"
+        delay_off:
+          seconds: 30
+        delay_on:
+          seconds: 0
+  - cover:
+      - name: Kitchen water valve
+        unique_id: kitchen_water_valve
+        device_class: gate
+        state: >
+          {% set s = states('input_select.kitchen_water_valve_state') %}
+          {% if s == 'open' %}
+            open
+          {% elif s == 'opening' %}
+            opening
+          {% elif s == 'closed' %}
+            closed
+          {% elif s == 'closing' %}
+            closing
+          {% else %}
+            unknown
+          {% endif %}
+        open_cover:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_water_valve_open
+        close_cover:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_water_valve_close
+      - name: Laundry water valve
+        unique_id: laundry_water_valve
+        device_class: gate
+        state: >
+          {% set s = states('input_select.laundry_water_valve_state') %}
+          {% if s == 'open' %}
+            open
+          {% elif s == 'opening' %}
+            opening
+          {% elif s == 'closed' %}
+            closed
+          {% elif s == 'closing' %}
+            closing
+          {% else %}
+            unknown
+          {% endif %}
+        open_cover:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.laundry_water_valve_open
+        close_cover:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.laundry_water_valve_close
+          
 climate:
   - platform: generic_thermostat
     name: Охлаждение RPi

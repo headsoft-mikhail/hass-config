@@ -380,11 +380,11 @@ views:
             points_per_hour: 2
             font_size: 70
             entities:
-              - entity: sensor.home_assistant_temperature
+              - entity: sensor.black_river_temperature
                 name: Температура
                 show_indicator: true
                 show_state: true
-              - entity: sensor.home_assistant_apparent_temperature
+              - entity: sensor.black_river_apparent_temperature
                 name: Ощущается
                 show_indicator: true
                 show_state: true
@@ -589,6 +589,11 @@ views:
                 icon_color: orange
                 tap_action:
                   action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.hdmi_hub
+                icon_color: blue
+                tap_action:
+                  action: toggle
           - square: false
             columns: 2
             type: grid
@@ -711,6 +716,7 @@ views:
                     show_color_control: true
                     tap_action:
                       action: toggle
+                    use_light_color: true
                 columns: 2
           - type: grid
             square: false
@@ -790,6 +796,23 @@ views:
                   {% endif %}
                 tap_action:
                   action: more-info
+              - type: template
+                icon: |-
+                  {% if states(entity) == 'on'%}
+                  mdi:fridge
+                  {% else %}
+                  mdi:fridge-off
+                  {% endif %}
+                icon_color: purple
+                entity: binary_sensor.fridge_acticity
+                content: |-
+                  {% if states(entity) == 'on'%}
+                  Холодильник работает
+                  {% else %}
+                  Не обнаружено
+                  {% endif %}
+                tap_action:
+                  action: more-info
           - square: false
             type: grid
             cards:
@@ -814,16 +837,23 @@ views:
                 tap_action:
                   action: toggle
               - type: custom:mushroom-entity-card
-                entity: switch.kitchen_socket
-                icon_color: red
-                tap_action:
-                  action: toggle
-              - type: custom:mushroom-entity-card
                 entity: switch.dishwasher
                 icon_color: purple
                 tap_action:
                   action: more-info
                 hold_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.fridge_socket
+                icon_color: purple
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: switch.kitchen_socket
+                icon_color: red
+                tap_action:
                   action: toggle
           - square: false
             type: grid
@@ -1284,6 +1314,29 @@ views:
               action: none
             double_tap_action:
               action: none
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: select.roborock_robotic_vacuum_cleaner_cleaning_mode
+                  - type: entity
+                    entity: sensor.roborock_robotic_vacuum_cleaner_state
+                  - type: entity
+                    entity: sensor.roborock_robotic_vacuum_cleaner_operational_error
+                  - type: entity
+                    entity: sensor.roborock_robotic_vacuum_cleaner_battery_state
+                  - type: entity
+                    entity: sensor.roborock_robotic_vacuum_cleaner_battery
+              - type: custom:mushroom-vacuum-card
+                entity: vacuum.roborock_robotic_vacuum_cleaner
+                icon_animation: true
+                commands:
+                  - start_pause
+                  - stop
+                  - return_home
+            columns: 1
         title: Кладовая
       - square: false
         type: grid
@@ -1331,7 +1384,7 @@ views:
                 entity: binary_sensor.drying_machine_activity
                 content: |-
                   {% if states(entity) == 'on'%}
-                  Идет стирка
+                  Идет сушка
                   {% else %}
                   Не обнаружено
                   {% endif %}
