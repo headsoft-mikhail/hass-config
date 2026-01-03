@@ -608,7 +608,17 @@ views:
         columns: 1
         cards:
           - type: custom:mushroom-chips-card
-            chips: []
+            chips:
+              - type: entity
+                entity: sensor.kids_room_temperature
+                icon_color: deep-orange
+              - type: entity
+                entity: sensor.kids_room_humidity
+                icon_color: blue
+              - type: entity
+                entity: sensor.kids_room_pressure
+                icon_color: light-grey
+                icon: mdi:gauge
           - square: false
             type: grid
             cards:
@@ -831,34 +841,9 @@ views:
                 icon_color: orange
                 tap_action:
                   action: toggle
-          - type: custom:mushroom-vacuum-card
-            entity: vacuum.roborock_vacuum_cleaner
-            icon_animation: true
-            commands:
-              - start_pause
-              - stop
-              - return_home
-            tap_action:
-              action: more-info
-            hold_action:
-              action: none
-            double_tap_action:
-              action: none
           - square: false
             type: grid
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: select.roborock_robotic_vacuum_cleaner_cleaning_mode
-                  - type: entity
-                    entity: sensor.roborock_robotic_vacuum_cleaner_state
-                  - type: entity
-                    entity: sensor.roborock_robotic_vacuum_cleaner_operational_error
-                  - type: entity
-                    entity: sensor.roborock_robotic_vacuum_cleaner_battery_state
-                  - type: entity
-                    entity: sensor.roborock_robotic_vacuum_cleaner_battery
               - type: custom:mushroom-vacuum-card
                 entity: vacuum.roborock_robotic_vacuum_cleaner
                 icon_animation: true
@@ -866,6 +851,13 @@ views:
                   - start_pause
                   - stop
                   - return_home
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.roborock_robotic_vacuum_cleaner_battery
+                  - type: entity
+                    entity: sensor.roborock_robotic_vacuum_cleaner_operational_error
+                    icon_color: orange
             columns: 1
         title: Кладовая
       - square: false
