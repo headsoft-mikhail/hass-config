@@ -476,7 +476,6 @@ template:
   - cover:
       - name: Kitchen water valve
         unique_id: kitchen_water_valve
-        device_class: gate
         state: >
           {% set s = states('input_select.kitchen_water_valve_state') %}
           {% if s == 'open' %}
@@ -500,7 +499,6 @@ template:
               entity_id: switch.kitchen_water_valve_close
       - name: Laundry water valve
         unique_id: laundry_water_valve
-        device_class: gate
         state: >
           {% set s = states('input_select.laundry_water_valve_state') %}
           {% if s == 'open' %}

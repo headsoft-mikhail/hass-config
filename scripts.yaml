@@ -2,6 +2,55 @@ reset_petkit_pura_air_filter:
   alias: "Petkit Pura Air - Сбросить фильтр"
   sequence:
     - action: input_datetime.set_datetime
-      data:
+      target:
         entity_id: input_datetime.petkit_pura_air_filter_replaced
+      data:
         date: "{{ now().strftime('%Y-%m-%d') }}"
+
+laundry_water_valve_toggle_by_state:
+  alias: Laundry water valve toggle by state
+  mode: single
+  sequence:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: >
+                {{ states('cover.laundry_water_valve') in ['open', 'opening'] }}
+          sequence:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.laundry_water_valve_close
+
+        - conditions:
+            - condition: template
+              value_template: >
+                {{ states('cover.laundry_water_valve') in ['closed', 'closing'] }}
+          sequence:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.laundry_water_valve_open
+      default: []
+
+kitchen_water_valve_toggle_by_state:
+  alias: Kitchen water valve toggle by state
+  mode: single
+  sequence:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: >
+                {{ states('cover.kitchen_water_valve') in ['open', 'opening'] }}
+          sequence:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.kitchen_water_valve_close
+
+        - conditions:
+            - condition: template
+              value_template: >
+                {{ states('cover.kitchen_water_valve') in ['closed', 'closing'] }}
+          sequence:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.kitchen_water_valve_open
+      default: []
