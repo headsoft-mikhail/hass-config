@@ -74,14 +74,6 @@ views:
                 entity: sensor.snmp_router_upload_speed
                 icon: mdi:arrow-up-bold
                 icon_color: blue
-              - type: entity
-                entity: sensor.zyxel_gateway_download_speed
-                icon: mdi:arrow-down-bold
-                icon_color: orange
-              - type: entity
-                entity: sensor.zyxel_gateway_upload_speed
-                icon: mdi:arrow-up-bold
-                icon_color: blue
           - type: custom:uptime-card
             entity: binary_sensor.ping_8_8_8_8
             icon: mdi:check-network-outline
@@ -102,10 +94,6 @@ views:
               unit: hour
           - type: custom:mushroom-chips-card
             chips:
-              - type: entity
-                entity: sensor.zyxel_gateway_uptime
-                icon: mdi:clock
-                icon_color: grey
               - type: spacer
               - type: entity
                 entity: sensor.snmp_router_incoming_bytes_monthly
@@ -1791,11 +1779,6 @@ views:
                     type: custom:mushroom-entity-card
                   entity_id: sensor.*_battery_status
                   state: unavailable
-              exclude:
-                - options: {}
-                  entity_id: sensor.contact_sensor_battery_sensor
-                - options: {}
-                  entity_id: sensor.ik_pult_battery
             sort:
               method: state
               numeric: true
