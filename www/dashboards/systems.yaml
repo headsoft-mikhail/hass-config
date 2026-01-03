@@ -976,7 +976,7 @@ views:
                   quantity: 24
                   unit: hour
               - type: custom:bar-sensor-card
-                entity: sensor.zemismart_spm01_avg_current
+                entity: sensor.zemismart_smp01_avg_current
                 min: 0
                 max: 50
                 enable_dynamic_bar_color: true
@@ -987,7 +987,7 @@ views:
                 palette: green_to_red
                 title: Ток
               - type: custom:bar-sensor-card
-                entity: sensor.zemismart_spm01_avg_power
+                entity: sensor.zemismart_smp01_avg_power
                 min: 0
                 max: 11
                 enable_dynamic_bar_color: true
@@ -1014,7 +1014,7 @@ views:
             entities:
               grid:
                 entity:
-                  consumption: sensor.zemismart_spm01_avg_power
+                  consumption: sensor.zemismart_smp01_avg_power
                 secondary_info: {}
                 color_circle: true
                 color_value: true
