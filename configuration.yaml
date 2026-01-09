@@ -357,7 +357,7 @@ template:
           SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_memory_percent')  }}"
           Studio_Code_server: "{{ states('sensor.studio_code_server_memory_percent')  }}"
           AdGuard_home: "{{ states('sensor.adguard_home_memory_percent')  }}"
-      - name: "petkit_pura_air_filter_days_left"
+      - name: "PetKit Pura Air Filter Days Left"
         unique_id: "petkit_pura_air_filter_days_left"
         unit_of_measurement: "d"
         state: >
@@ -371,7 +371,7 @@ template:
         attributes:
           last_update: "{{ now() }}"
         availability: "{{ states('input_datetime.petkit_pura_air_filter_replaced') not in ['unknown', 'unavailable'] }}"
-      - name: "airmonitor2_tvoc_ug"
+      - name: "AirMonitor2 TVOC ug"
         unique_id: "airmonitor2_tvoc_ug"
         unit_of_measurement: "µg/m³"
         state: '{{ (states("sensor.airmonitor2_etvoc") | float(0) * 1000) | round(0) }}'
@@ -430,6 +430,11 @@ template:
         unit_of_measurement: "W"
         device_class: power
         state: "{% if state_attr('climate.laundry_heat_floor', 'hvac_action') == 'heating' %}225{% else %}0{% endif %}"
+      - name: "Laundry Heat Floor 2 Power"
+        unique_id: laundry_heat_floor_2_power
+        unit_of_measurement: "W"
+        device_class: power
+        state: "{% if state_attr('climate.laundry_heat_floor_2', 'hvac_action') == 'heating' %}225{% else %}0{% endif %}"
       - name: "Loggia Heat Floor Power"
         unique_id: loggia_heat_floor_power
         unit_of_measurement: "W"
@@ -440,8 +445,33 @@ template:
         unit_of_measurement: "°C"
         device_class: temperature
         state: "{{ state_attr('climate.towel_dryer', 'current_temperature') | float(0) }}"
+      - name: Bathroom Heat Floor Current Temperature
+        unique_id: bathroom_heat_floor_current_temperature
+        state: "{{ state_attr('climate.bathroom_heat_floor', 'current_temperature') | float(0) }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+      - name: Bathroom Heat Wall Current Temperature
+        unique_id: bathroom_heat_wall_current_temperature
+        state: "{{ state_attr('climate.bathroom_heat_wall', 'current_temperature') | float(0) }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+      - name: Laundry Heat Floor Current Temperature
+        unique_id: laundry_heat_floor_current_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state: "{{ state_attr('climate.laundry_heat_floor', 'current_temperature') | float(0) }}"
+      - name: Laundry Heat Floor 2 Current Temperature
+        unique_id: laundry_heat_floor_2_current_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state: "{{ state_attr('climate.laundry_heat_floor_2', 'current_temperature') | float(0) }}"
+      - name: Loggia Heat Floor Current Temperature
+        unique_id: loggia_heat_floor_current_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state: "{{ state_attr('climate.loggia_heat_floor', 'current_temperature') | float(0) }}"
   - binary_sensor:
-      - name: "Посудомойка работает"
+      - name: "Dishwasher Activity"
         unique_id: dishwasher_activity
         device_class: motion
         state: "{{ states('sensor.dishwasher_current')|float(0) > 0.2 }}"
@@ -449,7 +479,7 @@ template:
           seconds: 300
         delay_on:
           seconds: 0
-      - name: "Идет стирка"
+      - name: "Washing Machine Activity"
         unique_id: washing_machine_activity
         device_class: motion
         state: "{{ states('sensor.washing_machine_current')|float(0) > 0.2 }}"
@@ -457,7 +487,7 @@ template:
           seconds: 180
         delay_on:
           seconds: 0
-      - name: "Идет сушка"
+      - name: "Drying Machine Activity"
         unique_id: drying_machine_activity
         device_class: motion
         state: "{{ states('sensor.drying_machine_current')|float(0) > 0.2 }}"
@@ -465,7 +495,7 @@ template:
           seconds: 90
         delay_on:
           seconds: 0
-      - name: "Холодильник работает"
+      - name: "Fridge Activity"
         unique_id: fridge_activity
         device_class: motion
         state: "{{ states('sensor.fridge_socket_current')|float(0) > 0.2 }}"
@@ -473,6 +503,14 @@ template:
           seconds: 30
         delay_on:
           seconds: 0
+      - name: "3D Printer Activity"
+        unique_id: 3d_printer_activity
+        device_class: motion
+        state: "{{ is_state('binary_sensor.3d_printer_tilt_sensor_vibration', 'on') }}"
+        delay_on:
+          minutes: 2
+        delay_off:
+          minutes: 2
   - cover:
       - name: Kitchen water valve
         unique_id: kitchen_water_valve

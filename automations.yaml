@@ -339,7 +339,7 @@
           option: "{% if prev in ['opening', 'open'] %}\n  open\n{% elif prev in ['closing',
             'closed'] %}\n  closed\n{% else %}\n  {{ prev }}\n{% endif %}\n"
 - id: '0015'
-  alias: Уведомление об изменении состояния выключателей
+  alias: notify_about_switch_state_changed
   triggers:
   - trigger: state
     entity_id:
@@ -360,3 +360,37 @@
         trigger.to_state.state | replace(''on'',''включено'') | replace(''off'',''выключено'')
         }}"'
   mode: queued
+- id: '0016'
+  alias: notify_about_activity_ended
+  triggers:
+    - trigger: state
+      entity_id:
+        - binary_sensor.washing_machine_activity
+        - binary_sensor.drying_machine_activity
+        - binary_sensor.dishwasher_activity
+        - binary_sensor.3d_printer_activity
+      from: 'on'
+      to: 'off'
+  actions:
+    - action: notify.notify
+      data:
+        title: Завершение активности
+        message: >
+          {{ trigger.to_state.name }} — активность завершена
+  mode: queued
+- id: '0017'
+  alias: turn_off_vertical_vacuum_cleaner_charging_after_4h
+  triggers:
+    - trigger: state
+      entity_id: switch.store_room_socket
+      from: 'off'
+      to: 'on'
+  actions: 
+    - delay:
+        hours: 4
+    - condition: state
+      entity_id: switch.store_room_socket
+      state: 'on'
+    - action: switch.turn_off
+      target:
+        entity_id: switch.store_room_socket
