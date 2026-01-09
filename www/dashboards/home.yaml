@@ -872,7 +872,7 @@ views:
                 chips:
                   - type: template
                     icon_color: purple
-                    entity: binary_sensor.printer_activity
+                    entity: binary_sensor.3d_printer_activity
                     content: |-
                       {% if states(entity) == 'on'%}
                       Идет печать
