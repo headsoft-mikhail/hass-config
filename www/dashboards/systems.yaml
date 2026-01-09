@@ -161,6 +161,41 @@ views:
                       action: none
                     icon: mdi:home
                     icon_color: light-blue
+                  - type: entity
+                    entity: binary_sensor.rpi_power_status
+                  - type: entity
+                    entity: sensor.rpi_cpu_temperature
+                    icon_color: orange
+                  - type: template
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: toggle
+                    content: |-
+                      {% set action = state_attr(entity, 'hvac_action') %}
+                      {{ {
+                        'off': 'Выключено',
+                        'idle': 'Ожидание',
+                        'cooling': 'Охлаждение',
+                      }[action] if action else 'Неизвестно' }}
+                    entity: climate.rpi_cooling_system
+                    icon: |+
+                      {% set action = state_attr(entity,  'hvac_action') %}
+                      {{ {
+                        'off': 'mdi:fan-off',
+                        'idle': 'mdi:fan-clock',
+                        'cooling': 'mdi:fan',
+                      }[action] if action else 'mdi:help-circle-outline' }}
+
+                    icon_color: |
+                      {% set action = state_attr(entity,  'hvac_action') %}
+                      {{ {
+                        'off': 'grey',
+                        'idle': 'cyan',
+                        'cooling': 'cyan',
+                      }[action] if action else 'orange' }}
+              - type: custom:mushroom-chips-card
+                chips:
                   - type: template
                     content: '{{ states(entity) }}'
                     icon_color: |-
@@ -205,37 +240,6 @@ views:
                       action: more-info
                     hold_action:
                       action: none
-                  - type: entity
-                    entity: sensor.rpi_cpu_temperature
-                    icon_color: orange
-                  - type: template
-                    tap_action:
-                      action: more-info
-                    hold_action:
-                      action: toggle
-                    content: |-
-                      {% set action = state_attr(entity, 'hvac_action') %}
-                      {{ {
-                        'off': 'Выключено',
-                        'idle': 'Ожидание',
-                        'cooling': 'Охлаждение',
-                      }[action] if action else 'Неизвестно' }}
-                    entity: climate.rpi_cooling_system
-                    icon: |+
-                      {% set action = state_attr(entity,  'hvac_action') %}
-                      {{ {
-                        'off': 'mdi:fan-off',
-                        'idle': 'mdi:fan-clock',
-                        'cooling': 'mdi:fan',
-                      }[action] if action else 'mdi:help-circle-outline' }}
-
-                    icon_color: |
-                      {% set action = state_attr(entity,  'hvac_action') %}
-                      {{ {
-                        'off': 'grey',
-                        'idle': 'cyan',
-                        'cooling': 'cyan',
-                      }[action] if action else 'orange' }}
               - type: grid
                 columns: 2
                 square: false
@@ -745,6 +749,296 @@ views:
                   target: {}
   - type: sections
     max_columns: 3
+    icon: mdi:home-thermometer-outline
+    path: climate
+    title: Климат
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Гостиная
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.kitchen_temperature
+                    icon_color: deep-orange
+              - square: false
+                type: grid
+                columns: 1
+                cards:
+                  - type: custom:mushroom-climate-card
+                    entity: climate.living_room_radiator_thermostat
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Спальня
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.airmonitor2_temperature
+                    icon_color: deep-orange
+              - square: false
+                type: grid
+                columns: 1
+                cards:
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bedroom_radiator
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading: Детская
+            heading_style: title
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.kids_room_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-climate-card
+                    entity: climate.kids_room_radiator_thermostat
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading: Ванная
+            heading_style: title
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.bathroom_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.bathroom_heat_floor_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.bathroom_heat_floor_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bathroom_heat_floor
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.bathroom_heat_wall_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.bathroom_heat_wall_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bathroom_heat_wall
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.towel_dryer_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.towel_dryer_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.towel_dryer
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Прачечная
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.laundry_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.laundry_heat_floor
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_2_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_2_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.laundry_heat_floor_2
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    layout: horizontal
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading: Коридор
+            heading_style: title
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.hall_temperature
+                    icon_color: deep-orange
+      - type: grid
+        cards:
+          - type: heading
+            heading: Кладовка
+            heading_style: title
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.efekta_smart_aq_box_temperature
+                    icon_color: deep-orange
+      - type: grid
+        cards:
+          - type: heading
+            heading: Балкон
+            heading_style: title
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.loggia_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.loggia_heat_floor_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.loggia_heat_floor_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.loggia_heat_floor
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+  - type: sections
+    max_columns: 3
     title: Безопасность
     path: water
     icon: mdi:water
@@ -772,6 +1066,8 @@ views:
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l1
                     name: Гостиная
+                    tap_action:
+                      action: toggle
               - type: grid
                 columns: 1
                 square: false
@@ -784,6 +1080,8 @@ views:
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l2
                     name: Спальня
+                    tap_action:
+                      action: toggle
               - type: grid
                 columns: 1
                 square: false
@@ -796,6 +1094,8 @@ views:
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l3
                     name: Детская
+                    tap_action:
+                      action: toggle
       - type: grid
         cards:
           - type: heading
@@ -805,7 +1105,7 @@ views:
           - type: custom:mushroom-entity-card
             entity: cover.kitchen_water_valve
             tap_action:
-              action: more-info
+              action: none
             hold_action:
               action: call-service
               service: script.kitchen_water_valve_toggle_by_state
@@ -831,7 +1131,7 @@ views:
           - type: custom:mushroom-entity-card
             entity: cover.laundry_water_valve
             tap_action:
-              action: more-info
+              action: none
             hold_action:
               action: call-service
               service: script.laundry_water_valve_toggle_by_state
