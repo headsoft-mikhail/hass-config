@@ -1,133 +1,402 @@
-- name: HASS Bridge Custom
+- name: HASS Bridge Bathroom
   port: 56320
   filter:
     include_entities:
-      # - input_select.sound_signal_source
-      # свет
-      - light.tuya_lava_lamp
-      - light.tuya_stars_projector
-      # переключатели, розетки
-      - switch.aqara_t2_ch1_pc
-      # датчики
-      - sensor.aqara_t1_sensor_1_temperature
-      - sensor.aqara_t1_sensor_1_humidity
-      - sensor.aqara_t1_sensor_2_temperature
-      - sensor.aqara_t1_sensor_2_humidity
-      - sensor.aqara_t1_sensor_3_temperature
-      - sensor.aqara_t1_sensor_3_humidity
+      - switch.bathroom_dimmed_light
+      - switch.bathroom_bright_light
+      - switch.bathroom_sconce
+      - climate.towel_dryer
+      - climate.bathroom_heat_wall
+      - climate.bathroom_heat_floor
+      - sensor.bathroom_temperature
+      - sensor.bathroom_humidity
+      - binary_sensor.bathroom_bath_water_leak_sensor
+      - binary_sensor.bathroom_drain_water_leak_sensor
+      - binary_sensor.bathroom_installation_water_leak_sensor
+      - binary_sensor.bathroom_sink_water_leak_sensor
+  entity_config:
+    switch.bathroom_dimmed_light:
+      name: Приглушенный свет
+    switch.bathroom_bright_light:
+      name: Яркий свет
+    switch.bathroom_sconce:
+      name: Бра в ванной
+    climate.towel_dryer:
+      name: Полотенцесушитель
+    climate.bathroom_heat_wall:
+      name: Теплая стена
+    climate.bathroom_heat_floor:
+      name: Теплый пол
+    sensor.bathroom_temperature:
+      name: Температура
+      linked_battery_sensor: sensor.bathroom_t1_battery
+      low_battery_threshold: 25
+    sensor.bathroom_humidity:
+      name: Влажность
+      linked_battery_sensor: sensor.bathroom_t1_battery
+      low_battery_threshold: 25
+    binary_sensor.bathroom_bath_water_leak_sensor:
+      name: Протечка под ванной
+      linked_battery_sensor: sensor.bathroom_bath_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.bathroom_drain_water_leak_sensor:
+      name: Протечка у фановой трубы в ванной
+      linked_battery_sensor: sensor.bathroom_drain_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.bathroom_installation_water_leak_sensor:
+      name: Протечка в инсталляции в ванной
+      linked_battery_sensor: sensor.bathroom_installation_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.bathroom_sink_water_leak_sensor:
+      name: Протечка под раковиной в ванной
+      linked_battery_sensor: sensor.bathroom_sink_water_leak_sensor_battery
+      low_battery_threshold: 25
+
+- name: HASS Bridge Bedroom
+  port: 56321
+  filter:
+    include_entities:
+      - light.lava_lamp
+      - light.stars_projector
+      # - light.meross_ambient_light_l
+      # - light.meross_ambient_light_r
+      - switch.bedroom_desktop_dimmed_light
+      - switch.bedroom_desktop_bright_light
+      - switch.bedroom_dimmed_light
+      - switch.bedroom_bright_light
+      - switch.bedroom_mirror_backlight
+      - switch.bedroom_track_l
+      - switch.bedroom_track_r
+      - switch.pc_power_switch
+      - switch.hdmi_hub
+      - switch.humidifier_system_control_switch_l2
+      - cover.bedroom_curtain
+      - climate.bedroom_radiator_thermostat
       - sensor.airmonitor2_temperature
       - sensor.airmonitor2_humidity
+      - sensor.airmonitor2_tvoc_ug
       - sensor.airmonitor2_co2
       - sensor.airmonitor2_pm25
       - sensor.airmonitor2_pm10
-      - sensor.airmonitor2_tvoc_ug
+  entity_config:
+    light.lava_lamp:
+      name: Лавалампа
+    light.stars_projector:
+      name: Звезды
+    # light.meross_ambient_light_l:
+    # light.meross_ambient_light_r:
+    switch.bedroom_desktop_dimmed_light:
+      name: Подсветка над столом
+    switch.bedroom_desktop_bright_light:
+      name: Яркий свет над столом
+    switch.bedroom_dimmed_light:
+      name: Приглушенный свет
+    switch.bedroom_bright_light:
+      name: Яркий свет
+    switch.bedroom_mirror_backlight:
+      name: Подсветка зеркала
+    switch.bedroom_track_l:
+      name: Трек слева
+    switch.bedroom_track_r:
+      name: Трек справа
+    switch.pc_power_switch:
+      name: Компьютер
+    switch.hdmi_hub:
+      name: Хаб
+    switch.humidifier_system_control_switch_l2:
+      name: Увлажнение
+      type: sprinkler
+    cover.bedroom_curtain:
+      name: Шторы
+    climate.bedroom_radiator_thermostat:
+      name: Батарея
+      linked_battery_sensor: sensor.bedroom_radiator_thermostat_battery
+      low_battery_threshold: 25
+    sensor.airmonitor2_temperature:
+      name: Температура
+    sensor.airmonitor2_humidity:
+      name: Влажность
+    sensor.airmonitor2_tvoc_ug:
+      name: TVOC
+    sensor.airmonitor2_co2:
+      name: CO2
+    sensor.airmonitor2_pm25:
+      name: PM2.5
+    sensor.airmonitor2_pm10:
+      name: PM10
+
+- name: HASS Bridge Hall
+  port: 56322
+  filter:
+    include_entities:
+      - binary_sensor.hall_contact_sensor
+      - switch.hall_wardrobe_light
+      - switch.hall_track_part_1
+      - switch.hall_track_part_2
+      - switch.hall_under_wardrobe_socket
+      - sensor.hall_temperature
+      - sensor.hall_humidity
+      - binary_sensor.hall_collector_water_leak_sensor
+      - binary_sensor.smoke_sensor
+  entity_config:
+    binary_sensor.hall_contact_sensor:
+      name: Задвижка
+    switch.hall_wardrobe_light:
+      name: Подсветка шкафа
+    switch.hall_track_part_1:
+      name: Свет у входа
+    switch.hall_track_part_2:
+      name: Свет в коридоре
+    switch.hall_under_wardrobe_socket:
+      name: Розетка под шкафом
+      type: outlet
+    sensor.hall_temperature:
+      name: Температура
+      linked_battery_sensor: sensor.hall_t1_battery
+    sensor.hall_humidity:
+      name: Влажность
+      linked_battery_sensor: sensor.hall_t1_battery
+      low_battery_threshold: 25
+    binary_sensor.hall_collector_water_leak_sensor:
+      name: Протечка в коллекторе в коридоре
+      linked_battery_sensor: sensor.hall_collector_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.smoke_sensor:
+      name: Датчик дыма
+      linked_battery_sensor: sensor.smoke_sensor_battery
+      low_battery_threshold: 25
+
+- name: HASS Bridge KidsRoom
+  port: 56323
+  filter:
+    include_entities:
+      - switch.kids_room_light
+      - switch.kids_room_desktop_light
+      - switch.kids_room_track
+      - switch.humidifier_system_control_switch_l3
+      - cover.kids_room_curtain
+      - climate.kids_room_radiator_thermostat
+      - sensor.kids_room_temperature
+      - sensor.kids_room_humidity
+  entity_config:
+    switch.kids_room_light:
+      name: Свет
+    switch.kids_room_desktop_light:
+      name: Подсветка стола
+    switch.kids_room_track:
+      name: Трек
+    switch.humidifier_system_control_switch_l3:
+      name: Увлажнение
+      type: sprinkler
+    cover.kids_room_curtain:
+      name: Шторы
+    climate.kids_room_radiator_thermostat:
+      name: Батарея
+      linked_battery_sensor: sensor.kids_room_radiator_thermostat_battery
+      low_battery_threshold: 25
+    sensor.kids_room_temperature:
+      name: Температура
+      linked_battery_sensor: sensor.kids_room_t1_battery
+      low_battery_threshold: 25
+    sensor.kids_room_humidity:
+      name: Влажность
+      linked_battery_sensor: sensor.kids_room_t1_battery
+      low_battery_threshold: 25
+
+- name: HASS Bridge Kitchen
+  port: 56324
+  filter:
+    include_entities:
+      - switch.kitchen_dinner_table
+      - switch.kitchen_led_light
+      - switch.kitchen_hood_led
+      - switch.kitchen_hood_fan
+      - switch.kitchen_socket
+      - switch.kitchen_water_valve_switch
+      - binary_sensor.dishwasher_activity
+      - binary_sensor.kitchen_sink_water_leak_sensor
+      - binary_sensor.kitchen_dishwasher_water_leak_sensor
+  entity_config:
+    switch.kitchen_dinner_table:
+      name: Свет над столом
+    switch.kitchen_led_light:
+      name: Подсветка кухни
+    switch.kitchen_hood_led:
+      name: Подсветка вытяжки
+    switch.kitchen_hood_fan:
+      name: Вытяжка
+    switch.kitchen_socket:
+      name: Розетка в кухне
+      type: outlet
+    switch.kitchen_water_valve_switch:
+      name: Вода
+      type: valve
+    binary_sensor.dishwasher_activity:
+      name: Посудомоечная машина
+    binary_sensor.kitchen_sink_water_leak_sensor:
+      name: Протечка под раковиной в кухне
+      linked_battery_sensor: sensor.kitchen_sink_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.kitchen_dishwasher_water_leak_sensor:
+      name: Протечка за посудомойкой
+      linked_battery_sensor: sensor.kitchen_dishwasher_water_leak_sensor_battery
+      low_battery_threshold: 25
+
+- name: HASS Bridge LivingRoom
+  port: 56325
+  filter:
+    include_entities:
+      - switch.living_room_bright_light
+      - switch.living_room_dimmed_light
+      - switch.living_room_track
+      - switch.living_room_behind_sofa_socket
+      - switch.humidifier_system_control_switch_l1
+      - switch.xgimi_horizon_ultra
+      - cover.living_room_curtain
+      - cover.living_room_roll_curtain
+      - climate.living_room_radiator_thermostat
+      - sensor.kitchen_temperature
+      - sensor.kitchen_humidity
+      - sensor.living_room_luminance_sensor_illuminance
+  entity_config:
+    switch.living_room_bright_light:
+      name: Яркий свет
+    switch.living_room_dimmed_light:
+      name: Приглушенный свет
+    switch.living_room_track:
+      name: Трек
+    switch.living_room_behind_sofa_socket:
+      name: Розетка за диваном
+      type: outlet
+    switch.humidifier_system_control_switch_l1:
+      name: Увлажнение
+      type: sprinkler
+    switch.xgimi_horizon_ultra:
+      name: Проектор
+    cover.living_room_curtain:
+      name: Шторы
+    cover.living_room_roll_curtain:
+      name: Занавес
+    climate.living_room_radiator_thermostat:
+      name: Батарея
+      linked_battery_sensor: sensor.living_room_radiator_thermostat_battery
+      low_battery_threshold: 25
+    sensor.kitchen_temperature:
+      name: Температура
+      linked_battery_sensor: sensor.kitchen_t1_battery
+      low_battery_threshold: 25
+    sensor.kitchen_humidity:
+      name: Влажность
+      linked_battery_sensor: sensor.kitchen_t1_battery
+      low_battery_threshold: 25
+    sensor.living_room_luminance_sensor_illuminance:
+      name: Освещенность
+      linked_battery_sensor: sensor.living_room_luminance_sensor_battery
+      low_battery_threshold: 25
+
+- name: HASS Bridge Laundry
+  port: 56326
+  filter:
+    include_entities:
+      - switch.laundry_light
+      - switch.laundry_water_valve_switch
+      - climate.laundry_heat_floor_2
+      - sensor.laundry_temperature
+      - sensor.laundry_humidity
+      - binary_sensor.washing_machine_activity
+      - binary_sensor.drying_machine_activity
+      - binary_sensor.laundry_collector_water_leak_sensor
+      - binary_sensor.laundry_humidifier_water_leak_sensor
+      - binary_sensor.laundry_installation_water_leak_sensor
+      - binary_sensor.laundry_sink_water_leak_sensor
+      - binary_sensor.laundry_washing_machine_water_leak_sensor
+  entity_config:
+    switch.laundry_light:
+      name: Свет
+    switch.laundry_water_valve_switch:
+      name: Вода
+      type: valve
+    climate.laundry_heat_floor_2:
+      name: Теплый пол
+    sensor.laundry_temperature:
+      name: Температура
+      linked_battery_sensor: sensor.laundry_t1_battery
+      low_battery_threshold: 25
+    sensor.laundry_humidity:
+      name: Влажность
+      linked_battery_sensor: sensor.laundry_t1_battery
+      low_battery_threshold: 25
+    binary_sensor.washing_machine_activity:
+      name: Стиральная машина
+    binary_sensor.drying_machine_activity:
+      name: Сушильная машина
+    binary_sensor.laundry_collector_water_leak_sensor:
+      name: Протечка в коллекторе в прачечной
+      linked_battery_sensor: sensor.laundry_collector_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.laundry_humidifier_water_leak_sensor:
+      name: Протечка в системе увлажнения
+      linked_battery_sensor: sensor.laundry_humidifier_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.laundry_installation_water_leak_sensor:
+      name: Протечка в инсталляции в прачечной
+      linked_battery_sensor: sensor.laundry_installation_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.laundry_sink_water_leak_sensor:
+      name: Протечка под раковиной в прачечной
+      linked_battery_sensor: sensor.laundry_sink_water_leak_sensor_battery
+      low_battery_threshold: 25
+    binary_sensor.laundry_washing_machine_water_leak_sensor:
+      name: Протечка за стиральной машинкой
+      linked_battery_sensor: sensor.laundry_washing_machine_water_leak_sensor_battery
+      low_battery_threshold: 25
+
+- name: HASS Bridge Loggia
+  port: 56327
+  filter:
+    include_entities:
+      - climate.loggia_heat_floor
+      - sensor.loggia_temperature
+      - sensor.loggia_humidity
+  entity_config:
+    climate.loggia_heat_floor:
+      name: Теплый пол
+    sensor.loggia_temperature:
+      name: Температура
+      linked_battery_sensor: sensor.loggia_t1_battery
+      low_battery_threshold: 25
+    sensor.loggia_humidity:
+      name: Влажность
+      linked_battery_sensor: sensor.loggia_t1_battery
+      low_battery_threshold: 25
+
+- name: HASS Bridge StoreRoom
+  port: 56328
+  filter:
+    include_entities:
+      - switch.store_room_light
+      - switch.store_room_socket
       - sensor.efekta_smart_aq_box_temperature
       - sensor.efekta_smart_aq_box_humidity
-      - sensor.efekta_smart_aq_box_co2
+      - sensor.efekta_smart_aq_box_tvoc_ug
       - sensor.efekta_smart_aq_box_pm25
       - sensor.efekta_smart_aq_box_pm10
-      - sensor.efekta_smart_aq_box_tvoc_ug
-      - binary_sensor.aqara_leak_sensor_1
-      - binary_sensor.meross_power_outlet_1_activity
-      # термостаты
-      - climate.aqara_e1_thermostat_1
-      - climate.aqara_e1_thermostat_2
-      - climate.aqara_e1_thermostat_3
-      - humidifier.switch_humidifier
-      - climate.conditioner
+      - binary_sensor.3d_printer_activity
   entity_config:
-    # input_select.soundbar_source:
-    #   name: "Источник звука"
-    # свет
-    light.tuya_lava_lamp:
-      name: "Лава-лампа"
-    light.tuya_stars_projector:
-      name: "Звездное небо"
-    # переключатели, розетки
-    switch.aqara_t2_ch1_pc:
-      name: "Компьютер"
-    # датчики
-    sensor.aqara_t1_sensor_1_temperature:
-      name: T1 Коридор
-      linked_battery_sensor: sensor.aqara_t1_sensor_1_battery
-      low_battery_threshold: 30
-    sensor.aqara_t1_sensor_1_humidity:
-      name: T1 Коридор
-      linked_battery_sensor: sensor.aqara_t1_sensor_1_battery
-      low_battery_threshold: 30
-    sensor.aqara_t1_sensor_2_temperature:
-      name: T1 Балкон
-      linked_battery_sensor: sensor.aqara_t1_sensor_2_battery
-      low_battery_threshold: 30
-    sensor.aqara_t1_sensor_2_humidity:
-      name: T1 Балкон
-      linked_battery_sensor: sensor.aqara_t1_sensor_2_battery
-      low_battery_threshold: 30
-    sensor.aqara_t1_sensor_3_temperature:
-      name: T1 Кухня
-      linked_battery_sensor: sensor.aqara_t1_sensor_3_battery
-      low_battery_threshold: 30
-    sensor.aqara_t1_sensor_3_humidity:
-      name: T1 Кухня
-      linked_battery_sensor: sensor.aqara_t1_sensor_3_battery
-      low_battery_threshold: 30
-    sensor.airmonitor2_temperature:
-      name: AirMonitor2
-      linked_battery_sensor: sensor.airmonitor2_battery
-      low_battery_threshold: 30
-    sensor.airmonitor2_humidity:
-      name: AirMonitor2
-      linked_battery_sensor: sensor.airmonitor2_battery
-      low_battery_threshold: 30
-    sensor.airmonitor2_co2:
-      name: CO2 AM2
-      linked_battery_sensor: sensor.airmonitor2_battery
-      low_battery_threshold: 30
-    sensor.airmonitor2_pm25:
-      name: PM2.5 AM2
-      linked_battery_sensor: sensor.airmonitor2_battery
-      low_battery_threshold: 30
-    sensor.airmonitor2_pm10:
-      name: PM10 AM2
-      linked_battery_sensor: sensor.airmonitor2_battery
-      low_battery_threshold: 30
-    sensor.airmonitor2_tvoc_ug:
-      name: TVOC AM2
-      linked_battery_sensor: sensor.airmonitor2_battery
-      low_battery_threshold: 30
+    switch.store_room_light:
+      name: Свет
+    switch.store_room_socket:
+      name: Розетка в кладовой
+      type: outlet
     sensor.efekta_smart_aq_box_temperature:
-      name: Efekta
+      name: Температура
     sensor.efekta_smart_aq_box_humidity:
-      name: Efekta
-    sensor.efekta_smart_aq_box_co2:
-      name: CO2 Efekta
-    sensor.efekta_smart_aq_box_pm25:
-      name: PM2.5 Efekta
-    sensor.efekta_smart_aq_box_pm10:
-      name: PM10 Efekta
+      name: Влажность
     sensor.efekta_smart_aq_box_tvoc_ug:
-      name: TVOC Efekta
-    binary_sensor.aqara_leak_sensor_1:
-      name: Подоконник
-      linked_battery_sensor: sensor.aqara_leak_sensor_1_battery
-      low_battery_threshold: 30
-    binary_sensor.meross_power_outlet_1_activity:
-      name: Климат балкона
-    climate.aqara_e1_thermostat_1:
-      name: Рабочее место
-      linked_battery_sensor: sensor.aqara_e1_thermostat_1_battery
-      low_battery_threshold: 30
-    climate.aqara_e1_thermostat_2:
-      name: Спальня
-      linked_battery_sensor: sensor.aqara_e1_thermostat_2_battery
-      low_battery_threshold: 30
-    climate.aqara_e1_thermostat_3:
-      name: Кухня
-      linked_battery_sensor: sensor.aqara_e1_thermostat_3_battery
-      low_battery_threshold: 30
-    humidifier.switch_humidifier:
-      name: Увлажнитель
-      linked_humidity_sensor: sensor.airmonitor2_humidity
-    climate.conditioner:
-      name: Кондиционер
-
+      name: TVOC
+    sensor.efekta_smart_aq_box_pm25:
+      name: PM2.5
+    sensor.efekta_smart_aq_box_pm10:
+      name: PM10
+    binary_sensor.3d_printer_activity:
+      name: Принтер

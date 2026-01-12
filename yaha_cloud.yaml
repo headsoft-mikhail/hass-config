@@ -11,8 +11,8 @@ filter:
     - climate.bathroom_heat_floor
     - sensor.bathroom_temperature
     # bedroom
-    - light.tuya_lava_lamp
-    - light.tuya_stars_projector
+    - light.lava_lamp
+    - light.stars_projector
     - light.meross_ambient_light_l
     - light.meross_ambient_light_r
     - switch.bedroom_desktop_dimmed_light
@@ -57,6 +57,7 @@ filter:
     - switch.living_room_track
     - switch.living_room_behind_sofa_socket
     - switch.humidifier_system_control_switch_l1
+    - switch.xgimi_horizon_ultra
     - cover.living_room_curtain
     - cover.living_room_roll_curtain
     - climate.living_room_radiator_thermostat
@@ -77,7 +78,6 @@ filter:
     - sensor.efekta_smart_aq_box_temperature
     - binary_sensor.3d_printer_activity
   include_entity_globs: []
-
 
 entity_config:
   # bathroom
@@ -108,13 +108,13 @@ entity_config:
   sensor.bathroom_temperature:
     name: Датчик
     room: Ванная
-    properties:      
-    - type: temperature        
-      entity: sensor.bathroom_temperature      
-    - type: humidity       
-      entity: sensor.bathroom_humidity
-    - type: pressure
-      entity: sensor.bathroom_pressure  
+    properties:
+      - type: temperature
+        entity: sensor.bathroom_temperature
+      - type: humidity
+        entity: sensor.bathroom_humidity
+      - type: pressure
+        entity: sensor.bathroom_pressure
 
   # bedroom
   light.meross_ambient_light_l:
@@ -125,11 +125,11 @@ entity_config:
     name: Цветной светильник справа
     room: Спальня
     type: devices.types.light.lamp
-  light.tuya_lava_lamp:
+  light.lava_lamp:
     name: Лавалампа
     room: Спальня
     type: devices.types.light.lamp
-  light.tuya_stars_projector:
+  light.stars_projector:
     name: Звезды
     room: Спальня
     type: devices.types.light.lamp
@@ -182,21 +182,21 @@ entity_config:
     room: Спальня
     type: devices.types.thermostat
     turn_off: false
-  sensor.airmonitor2_temperature:    
-    name: Датчик 
-    room: Спальня   
-    properties:      
-    - type: temperature        
-      entity: sensor.airmonitor2_temperature      
-    - type: humidity       
-      entity: sensor.airmonitor2_humidity      
-    - type: co2_level        
-      entity: sensor.airmonitor2_co2      
-    - type: tvoc        
-      entity: sensor.airmonitor2_tvoc_ug      
-    - type: pm2.5_density        
-      entity: sensor.airmonitor2_pm25    
-  
+  sensor.airmonitor2_temperature:
+    name: Датчик
+    room: Спальня
+    properties:
+      - type: temperature
+        entity: sensor.airmonitor2_temperature
+      - type: humidity
+        entity: sensor.airmonitor2_humidity
+      - type: co2_level
+        entity: sensor.airmonitor2_co2
+      - type: tvoc
+        entity: sensor.airmonitor2_tvoc_ug
+      - type: pm2.5_density
+        entity: sensor.airmonitor2_pm25
+
   # hall
   binary_sensor.hall_contact_sensor:
     name: Задвижка
@@ -221,14 +221,14 @@ entity_config:
   sensor.hall_temperature:
     name: Датчик
     room: Коридор
-    properties:      
-    - type: temperature        
-      entity: sensor.hall_temperature      
-    - type: humidity       
-      entity: sensor.hall_humidity 
-    - type: pressure
-      entity: sensor.hall_pressure
-  
+    properties:
+      - type: temperature
+        entity: sensor.hall_temperature
+      - type: humidity
+        entity: sensor.hall_humidity
+      - type: pressure
+        entity: sensor.hall_pressure
+
   # kids_room
   switch.kids_room_light:
     name: Свет
@@ -250,21 +250,21 @@ entity_config:
     name: Шторы
     room: Детская
     type: devices.types.openable.curtain
-  climate.kids_room_radiator_thermostat:   
+  climate.kids_room_radiator_thermostat:
     name: Батарея
     room: Детская
     type: devices.types.thermostat
     turn_off: false
-  sensor.kids_room_temperature:    
-    name : Датчик
+  sensor.kids_room_temperature:
+    name: Датчик
     room: Детская
-    properties:      
-    - type: temperature        
-      entity: sensor.kids_room_temperature      
-    - type: humidity       
-      entity: sensor.kids_room_humidity 
-    - type: pressure
-      entity: sensor.kids_room_pressure
+    properties:
+      - type: temperature
+        entity: sensor.kids_room_temperature
+      - type: humidity
+        entity: sensor.kids_room_humidity
+      - type: pressure
+        entity: sensor.kids_room_pressure
 
   # kitchen
   switch.kitchen_dinner_table:
@@ -317,6 +317,10 @@ entity_config:
     name: Увлажнение
     room: Гостиная
     type: devices.types.switch
+  switch.xgimi_horizon_ultra:
+    name: Проектор
+    room: Гостиная
+    type: devices.types.switch
   cover.living_room_curtain:
     name: Шторы
     room: Гостиная
@@ -333,15 +337,15 @@ entity_config:
   sensor.kitchen_temperature:
     name: Датчик
     room: Гостиная
-    properties:      
-    - type: temperature        
-      entity: sensor.kitchen_temperature      
-    - type: humidity       
-      entity: sensor.kitchen_humidity 
-    - type: pressure
-      entity: sensor.kitchen_pressure
-    - type: illumination
-      entity: sensor.living_room_luminance_sensor_illuminance
+    properties:
+      - type: temperature
+        entity: sensor.kitchen_temperature
+      - type: humidity
+        entity: sensor.kitchen_humidity
+      - type: pressure
+        entity: sensor.kitchen_pressure
+      - type: illumination
+        entity: sensor.living_room_luminance_sensor_illuminance
 
   # laundry
   switch.laundry_light:
@@ -359,13 +363,13 @@ entity_config:
   sensor.laundry_temperature:
     name: Датчик
     room: Прачечная
-    properties:      
-    - type: temperature        
-      entity: sensor.laundry_temperature      
-    - type: humidity       
-      entity: sensor.laundry_humidity 
-    - type: pressure
-      entity: sensor.laundry_pressure
+    properties:
+      - type: temperature
+        entity: sensor.laundry_temperature
+      - type: humidity
+        entity: sensor.laundry_humidity
+      - type: pressure
+        entity: sensor.laundry_pressure
   binary_sensor.washing_machine_activity:
     name: Стиральная машина
     room: Прачечная
@@ -383,13 +387,13 @@ entity_config:
   sensor.loggia_temperature:
     name: Датчик
     room: Балкон
-    properties:      
-    - type: temperature        
-      entity: sensor.loggia_temperature      
-    - type: humidity       
-      entity: sensor.loggia_humidity 
-    - type: pressure
-      entity: sensor.loggia_pressure
+    properties:
+      - type: temperature
+        entity: sensor.loggia_temperature
+      - type: humidity
+        entity: sensor.loggia_humidity
+      - type: pressure
+        entity: sensor.loggia_pressure
 
   # storage_room
   switch.store_room_light:
@@ -401,22 +405,22 @@ entity_config:
     room: Кладовка
     type: devices.types.socket
   sensor.efekta_smart_aq_box_temperature:
-    name: Датчик 
-    room: Кладовка   
-    properties:      
-    - type: temperature        
-      entity: sensor.efekta_smart_aq_box_temperature      
-    - type: humidity       
-      entity: sensor.efekta_smart_aq_box_humidity      
-    - type: co2_level        
-      entity: sensor.efekta_smart_aq_box_co2      
-    - type: tvoc        
-      entity: sensor.efekta_smart_aq_box_tvoc_ug      
-    - type: pm2.5_density        
-      entity: sensor.efekta_smart_aq_box_pm25    
-    - type: pressure        
-      entity: sensor.efekta_smart_aq_box_pressure
+    name: Датчик
+    room: Кладовка
+    properties:
+      - type: temperature
+        entity: sensor.efekta_smart_aq_box_temperature
+      - type: humidity
+        entity: sensor.efekta_smart_aq_box_humidity
+      - type: co2_level
+        entity: sensor.efekta_smart_aq_box_co2
+      - type: tvoc
+        entity: sensor.efekta_smart_aq_box_tvoc_ug
+      - type: pm2.5_density
+        entity: sensor.efekta_smart_aq_box_pm25
+      - type: pressure
+        entity: sensor.efekta_smart_aq_box_pressure
   binary_sensor.3d_printer_activity:
-    name: Принтер 
+    name: Принтер
     room: Кладовка
     type: devices.types.sensor.motion

@@ -279,6 +279,143 @@ views:
     cards: []
     theme: My Custom Theme
   - type: sections
+    max_columns: 2
+    title: Безопасность
+    path: security
+    icon: mdi:shield
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: template
+                    icon: |-
+                      {% if states(entity) == 'on'%}
+                      mdi:lock-open
+                      {% else %}
+                      mdi:lock
+                      {% endif %}
+                    icon_color: purple
+                    entity: binary_sensor.hall_contact_sensor
+                    content: |-
+                      {% if states(entity) == 'on'%}
+                      Открыто
+                      {% else %}
+                      Закрыто
+                      {% endif %}
+                    tap_action:
+                      action: more-info
+              - type: custom:mushroom-entity-card
+                entity: lock.aqara_smart_lock_u200
+                name: Замок
+              - type: tile
+                entity: alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                name: Режим
+                color: blue
+                hide_state: true
+                vertical: false
+                features:
+                  - type: custom:service-call
+                    entries:
+                      - type: selector
+                        entity_id: alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                        options:
+                          - entity_id: >-
+                              alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                            option: disarmed
+                            tap_action:
+                              action: perform-action
+                              perform_action: alarm_control_panel.alarm_disarm
+                              target:
+                                entity_id:
+                                  - >-
+                                    alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                              data: {}
+                            label: Отключено
+                            icon: mdi:shield-off
+                            styles: |
+                              :host {
+                                --mdc-icon-size: 25px;
+                                --color: grey;
+                                {% if (states(config.entity) or "") != config.option %}
+                                --icon-color: grey;
+                                --label-color: grey;
+                                {% endif %}
+                              }
+                          - entity_id: >-
+                              alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                            option: armed_night
+                            tap_action:
+                              action: perform-action
+                              perform_action: alarm_control_panel.alarm_arm_night
+                              target:
+                                entity_id:
+                                  - >-
+                                    alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                              data: {}
+                            label: Ночь
+                            icon: mdi:shield-moon
+                            styles: |
+                              :host {
+                                --mdc-icon-size: 25px;
+                                --color: magenta;
+                                {% if (states(config.entity) or "") != config.option %}
+                                --icon-color: magenta;
+                                --label-color: magenta;
+                                {% endif %}
+                              }
+                          - entity_id: >-
+                              alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                            option: armed_home
+                            tap_action:
+                              action: perform-action
+                              perform_action: alarm_control_panel.alarm_arm_home
+                              target:
+                                entity_id:
+                                  - >-
+                                    alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                              data: {}
+                            label: Дома
+                            icon: mdi:shield-home
+                            styles: |
+                              :host {
+                                --mdc-icon-size: 25px;
+                                --color: green;
+                                {% if (states(config.entity) or "") != config.option %}
+                                --icon-color: green;
+                                --label-color: green;
+                                {% endif %}
+                              }
+                          - entity_id: >-
+                              alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                            option: armed_away
+                            tap_action:
+                              action: perform-action
+                              perform_action: alarm_control_panel.alarm_arm_away
+                              target:
+                                entity_id:
+                                  - >-
+                                    alarm_control_panel.aqara_hub_e1_8f1b_security_system
+                              data: {}
+                            label: Не дома
+                            icon: mdi:shield-lock
+                            styles: |
+                              :host {
+                                --mdc-icon-size: 25px;
+                                --color: red;
+                                {% if (states(config.entity) or "") != config.option %}
+                                --icon-color: red;
+                                --label-color: red;
+                                {% endif %}
+                              }
+                        autofill_entity_id: true
+                features_position: bottom
+  - type: sections
     max_columns: 4
     icon: mdi:weather-partly-cloudy
     path: weather
@@ -802,7 +939,7 @@ views:
                 columns: 1
                 cards:
                   - type: custom:mushroom-climate-card
-                    entity: climate.bedroom_radiator
+                    entity: climate.bedroom_radiator_thermostat
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -1149,7 +1286,7 @@ views:
                 entity: binary_sensor.laundry_humidifier_water_leak_sensor
                 name: В системе увлажнения
               - type: custom:mushroom-entity-card
-                entity: binary_sensor.laundry_washing_machie_water_leak_sensor
+                entity: binary_sensor.laundry_washing_machine_water_leak_sensor
                 name: Под стиральной машинкой
               - type: custom:mushroom-entity-card
                 entity: binary_sensor.laundry_sink_water_leak_sensor
@@ -1163,7 +1300,7 @@ views:
             square: false
             cards:
               - type: custom:mushroom-entity-card
-                entity: binary_sensor.barthroom_installation_water_leak_sensor
+                entity: binary_sensor.bathroom_installation_water_leak_sensor
                 name: В инсталляции
               - type: custom:mushroom-entity-card
                 entity: binary_sensor.bathroom_bath_water_leak_sensor
@@ -1328,6 +1465,7 @@ views:
                 - entity: sensor.air_conditioner_system_relay_power
                   icon: mdi:air-conditioner
                   name: Кондиционер
+                  secondary_info: {}
                 - entity: sensor.washing_machine_power
                   name: Стиральная машина
                   icon: mdi:washing-machine
@@ -1337,6 +1475,7 @@ views:
                 - entity: sensor.dishwasher_power
                   name: Посудомоечная машина
                   icon: mdi:dishwasher
+                  secondary_info: {}
                 - entity: switch.eversweet_3_pro_uvc_power
                   name: Питьевой фонтан
                   icon: mdi:fountain
@@ -1350,6 +1489,8 @@ views:
                   name: Розетка в кладовке - пылесос
                 - entity: sensor.fridge_socket_power
                   name: Холодильник
+                  secondary_info: {}
+                  icon: mdi:fridge
                 - entity: sensor.bathroom_heat_floor_power
                   name: Теплый пол в ванной
                 - entity: sensor.bathroom_heat_wall_power

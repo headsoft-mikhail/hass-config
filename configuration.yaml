@@ -262,7 +262,7 @@ input_button:
     icon: mdi:qrcode
 
 input_select:
-  sound_signal_source:
+  audio_system_signal_source:
     name: "Источник сигнала колонок"
     options:
       - "Off"
@@ -289,7 +289,6 @@ input_select:
       - opening
       - closing
       - error
-
 
 input_datetime:
   petkit_pura_air_filter_replaced:
@@ -514,6 +513,19 @@ template:
   - cover:
       - name: Kitchen water valve
         unique_id: kitchen_water_valve
+        icon: >-
+          {% set s = states('input_select.kitchen_water_valve_state') %}
+          {% if s == 'open' %}
+            mdi:water-pump 
+          {% elif s == 'opening' %}
+            mdi:rotate-left
+          {% elif s == 'closed' %}
+            mdi:water-pump-off
+          {% elif s == 'closing' %}
+            mdi:rotate-right
+          {% else %}
+            mdi:help-circle-outline
+          {% endif %}
         state: >
           {% set s = states('input_select.kitchen_water_valve_state') %}
           {% if s == 'open' %}
@@ -537,6 +549,19 @@ template:
               entity_id: switch.kitchen_water_valve_close
       - name: Laundry water valve
         unique_id: laundry_water_valve
+        icon: >-
+          {% set s = states('input_select.laundry_water_valve_state') %}
+          {% if s == 'open' %}
+            mdi:water-pump 
+          {% elif s == 'opening' %}
+            mdi:rotate-left
+          {% elif s == 'closed' %}
+            mdi:water-pump-off
+          {% elif s == 'closing' %}
+            mdi:rotate-right
+          {% else %}
+            mdi:help-circle-outline
+          {% endif %}
         state: >
           {% set s = states('input_select.laundry_water_valve_state') %}
           {% if s == 'open' %}
@@ -558,7 +583,96 @@ template:
           - action: switch.turn_on
             target:
               entity_id: switch.laundry_water_valve_close
-          
+  - switch:
+      - name: Kitchen water valve switch
+        unique_id: kitchen_water_valve_switch
+        state: >
+          {% set s = states('input_select.kitchen_water_valve_state') %}
+          {% if s == 'open' or s == 'opening' %}
+            on
+          {% elif s == 'closed' or s == 'closing' %}
+            off
+          {% else %}
+            unknown
+          {% endif %}
+        turn_on:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_water_valve_open
+        turn_off:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_water_valve_close
+      - name: Laundry water valve switch
+        unique_id: laundry_water_valve_switch
+        state: >
+          {% set s = states('input_select.laundry_water_valve_state') %}
+          {% if s == 'open' or s == 'opening' %}
+            on
+          {% elif s == 'closed' or s == 'closing' %}
+            off
+          {% else %}
+            unknown
+          {% endif %}
+        turn_on:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.laundry_water_valve_open
+        turn_off:
+          - action: switch.turn_on
+            target:
+              entity_id: switch.laundry_water_valve_close
+      - name: Xgimi Horizon Ultra
+        unique_id: xgimi_horizon_ultra
+        state: "{{ is_state('remote.xgimi_horizon_ultra_switch_off', 'on') }}"
+        icon: >-
+          {% if is_state('remote.xgimi_horizon_ultra_switch_off', 'on') %}
+            mdi:projector
+          {% else %}
+            mdi:projector-off
+          {% endif %}
+        turn_on:
+          action: remote.turn_on
+          target:
+            entity_id: remote.xgimi_horizon_ultra_switch_on
+        turn_off:
+          sequence:
+            - action: remote.turn_off
+              target:
+                entity_id: remote.xgimi_horizon_ultra_switch_off
+            - action: remote.turn_off
+              target:
+                entity_id: remote.xgimi_horizon_ultra_switch_on
+  - button:
+      - name: Audio System Volume Up
+        unique_id: audio_system_volume_up
+        icon: mdi:volume-plus
+        press:
+          - action: text.set_value
+            target:
+              entity_id: text.ir_remote_control_ir_code_to_send
+            data:
+              value: BXwjjRE+AuAHAQOiBj4C4AMBQA/AA8ABwA9AB0ABQAdAA+ALAeADF0AL4AcDBzmgfCO9CD4C
+
+      - name: Audio System Volume Down
+        unique_id: audio_system_volume_down
+        icon: mdi:volume-minus
+        press:
+          - action: text.set_value
+            target:
+              entity_id: text.ir_remote_control_ir_code_to_send
+            data:
+              value: BXkjmxFBAuAHAQOYBkEC4AMBQA/AA8ABwA/gBwfgAwFAG+AHAUATwANAAQuYBkECL6B5I94IQQI=
+      - name: Audio System Off
+        unique_id: audio_system_off
+        icon: mdi:power-cycle
+        press:
+          - action: text.set_value
+            target:
+              entity_id: text.ir_remote_control_ir_code_to_send
+            data:
+              value: BWYjmRFCAuAHAQOZBkIC4AMBQA/AA8ABwA9AB0ABQAdAA+ADAcAPwAdAAUALwANAAQuZBkICTKBmI78IQgI=
+
 climate:
   - platform: generic_thermostat
     name: Охлаждение RPi

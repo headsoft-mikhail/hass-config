@@ -146,7 +146,7 @@ views:
                 square: false
                 cards:
                   - type: tile
-                    entity: light.tuya_lava_lamp
+                    entity: light.lava_lamp
                     color: pink
                     show_entity_picture: false
                     hide_state: false
@@ -224,7 +224,7 @@ views:
                             entity_id: light.tuya_lava_lamp
                     features_position: inline
                   - type: custom:mushroom-light-card
-                    entity: light.tuya_stars_projector
+                    entity: light.stars_projector
                     icon: ''
                     show_color_temp_control: false
                     show_color_control: true
@@ -277,7 +277,7 @@ views:
                 columns: 2
                 cards:
                   - type: custom:mushroom-climate-card
-                    entity: climate.bedroom_radiator
+                    entity: climate.bedroom_radiator_thermostat
                     tap_action:
                       action: none
                     fill_container: false
@@ -440,10 +440,177 @@ views:
                     icon_color: red
                     tap_action:
                       action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.xgimi_horizon_ultra
+                    icon_color: purple
+                    tap_action:
+                      action: toggle
+                    name: Проектор
               - type: grid
                 columns: 1
                 square: false
                 cards:
+                  - type: tile
+                    name: Колонки
+                    entity: input_select.audio_system_signal_source
+                    hide_state: true
+                    vertical: false
+                    hold_action:
+                      action: perform-action
+                      perform_action: button.press
+                      target:
+                        entity_id:
+                          - button.audio_system_off
+                    features:
+                      - type: custom:service-call
+                        entries:
+                          - type: selector
+                            entity_id: input_select.audio_system_signal_source
+                            options:
+                              - entity_id: input_select.audio_system_signal_source
+                                option: 'Off'
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: input_select.select_option
+                                  data:
+                                    option: 'Off'
+                                  target:
+                                    entity_id: input_select.audio_system_signal_source
+                                label: 'Off'
+                                icon: mdi:power-off
+                                styles: |
+                                  :host {
+                                    --mdc-icon-size: 25px;
+                                    --color: grey;
+                                    {% if (states(config.entity) or "") != config.option %}
+                                    --icon-color: grey;
+                                    --label-color: grey;
+                                    {% endif %}
+                                  }
+                              - entity_id: input_select.audio_system_signal_source
+                                option: Optical
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: input_select.select_option
+                                  data:
+                                    option: Optical
+                                  target:
+                                    entity_id: input_select.audio_system_signal_source
+                                label: Optical
+                                icon: mdi:toslink
+                                styles: |
+                                  :host {
+                                    --mdc-icon-size: 25px;
+                                    --color: orange;
+                                    {% if (states(config.entity) or "") != config.option %}
+                                    --icon-color: orange;
+                                    --label-color: orange;
+                                    {% endif %}
+                                  }
+                              - entity_id: input_select.audio_system_signal_source
+                                option: Bluetooth
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: input_select.select_option
+                                  data:
+                                    option: Bluetooth
+                                  target:
+                                    entity_id: input_select.audio_system_signal_source
+                                label: BT
+                                icon: mdi:bluetooth-audio
+                                styles: |
+                                  :host {
+                                    --mdc-icon-size: 25px;
+                                    --color: cyan;
+                                    {% if (states(config.entity) or "") != config.option %}
+                                    --icon-color: cyan;
+                                    --label-color: cyan;
+                                    {% endif %}
+                                  }
+                              - entity_id: input_select.audio_system_signal_source
+                                option: Line 1
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: input_select.select_option
+                                  data:
+                                    option: Line 1
+                                  target:
+                                    entity_id: input_select.audio_system_signal_source
+                                label: Line 1
+                                icon: mdi:numeric-1-box
+                                styles: |
+                                  :host {
+                                    --mdc-icon-size: 25px;
+                                    --color: green;
+                                    {% if (states(config.entity) or "") != config.option %}
+                                    --icon-color: green;
+                                    --label-color: green;
+                                    {% endif %}
+                                  }
+                              - entity_id: input_select.audio_system_signal_source
+                                option: Line 2
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: input_select.select_option
+                                  data:
+                                    option: Line 2
+                                  target:
+                                    entity_id: input_select.audio_system_signal_source
+                                label: Line 2
+                                icon: mdi:numeric-2-box
+                                styles: |
+                                  :host {
+                                    --mdc-icon-size: 25px;
+                                    --color: green;
+                                    {% if (states(config.entity) or "") != config.option %}
+                                    --icon-color: green;
+                                    --label-color: green;
+                                    {% endif %}
+                                  }
+                              - entity_id: input_select.audio_system_signal_source
+                                option: Coax
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: input_select.select_option
+                                  data:
+                                    option: Coax
+                                  target:
+                                    entity_id: input_select.audio_system_signal_source
+                                label: Coax
+                                icon: mdi:audio-input-stereo-minijack
+                                styles: |
+                                  :host {
+                                    --mdc-icon-size: 25px;
+                                    --color: magenta;
+                                    {% if (states(config.entity) or "") != config.option %}
+                                    --icon-color: magenta;
+                                    --label-color: magenta;
+                                    {% endif %}
+                                  }
+                            autofill_entity_id: true
+                      - type: custom:service-call
+                        entries:
+                          - type: button
+                            entity_id: button.audio_system_volume_down
+                            icon: mdi:volume-minus
+                            tap_action:
+                              action: perform-action
+                              perform_action: button.press
+                              target:
+                                entity_id:
+                                  - button.audio_system_volume_down
+                              data: {}
+                          - type: button
+                            entity_id: button.audio_system_volume_up
+                            icon: mdi:volume-plus
+                            tap_action:
+                              action: perform-action
+                              perform_action: button.press
+                              target:
+                                entity_id:
+                                  - button.audio_system_volume_up
+                              data: {}
+                    features_position: bottom
                   - type: custom:mushroom-media-player-card
                     entity: media_player.yandex_station_m101k3a00pba6r
                     icon: ''
@@ -457,151 +624,6 @@ views:
                       - next
                     icon_type: entity-picture
                     layout: horizontal
-                  - type: custom:mushroom-media-player-card
-                    entity: media_player.xgimi_horizon_ultra
-                    icon: ''
-                    fill_container: false
-                    use_media_info: true
-                    show_volume_level: true
-                    volume_controls:
-                      - volume_buttons
-                    media_controls:
-                      - play_pause_stop
-                      - next
-                    icon_type: entity-picture
-                    layout: horizontal
-                  - features:
-                      - type: custom:service-call
-                        entries:
-                          - type: selector
-                            entity_id: input_select.sound_signal_source
-                            options:
-                              - entity_id: input_select.sound_signal_source
-                                option: 'Off'
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: input_select.select_option
-                                  data:
-                                    option: 'Off'
-                                  target:
-                                    entity_id: input_select.sound_signal_source
-                                label: 'Off'
-                                icon: mdi:power-off
-                                styles: |
-                                  :host {
-                                    --mdc-icon-size: 25px;
-                                    --color: grey;
-                                    {% if (states(config.entity) or "") != config.option %}
-                                    --icon-color: grey;
-                                    --label-color: grey;
-                                    {% endif %}
-                                  }
-                              - entity_id: input_select.sound_signal_source
-                                option: Optical
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: input_select.select_option
-                                  data:
-                                    option: Optical
-                                  target:
-                                    entity_id: input_select.sound_signal_source
-                                label: Optical
-                                icon: mdi:toslink
-                                styles: |
-                                  :host {
-                                    --mdc-icon-size: 25px;
-                                    --color: orange;
-                                    {% if (states(config.entity) or "") != config.option %}
-                                    --icon-color: orange;
-                                    --label-color: orange;
-                                    {% endif %}
-                                  }
-                              - entity_id: input_select.sound_signal_source
-                                option: Bluetooth
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: input_select.select_option
-                                  data:
-                                    option: Bluetooth
-                                  target:
-                                    entity_id: input_select.sound_signal_source
-                                label: BT
-                                icon: mdi:bluetooth-audio
-                                styles: |
-                                  :host {
-                                    --mdc-icon-size: 25px;
-                                    --color: cyan;
-                                    {% if (states(config.entity) or "") != config.option %}
-                                    --icon-color: cyan;
-                                    --label-color: cyan;
-                                    {% endif %}
-                                  }
-                              - entity_id: input_select.sound_signal_source
-                                option: Line 1
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: input_select.select_option
-                                  data:
-                                    option: Line 1
-                                  target:
-                                    entity_id: input_select.sound_signal_source
-                                label: Line 1
-                                icon: mdi:numeric-1-box
-                                styles: |
-                                  :host {
-                                    --mdc-icon-size: 25px;
-                                    --color: green;
-                                    {% if (states(config.entity) or "") != config.option %}
-                                    --icon-color: green;
-                                    --label-color: green;
-                                    {% endif %}
-                                  }
-                              - entity_id: input_select.sound_signal_source
-                                option: Line 2
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: input_select.select_option
-                                  data:
-                                    option: Line 2
-                                  target:
-                                    entity_id: input_select.sound_signal_source
-                                label: Line 2
-                                icon: mdi:numeric-2-box
-                                styles: |
-                                  :host {
-                                    --mdc-icon-size: 25px;
-                                    --color: green;
-                                    {% if (states(config.entity) or "") != config.option %}
-                                    --icon-color: green;
-                                    --label-color: green;
-                                    {% endif %}
-                                  }
-                              - entity_id: input_select.sound_signal_source
-                                option: Coax
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: input_select.select_option
-                                  data:
-                                    option: Coax
-                                  target:
-                                    entity_id: input_select.sound_signal_source
-                                label: Coax
-                                icon: mdi:audio-input-stereo-minijack
-                                styles: |
-                                  :host {
-                                    --mdc-icon-size: 25px;
-                                    --color: magenta;
-                                    {% if (states(config.entity) or "") != config.option %}
-                                    --icon-color: magenta;
-                                    --label-color: magenta;
-                                    {% endif %}
-                                  }
-                            autofill_entity_id: true
-                    type: tile
-                    entity: input_select.sound_signal_source
-                    features_position: bottom
-                    vertical: false
-                    hide_state: true
               - type: grid
                 columns: 2
                 square: false
@@ -1080,12 +1102,12 @@ views:
                       action: more-info
                     hold_action:
                       action: toggle
-              - type: grid
+              - square: false
+                type: grid
                 columns: 2
-                square: false
                 cards:
                   - type: custom:mushroom-climate-card
-                    entity: climate.laundry_heat_floor
+                    entity: climate.laundry_heat_floor_2
                     show_temperature_control: true
                     hvac_modes:
                       - heat
@@ -1094,6 +1116,7 @@ views:
                       action: none
                     hold_action:
                       action: more-info
+                    name: Теплый пол в прачечной
             title: Прачечная
   - type: sections
     max_columns: 2
