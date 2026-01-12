@@ -164,19 +164,19 @@ views:
                                   perform_action: light.turn_on
                                   target:
                                     entity_id:
-                                      - light.tuya_lava_lamp
+                                      - light.lava_lamp
                                   data:
                                     brightness: 0
                                 styles: |
                                   :host {
-                                    {% if state_attr("light.tuya_lava_lamp", "brightness") == None %}
+                                    {% if state_attr("light.lava_lamp", "brightness") == None %}
                                     background: grey;
                                     {% else %}
                                     --color: grey;
                                     --label-color: grey;
                                     {% endif %}
                                   }
-                                entity_id: light.tuya_lava_lamp
+                                entity_id: light.lava_lamp
                               - option: 102
                                 label: Relax
                                 tap_action:
@@ -184,15 +184,15 @@ views:
                                   perform_action: light.turn_on
                                   target:
                                     entity_id:
-                                      - light.tuya_lava_lamp
+                                      - light.lava_lamp
                                   data:
                                     brightness: 102
                                 styles: |
                                   :host {
                                     {% if  
-                                      state_attr("light.tuya_lava_lamp", "brightness") <= config.option + 10 
+                                      state_attr("light.lava_lamp", "brightness") <= config.option + 10 
                                       and 
-                                      state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10
+                                      state_attr("light.lava_lamp", "brightness") >= config.option - 10
                                     %}
                                     background: orange;
                                     {% else %}
@@ -200,7 +200,7 @@ views:
                                     --label-color: orange;
                                     {% endif %}
                                   }
-                                entity_id: light.tuya_lava_lamp
+                                entity_id: light.lava_lamp
                               - option: 255
                                 label: Heat
                                 tap_action:
@@ -208,20 +208,20 @@ views:
                                   perform_action: light.turn_on
                                   target:
                                     entity_id:
-                                      - light.tuya_lava_lamp
+                                      - light.lava_lamp
                                   data:
                                     brightness: 255
                                 styles: |
                                   :host {
-                                    {% if state_attr("light.tuya_lava_lamp", "brightness") >= config.option - 10 %}
+                                    {% if state_attr("light.lava_lamp", "brightness") >= config.option - 10 %}
                                     background: red;
                                     {% else %}
                                     --color: red;
                                     --label-color: red;
                                     {% endif %}
                                   }
-                                entity_id: light.tuya_lava_lamp
-                            entity_id: light.tuya_lava_lamp
+                                entity_id: light.lava_lamp
+                            entity_id: light.lava_lamp
                     features_position: inline
                   - type: custom:mushroom-light-card
                     entity: light.stars_projector

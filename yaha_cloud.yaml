@@ -26,7 +26,7 @@ filter:
     - switch.hdmi_hub
     - switch.humidifier_system_control_switch_l2
     - cover.bedroom_curtain
-    - climate.bedroom_radiator
+    - climate.bedroom_radiator_thermostat
     - sensor.airmonitor2_temperature
     # hall
     - binary_sensor.hall_contact_sensor
@@ -177,7 +177,7 @@ entity_config:
     name: Шторы
     room: Спальня
     type: devices.types.openable.curtain
-  climate.bedroom_radiator:
+  climate.bedroom_radiator_thermostat:
     name: Батарея
     room: Спальня
     type: devices.types.thermostat

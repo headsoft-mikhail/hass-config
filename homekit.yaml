@@ -138,6 +138,7 @@
       - sensor.hall_humidity
       - binary_sensor.hall_collector_water_leak_sensor
       - binary_sensor.smoke_sensor
+      - alarm_control_panel.aqara_hub_e1_8f1b_security_system
   entity_config:
     binary_sensor.hall_contact_sensor:
       name: Задвижка
@@ -165,6 +166,8 @@
       name: Датчик дыма
       linked_battery_sensor: sensor.smoke_sensor_battery
       low_battery_threshold: 25
+    alarm_control_panel.aqara_hub_e1_8f1b_security_system:
+      name: Режим
 
 - name: HASS Bridge KidsRoom
   port: 56323
