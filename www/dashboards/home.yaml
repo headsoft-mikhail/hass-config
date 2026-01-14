@@ -8,81 +8,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Спальня
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: sensor.airmonitor2_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    entity: sensor.airmonitor2_humidity
-                    icon_color: blue
-                  - type: template
-                    entity: sensor.airmonitor2_pm25
-                    icon_color: |-
-                      {% set tvoc = states(entity) | float(0) %}
-                      {% if tvoc < 75 %}
-                        green
-                      {% elif tvoc < 150 %}
-                        lime
-                      {% elif tvoc < 250 %}
-                        deep-orange
-                      {% else %}
-                        red
-                      {% endif %}
-                    icon: mdi:grain
-                    content: >-
-                      {{ states(entity) }} {{ state_attr(entity,
-                      'unit_of_measurement') }}
-                    tap_action:
-                      action: more-info
-                  - type: template
-                    entity: sensor.airmonitor2_tvoc_ug
-                    icon: mdi:molecule
-                    icon_color: |-
-                      {% set tvoc = states(entity) | float(0) %}
-                      {% if tvoc < 300 %}
-                        teal
-                      {% elif tvoc < 1000 %}
-                        green
-                      {% elif tvoc < 3000 %}
-                        lime
-                      {% elif tvoc < 9000 %}
-                        deep-orange
-                      {% else %}
-                        red
-                      {% endif %}
-                    content: >-
-                      {{ states(entity) }} {{ state_attr(entity,
-                      'unit_of_measurement') }}
-                    tap_action:
-                      action: more-info
-                  - type: template
-                    entity: sensor.airmonitor2_co2
-                    icon: mdi:molecule-co2
-                    icon_color: |-
-                      {% set tvoc = states(entity) | float(0) %}
-                      {% if tvoc < 1000 %}
-                        green
-                      {% elif tvoc < 2000 %}
-                        amber
-                      {% else %}
-                        red
-                      {% endif %}
-                    content: >-
-                      {{ states(entity) }} {{ state_attr(entity,
-                      'unit_of_measurement') }}
-                    tap_action:
-                      action: more-info
-                  - type: entity
-                    entity: sensor.airmonitor2_noise
-                    icon_color: grey
               - type: grid
                 square: false
                 cards:
@@ -141,6 +70,12 @@ views:
                       action: toggle
                     show_position_control: true
                     show_buttons_control: false
+      - type: grid
+        cards:
+          - square: false
+            type: grid
+            columns: 1
+            cards:
               - type: grid
                 columns: 1
                 square: false
@@ -294,6 +229,88 @@ views:
                     tap_action:
                       action: toggle
                     fill_container: false
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.airmonitor2_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.airmonitor2_humidity
+            icon_color: blue
+        alignment: start
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.airmonitor2_pm25
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 75 %}
+                green
+              {% elif tvoc < 150 %}
+                lime
+              {% elif tvoc < 250 %}
+                deep-orange
+              {% else %}
+                red
+              {% endif %}
+            icon: mdi:grain
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.airmonitor2_tvoc_ug
+            icon: mdi:molecule
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 300 %}
+                teal
+              {% elif tvoc < 1000 %}
+                green
+              {% elif tvoc < 3000 %}
+                lime
+              {% elif tvoc < 9000 %}
+                deep-orange
+              {% else %}
+                red
+              {% endif %}
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.airmonitor2_co2
+            icon: mdi:molecule-co2
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 1000 %}
+                green
+              {% elif tvoc < 2000 %}
+                amber
+              {% else %}
+                red
+              {% endif %}
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.airmonitor2_noise
+            icon_color: grey
+        alignment: start
+    header:
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+      card:
+        type: markdown
+        text_only: true
+        content: |
+          ## Спальня
   - type: sections
     max_columns: 2
     path: living_room
@@ -302,28 +319,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Гостиная
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: sensor.kitchen_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    entity: sensor.kitchen_humidity
-                    icon_color: blue
-                  - type: entity
-                    entity: sensor.kitchen_pressure
-                    icon_color: light-grey
-                    icon: mdi:gauge
-                  - type: entity
-                    entity: sensor.living_room_luminance_sensor_illuminance
-                    icon_color: yellow
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template
@@ -417,6 +416,12 @@ views:
                     show_position_control: true
                     tap_action:
                       action: toggle
+      - type: grid
+        cards:
+          - square: false
+            type: grid
+            columns: 1
+            cards:
               - square: false
                 type: grid
                 cards:
@@ -645,6 +650,31 @@ views:
                       action: toggle
     theme: My Custom Theme
     cards: []
+    header:
+      card:
+        type: markdown
+        content: '## Гостиная'
+        text_only: true
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.kitchen_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.kitchen_humidity
+            icon_color: blue
+          - type: entity
+            entity: sensor.kitchen_pressure
+            icon_color: light-grey
+            icon: mdi:gauge
+          - type: entity
+            entity: sensor.living_room_luminance_sensor_illuminance
+            icon_color: yellow
+        alignment: start
   - type: sections
     max_columns: 2
     title: Детская
@@ -654,25 +684,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Детская
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: sensor.kids_room_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    entity: sensor.kids_room_humidity
-                    icon_color: blue
-                  - type: entity
-                    entity: sensor.kids_room_pressure
-                    icon_color: light-grey
-                    icon: mdi:gauge
               - square: false
                 type: grid
                 cards:
@@ -720,6 +735,28 @@ views:
                     fill_container: false
                     tap_action:
                       action: toggle
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.kids_room_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.kids_room_humidity
+            icon_color: blue
+          - type: entity
+            entity: sensor.kids_room_pressure
+            icon_color: light-grey
+            icon: mdi:gauge
+        alignment: start
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Детская'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
   - type: sections
     max_columns: 2
     icon: mdi:door
@@ -729,25 +766,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Коридор
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: sensor.hall_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    entity: sensor.hall_humidity
-                    icon_color: blue
-                  - type: entity
-                    entity: sensor.hall_pressure
-                    icon_color: light-grey
-                    icon: mdi:gauge
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template
@@ -802,6 +824,28 @@ views:
                     name: Входная дверь
                 columns: 2
     cards: []
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Коридор'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.hall_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.hall_humidity
+            icon_color: blue
+          - type: entity
+            entity: sensor.hall_pressure
+            icon_color: light-grey
+            icon: mdi:gauge
+        alignment: start
   - type: sections
     max_columns: 2
     title: Кладовая
@@ -811,85 +855,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Кладовая
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    name: Температура
-                    entity: sensor.efekta_smart_aq_box_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    name: Влажность
-                    entity: sensor.efekta_smart_aq_box_humidity
-                    icon_color: blue
-                  - type: template
-                    entity: sensor.efekta_smart_aq_box_pm25
-                    icon_color: |-
-                      {% set tvoc = states(entity) | float(0) %}
-                      {% if tvoc < 75 %}
-                        green
-                      {% elif tvoc < 150 %}
-                        lime
-                      {% elif tvoc < 250 %}
-                        deep-orange
-                      {% else %}
-                        red
-                      {% endif %}
-                    icon: mdi:grain
-                    content: >-
-                      {{ states(entity) }} {{ state_attr(entity,
-                      'unit_of_measurement') }}
-                    tap_action:
-                      action: more-info
-                  - type: template
-                    entity: sensor.efekta_smart_aq_box_tvoc_ug
-                    icon: mdi:molecule
-                    icon_color: |-
-                      {% set tvoc = states(entity) | float(0) %}
-                      {% if tvoc < 300 %}
-                        teal
-                      {% elif tvoc < 1000 %}
-                        green
-                      {% elif tvoc < 3000 %}
-                        lime
-                      {% elif tvoc < 9000 %}
-                        deep-orange
-                      {% else %}
-                        red
-                      {% endif %}
-                    content: >-
-                      {{ states(entity) }} {{ state_attr(entity,
-                      'unit_of_measurement') }}
-                    tap_action:
-                      action: more-info
-                  - type: template
-                    entity: sensor.efekta_smart_aq_box_co2
-                    icon: mdi:molecule-co2
-                    icon_color: |-
-                      {% set tvoc = states(entity) | float(0) %}
-                      {% if tvoc < 1000 %}
-                        green
-                      {% elif tvoc < 2000 %}
-                        amber
-                      {% else %}
-                        red
-                      {% endif %}
-                    content: >-
-                      {{ states(entity) }} {{ state_attr(entity,
-                      'unit_of_measurement') }}
-                    tap_action:
-                      action: more-info
-                  - type: entity
-                    name: Давление
-                    entity: sensor.efekta_smart_aq_box_pressure
-                    icon: mdi:gauge
-                    icon_color: grey
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template
@@ -912,6 +881,12 @@ views:
                     icon_color: yellow
                     tap_action:
                       action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.store_room_table_light
+                    icon_color: orange
+                    tap_action:
+                      action: toggle
+                    icon: mdi:desk-lamp
                   - type: custom:mushroom-entity-card
                     entity: switch.store_room_socket
                     icon_color: orange
@@ -936,6 +911,91 @@ views:
                           sensor.roborock_robotic_vacuum_cleaner_operational_error
                         icon_color: orange
                 columns: 1
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            name: Температура
+            entity: sensor.efekta_smart_aq_box_temperature
+            icon_color: deep-orange
+          - type: entity
+            name: Влажность
+            entity: sensor.efekta_smart_aq_box_humidity
+            icon_color: blue
+          - type: entity
+            name: Давление
+            entity: sensor.efekta_smart_aq_box_pressure
+            icon: mdi:gauge
+            icon_color: grey
+        alignment: start
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.efekta_smart_aq_box_pm25
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 75 %}
+                green
+              {% elif tvoc < 150 %}
+                lime
+              {% elif tvoc < 250 %}
+                deep-orange
+              {% else %}
+                red
+              {% endif %}
+            icon: mdi:grain
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.efekta_smart_aq_box_tvoc_ug
+            icon: mdi:molecule
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 300 %}
+                teal
+              {% elif tvoc < 1000 %}
+                green
+              {% elif tvoc < 3000 %}
+                lime
+              {% elif tvoc < 9000 %}
+                deep-orange
+              {% else %}
+                red
+              {% endif %}
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.efekta_smart_aq_box_co2
+            icon: mdi:molecule-co2
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 1000 %}
+                green
+              {% elif tvoc < 2000 %}
+                amber
+              {% else %}
+                red
+              {% endif %}
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+        alignment: start
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Кладовая'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
   - type: sections
     max_columns: 2
     title: Ванная
@@ -945,25 +1005,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Ванная
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: sensor.bathroom_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    entity: sensor.bathroom_humidity
-                    icon_color: blue
-                  - type: entity
-                    entity: sensor.bathroom_pressure
-                    icon_color: light-grey
-                    icon: mdi:gauge
               - square: false
                 type: grid
                 cards:
@@ -1016,6 +1061,28 @@ views:
                       action: none
                     hold_action:
                       action: more-info
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.bathroom_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.bathroom_humidity
+            icon_color: blue
+          - type: entity
+            entity: sensor.bathroom_pressure
+            icon_color: light-grey
+            icon: mdi:gauge
+        alignment: start
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Ванная'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
   - type: sections
     max_columns: 2
     title: Прачечная
@@ -1025,25 +1092,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Прачечная
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: sensor.laundry_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    entity: sensor.laundry_humidity
-                    icon_color: blue
-                  - type: entity
-                    entity: sensor.laundry_pressure
-                    icon_color: light-grey
-                    icon: mdi:gauge
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template
@@ -1117,7 +1169,28 @@ views:
                     hold_action:
                       action: more-info
                     name: Теплый пол в прачечной
-            title: Прачечная
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Прачечная'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.laundry_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.laundry_humidity
+            icon_color: blue
+          - type: entity
+            entity: sensor.laundry_pressure
+            icon_color: light-grey
+            icon: mdi:gauge
+        alignment: start
   - type: sections
     max_columns: 2
     title: Балкон
@@ -1126,25 +1199,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Балкон
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: entity
-                    entity: sensor.loggia_temperature
-                    icon_color: deep-orange
-                  - type: entity
-                    entity: sensor.loggia_humidity
-                    icon_color: blue
-                  - type: entity
-                    entity: sensor.loggia_pressure
-                    icon_color: light-grey
-                    icon: mdi:gauge
               - type: grid
                 columns: 2
                 square: false
@@ -1159,3 +1217,25 @@ views:
                       action: none
                     hold_action:
                       action: more-info
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Балкон'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.loggia_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.loggia_humidity
+            icon_color: blue
+          - type: entity
+            entity: sensor.loggia_pressure
+            icon_color: light-grey
+            icon: mdi:gauge
+        alignment: start

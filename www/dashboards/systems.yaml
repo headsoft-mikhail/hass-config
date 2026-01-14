@@ -3,9 +3,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Internet
+          - type: markdown
+            text_only: true
+            content: |
+              ## Интернет
           - square: false
             type: grid
             columns: 1
@@ -117,10 +118,10 @@ views:
         column_span: 1
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Transmission
-            badges: []
+          - type: markdown
+            text_only: true
+            content: |
+              ## Торренты
           - type: custom:transmission-card
             header_text: ''
             no_torrent_label: ''
@@ -144,9 +145,10 @@ views:
             force_status_newline: true
       - type: grid
         cards:
-          - type: heading
-            heading: HomeAssistant
-            heading_style: title
+          - type: markdown
+            text_only: true
+            content: |
+              ## HomeAssistant
           - square: false
             type: grid
             columns: 1
@@ -291,25 +293,6 @@ views:
             columns: 1
             square: false
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: template
-                    icon: |-
-                      {% if states(entity) == 'on'%}
-                      mdi:lock-open
-                      {% else %}
-                      mdi:lock
-                      {% endif %}
-                    icon_color: purple
-                    entity: binary_sensor.hall_contact_sensor
-                    content: |-
-                      {% if states(entity) == 'on'%}
-                      Открыто
-                      {% else %}
-                      Закрыто
-                      {% endif %}
-                    tap_action:
-                      action: more-info
               - type: custom:mushroom-entity-card
                 entity: lock.aqara_smart_lock_u200
                 name: Замок
@@ -415,6 +398,34 @@ views:
                               }
                         autofill_entity_id: true
                 features_position: bottom
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Безопасность'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: |-
+              {% if states(entity) == 'on'%}
+              mdi:lock-open
+              {% else %}
+              mdi:lock
+              {% endif %}
+            icon_color: purple
+            entity: binary_sensor.hall_contact_sensor
+            content: |-
+              {% if states(entity) == 'on'%}
+              Открыто
+              {% else %}
+              Закрыто
+              {% endif %}
+            tap_action:
+              action: more-info
   - type: sections
     max_columns: 4
     icon: mdi:weather-partly-cloudy
@@ -423,94 +434,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Погода
-            icon: ''
           - type: grid
             columns: 1
             square: false
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: weather
-                    entity: weather.black_river
-                    show_conditions: true
-                    show_temperature: false
-                  - type: template
-                    entity: sensor.black_river_temperature
-                    content: >-
-                      {{ states(entity).replace('.', ',') }} {{
-                      state_attr(entity, 'unit_of_measurement') }}
-                    icon: mdi:thermometer
-                    icon_color: |-
-                      {% set temp = states(entity) | float(0) %}
-                      {% if temp < 3 %}
-                        light-blue
-                      {% elif temp < 13 %}
-                        teal
-                      {% elif temp < 23 %}
-                        amber
-                      {% else %}
-                        deep-orange
-                      {% endif %}
-                    tap_action:
-                      action: more-info
-                  - type: template
-                    entity: sensor.black_river_apparent_temperature
-                    content: >-
-                      Ощущается как {{ states(entity).replace('.', ',') }} {{
-                      state_attr(entity, 'unit_of_measurement') }}
-                    icon: mdi:thermometer
-                    icon_color: |-
-                      {% set temp = states(entity) | float(0) %}
-                      {% if temp < 3 %}
-                        light-blue
-                      {% elif temp < 13 %}
-                        teal
-                      {% elif temp < 23 %}
-                        amber
-                      {% else %}
-                        deep-orange
-                      {% endif %}
-                    tap_action:
-                      action: more-info
-                  - type: template
-                    entity: sensor.black_river_precipitation
-                    icon: mdi:weather-snowy-rainy
-                    content: >-
-                      {{ states(entity) | float | round(1) ~ ' mm' if
-                      states(entity) not in ['unknown', 'unavailable', 'none',
-                      '', None] else '-' }}
-                    tap_action:
-                      action: more-info
-                    icon_color: light-blue
-                  - type: entity
-                    entity: sensor.black_river_cloud_coverage
-                    icon_color: light-grey
-                    tap_action:
-                      action: more-info
-                  - type: entity
-                    entity: sensor.black_river_wind_bearing_2
-                    icon_color: cyan
-                    tap_action:
-                      action: more-info
-                  - type: entity
-                    entity: sensor.black_river_wind_speed
-                    icon_color: cyan
-                    tap_action:
-                      action: more-info
-                  - type: entity
-                    entity: sensor.black_river_humidity
-                    icon_color: blue
-                    tap_action:
-                      action: more-info
-                  - type: entity
-                    entity: sensor.black_river_pressure
-                    content_info: state
-                    icon_color: grey
-                    tap_action:
-                      action: more-info
               - type: custom:hourly-weather
                 entity: weather.black_river
                 icons: true
@@ -553,6 +480,9 @@ views:
               - value: above_horizon
                 label: Day
             tap_action: none
+        column_span: 1
+      - type: grid
+        cards:
           - type: custom:windrose-card
             data_period:
               hours_to_show: 720
@@ -604,6 +534,8 @@ views:
                 tap_action:
                   entity: sensor.black_river_wind_speed
                   action: more-info
+      - type: grid
+        cards:
           - type: custom:horizon-card
             title: null
             moon: true
@@ -621,10 +553,101 @@ views:
               moonrise: true
               moonset: true
               moon_phase: true
-        column_span: 2
     theme: My Custom Theme
     cards: []
     dense_section_placement: true
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Погода'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: weather
+            entity: weather.black_river
+            show_conditions: true
+            show_temperature: false
+          - type: template
+            entity: sensor.black_river_temperature
+            content: >-
+              {{ states(entity).replace('.', ',') }} {{ state_attr(entity,
+              'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.black_river_apparent_temperature
+            content: >-
+              Ощущается как {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.black_river_humidity
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.black_river_pressure
+            content_info: state
+            icon_color: grey
+            tap_action:
+              action: more-info
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.black_river_cloud_coverage
+            icon_color: light-grey
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.black_river_precipitation
+            icon: mdi:weather-snowy-rainy
+            content: >-
+              {{ states(entity) | float | round(1) ~ ' mm' if states(entity) not
+              in ['unknown', 'unavailable', 'none', '', None] else '-' }}
+            tap_action:
+              action: more-info
+            icon_color: light-blue
+          - type: entity
+            entity: sensor.black_river_wind_bearing_2
+            icon_color: cyan
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.black_river_wind_speed
+            icon_color: cyan
+            tap_action:
+              action: more-info
   - type: sections
     max_columns: 4
     icon: mdi:cat
@@ -884,6 +907,14 @@ views:
                   action: perform-action
                   perform_action: script.reset_petkit_pura_air_filter
                   target: {}
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Кошки'
+      layout: responsive
+      badges_position: bottom
+      badges_wrap: wrap
   - type: sections
     max_columns: 3
     icon: mdi:home-thermometer-outline
@@ -1174,6 +1205,14 @@ views:
                       action: none
                     hold_action:
                       action: more-info
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Климат'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
   - type: sections
     max_columns: 3
     title: Безопасность
@@ -1312,6 +1351,14 @@ views:
                 entity: binary_sensor.bathroom_drain_water_leak_sensor
                 name: У фановой трубы
     cards: []
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Вода'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
   - type: sections
     max_columns: 3
     title: Электричество
@@ -1321,81 +1368,10 @@ views:
     sections:
       - type: grid
         cards:
-          - type: heading
-            heading_style: title
-            heading: Электричество
           - square: false
             type: grid
             columns: 1
             cards:
-              - type: custom:mushroom-chips-card
-                chips:
-                  - type: template
-                    entity: binary_sensor.electricity_outage_sensor
-                    icon_color: |-
-                      {% if is_state(entity, 'on') %}
-                        green
-                      {% elif is_state(entity, 'off') %}
-                        red
-                      {% else %}
-                        orange
-                      {% endif %}
-                    content: |-
-                      {% if is_state(entity, 'on') %}
-                        Подключено
-                      {% elif is_state(entity, 'off') %}
-                        Отключено
-                      {% else %}
-                        Недоступно
-                      {% endif %}
-                    icon: |-
-                      {% if is_state(entity, 'on') %}
-                        mdi:power-plug-outline
-                      {% elif is_state(entity, 'off') %}
-                        mdi:power-plug-off-outline
-                      {% else %}
-                        mdi:help-circle-outline
-                      {% endif %}
-                    tap_action:
-                      action: more-info
-                  - type: spacer
-                  - type: template
-                    icon_color: |-
-                      {% if states(entity)|float(0) > 235 %}
-                        red
-                      {% elif states(entity)|float(0) > 230 %}
-                        amber
-                      {% elif states(entity)|float(0) > 220 %}
-                        green
-                      {% elif states(entity)|float(0) > 210 %}
-                        amber
-                      {% else %}
-                        red
-                      {% endif %}
-                    entity: sensor.zemismart_smp01_voltage
-                    content: |-
-
-                      {{states(entity) | float(0)}} V
-                    icon: mdi:sine-wave
-                    tap_action:
-                      action: more-info
-                    hold_action:
-                      action: none
-                    double_tap_action:
-                      action: none
-                  - type: entity
-                    entity: sensor.zemismart_smp01_ac_frequency
-                    tap_action:
-                      action: more-info
-                    hold_action:
-                      action: none
-                    double_tap_action:
-                      action: none
-                    icon_color: blue
-                  - type: entity
-                    entity: sensor.zemismart_smp01_energy_monthly
-                    icon: mdi:lightning-bolt
-                    icon_color: deep-orange
               - type: custom:uptime-card
                 entity: binary_sensor.electricity_outage_sensor
                 average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
@@ -1608,3 +1584,78 @@ views:
                   numeric: true
                 show_empty: true
     cards: []
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Электричество'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: binary_sensor.electricity_outage_sensor
+            icon_color: |-
+              {% if is_state(entity, 'on') %}
+                green
+              {% elif is_state(entity, 'off') %}
+                red
+              {% else %}
+                orange
+              {% endif %}
+            content: |-
+              {% if is_state(entity, 'on') %}
+                Подключено
+              {% elif is_state(entity, 'off') %}
+                Отключено
+              {% else %}
+                Недоступно
+              {% endif %}
+            icon: |-
+              {% if is_state(entity, 'on') %}
+                mdi:power-plug-outline
+              {% elif is_state(entity, 'off') %}
+                mdi:power-plug-off-outline
+              {% else %}
+                mdi:help-circle-outline
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: spacer
+          - type: template
+            icon_color: |-
+              {% if states(entity)|float(0) > 240 %}
+                red
+              {% elif states(entity)|float(0) > 235 %}
+                amber
+              {% elif states(entity)|float(0) > 220 %}
+                green
+              {% elif states(entity)|float(0) > 210 %}
+                amber
+              {% else %}
+                red
+              {% endif %}
+            entity: sensor.zemismart_smp01_voltage
+            content: '{{states(entity) | float(0)}} V'
+            icon: mdi:sine-wave
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+          - type: entity
+            entity: sensor.zemismart_smp01_ac_frequency
+            tap_action:
+              action: more-info
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon_color: blue
+          - type: entity
+            entity: sensor.zemismart_smp01_energy_monthly
+            icon: mdi:lightning-bolt
+            icon_color: deep-orange
