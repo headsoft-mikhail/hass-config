@@ -48,11 +48,10 @@
   alias: notify_about_power_off
   description: Уведомление об отключении электричества
   triggers:
-    - type: not_opened
-      device_id: 13dd824d27eba323fd3981c6226b3c1b
-      entity_id: f1acf946117249e56b42375c9b5432ea
-      domain: binary_sensor
-      trigger: device
+    - trigger: state
+      entity_id: binary_sensor.electricity_outage_sensor
+      from: "on"
+      to: "off"
       for:
         hours: 0
         minutes: 0
@@ -69,11 +68,10 @@
   alias: notify_about_power_on
   description: Уведомление о восстановлении электричества
   triggers:
-    - type: opened
-      device_id: 13dd824d27eba323fd3981c6226b3c1b
-      entity_id: f1acf946117249e56b42375c9b5432ea
-      domain: binary_sensor
-      trigger: device
+    - trigger: state
+      entity_id: binary_sensor.electricity_outage_sensor
+      from: "off"
+      to: "on"
       for:
         hours: 0
         minutes: 0
@@ -90,11 +88,10 @@
   alias: notify_about_ping_google_fail
   description: Уведомление об отключении интернета
   triggers:
-    - type: not_connected
-      device_id: de24bbb7ba721126a7555841647841ff
-      entity_id: f12857c8ff696bdf0ab48605cb66fee1
-      domain: binary_sensor
-      trigger: device
+    - trigger: state
+      entity_id: binary_sensor.ping_8_8_8_8
+      from: "on"
+      to: "off"
       for:
         hours: 0
         minutes: 0
@@ -111,11 +108,10 @@
   alias: notify_about_ping_google_ok
   description: Уведомление о восстановлении интернета
   triggers:
-    - type: connected
-      device_id: de24bbb7ba721126a7555841647841ff
-      entity_id: f12857c8ff696bdf0ab48605cb66fee1
-      domain: binary_sensor
-      trigger: device
+    - trigger: state
+      entity_id: binary_sensor.ping_8_8_8_8
+      from: "off"
+      to: "on"
       for:
         hours: 0
         minutes: 0
