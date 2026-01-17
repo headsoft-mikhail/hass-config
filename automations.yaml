@@ -399,9 +399,7 @@
   - action: notify.notify
     data:
       title: Завершение активности
-      message: '{{ trigger.to_state.name }} — активность завершена
-
-        '
+      message: '{{ trigger.to_state.name }} — активность завершена'
   mode: queued
 - id: '0017'
   alias: turn_off_vertical_vacuum_cleaner_charging_after_4h
