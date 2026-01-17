@@ -1,397 +1,421 @@
-- id: "0001"
+- id: '0001'
   alias: notify_about_download_completed
   description: Уведомление о завершении загрузки transmission
   triggers:
-    - trigger: event
-      event_type: transmission_downloaded_torrent
+  - trigger: event
+    event_type: transmission_downloaded_torrent
   conditions: []
   actions:
-    - action: notify.notify
-      data:
-        title: Загрузка завершена
-        message: "{{trigger.event.data.name}}"
-    - action: transmission.remove_torrent
-      data:
-        entry_id: 97082637855de2c974fdf46142760427
-        id: "{{trigger.event.data.id}}"
-        delete_data: false
+  - action: notify.notify
+    data:
+      title: Загрузка завершена
+      message: '{{trigger.event.data.name}}'
+  - action: transmission.remove_torrent
+    data:
+      entry_id: 97082637855de2c974fdf46142760427
+      id: '{{trigger.event.data.id}}'
+      delete_data: false
   mode: single
-- id: "0003"
+- id: '0003'
   alias: notify_about_homeassistant_started
   description: Уведомление о запуске Homeassistant
   triggers:
-    - trigger: homeassistant
-      event: start
+  - trigger: homeassistant
+    event: start
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Homeassistant запущен
-        message: Ура!
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Homeassistant запущен
+      message: Ура!
   mode: single
-- id: "0004"
+- id: '0004'
   alias: notify_about_homeassistant_stopped
   description: Уведомление об остановке Homeassistant
   triggers:
-    - trigger: homeassistant
-      event: shutdown
+  - trigger: homeassistant
+    event: shutdown
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Homeassistant остановлен
-        message: Грустняшка
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Homeassistant остановлен
+      message: Грустняшка
   mode: single
-- id: "0005"
+- id: '0005'
   alias: notify_about_power_off
   description: Уведомление об отключении электричества
   triggers:
-    - trigger: state
-      entity_id: binary_sensor.electricity_outage_sensor
-      from: "on"
-      to: "off"
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 1
+  - trigger: state
+    entity_id: binary_sensor.electricity_outage_sensor
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Отключение электричества
-        message: Грустняшка
-  mode: single
-- id: "0006"
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Отключение электричества
+      message: Грустняшка
+  - action: input_datetime.set_datetime
+    data: 
+      entity_id: input_datetime.electricity_down_at
+      timestamp: "{{ now().timestamp() }}"
+  mode: restart
+- id: '0006'
   alias: notify_about_power_on
   description: Уведомление о восстановлении электричества
   triggers:
-    - trigger: state
-      entity_id: binary_sensor.electricity_outage_sensor
-      from: "off"
-      to: "on"
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 5
+  - trigger: state
+    entity_id: binary_sensor.electricity_outage_sensor
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        title: Электричество восстановлено
-        message: Ура!
-  mode: single
-- id: "0007"
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Электричество восстановлено
+      message: >
+        {% set down = states('input_datetime.electricity_down_at') %}
+        {% if down not in ('unknown', 'unavailable', '') %}
+        {% set down_dt = strptime(down, '%Y-%m-%d %H:%M:%S') %}
+        {% set diff = (now().timestamp() - down_dt.timestamp()) | int %}
+        Ура! Было отключено {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
+        {% else %}
+        Ура!
+        {% endif %}
+  mode: restart
+- id: '0007'
   alias: notify_about_ping_google_fail
   description: Уведомление об отключении интернета
   triggers:
-    - trigger: state
-      entity_id: binary_sensor.ping_8_8_8_8
-      from: "on"
-      to: "off"
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 1
+  - trigger: state
+    entity_id: binary_sensor.ping_8_8_8_8
+    from: 'on'
+    to: 'off'
+    for:
+      seconds: 1
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        message: Грустняшка
-        title: Интернет отвалился
-  mode: single
-- id: "0008"
+  - action: notify.notify
+    data:
+      title: Интернет отвалился
+      message: Грустняшка
+  - action: input_datetime.set_datetime
+    data: 
+      entity_id: input_datetime.internet_down_at
+      timestamp: "{{ now().timestamp() }}"
+  mode: restart
+- id: '0008'
   alias: notify_about_ping_google_ok
   description: Уведомление о восстановлении интернета
   triggers:
-    - trigger: state
-      entity_id: binary_sensor.ping_8_8_8_8
-      from: "off"
-      to: "on"
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 1
+  - trigger: state
+    entity_id: binary_sensor.ping_8_8_8_8
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   conditions: []
   actions:
-    - action: notify.notify
-      metadata: {}
-      data:
-        message: Ура!
-        title: Интернет снова работает
-  mode: single
-- id: "0009"
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: >
+        {% set down = states('input_datetime.internet_down_at') %}
+        {% if down not in ('unknown', 'unavailable', '') %}
+        {% set down_dt = strptime(down, '%Y-%m-%d %H:%M:%S') %}
+        {% set diff = (now().timestamp() - down_dt.timestamp()) | int %}
+        Ура! Не работал {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
+        {% else %}
+        Ура!
+        {% endif %}
+      title: Интернет снова работает
+  - action: input_datetime.set_datetime
+    data:
+      entity_id: input_datetime.internet_down_at
+      timestamp: null
+  mode: restart
+- id: '0009'
   alias: end_lavalamp_warming
   description: Переключить яркость лавалампы на 40% после 90 минут на 100%
   triggers:
-    - trigger: template
-      value_template: '{{ state_attr("light.lava_lamp", "brightness") | int(0)
-        > 244 }}'
-      for:
-        minutes: 90
+  - trigger: template
+    value_template: '{{ state_attr("light.lava_lamp", "brightness") | int(0) > 244
+      }}'
+    for:
+      minutes: 90
   actions:
-    - action: light.turn_on
-      target:
-        entity_id: light.lava_lamp
-      data:
-        brightness: 102
+  - action: light.turn_on
+    target:
+      entity_id: light.lava_lamp
+    data:
+      brightness: 102
   mode: restart
-- id: "0010"
+- id: '0010'
   alias: change_audio_system_signal_source
   description: Передать ИК-сигнал при изменении input_select.audio_system_signal_source
   triggers:
-    - trigger: state
-      entity_id:
-        - input_select.audio_system_signal_source
+  - trigger: state
+    entity_id:
+    - input_select.audio_system_signal_source
   actions:
-    - if:
-        - condition: template
-          value_template: '{{ trigger.from_state and trigger.from_state.state == "Off" and trigger.to_state.state != "Off" }}'
-      then:
-        - action: button.press
-          target:
-            entity_id: button.audio_system_off
-        - delay:
-            milliseconds: 2000
-    - choose:
-        - conditions:
-            - condition: template
-              value_template: '{{ trigger.to_state.state == "Off" }}'
-          sequence:
-            - action: button.press
-              target:
-                entity_id: button.audio_system_off
-        - conditions:
-            - condition: template
-              value_template: '{{ trigger.to_state.state == "Optical" }}'
-          sequence:
-            - type: set_value
-              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-              entity_id: 887bfc51f053379291c3c944c6d7b291
-              domain: text
-              value: BY4jghFBAuAHAQOdBkEC4AMBQA/AA8ABwA/AB0ABQAvgAwHgAw/AC0AHwANAAQudBkECJaCOI7UIQQI=
-        - conditions:
-            - condition: template
-              value_template: '{{ trigger.to_state.state == "Bluetooth" }}'
-          sequence:
-            - type: set_value
-              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-              entity_id: 887bfc51f053379291c3c944c6d7b291
-              domain: text
-              value: BX0jpxE+AuAHAQOiBj4C4AMBQA/AA8ABwA9AB8ABQAvAA0ABQAtAAUAHQAPgAwHADwuiBj4CM6B9I8IIPgI=
-        - conditions:
-            - condition: template
-              value_template: '{{ trigger.to_state.state == "Line 1" }}'
-          sequence:
-            - type: set_value
-              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-              entity_id: 887bfc51f053379291c3c944c6d7b291
-              domain: text
-              value: BYUjpRFCAuAHAQOWBkIC4AMBQA/AA8ABwA/gBwfgFwHgBy8LlgZCAiyghSOxCEIC
-        - conditions:
-            - condition: template
-              value_template: '{{ trigger.to_state.state == "Line 2" }}'
-          sequence:
-            - type: set_value
-              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-              entity_id: 887bfc51f053379291c3c944c6d7b291
-              domain: text
-              value: BWIjlhFCAuAHAQOZBkIC4AMBQA/AA8ABwA/AB8ABQA/gCwFAF0ADQAFAB+ADAwc6oGIjxghCAg==
-        - conditions:
-            - condition: template
-              value_template: '{{ trigger.to_state.state == "Coax" }}'
-          sequence:
-            - type: set_value
-              device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
-              entity_id: 887bfc51f053379291c3c944c6d7b291
-              domain: text
-              value: BYcjpRFBAuAHAQOZBkEC4AMBQA/AA8ABwA/gAwfgFwHgAyvgAwsHGaCHI6oIQQI=
+  - if:
+    - condition: template
+      value_template: '{{ trigger.from_state and trigger.from_state.state == "Off"
+        and trigger.to_state.state != "Off" }}'
+    then:
+    - action: button.press
+      target:
+        entity_id: button.audio_system_off
+    - delay:
+        milliseconds: 2000
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == "Off" }}'
+      sequence:
+      - action: button.press
+        target:
+          entity_id: button.audio_system_off
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == "Optical" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: BY4jghFBAuAHAQOdBkEC4AMBQA/AA8ABwA/AB0ABQAvgAwHgAw/AC0AHwANAAQudBkECJaCOI7UIQQI=
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == "Bluetooth" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: BX0jpxE+AuAHAQOiBj4C4AMBQA/AA8ABwA9AB8ABQAvAA0ABQAtAAUAHQAPgAwHADwuiBj4CM6B9I8IIPgI=
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == "Line 1" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: BYUjpRFCAuAHAQOWBkIC4AMBQA/AA8ABwA/gBwfgFwHgBy8LlgZCAiyghSOxCEIC
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == "Line 2" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: BWIjlhFCAuAHAQOZBkIC4AMBQA/AA8ABwA/AB8ABQA/gCwFAF0ADQAFAB+ADAwc6oGIjxghCAg==
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == "Coax" }}'
+      sequence:
+      - type: set_value
+        device_id: d07ce564dd466ed7a9d0ec97d5a88cdf
+        entity_id: 887bfc51f053379291c3c944c6d7b291
+        domain: text
+        value: BYcjpRFBAuAHAQOZBkEC4AMBQA/AA8ABwA/gAwfgFwHgAyvgAwsHGaCHI6oIQQI=
   mode: single
-- id: "0011"
+- id: '0011'
   alias: petkit_feeder_1_act
   description: Выдать порцию еды Petkit Feeder 1
   triggers: []
   conditions: []
   actions:
-    - device_id: 81a094e022d2b74f6460993e1d717bfc
-      domain: select
-      entity_id: 4602dd31c4c59efbb1a950b8c7b0d4a3
-      type: select_option
-      option: 1/10th Cup (10g)
+  - device_id: 81a094e022d2b74f6460993e1d717bfc
+    domain: select
+    entity_id: 4602dd31c4c59efbb1a950b8c7b0d4a3
+    type: select_option
+    option: 1/10th Cup (10g)
   mode: single
-- id: "0012"
+- id: '0012'
   alias: petkit_feeder_2_act
   description: Выдать порцию еды Petkit Feeder 2
   triggers: []
   conditions: []
   actions:
-    - device_id: 72e9542e1e36f6df0e408762c518bf8c
-      domain: select
-      entity_id: f9e820aad82b338f68d514f0f8ff789d
-      type: select_option
-      option: 1/10th Cup (10g)
+  - device_id: 72e9542e1e36f6df0e408762c518bf8c
+    domain: select
+    entity_id: f9e820aad82b338f68d514f0f8ff789d
+    type: select_option
+    option: 1/10th Cup (10g)
   mode: single
-- id: "0013"
+- id: '0013'
   alias: select_kitchen_water_valve_state
   mode: queued
   triggers:
-    - trigger: state
-      entity_id: switch.kitchen_water_valve_open
-    - trigger: state
-      entity_id: switch.kitchen_water_valve_close
+  - trigger: state
+    entity_id: switch.kitchen_water_valve_open
+  - trigger: state
+    entity_id: switch.kitchen_water_valve_close
   variables:
-    o: "{{ is_state('switch.kitchen_water_valve_open', 'on') }}"
-    c: "{{ is_state('switch.kitchen_water_valve_close', 'on') }}"
-    prev: "{{ states('input_select.kitchen_water_valve_state') }}"
+    o: '{{ is_state(''switch.kitchen_water_valve_open'', ''on'') }}'
+    c: '{{ is_state(''switch.kitchen_water_valve_close'', ''on'') }}'
+    prev: '{{ states(''input_select.kitchen_water_valve_state'') }}'
   action:
-    - choose:
-        - conditions:
-            - condition: template
-              value_template: "{{ o and c }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.kitchen_water_valve_state
-              data:
-                option: error
-        - conditions:
-            - condition: template
-              value_template: "{{ o and not c }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.kitchen_water_valve_state
-              data:
-                option: opening
-        - conditions:
-            - condition: template
-              value_template: "{{ c and not o }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.kitchen_water_valve_state
-              data:
-                option: closing
-        - conditions:
-            - condition: template
-              value_template: "{{ not o and not c }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.kitchen_water_valve_state
-              data:
-                option:
-                  "{% if prev in ['opening', 'open'] %}\n  open\n{% elif prev in ['closing',
-                  'closed'] %}\n  closed\n{% else %}\n  {{ prev }}\n{% endif %}\n"
-- id: "0014"
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ o and c }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.kitchen_water_valve_state
+        data:
+          option: error
+    - conditions:
+      - condition: template
+        value_template: '{{ o and not c }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.kitchen_water_valve_state
+        data:
+          option: opening
+    - conditions:
+      - condition: template
+        value_template: '{{ c and not o }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.kitchen_water_valve_state
+        data:
+          option: closing
+    - conditions:
+      - condition: template
+        value_template: '{{ not o and not c }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.kitchen_water_valve_state
+        data:
+          option: "{% if prev in ['opening', 'open'] %}\n  open\n{% elif prev in ['closing',
+            'closed'] %}\n  closed\n{% else %}\n  {{ prev }}\n{% endif %}\n"
+- id: '0014'
   alias: select_laundry_water_valve_state
   mode: queued
   triggers:
-    - trigger: state
-      entity_id: switch.laundry_water_valve_open
-    - trigger: state
-      entity_id: switch.laundry_water_valve_close
+  - trigger: state
+    entity_id: switch.laundry_water_valve_open
+  - trigger: state
+    entity_id: switch.laundry_water_valve_close
   variables:
-    o: "{{ is_state('switch.laundry_water_valve_open', 'on') }}"
-    c: "{{ is_state('switch.laundry_water_valve_close', 'on') }}"
-    prev: "{{ states('input_select.laundry_water_valve_state') }}"
+    o: '{{ is_state(''switch.laundry_water_valve_open'', ''on'') }}'
+    c: '{{ is_state(''switch.laundry_water_valve_close'', ''on'') }}'
+    prev: '{{ states(''input_select.laundry_water_valve_state'') }}'
   action:
-    - choose:
-        - conditions:
-            - condition: template
-              value_template: "{{ o and c }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.laundry_water_valve_state
-              data:
-                option: error
-        - conditions:
-            - condition: template
-              value_template: "{{ o and not c }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.laundry_water_valve_state
-              data:
-                option: opening
-        - conditions:
-            - condition: template
-              value_template: "{{ c and not o }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.laundry_water_valve_state
-              data:
-                option: closing
-        - conditions:
-            - condition: template
-              value_template: "{{ not o and not c }}"
-          sequence:
-            - action: input_select.select_option
-              target:
-                entity_id: input_select.laundry_water_valve_state
-              data:
-                option:
-                  "{% if prev in ['opening', 'open'] %}\n  open\n{% elif prev in ['closing',
-                  'closed'] %}\n  closed\n{% else %}\n  {{ prev }}\n{% endif %}\n"
-- id: "0015"
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ o and c }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.laundry_water_valve_state
+        data:
+          option: error
+    - conditions:
+      - condition: template
+        value_template: '{{ o and not c }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.laundry_water_valve_state
+        data:
+          option: opening
+    - conditions:
+      - condition: template
+        value_template: '{{ c and not o }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.laundry_water_valve_state
+        data:
+          option: closing
+    - conditions:
+      - condition: template
+        value_template: '{{ not o and not c }}'
+      sequence:
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.laundry_water_valve_state
+        data:
+          option: "{% if prev in ['opening', 'open'] %}\n  open\n{% elif prev in ['closing',
+            'closed'] %}\n  closed\n{% else %}\n  {{ prev }}\n{% endif %}\n"
+- id: '0015'
   alias: notify_about_switch_state_changed
   triggers:
-    - trigger: state
-      entity_id:
-        - switch.fridge_socket
-        - switch.washing_machine
-        - switch.drying_machine
-        - switch.dishwasher
-      not_from:
-        - unknown
-        - unavailable
+  - trigger: state
+    entity_id:
+    - switch.fridge_socket
+    - switch.washing_machine
+    - switch.drying_machine
+    - switch.dishwasher
+    not_from:
+    - unknown
+    - unavailable
   actions:
-    - action: notify.notify
-      data:
-        title: Изменение состояния устройства
-        message: '{{ trigger.to_state.name }} меняет состояние с "{{
-          trigger.from_state.state | replace(''on'',''включено'') | replace(''off'',''выключено'')
-          }}" на "{{
-          trigger.to_state.state | replace(''on'',''включено'') | replace(''off'',''выключено'')
-          }}"'
+  - action: notify.notify
+    data:
+      title: Изменение состояния устройства
+      message: '{{ trigger.to_state.name }} меняет состояние с "{{ trigger.from_state.state
+        | replace(''on'',''включено'') | replace(''off'',''выключено'') }}" на "{{
+        trigger.to_state.state | replace(''on'',''включено'') | replace(''off'',''выключено'')
+        }}"'
   mode: queued
-- id: "0016"
+- id: '0016'
   alias: notify_about_activity_ended
   triggers:
-    - trigger: state
-      entity_id:
-        - binary_sensor.washing_machine_activity
-        - binary_sensor.drying_machine_activity
-        - binary_sensor.dishwasher_activity
-        - binary_sensor.3d_printer_activity
-      from: "on"
-      to: "off"
+  - trigger: state
+    entity_id:
+    - binary_sensor.washing_machine_activity
+    - binary_sensor.drying_machine_activity
+    - binary_sensor.dishwasher_activity
+    - binary_sensor.3d_printer_activity
+    from: 'on'
+    to: 'off'
   actions:
-    - action: notify.notify
-      data:
-        title: Завершение активности
-        message: >
-          {{ trigger.to_state.name }} — активность завершена
+  - action: notify.notify
+    data:
+      title: Завершение активности
+      message: '{{ trigger.to_state.name }} — активность завершена
+
+        '
   mode: queued
-- id: "0017"
+- id: '0017'
   alias: turn_off_vertical_vacuum_cleaner_charging_after_4h
   triggers:
-    - trigger: state
-      entity_id: switch.store_room_socket
-      from: "off"
-      to: "on"
+  - trigger: state
+    entity_id: switch.store_room_socket
+    from: 'off'
+    to: 'on'
   actions:
-    - delay:
-        hours: 4
-    - condition: state
+  - delay:
+      hours: 4
+  - condition: state
+    entity_id: switch.store_room_socket
+    state: 'on'
+  - action: switch.turn_off
+    target:
       entity_id: switch.store_room_socket
-      state: "on"
-    - action: switch.turn_off
-      target:
-        entity_id: switch.store_room_socket

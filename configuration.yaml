@@ -271,7 +271,6 @@ input_select:
       - "Line 1"
       - "Line 2"
       - "Coax"
-    initial: "Off"
     icon: "mdi:soundbar"
   kitchen_water_valve_state:
     name: Kitchen water valve state
@@ -295,6 +294,14 @@ input_datetime:
     name: "Petkit Pura Air - Filter - Reset date"
     has_date: true
     has_time: false
+  electricity_down_at:
+    name: Electricity Down At
+    has_date: true
+    has_time: true
+  internet_down_at:
+    name: Internet Down At
+    has_date: true
+    has_time: true
 
 template:
   - sensor:
@@ -505,11 +512,11 @@ template:
       - name: "3D Printer Activity"
         unique_id: 3d_printer_activity
         device_class: motion
-        state: "{{ is_state('binary_sensor.3d_printer_tilt_sensor_vibration', 'on') }}"
+        state: "{{ is_state('binary_sensor.3d_printer_motion_sensor_occupancy', 'on') }}"
         delay_on:
-          minutes: 2
+          minutes: 3
         delay_off:
-          minutes: 2
+          minutes: 3
   - cover:
       - name: Kitchen water valve
         unique_id: kitchen_water_valve
