@@ -91,7 +91,7 @@
         {% if down not in ('unknown', 'unavailable', '') %}
         {% set down_dt = strptime(down, '%Y-%m-%d %H:%M:%S') %}
         {% set diff = (now().timestamp() - down_dt.timestamp()) | int %}
-        Ура! Было отключено {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
+        Было отключено {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
         {% else %}
         Ура!
         {% endif %}
@@ -134,20 +134,16 @@
   - action: notify.notify
     metadata: {}
     data:
+      title: Интернет снова работает
       message: >
         {% set down = states('input_datetime.internet_down_at') %}
         {% if down not in ('unknown', 'unavailable', '') %}
         {% set down_dt = strptime(down, '%Y-%m-%d %H:%M:%S') %}
         {% set diff = (now().timestamp() - down_dt.timestamp()) | int %}
-        Ура! Не работал {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
+        Не работал {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
         {% else %}
         Ура!
         {% endif %}
-      title: Интернет снова работает
-  - action: input_datetime.set_datetime
-    data:
-      entity_id: input_datetime.internet_down_at
-      timestamp: null
   mode: restart
 - id: '0009'
   alias: end_lavalamp_warming

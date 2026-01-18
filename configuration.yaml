@@ -500,7 +500,7 @@ template:
         delay_off:
           seconds: 90
         delay_on:
-          seconds: 0
+          seconds: 60
       - name: "Fridge Activity"
         unique_id: fridge_activity
         device_class: motion
