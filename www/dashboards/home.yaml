@@ -1,318 +1,6 @@
 views:
   - type: sections
     max_columns: 2
-    title: Спальня
-    path: bedroom
-    icon: mdi:bed
-    theme: My Custom Theme
-    sections:
-      - type: grid
-        cards:
-          - square: false
-            type: grid
-            columns: 1
-            cards:
-              - type: grid
-                square: false
-                cards:
-                  - type: custom:mushroom-entity-card
-                    entity: switch.bedroom_dimmed_light
-                    icon_color: orange
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.bedroom_bright_light
-                    icon_color: yellow
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.bedroom_mirror_backlight
-                    icon_color: yellow
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.bedroom_desktop_dimmed_light
-                    icon_color: orange
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.bedroom_desktop_bright_light
-                    icon_color: orange
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.pc_power_switch
-                    icon_color: blue
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.bedroom_track_l
-                    icon_color: orange
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.bedroom_track_r
-                    icon_color: orange
-                    tap_action:
-                      action: toggle
-                  - type: custom:mushroom-entity-card
-                    entity: switch.hdmi_hub
-                    icon_color: blue
-                    tap_action:
-                      action: toggle
-              - square: false
-                columns: 2
-                type: grid
-                cards:
-                  - type: custom:mushroom-cover-card
-                    entity: cover.bedroom_curtain
-                    tap_action:
-                      action: toggle
-                    show_position_control: true
-                    show_buttons_control: false
-      - type: grid
-        cards:
-          - square: false
-            type: grid
-            columns: 1
-            cards:
-              - type: grid
-                columns: 1
-                square: false
-                cards:
-                  - type: tile
-                    entity: light.lava_lamp
-                    color: pink
-                    show_entity_picture: false
-                    hide_state: false
-                    vertical: false
-                    icon_tap_action:
-                      action: toggle
-                    features:
-                      - type: custom:service-call
-                        entries:
-                          - type: selector
-                            options:
-                              - label: 'Off'
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: light.turn_on
-                                  target:
-                                    entity_id:
-                                      - light.lava_lamp
-                                  data:
-                                    brightness: 0
-                                styles: |
-                                  :host {
-                                    {% if state_attr("light.lava_lamp", "brightness") == None %}
-                                    background: grey;
-                                    {% else %}
-                                    --color: grey;
-                                    --label-color: grey;
-                                    {% endif %}
-                                  }
-                                entity_id: light.lava_lamp
-                              - option: 102
-                                label: Relax
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: light.turn_on
-                                  target:
-                                    entity_id:
-                                      - light.lava_lamp
-                                  data:
-                                    brightness: 102
-                                styles: |
-                                  :host {
-                                    {% if  
-                                      state_attr("light.lava_lamp", "brightness") <= config.option + 10 
-                                      and 
-                                      state_attr("light.lava_lamp", "brightness") >= config.option - 10
-                                    %}
-                                    background: orange;
-                                    {% else %}
-                                    --color: orange;
-                                    --label-color: orange;
-                                    {% endif %}
-                                  }
-                                entity_id: light.lava_lamp
-                              - option: 255
-                                label: Heat
-                                tap_action:
-                                  action: perform-action
-                                  perform_action: light.turn_on
-                                  target:
-                                    entity_id:
-                                      - light.lava_lamp
-                                  data:
-                                    brightness: 255
-                                styles: |
-                                  :host {
-                                    {% if state_attr("light.lava_lamp", "brightness") >= config.option - 10 %}
-                                    background: red;
-                                    {% else %}
-                                    --color: red;
-                                    --label-color: red;
-                                    {% endif %}
-                                  }
-                                entity_id: light.lava_lamp
-                            entity_id: light.lava_lamp
-                    features_position: inline
-                  - type: custom:mushroom-light-card
-                    entity: light.stars_projector
-                    icon: ''
-                    show_color_temp_control: false
-                    show_color_control: true
-                    show_brightness_control: false
-                    use_light_color: true
-                    collapsible_controls: false
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    fill_container: true
-                    layout: horizontal
-                  - square: false
-                    type: grid
-                    cards:
-                      - type: custom:mushroom-light-card
-                        entity: light.meross_ambient_light_l
-                        show_color_control: true
-                        show_brightness_control: true
-                        use_light_color: true
-                        tap_action:
-                          action: toggle
-                      - type: custom:mushroom-light-card
-                        entity: light.meross_ambient_light_r
-                        show_brightness_control: true
-                        show_color_control: true
-                        tap_action:
-                          action: toggle
-                        use_light_color: true
-                    columns: 2
-              - type: grid
-                square: false
-                columns: 1
-                cards:
-                  - type: custom:mushroom-media-player-card
-                    entity: media_player.yandex_station_m00db3710dqrsg
-                    icon: ''
-                    volume_controls:
-                      - volume_buttons
-                    media_controls:
-                      - next
-                      - play_pause_stop
-                    fill_container: false
-                    use_media_info: true
-                    show_volume_level: true
-                    collapsible_controls: true
-                    layout: horizontal
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: custom:mushroom-climate-card
-                    entity: climate.bedroom_radiator_thermostat
-                    tap_action:
-                      action: none
-                    fill_container: false
-                    show_temperature_control: true
-                    hold_action:
-                      action: more-info
-                    double_tap_action:
-                      action: none
-                    hvac_modes:
-                      - heat
-                      - 'off'
-                  - type: custom:mushroom-entity-card
-                    entity: switch.humidifier_system_control_switch_l2
-                    tap_action:
-                      action: toggle
-                    fill_container: false
-    badges:
-      - type: custom:mushroom-chips-card
-        chips:
-          - type: entity
-            entity: sensor.airmonitor2_temperature
-            icon_color: deep-orange
-          - type: entity
-            entity: sensor.airmonitor2_humidity
-            icon_color: blue
-        alignment: start
-      - type: custom:mushroom-chips-card
-        chips:
-          - type: template
-            entity: sensor.airmonitor2_pm25
-            icon_color: |-
-              {% set tvoc = states(entity) | float(0) %}
-              {% if tvoc < 75 %}
-                green
-              {% elif tvoc < 150 %}
-                lime
-              {% elif tvoc < 250 %}
-                deep-orange
-              {% else %}
-                red
-              {% endif %}
-            icon: mdi:grain
-            content: >-
-              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
-              }}
-            tap_action:
-              action: more-info
-          - type: template
-            entity: sensor.airmonitor2_tvoc_ug
-            icon: mdi:molecule
-            icon_color: |-
-              {% set tvoc = states(entity) | float(0) %}
-              {% if tvoc < 300 %}
-                teal
-              {% elif tvoc < 1000 %}
-                green
-              {% elif tvoc < 3000 %}
-                lime
-              {% elif tvoc < 9000 %}
-                deep-orange
-              {% else %}
-                red
-              {% endif %}
-            content: >-
-              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
-              }}
-            tap_action:
-              action: more-info
-          - type: template
-            entity: sensor.airmonitor2_co2
-            icon: mdi:molecule-co2
-            icon_color: |-
-              {% set tvoc = states(entity) | float(0) %}
-              {% if tvoc < 1000 %}
-                green
-              {% elif tvoc < 2000 %}
-                amber
-              {% else %}
-                red
-              {% endif %}
-            content: >-
-              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
-              }}
-            tap_action:
-              action: more-info
-          - type: entity
-            entity: sensor.airmonitor2_noise
-            icon_color: grey
-        alignment: start
-    header:
-      layout: start
-      badges_position: bottom
-      badges_wrap: wrap
-      card:
-        type: markdown
-        text_only: true
-        content: |
-          ## Спальня
-  - type: sections
-    max_columns: 2
     path: living_room
     title: Гостиная
     icon: mdi:sofa
@@ -677,6 +365,318 @@ views:
         alignment: start
   - type: sections
     max_columns: 2
+    title: Спальня
+    path: bedroom
+    icon: mdi:bed
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: grid
+                square: false
+                cards:
+                  - type: custom:mushroom-entity-card
+                    entity: switch.bedroom_dimmed_light
+                    icon_color: orange
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.bedroom_bright_light
+                    icon_color: yellow
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.bedroom_mirror_backlight
+                    icon_color: yellow
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.bedroom_desktop_dimmed_light
+                    icon_color: orange
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.bedroom_desktop_bright_light
+                    icon_color: orange
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.pc_power_switch
+                    icon_color: blue
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.bedroom_track_l
+                    icon_color: orange
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.bedroom_track_r
+                    icon_color: orange
+                    tap_action:
+                      action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.hdmi_hub
+                    icon_color: blue
+                    tap_action:
+                      action: toggle
+              - square: false
+                columns: 2
+                type: grid
+                cards:
+                  - type: custom:mushroom-cover-card
+                    entity: cover.bedroom_curtain
+                    tap_action:
+                      action: toggle
+                    show_position_control: true
+                    show_buttons_control: false
+      - type: grid
+        cards:
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: tile
+                    entity: light.lava_lamp
+                    color: pink
+                    show_entity_picture: false
+                    hide_state: false
+                    vertical: false
+                    icon_tap_action:
+                      action: toggle
+                    features:
+                      - type: custom:service-call
+                        entries:
+                          - type: selector
+                            options:
+                              - label: 'Off'
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: light.turn_on
+                                  target:
+                                    entity_id:
+                                      - light.lava_lamp
+                                  data:
+                                    brightness: 0
+                                styles: |
+                                  :host {
+                                    {% if state_attr("light.lava_lamp", "brightness") == None %}
+                                    background: grey;
+                                    {% else %}
+                                    --color: grey;
+                                    --label-color: grey;
+                                    {% endif %}
+                                  }
+                                entity_id: light.lava_lamp
+                              - option: 102
+                                label: Relax
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: light.turn_on
+                                  target:
+                                    entity_id:
+                                      - light.lava_lamp
+                                  data:
+                                    brightness: 102
+                                styles: |
+                                  :host {
+                                    {% if  
+                                      state_attr("light.lava_lamp", "brightness") <= config.option + 10 
+                                      and 
+                                      state_attr("light.lava_lamp", "brightness") >= config.option - 10
+                                    %}
+                                    background: orange;
+                                    {% else %}
+                                    --color: orange;
+                                    --label-color: orange;
+                                    {% endif %}
+                                  }
+                                entity_id: light.lava_lamp
+                              - option: 255
+                                label: Heat
+                                tap_action:
+                                  action: perform-action
+                                  perform_action: light.turn_on
+                                  target:
+                                    entity_id:
+                                      - light.lava_lamp
+                                  data:
+                                    brightness: 255
+                                styles: |
+                                  :host {
+                                    {% if state_attr("light.lava_lamp", "brightness") >= config.option - 10 %}
+                                    background: red;
+                                    {% else %}
+                                    --color: red;
+                                    --label-color: red;
+                                    {% endif %}
+                                  }
+                                entity_id: light.lava_lamp
+                            entity_id: light.lava_lamp
+                    features_position: inline
+                  - type: custom:mushroom-light-card
+                    entity: light.stars_projector
+                    icon: ''
+                    show_color_temp_control: false
+                    show_color_control: true
+                    show_brightness_control: false
+                    use_light_color: true
+                    collapsible_controls: false
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    fill_container: true
+                    layout: horizontal
+                  - square: false
+                    type: grid
+                    cards:
+                      - type: custom:mushroom-light-card
+                        entity: light.meross_ambient_light_l
+                        show_color_control: true
+                        show_brightness_control: true
+                        use_light_color: true
+                        tap_action:
+                          action: toggle
+                      - type: custom:mushroom-light-card
+                        entity: light.meross_ambient_light_r
+                        show_brightness_control: true
+                        show_color_control: true
+                        tap_action:
+                          action: toggle
+                        use_light_color: true
+                    columns: 2
+              - type: grid
+                square: false
+                columns: 1
+                cards:
+                  - type: custom:mushroom-media-player-card
+                    entity: media_player.yandex_station_m00db3710dqrsg
+                    icon: ''
+                    volume_controls:
+                      - volume_buttons
+                    media_controls:
+                      - next
+                      - play_pause_stop
+                    fill_container: false
+                    use_media_info: true
+                    show_volume_level: true
+                    collapsible_controls: true
+                    layout: horizontal
+              - type: grid
+                square: false
+                columns: 2
+                cards:
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bedroom_radiator_thermostat
+                    tap_action:
+                      action: none
+                    fill_container: false
+                    show_temperature_control: true
+                    hold_action:
+                      action: more-info
+                    double_tap_action:
+                      action: none
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidifier_system_control_switch_l2
+                    tap_action:
+                      action: toggle
+                    fill_container: false
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.airmonitor2_temperature
+            icon_color: deep-orange
+          - type: entity
+            entity: sensor.airmonitor2_humidity
+            icon_color: blue
+        alignment: start
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.airmonitor2_pm25
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 75 %}
+                green
+              {% elif tvoc < 150 %}
+                lime
+              {% elif tvoc < 250 %}
+                deep-orange
+              {% else %}
+                red
+              {% endif %}
+            icon: mdi:grain
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.airmonitor2_tvoc_ug
+            icon: mdi:molecule
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 300 %}
+                teal
+              {% elif tvoc < 1000 %}
+                green
+              {% elif tvoc < 3000 %}
+                lime
+              {% elif tvoc < 9000 %}
+                deep-orange
+              {% else %}
+                red
+              {% endif %}
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.airmonitor2_co2
+            icon: mdi:molecule-co2
+            icon_color: |-
+              {% set tvoc = states(entity) | float(0) %}
+              {% if tvoc < 1000 %}
+                green
+              {% elif tvoc < 2000 %}
+                amber
+              {% else %}
+                red
+              {% endif %}
+            content: >-
+              {{ states(entity) }} {{ state_attr(entity, 'unit_of_measurement')
+              }}
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.airmonitor2_noise
+            icon_color: grey
+        alignment: start
+    header:
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+      card:
+        type: markdown
+        text_only: true
+        content: |
+          ## Спальня
+  - type: sections
+    max_columns: 2
     title: Детская
     path: kids_room
     icon: mdi:teddy-bear
@@ -846,6 +846,30 @@ views:
             icon_color: light-grey
             icon: mdi:gauge
         alignment: start
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: |-
+              {% if states(entity) == 'on'%}
+              mdi:smoke-detector-variant-alert
+              {% else %}
+              mdi:smoke-detector-variant
+              {% endif %}
+            icon_color: |-
+              {% if states(entity) == 'on'%}
+              red
+              {% else %}
+              green
+              {% endif %}
+            entity: binary_sensor.smoke_sensor
+            content: |-
+              {% if states(entity) == 'on'%}
+              Обнаружено задымление!
+              {% else %}
+              Задымление не обнаружено
+              {% endif %}
+            tap_action:
+              action: more-info
   - type: sections
     max_columns: 2
     title: Кладовая
@@ -902,14 +926,7 @@ views:
                       - start_pause
                       - stop
                       - return_home
-                  - type: custom:mushroom-chips-card
-                    chips:
-                      - type: entity
-                        entity: sensor.roborock_robotic_vacuum_cleaner_battery
-                      - type: entity
-                        entity: >-
-                          sensor.roborock_robotic_vacuum_cleaner_operational_error
-                        icon_color: orange
+                    name: Робот-пылесос
                 columns: 1
     badges:
       - type: custom:mushroom-chips-card

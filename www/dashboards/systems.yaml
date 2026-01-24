@@ -164,8 +164,6 @@ views:
                     icon: mdi:home
                     icon_color: light-blue
                   - type: entity
-                    entity: binary_sensor.rpi_power_status
-                  - type: entity
                     entity: sensor.rpi_cpu_temperature
                     icon_color: orange
                   - type: template
@@ -426,6 +424,28 @@ views:
               {% endif %}
             tap_action:
               action: more-info
+          - type: template
+            icon: |-
+              {% if states(entity) == 'on'%}
+              mdi:smoke-detector-variant-alert
+              {% else %}
+              mdi:smoke-detector-variant
+              {% endif %}
+            icon_color: |-
+              {% if states(entity) == 'on'%}
+              red
+              {% else %}
+              green
+              {% endif %}
+            entity: binary_sensor.smoke_sensor
+            content: |-
+              {% if states(entity) == 'on'%}
+              Обнаружено задымление!
+              {% else %}
+              Задымление не обнаружено
+              {% endif %}
+            tap_action:
+              action: more-info
   - type: sections
     max_columns: 4
     icon: mdi:weather-partly-cloudy
@@ -676,7 +696,6 @@ views:
                     show_value_inline: true
                     min: 0
                     max: 50
-                    tap_action: none
                   - type: custom:mushroom-entity-card
                     entity: automation.petkit_feeder_1_act
                     icon: mdi:hamburger-plus
@@ -727,7 +746,7 @@ views:
                       state: no_error
                     - options: {}
                       entity_id: sensor.fresh_element_solo_1_status
-                      state: online
+                      state: normal
       - type: grid
         cards:
           - type: heading
@@ -749,7 +768,6 @@ views:
                     show_value_inline: true
                     min: 0
                     max: 50
-                    tap_action: none
                   - type: custom:mushroom-entity-card
                     entity: automation.petkit_feeder_2_act
                     icon: mdi:hamburger-plus
@@ -800,7 +818,7 @@ views:
                       state: no_error
                     - options: {}
                       entity_id: sensor.fresh_element_solo_2_status
-                      state: online
+                      state: normal
       - type: grid
         cards:
           - type: heading
@@ -864,7 +882,7 @@ views:
                 bar_height: 30
                 show_value_inline: true
                 entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                title: 'Кормилка 1: Влагопоглотитель'
+                title: 'Кормилка - Фрея: Влагопоглотитель'
                 icon: mdi:water-remove
                 min: 0
                 max: 30
@@ -881,7 +899,7 @@ views:
                 bar_height: 30
                 show_value_inline: true
                 entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                title: 'Кормилка 2: Влагопоглотитель'
+                title: 'Кормилка - Шанталь: Влагопоглотитель'
                 icon: mdi:water-remove
                 min: 0
                 max: 30
@@ -927,6 +945,7 @@ views:
           - type: heading
             heading_style: title
             heading: Гостиная
+            icon: mdi:sofa
           - type: grid
             columns: 1
             square: false
@@ -956,6 +975,7 @@ views:
           - type: heading
             heading_style: title
             heading: Спальня
+            icon: mdi:bed
           - type: grid
             columns: 1
             square: false
@@ -985,6 +1005,7 @@ views:
           - type: heading
             heading: Детская
             heading_style: title
+            icon: mdi:teddy-bear
           - type: grid
             columns: 1
             square: false
@@ -1014,6 +1035,7 @@ views:
           - type: heading
             heading: Ванная
             heading_style: title
+            icon: mdi:shower
           - type: grid
             columns: 1
             square: false
@@ -1089,6 +1111,7 @@ views:
           - type: heading
             heading_style: title
             heading: Прачечная
+            icon: mdi:washing-machine
           - type: grid
             columns: 1
             square: false
@@ -1145,6 +1168,7 @@ views:
           - type: heading
             heading: Коридор
             heading_style: title
+            icon: mdi:door
           - type: grid
             columns: 1
             square: false
@@ -1159,6 +1183,7 @@ views:
           - type: heading
             heading: Кладовка
             heading_style: title
+            icon: mdi:package-variant-closed
           - type: grid
             columns: 1
             square: false
@@ -1173,6 +1198,7 @@ views:
           - type: heading
             heading: Балкон
             heading_style: title
+            icon: mdi:balcony
           - type: grid
             columns: 1
             square: false
@@ -1532,6 +1558,7 @@ views:
           - type: heading
             heading: Батареи
             heading_style: title
+            icon: mdi:battery-alert
           - type: grid
             columns: 1
             square: false
