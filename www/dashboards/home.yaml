@@ -916,6 +916,11 @@ views:
                     icon_color: orange
                     tap_action:
                       action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.3d_printer_plug
+                    icon_color: purple
+                    tap_action:
+                      action: toggle
               - square: false
                 type: grid
                 cards:

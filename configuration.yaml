@@ -236,6 +236,12 @@ utility_meter:
     source: sensor.store_room_socket_energy
     cycle: monthly
     always_available: true
+  3d_printer_energy_monthly:
+    name: 3D Printer Energy Monthly
+    unique_id: 3d_printer_energy_monthly
+    source: sensor.3d_printer_plug_energy
+    cycle: monthly
+    always_available: true
   zemismart_smp01_energy_monthly:
     name: Zemismart SMP01 Energy Monthly
     unique_id: zemismart_smp01_energy_monthly

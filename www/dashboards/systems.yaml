@@ -1489,20 +1489,35 @@ views:
                   name: Розетка за диваном
                 - entity: sensor.store_room_socket_power
                   name: Розетка в кладовке - пылесос
+                - entity: sensor.3d_printer_plug_power
+                  secondary_info: {}
+                  name: 3D принтер
+                  icon: mdi:printer-3d
+                  display_zero_state: false
                 - entity: sensor.fridge_socket_power
                   name: Холодильник
                   secondary_info: {}
                   icon: mdi:fridge
                 - entity: sensor.bathroom_heat_floor_power
                   name: Теплый пол в ванной
+                  secondary_info: {}
+                  icon: mdi:heating-coil
                 - entity: sensor.bathroom_heat_wall_power
                   name: Теплая стена в ванной
+                  secondary_info: {}
+                  icon: mdi:heating-coil
                 - entity: sensor.towel_dryer_power
                   name: Полотенцесушитель
+                  secondary_info: {}
+                  icon: mdi:radiator
                 - entity: sensor.laundry_heat_floor_power
                   name: Теплый пол в прачечной
+                  secondary_info: {}
+                  icon: mdi:heating-coil
                 - entity: sensor.loggia_heat_floor_power
                   name: Теплый пол на балконе
+                  secondary_info: {}
+                  icon: mdi:heating-coil
               home:
                 secondary_info: {}
             clickable_entities: true
@@ -1542,6 +1557,8 @@ views:
                 name: Розетка за диваном
               - entity: sensor.store_room_socket_energy_monthly
                 name: Розетка в кладовой
+              - entity: sensor.3d_printer_energy_monthly
+                name: 3D Принтер
               - entity: sensor.bathroom_heat_floor_energy_monthly
                 name: Теплый пол в ванной
               - entity: sensor.bathroom_heat_wall_energy_monthly

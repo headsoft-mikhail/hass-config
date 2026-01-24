@@ -378,7 +378,9 @@
   filter:
     include_entities:
       - switch.store_room_light
+      - switch.store_room_table_light
       - switch.store_room_socket
+      - switch.3d_printer_plug
       - sensor.efekta_smart_aq_box_temperature
       - sensor.efekta_smart_aq_box_humidity
       - sensor.efekta_smart_aq_box_tvoc_ug
@@ -388,9 +390,13 @@
   entity_config:
     switch.store_room_light:
       name: Свет
+    switch.store_room_table_light:
+      name: Подсветка стола
     switch.store_room_socket:
       name: Розетка в кладовой
       type: outlet
+    switch.3d_printer_plug:
+      name: 3D принтер
     sensor.efekta_smart_aq_box_temperature:
       name: Температура
     sensor.efekta_smart_aq_box_humidity:

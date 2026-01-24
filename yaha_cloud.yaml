@@ -74,7 +74,9 @@ filter:
     - sensor.loggia_temperature
     # storage_room
     - switch.store_room_light
+    - switch.store_room_table_light
     - switch.store_room_socket
+    - switch.3d_printer_plug
     - sensor.efekta_smart_aq_box_temperature
     - binary_sensor.3d_printer_activity
   include_entity_globs: []
@@ -400,10 +402,18 @@ entity_config:
     name: Свет
     room: Кладовка
     type: devices.types.light
+  switch.store_room_table_light:
+    name: Подсветка стола
+    room: Кладовка
+    type: devices.types.light
   switch.store_room_socket:
     name: Розетка в кладовой
     room: Кладовка
     type: devices.types.socket
+  switch.3d_printer_plug:
+    name: 3 Д Принтер
+    room: Кладовка
+    type: devices.types.switch
   sensor.efekta_smart_aq_box_temperature:
     name: Датчик
     room: Кладовка
@@ -421,6 +431,6 @@ entity_config:
       - type: pressure
         entity: sensor.efekta_smart_aq_box_pressure
   binary_sensor.3d_printer_activity:
-    name: Принтер
+    name: 3 Д Принтер
     room: Кладовка
     type: devices.types.sensor.motion
