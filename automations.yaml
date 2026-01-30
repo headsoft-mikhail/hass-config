@@ -64,7 +64,7 @@
       title: Отключение электричества
       message: Грустняшка
   - action: input_datetime.set_datetime
-    data: 
+    data:
       entity_id: input_datetime.electricity_down_at
       timestamp: "{{ now().timestamp() }}"
   mode: restart
@@ -113,7 +113,7 @@
       title: Интернет отвалился
       message: Грустняшка
   - action: input_datetime.set_datetime
-    data: 
+    data:
       entity_id: input_datetime.internet_down_at
       timestamp: "{{ now().timestamp() }}"
   mode: restart
@@ -413,3 +413,63 @@
   - action: switch.turn_off
     target:
       entity_id: switch.store_room_socket
+- id: '0018'
+  alias: feed_cats_switch_auto_turn_off
+  description: Отключить переключатель кормления кошек
+  triggers:
+  - trigger: state
+    entity_id:
+    - switch.feed_cats_switch
+    from:
+    - 'off'
+    to:
+    - 'on'
+  conditions: []
+  actions:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id: switch.feed_cats_switch
+    data: {}
+  mode: single
+- id: '0019'
+  alias: activate_sleep_scene
+  description: Активировать сцену Сон
+  triggers:
+  - trigger: state
+    entity_id:
+    - alarm_control_panel.aqara_hub_e1_8f1b_security_system
+    to:
+    - armed_night
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.sleep
+    data: {}
+  mode: single
+- id: '0020'
+  alias: nfc_sleep_scanned
+  description: Считана NFC метка - Ложимся спать
+  triggers:
+  - trigger: tag
+    tag_id: 89641b46-86c6-46be-816f-e82ed225e00f
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.sleep
+    data: {}
+  - action: alarm_control_panel.alarm_arm_night
+    metadata: {}
+    target:
+      entity_id: alarm_control_panel.aqara_hub_e1_8f1b_security_system
+    data: {}
+  mode: single

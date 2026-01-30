@@ -14,6 +14,7 @@ homekit: !include homekit.yaml
 yandex_station: !include yandex_station.yaml
 yandex_smart_home: !include yaha_cloud.yaml
 gismeteo: !include gismeteo.yaml
+# modbus: !include modbus.yaml
 
 # Custom entities
 
@@ -656,6 +657,18 @@ template:
             - action: remote.turn_off
               target:
                 entity_id: remote.xgimi_horizon_ultra_switch_on
+      - name: Feed cats switch
+        unique_id: feed_cats_switch
+        icon: mdi:hamburger-plus
+        turn_on:
+          sequence:
+            - action: automation.trigger
+              target:
+                entity_id: automation.petkit_feeder_1_act
+            - action: automation.trigger
+              target:
+                entity_id: automation.petkit_feeder_2_act
+        turn_off: []
   - button:
       - name: Audio System Volume Up
         unique_id: audio_system_volume_up

@@ -216,6 +216,7 @@
       - switch.kitchen_hood_fan
       - switch.kitchen_socket
       - switch.kitchen_water_valve_switch
+      - switch.feed_cats_switch
       - binary_sensor.dishwasher_activity
       - binary_sensor.kitchen_sink_water_leak_sensor
       - binary_sensor.kitchen_dishwasher_water_leak_sensor
@@ -234,6 +235,8 @@
     switch.kitchen_water_valve_switch:
       name: Вода
       type: valve
+    switch.feed_cats_switch:
+      name: Покормить кошек
     binary_sensor.dishwasher_activity:
       name: Посудомоечная машина
     binary_sensor.kitchen_sink_water_leak_sensor:

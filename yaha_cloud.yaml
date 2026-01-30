@@ -49,6 +49,7 @@ filter:
     - switch.kitchen_hood_led
     - switch.kitchen_hood_fan
     - switch.kitchen_socket
+    - switch.feed_cats_switch
     - cover.kitchen_water_valve
     - binary_sensor.dishwasher_activity
     # living_room
@@ -289,6 +290,10 @@ entity_config:
     name: Розетка в кухне
     room: Кухня
     type: devices.types.socket
+  switch.feed_cats_switch:
+    name: Покормить кошек
+    room: Кухня
+    type: devices.types.switch
   cover.kitchen_water_valve:
     name: Вода
     room: Кухня

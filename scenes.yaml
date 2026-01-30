@@ -1,0 +1,151 @@
+- id: '0001'
+  name: Sleep
+  entities:
+    switch.kitchen_dinner_table:
+      icon: mdi:ceiling-light-multiple
+      friendly_name: Обеденный стол
+      state: 'off'
+    switch.kitchen_led_light:
+      icon: mdi:led-strip-variant
+      friendly_name: Подсветка кухни
+      state: 'off'
+    switch.bedroom_desktop_dimmed_light:
+      icon: mdi:desk-lamp
+      friendly_name: Приглушенный свет
+      state: 'off'
+    switch.bedroom_desktop_bright_light:
+      icon: mdi:desk-lamp-on
+      friendly_name: Яркий свет
+      state: 'off'
+    light.meross_ambient_light_l:
+      min_color_temp_kelvin: 2700
+      max_color_temp_kelvin: 6500
+      min_mireds: 153
+      max_mireds: 370
+      supported_color_modes:
+      - color_temp
+      - rgb
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      togglex_auto: 1
+      friendly_name: Цветной светильник слева
+      supported_features: 32
+      state: 'off'
+    light.meross_ambient_light_r:
+      min_color_temp_kelvin: 2700
+      max_color_temp_kelvin: 6500
+      min_mireds: 153
+      max_mireds: 370
+      supported_color_modes:
+      - color_temp
+      - rgb
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      togglex_auto: true
+      friendly_name: Цветной светильник справа
+      supported_features: 32
+      state: 'off'
+    switch.bedroom_bright_light:
+      icon: mdi:lightbulb-group
+      friendly_name: Яркий
+      state: 'off'
+    switch.bedroom_dimmed_light:
+      icon: mdi:lightbulb
+      friendly_name: Приглушенный свет
+      state: 'off'
+    switch.bedroom_mirror_backlight:
+      icon: mdi:mirror-rectangle
+      friendly_name: Подсветка зеркала
+      state: 'off'
+    light.stars_projector:
+      supported_color_modes:
+      - hs
+      - white
+      color_mode:
+      brightness:
+      hs_color:
+      rgb_color:
+      xy_color:
+      icon: mdi:star-four-points
+      friendly_name: Проектор звездное небо
+      supported_features: 0
+      state: 'off'
+    switch.living_room_bright_light:
+      icon: mdi:lightbulb-group
+      friendly_name: Яркий свет в гостиной
+      state: 'off'
+    switch.hall_wardrobe_light:
+      icon: mdi:led-strip-variant
+      friendly_name: Подсветка шкафа
+      state: 'off'
+    switch.living_room_dimmed_light:
+      icon: mdi:led-strip-variant
+      friendly_name: Подсветка
+      state: 'off'
+    switch.living_room_track:
+      icon: mdi:track-light
+      friendly_name: Трек в гостиной
+      state: 'off'
+    switch.hall_track_part_1:
+      icon: mdi:track-light
+      friendly_name: Свет в коридоре 1
+      state: 'off'
+    switch.kitchen_hood_led:
+      icon: mdi:fan
+      friendly_name: Подсветка вытяжки
+      state: 'off'
+    light.lava_lamp:
+      supported_color_modes:
+      - brightness
+      color_mode:
+      brightness:
+      icon: mdi:lava-lamp
+      friendly_name: Лава-лампа
+      supported_features: 0
+      state: 'off'
+  icon: mdi:moon-waxing-crescent
+  metadata:
+    switch.kitchen_dinner_table:
+      entity_only: true
+    switch.kitchen_led_light:
+      entity_only: true
+    switch.bedroom_desktop_dimmed_light:
+      entity_only: true
+    switch.bedroom_desktop_bright_light:
+      entity_only: true
+    light.meross_ambient_light_l:
+      entity_only: true
+    light.meross_ambient_light_r:
+      entity_only: true
+    switch.bedroom_bright_light:
+      entity_only: true
+    switch.bedroom_dimmed_light:
+      entity_only: true
+    switch.bedroom_mirror_backlight:
+      entity_only: true
+    light.stars_projector:
+      entity_only: true
+    switch.living_room_bright_light:
+      entity_only: true
+    switch.hall_wardrobe_light:
+      entity_only: true
+    switch.living_room_dimmed_light:
+      entity_only: true
+    switch.living_room_track:
+      entity_only: true
+    switch.hall_track_part_1:
+      entity_only: true
+    switch.kitchen_hood_led:
+      entity_only: true
+    light.lava_lamp:
+      entity_only: true
