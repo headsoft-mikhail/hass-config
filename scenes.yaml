@@ -32,9 +32,9 @@
       hs_color:
       rgb_color:
       xy_color:
-      togglex_auto: 1
       friendly_name: Цветной светильник слева
       supported_features: 32
+      togglex_auto: true
       state: 'off'
     light.meross_ambient_light_r:
       min_color_temp_kelvin: 2700
@@ -51,9 +51,9 @@
       hs_color:
       rgb_color:
       xy_color:
-      togglex_auto: true
       friendly_name: Цветной светильник справа
       supported_features: 32
+      togglex_auto: true
       state: 'off'
     switch.bedroom_bright_light:
       icon: mdi:lightbulb-group
@@ -113,6 +113,10 @@
       friendly_name: Лава-лампа
       supported_features: 0
       state: 'off'
+    switch.hdmi_hub:
+      icon: mdi:hdmi-port
+      friendly_name: Хаб HDMI
+      state: 'off'
   icon: mdi:moon-waxing-crescent
   metadata:
     switch.kitchen_dinner_table:
@@ -148,4 +152,137 @@
     switch.kitchen_hood_led:
       entity_only: true
     light.lava_lamp:
+      entity_only: true
+    switch.hdmi_hub:
+      entity_only: true
+- id: '1770043074667'
+  name: Work
+  entities:
+    switch.hall_wardrobe_light:
+      icon: mdi:led-strip-variant
+      friendly_name: Подсветка шкафа
+      state: 'off'
+    switch.hall_track_part_1:
+      icon: mdi:track-light
+      friendly_name: Свет в коридоре 1
+      state: 'off'
+    switch.bedroom_dimmed_light:
+      icon: mdi:lightbulb
+      friendly_name: Приглушенный свет
+      state: 'off'
+    switch.bedroom_mirror_backlight:
+      icon: mdi:mirror-rectangle
+      friendly_name: Подсветка зеркала
+      state: 'off'
+    switch.kitchen_hood_led:
+      icon: mdi:fan
+      friendly_name: Подсветка вытяжки
+      state: 'off'
+    switch.kitchen_led_light:
+      icon: mdi:led-strip-variant
+      friendly_name: Подсветка кухни
+      state: 'off'
+    switch.kitchen_dinner_table:
+      icon: mdi:ceiling-light-multiple
+      friendly_name: Обеденный стол
+      state: 'off'
+    switch.living_room_dimmed_light:
+      icon: mdi:led-strip-variant
+      friendly_name: Подсветка
+      state: 'off'
+    light.meross_ambient_light_l:
+      min_color_temp_kelvin: 2700
+      max_color_temp_kelvin: 6500
+      min_mireds: 153
+      max_mireds: 370
+      supported_color_modes:
+      - color_temp
+      - rgb
+      color_mode: rgb
+      brightness: 166
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      - 14.118
+      - 100
+      rgb_color:
+      - 255
+      - 60
+      - 0
+      xy_color:
+      - 0.679
+      - 0.318
+      friendly_name: Цветной светильник слева
+      supported_features: 32
+      state: 'on'
+    light.meross_ambient_light_r:
+      min_color_temp_kelvin: 2700
+      max_color_temp_kelvin: 6500
+      min_mireds: 153
+      max_mireds: 370
+      supported_color_modes:
+      - color_temp
+      - rgb
+      color_mode: rgb
+      brightness: 166
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      - 14.118
+      - 100
+      rgb_color:
+      - 255
+      - 60
+      - 0
+      xy_color:
+      - 0.679
+      - 0.318
+      friendly_name: Цветной светильник справа
+      supported_features: 32
+      state: 'on'
+    switch.bedroom_desktop_dimmed_light:
+      icon: mdi:desk-lamp
+      friendly_name: Приглушенный свет
+      state: 'on'
+    switch.bedroom_desktop_bright_light:
+      icon: mdi:desk-lamp-on
+      friendly_name: Яркий свет
+      state: 'off'
+    switch.bedroom_bright_light:
+      icon: mdi:lightbulb-group
+      friendly_name: Яркий
+      state: 'off'
+    switch.hdmi_hub:
+      icon: mdi:hdmi-port
+      friendly_name: Хаб HDMI
+      state: 'on'
+  icon: mdi:briefcase
+  metadata:
+    switch.hall_wardrobe_light:
+      entity_only: true
+    switch.hall_track_part_1:
+      entity_only: true
+    switch.bedroom_dimmed_light:
+      entity_only: true
+    switch.bedroom_mirror_backlight:
+      entity_only: true
+    switch.kitchen_hood_led:
+      entity_only: true
+    switch.kitchen_led_light:
+      entity_only: true
+    switch.kitchen_dinner_table:
+      entity_only: true
+    switch.living_room_dimmed_light:
+      entity_only: true
+    light.meross_ambient_light_l:
+      entity_only: true
+    light.meross_ambient_light_r:
+      entity_only: true
+    switch.bedroom_desktop_dimmed_light:
+      entity_only: true
+    switch.bedroom_desktop_bright_light:
+      entity_only: true
+    switch.bedroom_bright_light:
+      entity_only: true
+    switch.hdmi_hub:
       entity_only: true

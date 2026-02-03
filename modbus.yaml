@@ -1,0 +1,45 @@
+- name: oasis
+  type: tcp
+  host: 192.168.1.110
+  port: 502
+  delay: 2
+  scan_interval: 5
+  sensors:
+    #input registers
+    - name: "Oasis Outdoor Temperature"
+      unique_id: oasis_outdoor_temperature
+      address: 11 # map10
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+    - name: "Oasis Current Temperature"
+      unique_id: oasis_current_temperature
+      address: 9 # map8
+      input_type: input
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+    - name: "Oasis Current Fan Speed"
+      unique_id: oasis_current_fan_speed
+      address: 25 # map26
+      input_type: input
+      data_type: int16
+
+    # holding registers
+    - name: "Oasis Target Temperature"
+      unique_id: oasis_target_temperature
+      address: 31 # map32
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+    - name: "Oasis Target Fan Speed"
+      unique_id: oasis_target_fan_speed
+      address: 32 # map33
+      input_type: holding
+      data_type: uint16
+

@@ -14,7 +14,7 @@ homekit: !include homekit.yaml
 yandex_station: !include yandex_station.yaml
 yandex_smart_home: !include yaha_cloud.yaml
 gismeteo: !include gismeteo.yaml
-# modbus: !include modbus.yaml
+modbus: !include modbus.yaml
 
 # Custom entities
 
@@ -309,6 +309,24 @@ input_datetime:
     name: Internet Down At
     has_date: true
     has_time: true
+
+input_number:
+  oasis_target_temperature:
+    name: Oasis Target Temperature
+    min: 15
+    max: 30
+    step: 0.5
+    unit_of_measurement: "°C"
+  oasis_target_fan_speed:
+    name: Oasis Target Fan Speed
+    min: 1
+    max: 10
+    step: 1
+  oasis_write_register_counter:
+    name: Oasis Write Register Counter
+    min: 0
+    max: 100
+    step: 1
 
 template:
   - sensor:

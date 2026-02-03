@@ -473,3 +473,162 @@
       entity_id: alarm_control_panel.aqara_hub_e1_8f1b_security_system
     data: {}
   mode: single
+- id: '0021'
+  alias: nfc_work_scanned
+  description: Считана NFC метка - Работать работу
+  triggers:
+  - trigger: tag
+    tag_id: 69c17ef9-f598-49d9-bc24-c2c525ee74f0
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.work
+    data: {}
+  - action: alarm_control_panel.alarm_arm_home
+    metadata: {}
+    target:
+      entity_id: alarm_control_panel.aqara_hub_e1_8f1b_security_system
+    data: {}
+  mode: single
+
+- id: '0025'
+  alias: oasis_set_target_temperature
+  description: Установить целевую температуру приточной установки
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: input_number.oasis_target_temperature
+  conditions:
+    - condition: template
+      value_template: >
+        {% set val_x_2 = states('input_number.oasis_target_temperature') | float(0) * 2 %}
+        {{ val_x_2 | round(0) | int == val_x_2}}
+    - condition: template
+      value_template: >
+        {% set val = states('input_number.oasis_target_temperature') | float(0) %}
+        {{ val >= 15 and val <= 30 }}
+    - condition: template
+      value_template: >
+        {% set input_val_x_10 = (states('input_number.oasis_target_temperature') | float(0) * 10) | round(0) %}
+        {% set sensor_val_x_10 = (states('sensor.oasis_target_temperature') | float(0)  * 10) | round(0) %}
+        {{ input_val_x_10 != sensor_val_x_10 }}
+    - condition: numeric_state
+      entity_id: input_number.oasis_write_register_counter
+      below: 20
+  actions:
+    - delay: 
+        seconds: 2
+    - action: modbus.write_register
+      data:
+        hub: oasis
+        unit: 1
+        address: 31   # map32
+        value: >
+          {{ (states('input_number.oasis_target_temperature') | float * 10) | round(0) | int }}
+    - action: input_number.increment
+      target:
+        entity_id: input_number.oasis_write_register_counter
+- id: '0026'
+  alias: oasis_sync_temperature_from_sensor_to_input_number
+  mode: single
+  triggers:
+    - trigger: state
+      entity_id: sensor.oasis_target_temperature
+  condition:
+    - condition: template
+      value_template: >
+        {% set val_x_2 = states('sensor.oasis_target_temperature') | float(0) * 2 %}
+        {{ val_x_2 | round(0) | int == val_x_2}}
+    - condition: template
+      value_template: >
+        {% set val = states('sensor.oasis_target_temperature') | float(0) %}
+        {{ val >= 15 and val <= 30 }}
+    - condition: template
+      value_template: >
+        {% set input_val = (states('input_number.oasis_target_temperature') | float(0) * 10) | round(0) %}
+        {% set sensor_val = (states('sensor.oasis_target_temperature') | float(0) * 10) | round(0)  %}
+        {{ input_val != sensor_val }}
+  actions:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.oasis_target_temperature
+      data:
+        value: >
+          {{ states('sensor.oasis_target_temperature') | float }}
+- id: '0027'
+  alias: oasis_set_target_fan_speed
+  description: Установить целевую скорость вентиляторов приточной установки
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: input_number.oasis_target_fan_speed
+  conditions:
+    - condition: template
+      value_template: >
+        {% set val = states('input_number.oasis_target_fan_speed') | float(0) %}
+        {{ val | round(0) | int == val }}
+    - condition: template
+      value_template: >
+        {% set val = states('input_number.oasis_target_fan_speed') | int(0) %}
+        {{ val >= 1 and val <= 10 }}
+    - condition: template
+      value_template: >
+        {% set input_val = states('input_number.oasis_target_fan_speed') | int(0) %}
+        {% set sensor_val = states('sensor.oasis_target_fan_speed') | int(0) %}
+        {{ input_val != sensor_val }}
+    - condition: numeric_state
+      entity_id: input_number.oasis_write_register_counter
+      below: 20
+  action:
+    - delay: 
+        seconds: 2
+    - action: modbus.write_register
+      data:
+        hub: oasis
+        unit: 1
+        address: 32   # map33
+        value: >
+          {{ states('input_number.oasis_target_fan_speed') | int }}
+    - action: input_number.increment
+      target:
+        entity_id: input_number.oasis_write_register_counter
+- id: '0028'
+  alias: oasis_sync_fan_speed_from_sensor_to_input_number
+  mode: single
+  triggers:
+    - trigger: state
+      entity_id: sensor.oasis_target_fan_speed
+  conditions:
+    - condition: template
+      value_template: >
+        {% set val = states('sensor.oasis_target_fan_speed') | float(0) %}
+        {{ val | round(0) | int == val }}
+    - condition: template
+      value_template: >
+        {% set val = states('sensor.oasis_target_fan_speed') | int(0) %}
+        {{ val >= 1 and val <= 10 }}
+    - condition: template
+      value_template: >
+        {% set input_val = states('input_number.oasis_target_fan_speed') | int(0) %}
+        {% set sensor_val = states('sensor.oasis_target_fan_speed') | int(0) %}
+        {{ input_val != sensor_val }}
+  actions:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.oasis_target_fan_speed
+      data:
+        value: >
+          {{ states('sensor.oasis_target_fan_speed') | int }}
+- id: '0029'
+  alias: reset_oasis_write_registers_counter
+  triggers:
+    - trigger: time_pattern
+      minutes: "0"
+  actions:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.oasis_write_register_counter
+      data:
+        value: 0
