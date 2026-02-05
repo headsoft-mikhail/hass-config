@@ -690,6 +690,35 @@ template:
               target:
                 entity_id: automation.petkit_feeder_2_act
         turn_off: []
+      - name: "Oasis Power"
+        unique_id: oasis_power
+        icon: mdi:power
+        # state: > 
+        #   {% set raw_state = states('sensor.oasis_current_fan_speed') %}
+        #   {% if raw_state in ['unavailable', 'unknown', 'none'] %}
+        #     unavailable
+        #   {% set valid_state = raw_state | float(0) %} 
+        #     {% if valid_state > 0 %}
+        #       on
+        #     {% else %}
+        #       off
+        #     {% endif %}
+        #   {% endif %}
+        turn_on:
+          action: modbus.write_register
+          data:
+            hub: oasis
+            unit: 1
+            address: 2      # map3
+            value: 1        # Bit 0 = ON
+        turn_off:
+          action: modbus.write_register
+          data:
+            hub: oasis
+            unit: 1
+            address: 2
+            value: 0        # OFF
+
   - button:
       - name: Audio System Volume Up
         unique_id: audio_system_volume_up
