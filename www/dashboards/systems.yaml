@@ -396,6 +396,24 @@ views:
                               }
                         autofill_entity_id: true
                 features_position: bottom
+      - type: grid
+        cards:
+          - type: heading
+            heading: Сцены
+            heading_style: title
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: scene.sleep
+                name: Сон
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: scene.work
+                name: Работа
+                tap_action:
+                  action: toggle
     header:
       card:
         type: markdown
@@ -699,6 +717,7 @@ views:
                   - type: custom:mushroom-entity-card
                     entity: automation.petkit_feeder_1_act
                     icon: mdi:hamburger-plus
+                    icon_color: purple
                     hold_action:
                       action: perform-action
                       perform_action: automation.trigger
@@ -771,6 +790,7 @@ views:
                   - type: custom:mushroom-entity-card
                     entity: automation.petkit_feeder_2_act
                     icon: mdi:hamburger-plus
+                    icon_color: purple
                     hold_action:
                       action: perform-action
                       perform_action: automation.trigger
@@ -930,9 +950,17 @@ views:
         type: markdown
         text_only: true
         content: '## Кошки'
-      layout: responsive
+      layout: start
       badges_position: bottom
       badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-entity-card
+        entity: switch.feed_cats_switch
+        tap_action:
+          action: more-info
+        icon_color: purple
+        secondary_info: last-changed
+        name: Кормить кошек
   - type: sections
     max_columns: 3
     icon: mdi:home-thermometer-outline
@@ -1240,6 +1268,143 @@ views:
       badges_position: bottom
       badges_wrap: wrap
   - type: sections
+    max_columns: 4
+    theme: My Custom Theme
+    path: ventiliatsiia
+    icon: mdi:fan
+    title: Вентиляция
+    sections:
+      - type: grid
+        cards:
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.oasis_power
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: more-info
+                secondary_info: last-changed
+                icon_color: purple
+                name: Приточная установка
+              - type: custom:mushroom-empty-card
+              - type: custom:mushroom-number-card
+                entity: input_number.oasis_target_temperature
+                name: Температура
+                tap_action:
+                  action: none
+                icon: ''
+                icon_color: accent
+                hold_action:
+                  action: more-info
+                display_mode: buttons
+                secondary_info: last-changed
+              - type: custom:mushroom-number-card
+                entity: input_number.oasis_target_fan_speed
+                name: Скорость
+                tap_action:
+                  action: none
+                icon: ''
+                fill_container: false
+                display_mode: buttons
+                hold_action:
+                  action: more-info
+                secondary_info: last-changed
+          - entity: input_number.oasis_write_register_counter
+            title: Записей регистра за час
+            type: custom:bar-sensor-card
+            enable_dynamic_bar_color: true
+            palette: green_to_red
+            icon_color: light-blue
+            show_value_inline: true
+            bar_height: 20
+            max: 20
+    header:
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+      card:
+        type: markdown
+        text_only: true
+        content: '## Вентиляция'
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.oasis_outdoor_temperature
+            content: >-
+              На улице {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.oasis_target_temperature
+            content: >-
+              Уставка {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.oasis_current_temperature
+            content: >-
+              В канале {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.oasis_current_fan_speed
+            content: >-
+              Скорость {{ states(entity) }} | {{
+              states('sensor.oasis_target_fan_speed') }}
+            icon: mdi:fan
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.ventilation_system_relay_avg_power
+            icon: mdi:lightning-bolt
+            icon_color: deep-orange
+  - type: sections
     max_columns: 3
     title: Безопасность
     path: water
@@ -1307,7 +1472,7 @@ views:
           - type: custom:mushroom-entity-card
             entity: cover.kitchen_water_valve
             tap_action:
-              action: none
+              action: more-info
             hold_action:
               action: call-service
               service: script.kitchen_water_valve_toggle_by_state
@@ -1333,7 +1498,7 @@ views:
           - type: custom:mushroom-entity-card
             entity: cover.laundry_water_valve
             tap_action:
-              action: none
+              action: more-info
             hold_action:
               action: call-service
               service: script.laundry_water_valve_toggle_by_state

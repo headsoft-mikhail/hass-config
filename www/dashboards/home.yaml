@@ -89,6 +89,15 @@ views:
                     icon_color: red
                     tap_action:
                       action: toggle
+                  - type: custom:mushroom-entity-card
+                    entity: switch.feed_cats_switch
+                    icon_color: blue
+                    tap_action:
+                      action: more-info
+                    name: Кормить кошкек
+                    hold_action:
+                      action: toggle
+                    secondary_info: last-changed
               - square: false
                 type: grid
                 columns: 2
