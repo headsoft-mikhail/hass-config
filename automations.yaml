@@ -266,9 +266,9 @@
   - trigger: state
     entity_id: switch.kitchen_water_valve_close
   variables:
-    o: '{{ is_state(''switch.kitchen_water_valve_open'', ''on'') }}'
-    c: '{{ is_state(''switch.kitchen_water_valve_close'', ''on'') }}'
-    prev: '{{ states(''input_select.kitchen_water_valve_state'') }}'
+    o: '{{ is_state("switch.kitchen_water_valve_open", "on") }}'
+    c: '{{ is_state("switch.kitchen_water_valve_close", "on") }}'
+    prev: '{{ states("input_select.kitchen_water_valve_state") }}'
   action:
   - choose:
     - conditions:
@@ -317,9 +317,9 @@
   - trigger: state
     entity_id: switch.laundry_water_valve_close
   variables:
-    o: '{{ is_state(''switch.laundry_water_valve_open'', ''on'') }}'
-    c: '{{ is_state(''switch.laundry_water_valve_close'', ''on'') }}'
-    prev: '{{ states(''input_select.laundry_water_valve_state'') }}'
+    o: '{{ is_state("switch.laundry_water_valve_open", "on") }}'
+    c: '{{ is_state("switch.laundry_water_valve_close", "on") }}'
+    prev: '{{ states("input_select.laundry_water_valve_state") }}'
   action:
   - choose:
     - conditions:
@@ -376,8 +376,8 @@
     data:
       title: Изменение состояния устройства
       message: '{{ trigger.to_state.name }} меняет состояние с "{{ trigger.from_state.state
-        | replace(''on'',''включено'') | replace(''off'',''выключено'') }}" на "{{
-        trigger.to_state.state | replace(''on'',''включено'') | replace(''off'',''выключено'')
+        | replace("on","включено") | replace("off","выключено") }}" на "{{
+        trigger.to_state.state | replace("on","включено") | replace("off","выключено")
         }}"'
   mode: queued
 - id: '0016'
@@ -454,7 +454,7 @@
       entity_id: scene.sleep
     data: {}
   mode: single
-
+# oasis
 - id: '0025'
   alias: oasis_set_target_temperature
   description: Установить целевую температуру приточной установки
@@ -494,6 +494,7 @@
         entity_id: input_number.oasis_write_register_counter
 - id: '0026'
   alias: oasis_sync_temperature_from_sensor_to_input_number
+  description: Синхронизация температуры в input_number
   mode: single
   triggers:
     - trigger: state
@@ -558,6 +559,7 @@
         entity_id: input_number.oasis_write_register_counter
 - id: '0028'
   alias: oasis_sync_fan_speed_from_sensor_to_input_number
+  description: Синхронизация скорости вентилятора в input_number
   mode: single
   triggers:
     - trigger: state
@@ -594,3 +596,41 @@
         entity_id: input_number.oasis_write_register_counter
       data:
         value: 0
+- id: '0030'
+  alias: oasis_confirmed_sync_switch_and_cancel_applying
+  description: Синхронизация switch c сенсором скорости и сброс таймера на применение режима
+  mode: single
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.oasis_power_state_confirmed
+  variables: 
+    target: "{{ 'on' if  is_state('binary_sensor.oasis_power_state_confirmed', 'on') else 'off' }}"
+  actions:
+    - action: 'switch.turn_{{ target }}'
+      target:
+        entity_id: switch.oasis_power
+    - action: timer.cancel
+      target:
+        entity_id: timer.oasis_state_applying
+- id: '0031'
+  alias: oasis_confirmed_sync_switch_after_start
+  description: Синхронизация switch после запуска Homeassistant
+  triggers:
+  - trigger: homeassistant
+    event: start
+  variables:
+    target: "{{ 'on' if  is_state('binary_sensor.oasis_power_state_confirmed', 'on') else 'off' }}"
+  actions:
+    - action: timer.start
+      target:
+        entity_id: timer.oasis_state_applying
+    - delay:
+        seconds: 30
+    - action: 'switch.turn_{{ target }}'
+      target:
+        entity_id: switch.oasis_power
+    - action: timer.cancel
+      target:
+        entity_id: timer.oasis_state_applying
+  mode: single
+# oasis

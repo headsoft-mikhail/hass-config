@@ -263,6 +263,10 @@ switch:
         name: RPi cooling fan
         unique_id: rpi_cooling_fan
 
+timer: 
+  oasis_state_applying:
+    duration: '00:01:00'
+
 input_button:
   wifi_qr:
     name: Wi-Fi QR
@@ -545,6 +549,14 @@ template:
           minutes: 3
         delay_off:
           minutes: 3
+      - name: Oasis Power State Confirmed
+        unique_id: oasis_power_state_confirmed
+        state: >
+          {{ states('sensor.oasis_current_fan_speed') | int(0) > 0 }}
+      - name: Oasis Power State Applying
+        unique_id: oasis_power_state_applying
+        state: >
+          {{ is_state('timer.oasis_state_applying', 'active') }}
   - cover:
       - name: Kitchen water valve
         unique_id: kitchen_water_valve
@@ -690,34 +702,54 @@ template:
               target:
                 entity_id: automation.petkit_feeder_2_act
         turn_off: []
-      - name: "Oasis Power"
+      - name: Oasis Power
         unique_id: oasis_power
-        icon: mdi:power
-        # state: > 
-        #   {% set raw_state = states('sensor.oasis_current_fan_speed') %}
-        #   {% if raw_state in ['unavailable', 'unknown', 'none'] %}
-        #     unavailable
-        #   {% set valid_state = raw_state | float(0) %} 
-        #     {% if valid_state > 0 %}
-        #       on
-        #     {% else %}
-        #       off
-        #     {% endif %}
-        #   {% endif %}
+        icon: >-
+          {% if is_state('binary_sensor.oasis_power_state_applying', 'on') %}
+            mdi:timer-sand
+          {% elif is_state('binary_sensor.oasis_power_state_confirmed', 'on') %}
+            mdi:fan
+          {% else %}
+            mdi:fan-off
+          {% endif %}
         turn_on:
-          action: modbus.write_register
-          data:
-            hub: oasis
-            unit: 1
-            address: 2      # map3
-            value: 1        # Bit 0 = ON
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: binary_sensor.oasis_power_state_applying
+                    state: "off"
+                  - condition: state
+                    entity_id: binary_sensor.oasis_power_state_confirmed
+                    state: "off"
+                sequence:
+                  - action: modbus.write_register
+                    data:
+                      hub: oasis
+                      unit: 1
+                      address: 2      # map3
+                      value: 1        # Bit 0 = ON
+                  - action: timer.start
+                    target:
+                      entity_id: timer.oasis_state_applying
         turn_off:
-          action: modbus.write_register
-          data:
-            hub: oasis
-            unit: 1
-            address: 2
-            value: 0        # OFF
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: binary_sensor.oasis_power_state_applying
+                    state: "off"
+                  - condition: state
+                    entity_id: binary_sensor.oasis_power_state_confirmed
+                    state: "on"
+                sequence:
+                  - action: modbus.write_register
+                    data:
+                      hub: oasis
+                      unit: 1
+                      address: 2      # map3
+                      value: 0        # Bit 0 = OFF
+                  - action: timer.start
+                    target:
+                      entity_id: timer.oasis_state_applying
 
   - button:
       - name: Audio System Volume Up
