@@ -71,6 +71,7 @@ filter:
     - binary_sensor.washing_machine_activity
     - binary_sensor.drying_machine_activity
     # loggia
+    - switch.oasis_power
     - climate.loggia_heat_floor
     - sensor.loggia_temperature
     # storage_room
@@ -231,6 +232,8 @@ entity_config:
         entity: sensor.hall_humidity
       - type: pressure
         entity: sensor.hall_pressure
+      - type: smoke
+        entity: binary_sensor.smoke_sensor
 
   # kids_room
   switch.kids_room_light:
@@ -387,6 +390,10 @@ entity_config:
     type: devices.types.sensor.motion
 
   # loggia
+  switch.oasis_power:
+    name: Вентиляция
+    room: Балкон
+    type: devices.types.ventilation.fan
   climate.loggia_heat_floor:
     name: Теплый пол
     room: Балкон

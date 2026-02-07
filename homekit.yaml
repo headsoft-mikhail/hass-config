@@ -361,10 +361,13 @@
   port: 56327
   filter:
     include_entities:
+      - switch.oasis_power
       - climate.loggia_heat_floor
       - sensor.loggia_temperature
       - sensor.loggia_humidity
   entity_config:
+    switch.oasis_power:
+      name: Вентиляция
     climate.loggia_heat_floor:
       name: Теплый пол
     sensor.loggia_temperature:
