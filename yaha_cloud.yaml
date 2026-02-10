@@ -72,6 +72,7 @@ filter:
     - binary_sensor.drying_machine_activity
     # loggia
     - switch.oasis_power
+    - climate.oasis
     - climate.loggia_heat_floor
     - sensor.loggia_temperature
     # storage_room
@@ -394,6 +395,10 @@ entity_config:
     name: Вентиляция
     room: Балкон
     type: devices.types.ventilation.fan
+  climate.oasis:
+    name: Температура вентиляции
+    room: Балкон
+    type: devices.types.ventilation
   climate.loggia_heat_floor:
     name: Теплый пол
     room: Балкон

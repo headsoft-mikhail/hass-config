@@ -609,6 +609,11 @@
     - action: 'switch.turn_{{ target }}'
       target:
         entity_id: switch.oasis_power
+    - action: climate.set_hvac_mode
+      target: 
+        entity_id: climate.oasis 
+      data:
+        hvac_mode: '{{ "heat" if target=="on" else "off" }}'
     - action: timer.cancel
       target:
         entity_id: timer.oasis_state_applying
@@ -632,5 +637,65 @@
     - action: timer.cancel
       target:
         entity_id: timer.oasis_state_applying
+    - action: climate.set_hvac_mode
+      target: 
+        entity_id: climate.oasis 
+      data:
+        hvac_mode: '{{ "heat" if target=="on" else "off" }}'
   mode: single
+- id: '0032'
+  alias: oasis_climate_set_temperature
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: climate.oasis
+      attribute: temperature
+  conditions:
+    - condition: template
+      value_template: >
+        {% set val_x_2 = state_attr('climate.oasis', 'temperature') | float(0) * 2 %}
+        {{ val_x_2 | round(0) | int == val_x_2}}
+    - condition: template
+      value_template: >
+        {% set val = state_attr('climate.oasis', 'temperature') | float(0) %}
+        {{ val >= 15 and val <= 30 }}
+    - condition: template
+      value_template: >
+        {% set climate_val = state_attr('climate.oasis', 'temperature') | float(0)  %}
+        {% set sensor_val = states('sensor.oasis_target_temperature') | float(0) %}
+        {% set input_val = states('input_number.oasis_target_temperature') | float(0) %}
+        {{ climate_val != sensor_val and sensor_val == input_val }}
+  actions:
+    - action: input_number.set_value
+      target:
+        entity_id: input_number.oasis_target_temperature
+      data:
+        value: "{{ state_attr('climate.oasis', 'temperature') | float }}"
+- id: '0033'
+  alias: oasis_sync_temperature_from_sensor_to_climate
+  description: Синхронизация температуры в climate
+  mode: single
+  triggers:
+    - trigger: state
+      entity_id: sensor.oasis_target_temperature
+  condition:
+    - condition: template
+      value_template: >
+        {% set val_x_2 = states('sensor.oasis_target_temperature') | float(0) * 2 %}
+        {{ val_x_2 | round(0) | int == val_x_2}}
+    - condition: template
+      value_template: >
+        {% set val = states('sensor.oasis_target_temperature') | float(0) %}
+        {{ val >= 15 and val <= 30 }}
+    - condition: template
+      value_template: >
+        {% set climate_val = (state_attr('cliamte.oasis', 'temperature') | float(0) * 10) | round(0) %}
+        {% set sensor_val = (states('sensor.oasis_target_temperature') | float(0) * 10) | round(0)  %}
+        {{ climate_val != sensor_val }}
+  actions:
+    - action: climate.set_temperature
+      target: 
+        entity_id: climate.oasis 
+      data:
+        temperature: '{{ states("input_number.oasis_target_temperature") | float }}'
 # oasis

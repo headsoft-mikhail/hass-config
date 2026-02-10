@@ -750,7 +750,9 @@ template:
                   - action: timer.start
                     target:
                       entity_id: timer.oasis_state_applying
-
+      - name: Oasis Power Dummy
+        turn_on: []
+        turn_off: []
   - button:
       - name: Audio System Volume Up
         unique_id: audio_system_volume_up
@@ -761,7 +763,6 @@ template:
               entity_id: text.ir_remote_control_ir_code_to_send
             data:
               value: BXwjjRE+AuAHAQOiBj4C4AMBQA/AA8ABwA9AB0ABQAdAA+ALAeADF0AL4AcDBzmgfCO9CD4C
-
       - name: Audio System Volume Down
         unique_id: audio_system_volume_down
         icon: mdi:volume-minus
@@ -794,3 +795,13 @@ climate:
     hot_tolerance: 2.5
     ac_mode: true
     initial_hvac_mode: "cool"
+  - platform: generic_thermostat
+    name: Oasis
+    unique_id: oasis
+    heater: switch.oasis_power_dummy
+    target_sensor: sensor.oasis_target_temperature
+    min_temp: 15
+    max_temp: 30
+    target_temp_step: 0.5
+    ac_mode: false
+
