@@ -345,6 +345,9 @@ views:
                     fill_container: false
                     tap_action:
                       action: toggle
+                  - type: custom:mushroom-climate-card
+                    entity: climate.living_room_air_conditioner
+                    name: Кондиционер
     theme: My Custom Theme
     cards: []
     header:
@@ -602,6 +605,9 @@ views:
                     tap_action:
                       action: toggle
                     fill_container: false
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bedroom_air_conditioner
+                    name: Кондиционер
     badges:
       - type: custom:mushroom-chips-card
         chips:
@@ -744,6 +750,9 @@ views:
                     fill_container: false
                     tap_action:
                       action: toggle
+                  - type: custom:mushroom-climate-card
+                    entity: climate.kids_room_air_conditioner
+                    name: Кондиционер
     badges:
       - type: custom:mushroom-chips-card
         chips:
@@ -1230,6 +1239,24 @@ views:
     sections:
       - type: grid
         cards:
+          - square: false
+            type: grid
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.oasis_power
+                name: Приточная установка
+                icon_color: purple
+              - type: custom:mushroom-empty-card
+              - type: custom:mushroom-number-card
+                entity: input_number.oasis_target_temperature
+                icon_color: orange
+                display_mode: buttons
+                name: Температура вентиляции
+              - type: custom:mushroom-number-card
+                entity: input_number.oasis_target_fan_speed
+                display_mode: buttons
+                name: Скорость вентиляции
+            columns: 2
           - square: false
             type: grid
             columns: 1

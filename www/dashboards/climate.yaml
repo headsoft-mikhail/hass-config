@@ -1,0 +1,845 @@
+views:
+  - type: sections
+    max_columns: 4
+    icon: mdi:weather-partly-cloudy
+    path: weather
+    title: Погода
+    sections:
+      - type: grid
+        cards:
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:hourly-weather
+                entity: weather.black_river
+                icons: true
+                show_wind: 'false'
+                show_date: 'false'
+                show_precipitation_amounts: true
+                show_precipitation_probability: false
+                label_spacing: '2'
+                name: ' '
+                num_segments: '8'
+              - type: custom:clock-weather-card
+                entity: weather.black_river
+                hide_today_section: true
+                forecast_rows: 7
+                weather_icon_type: fill
+          - type: custom:mini-graph-card
+            name: Температура
+            hour24: true
+            points_per_hour: 2
+            font_size: 70
+            entities:
+              - entity: sensor.black_river_temperature
+                name: Температура
+                show_indicator: true
+                show_state: true
+              - entity: sensor.black_river_apparent_temperature
+                name: Ощущается
+                show_indicator: true
+                show_state: true
+              - color: white
+                entity: sun.sun
+                name: Солнце
+                show_line: false
+                show_points: false
+                show_legend: false
+                y_axis: secondary
+            state_map:
+              - value: below_horizon
+                label: Night
+              - value: above_horizon
+                label: Day
+            tap_action: none
+        column_span: 1
+      - type: grid
+        cards:
+          - type: custom:windrose-card
+            data_period:
+              hours_to_show: 720
+              time_interval: 60
+            refresh_interval: 300
+            windspeed_bar_location: bottom
+            wind_direction_entity:
+              entity: sensor.black_river_wind_bearing
+              use_statistics: false
+              direction_compensation: 0
+            windspeed_entities:
+              - entity: sensor.black_river_wind_speed
+                name: Скорость ветра
+                speed_unit: mps
+                use_statistics: true
+                statistics_period: hour
+                windspeed_bar_full: false
+                output_speed_unit: mps
+                speed_range_beaufort: false
+                speed_range_step: 1
+                speed_range_max: 15
+                current_speed_arrow: true
+            direction_labels:
+              cardinal_direction_letters: СВЮЗ
+            wind_direction_count: 8
+            windrose_draw_north_offset: 0
+            current_direction:
+              show_arrow: true
+              arrow_size: 50
+              center_circle_size: 30
+              hide_direction_below_speed: 0
+            compass_direction:
+              auto_rotate: false
+              entity: ''
+            cardinal_direction_letters: С,В,Ю,З
+            matching_strategy: time-frame
+            center_calm_percentage: false
+            corner_info:
+              top_right:
+                entity: sensor.black_river_wind_speed
+                unit: ' м/с'
+                color: white
+            actions:
+              windrose:
+                tap_action:
+                  entity: sensor.black_river_wind_bearing
+                  action: more-info
+              speed_bar_1:
+                tap_action:
+                  entity: sensor.black_river_wind_speed
+                  action: more-info
+      - type: grid
+        cards:
+          - type: custom:horizon-card
+            title: null
+            moon: true
+            refresh_period: 60
+            fields:
+              sunrise: true
+              sunset: true
+              dawn: true
+              noon: true
+              dusk: true
+              sun_azimuth: true
+              moon_azimuth: true
+              sun_elevation: true
+              moon_elevation: true
+              moonrise: true
+              moonset: true
+              moon_phase: true
+    theme: My Custom Theme
+    cards: []
+    dense_section_placement: true
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Погода'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: weather
+            entity: weather.black_river
+            show_conditions: true
+            show_temperature: false
+          - type: template
+            entity: sensor.black_river_temperature
+            content: >-
+              {{ states(entity).replace('.', ',') }} {{ state_attr(entity,
+              'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.black_river_apparent_temperature
+            content: >-
+              Ощущается как {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.black_river_humidity
+            icon_color: blue
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.black_river_pressure
+            content_info: state
+            icon_color: grey
+            tap_action:
+              action: more-info
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.black_river_cloud_coverage
+            icon_color: light-grey
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.black_river_precipitation
+            icon: mdi:weather-snowy-rainy
+            content: >-
+              {{ states(entity) | float | round(1) ~ ' mm' if states(entity) not
+              in ['unknown', 'unavailable', 'none', '', None] else '-' }}
+            tap_action:
+              action: more-info
+            icon_color: light-blue
+          - type: entity
+            entity: sensor.black_river_wind_bearing_2
+            icon_color: cyan
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.black_river_wind_speed
+            icon_color: cyan
+            tap_action:
+              action: more-info
+  - type: sections
+    max_columns: 4
+    theme: My Custom Theme
+    path: ventilation
+    icon: mdi:fan
+    title: Вентиляция
+    sections:
+      - type: grid
+        cards:
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: switch.oasis_power
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: more-info
+                secondary_info: last-changed
+                icon_color: purple
+                name: Приточная установка
+              - type: custom:mushroom-empty-card
+              - type: custom:mushroom-number-card
+                entity: input_number.oasis_target_temperature
+                name: Температура вентиляции
+                tap_action:
+                  action: none
+                icon: ''
+                icon_color: orange
+                hold_action:
+                  action: more-info
+                display_mode: buttons
+                secondary_info: last-changed
+              - type: custom:mushroom-number-card
+                entity: input_number.oasis_target_fan_speed
+                name: Скорость вентиляции
+                tap_action:
+                  action: none
+                icon: ''
+                fill_container: false
+                display_mode: buttons
+                hold_action:
+                  action: more-info
+                secondary_info: last-changed
+          - entity: input_number.oasis_write_register_counter
+            title: Записей регистра за час
+            type: custom:bar-sensor-card
+            enable_dynamic_bar_color: true
+            palette: green_to_red
+            display_mode: bar
+            show_value_inline: ture
+            bar_position: right
+            bar_height: 12
+            max: 20
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: switch.ventilation_system_relay
+                icon_color: purple
+                icon: mdi:power
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: more-info
+              - type: entity
+                entity: sensor.ventilation_system_relay_energy_monthly
+                icon_color: deep-orange
+                icon: mdi:lightning-bolt-circle
+              - type: entity
+                entity: sensor.ventilation_system_relay_avg_power
+                icon_color: orange
+                icon: mdi:lightning-bolt
+    header:
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+      card:
+        type: markdown
+        text_only: true
+        content: '## Вентиляция'
+    badges:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.oasis_outdoor_temperature
+            content: >-
+              На улице {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.oasis_target_temperature
+            content: >-
+              Уставка {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+          - type: template
+            entity: sensor.oasis_current_temperature
+            content: >-
+              В канале {{ states(entity).replace('.', ',') }} {{
+              state_attr(entity, 'unit_of_measurement') }}
+            icon: mdi:thermometer
+            icon_color: |-
+              {% set temp = states(entity) | float(0) %}
+              {% if temp < 3 %}
+                light-blue
+              {% elif temp < 13 %}
+                teal
+              {% elif temp < 23 %}
+                amber
+              {% else %}
+                deep-orange
+              {% endif %}
+            tap_action:
+              action: more-info
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            entity: sensor.oasis_current_fan_speed
+            content: >-
+              Скорость {{ states(entity) }} | {{
+              states('sensor.oasis_target_fan_speed') }}
+            icon: mdi:fan
+            icon_color: blue
+            tap_action:
+              action: more-info
+    cards: []
+  - type: sections
+    max_columns: 3
+    title: Безопасность
+    path: water
+    icon: mdi:water
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - type: grid
+            columns: 3
+            square: false
+            cards:
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.kitchen_humidity
+                        icon_color: blue
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidifier_system_control_switch_l1
+                    name: Гостиная
+                    tap_action:
+                      action: toggle
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.airmonitor2_humidity
+                        icon_color: blue
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidifier_system_control_switch_l2
+                    name: Спальня
+                    tap_action:
+                      action: toggle
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.kids_room_humidity
+                        icon_color: blue
+                  - type: custom:mushroom-entity-card
+                    entity: switch.humidifier_system_control_switch_l3
+                    name: Детская
+                    tap_action:
+                      action: toggle
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: switch.humidifier_system_relay
+                icon_color: purple
+                icon: mdi:power
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: more-info
+              - type: entity
+                entity: sensor.humidifier_system_relay_energy_monthly
+                icon_color: deep-orange
+                icon: mdi:lightning-bolt-circle
+              - type: entity
+                entity: sensor.humidifier_system_relay_power
+                icon_color: orange
+                icon: mdi:lightning-bolt
+    cards: []
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Увлажнение'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+  - type: sections
+    max_columns: 4
+    title: Кондиционирование
+    path: air-conditioner
+    icon: mdi:air-conditioner
+    sections:
+      - type: grid
+        cards:
+          - type: grid
+            columns: 3
+            square: false
+            cards:
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.kitchen_temperature
+                        icon_color: deep-orange
+                  - type: custom:mushroom-climate-card
+                    entity: climate.living_room_air_conditioner
+                    name: Гостиная
+                    tap_action:
+                      action: toggle
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.airmonitor2_temperature
+                        icon_color: deep-orange
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bedroom_air_conditioner
+                    name: Спальня
+                    tap_action:
+                      action: toggle
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.kids_room_temperature
+                        icon_color: deep-orange
+                  - type: custom:mushroom-climate-card
+                    entity: climate.kids_room_air_conditioner
+                    name: Детская
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: switch.air_conditioner_system_relay
+                icon_color: purple
+                icon: mdi:power
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: more-info
+              - type: entity
+                entity: sensor.air_conditioner_system_relay_energy_monthly
+                icon_color: deep-orange
+                icon: mdi:lightning-bolt-circle
+              - type: entity
+                entity: sensor.air_conditioner_system_relay_power
+                icon_color: orange
+                icon: mdi:lightning-bolt
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Кондиционирование'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    theme: My Custom Theme
+    cards: []
+  - type: sections
+    max_columns: 3
+    icon: mdi:home-thermometer-outline
+    path: heating
+    title: Обогрев
+    theme: My Custom Theme
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Гостиная
+            icon: mdi:sofa
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.kitchen_temperature
+                    icon_color: deep-orange
+              - square: false
+                type: grid
+                columns: 1
+                cards:
+                  - type: custom:mushroom-climate-card
+                    entity: climate.living_room_radiator_thermostat
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Спальня
+            icon: mdi:bed
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.airmonitor2_temperature
+                    icon_color: deep-orange
+              - square: false
+                type: grid
+                columns: 1
+                cards:
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bedroom_radiator_thermostat
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading: Детская
+            heading_style: title
+            icon: mdi:teddy-bear
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.kids_room_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-climate-card
+                    entity: climate.kids_room_radiator_thermostat
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading: Ванная
+            heading_style: title
+            icon: mdi:shower
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.bathroom_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.bathroom_heat_floor_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.bathroom_heat_floor_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bathroom_heat_floor
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.bathroom_heat_wall_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.bathroom_heat_wall_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.bathroom_heat_wall
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.towel_dryer_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.towel_dryer_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.towel_dryer
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Прачечная
+            icon: mdi:washing-machine
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.laundry_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.laundry_heat_floor
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_2_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.laundry_heat_floor_2_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.laundry_heat_floor_2
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    layout: horizontal
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+      - type: grid
+        cards:
+          - type: heading
+            heading: Коридор
+            heading_style: title
+            icon: mdi:door
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.hall_temperature
+                    icon_color: deep-orange
+      - type: grid
+        cards:
+          - type: heading
+            heading: Кладовка
+            heading_style: title
+            icon: mdi:package-variant-closed
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.efekta_smart_aq_box_temperature
+                    icon_color: deep-orange
+      - type: grid
+        cards:
+          - type: heading
+            heading: Балкон
+            heading_style: title
+            icon: mdi:balcony
+          - type: grid
+            columns: 1
+            square: false
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.loggia_temperature
+                    icon_color: deep-orange
+              - type: grid
+                columns: 1
+                square: false
+                cards:
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.loggia_heat_floor_current_temperature
+                        icon_color: deep-orange
+                      - type: entity
+                        entity: sensor.loggia_heat_floor_power
+                        icon_color: amber
+                  - type: custom:mushroom-climate-card
+                    entity: climate.loggia_heat_floor
+                    layout: horizontal
+                    show_temperature_control: true
+                    hvac_modes:
+                      - heat
+                      - 'off'
+                    tap_action:
+                      action: none
+                    hold_action:
+                      action: more-info
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: '## Обогрев'
+      layout: start
+      badges_position: bottom
+      badges_wrap: wrap
+    cards: []
