@@ -1275,6 +1275,11 @@ views:
                       action: none
                     hold_action:
                       action: more-info
+                  - type: custom:mushroom-entity-card
+                    entity: switch.fireplace_plug
+                    icon: mdi:fireplace
+                    icon_color: red
+                    name: Камин
     header:
       card:
         type: markdown

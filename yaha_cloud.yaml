@@ -71,6 +71,7 @@ filter:
     - binary_sensor.washing_machine_activity
     - binary_sensor.drying_machine_activity
     # loggia
+    - switch.fireplace_plug
     - switch.oasis_power
     - climate.oasis
     - climate.loggia_heat_floor
@@ -391,6 +392,10 @@ entity_config:
     type: devices.types.sensor.motion
 
   # loggia
+  switch.fireplace_plug:
+    name: Камин
+    room: Балкон
+    type: devices.types.socket
   switch.oasis_power:
     name: Вентиляция
     room: Балкон
