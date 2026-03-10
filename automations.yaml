@@ -630,7 +630,7 @@
       target:
         entity_id: timer.oasis_state_applying
     - delay:
-        seconds: 30
+        seconds: 120
     - action: 'switch.turn_{{ target }}'
       target:
         entity_id: switch.oasis_power

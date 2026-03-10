@@ -1,3 +1,4 @@
+.cache
 .storage
 .HA_VERSION
 .ha_run.lock
