@@ -58,8 +58,7 @@ views:
         cards:
           - type: custom:windrose-card
             data_period:
-              hours_to_show: 720
-              time_interval: 60
+              period_back: '-4w'
             refresh_interval: 300
             windspeed_bar_location: bottom
             wind_direction_entity:
@@ -80,8 +79,10 @@ views:
                 current_speed_arrow: true
             direction_labels:
               cardinal_direction_letters: СВЮЗ
-            wind_direction_count: 8
-            windrose_draw_north_offset: 0
+            rose_config:
+              wind_direction_count: 8
+              windrose_draw_north_offset: 0
+              center_calm_percentage: false
             current_direction:
               show_arrow: true
               arrow_size: 50
@@ -90,9 +91,9 @@ views:
             compass_direction:
               auto_rotate: false
               entity: ''
-            cardinal_direction_letters: С,В,Ю,З
-            matching_strategy: time-frame
-            center_calm_percentage: false
+            matching_strategy:
+              time_interval: 60
+              name: time-frame
             corner_info:
               top_right:
                 entity: sensor.black_river_wind_speed
@@ -481,7 +482,10 @@ views:
                     entity: climate.living_room_air_conditioner
                     name: Гостиная
                     tap_action:
-                      action: toggle
+                      action: more-info
+                    fill_container: false
+                    show_temperature_control: false
+                    hvac_modes: []
               - type: grid
                 columns: 1
                 square: false
@@ -495,7 +499,7 @@ views:
                     entity: climate.bedroom_air_conditioner
                     name: Спальня
                     tap_action:
-                      action: toggle
+                      action: more-info
               - type: grid
                 columns: 1
                 square: false
@@ -508,6 +512,8 @@ views:
                   - type: custom:mushroom-climate-card
                     entity: climate.kids_room_air_conditioner
                     name: Детская
+                    tap_action:
+                      action: more-info
           - type: custom:mushroom-chips-card
             chips:
               - type: entity

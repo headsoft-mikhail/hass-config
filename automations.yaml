@@ -437,23 +437,6 @@
       entity_id: switch.feed_cats_switch
     data: {}
   mode: single
-- id: '0019'
-  alias: activate_sleep_scene
-  description: Активировать сцену Сон
-  triggers:
-  - trigger: state
-    entity_id:
-    - alarm_control_panel.aqara_hub_e1_8f1b_security_system
-    to:
-    - armed_night
-  conditions: []
-  actions:
-  - action: scene.turn_on
-    metadata: {}
-    target:
-      entity_id: scene.sleep
-    data: {}
-  mode: single
 # oasis
 - id: '0025'
   alias: oasis_set_target_temperature

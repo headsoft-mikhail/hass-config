@@ -72,6 +72,7 @@
       - switch.humidifier_system_control_switch_l2
       - cover.bedroom_curtain
       - climate.bedroom_radiator_thermostat
+      - climate.bedroom_air_conditioner
       - sensor.airmonitor2_temperature
       - sensor.airmonitor2_humidity
       - sensor.airmonitor2_tvoc_ug
@@ -112,6 +113,8 @@
       name: Батарея
       linked_battery_sensor: sensor.bedroom_radiator_thermostat_battery
       low_battery_threshold: 25
+    climate.bedroom_air_conditioner:
+      name: Кондиционер
     sensor.airmonitor2_temperature:
       name: Температура
     sensor.airmonitor2_humidity:
@@ -138,7 +141,6 @@
       - sensor.hall_humidity
       - binary_sensor.hall_collector_water_leak_sensor
       - binary_sensor.smoke_sensor
-      - alarm_control_panel.aqara_hub_e1_8f1b_security_system
   entity_config:
     binary_sensor.hall_contact_sensor:
       name: Задвижка
@@ -166,8 +168,6 @@
       name: Датчик дыма
       linked_battery_sensor: sensor.smoke_sensor_battery
       low_battery_threshold: 25
-    alarm_control_panel.aqara_hub_e1_8f1b_security_system:
-      name: Режим
 
 - name: HASS Bridge KidsRoom
   port: 56323
@@ -179,6 +179,7 @@
       - switch.humidifier_system_control_switch_l3
       - cover.kids_room_curtain
       - climate.kids_room_radiator_thermostat
+      - climate.kids_room_air_conditioner
       - sensor.kids_room_temperature
       - sensor.kids_room_humidity
   entity_config:
@@ -197,6 +198,8 @@
       name: Батарея
       linked_battery_sensor: sensor.kids_room_radiator_thermostat_battery
       low_battery_threshold: 25
+    climate.kids_room_air_conditioner:
+      name: Кондиционер
     sensor.kids_room_temperature:
       name: Температура
       linked_battery_sensor: sensor.kids_room_t1_battery
@@ -261,6 +264,7 @@
       - cover.living_room_curtain
       - cover.living_room_roll_curtain
       - climate.living_room_radiator_thermostat
+      - climate.living_room_air_conditioner
       - sensor.kitchen_temperature
       - sensor.kitchen_humidity
       - sensor.living_room_luminance_sensor_illuminance
@@ -287,6 +291,8 @@
       name: Батарея
       linked_battery_sensor: sensor.living_room_radiator_thermostat_battery
       low_battery_threshold: 25
+    climate.living_room_air_conditioner:
+      name: Кондиционер
     sensor.kitchen_temperature:
       name: Температура
       linked_battery_sensor: sensor.kitchen_t1_battery

@@ -348,6 +348,12 @@ views:
                   - type: custom:mushroom-climate-card
                     entity: climate.living_room_air_conditioner
                     name: Кондиционер
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
+                    show_temperature_control: true
+                    fill_container: false
     theme: My Custom Theme
     cards: []
     header:
@@ -608,6 +614,12 @@ views:
                   - type: custom:mushroom-climate-card
                     entity: climate.bedroom_air_conditioner
                     name: Кондиционер
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
+                    show_temperature_control: true
+                    fill_container: false
     badges:
       - type: custom:mushroom-chips-card
         chips:
@@ -753,6 +765,12 @@ views:
                   - type: custom:mushroom-climate-card
                     entity: climate.kids_room_air_conditioner
                     name: Кондиционер
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
+                    show_temperature_control: true
+                    fill_container: false
     badges:
       - type: custom:mushroom-chips-card
         chips:
@@ -797,13 +815,40 @@ views:
                       {% else %}
                       mdi:lock
                       {% endif %}
-                    icon_color: purple
+                    icon_color: |-
+                      {% if states(entity) == 'on'%}
+                      red
+                      {% else %}
+                      green
+                      {% endif %}
                     entity: binary_sensor.hall_contact_sensor
                     content: |-
                       {% if states(entity) == 'on'%}
                       Открыто
                       {% else %}
                       Закрыто
+                      {% endif %}
+                    tap_action:
+                      action: more-info
+                  - type: template
+                    icon: |-
+                      {% if states(entity) == 'on'%}
+                      mdi:smoke-detector-variant-alert
+                      {% else %}
+                      mdi:smoke-detector-variant
+                      {% endif %}
+                    icon_color: |-
+                      {% if states(entity) == 'on'%}
+                      red
+                      {% else %}
+                      green
+                      {% endif %}
+                    entity: binary_sensor.smoke_sensor
+                    content: |-
+                      {% if states(entity) == 'on'%}
+                      Обнаружено задымление!
+                      {% else %}
+                      Задымление не обнаружено
                       {% endif %}
                     tap_action:
                       action: more-info
@@ -864,30 +909,6 @@ views:
             icon_color: light-grey
             icon: mdi:gauge
         alignment: start
-      - type: custom:mushroom-chips-card
-        chips:
-          - type: template
-            icon: |-
-              {% if states(entity) == 'on'%}
-              mdi:smoke-detector-variant-alert
-              {% else %}
-              mdi:smoke-detector-variant
-              {% endif %}
-            icon_color: |-
-              {% if states(entity) == 'on'%}
-              red
-              {% else %}
-              green
-              {% endif %}
-            entity: binary_sensor.smoke_sensor
-            content: |-
-              {% if states(entity) == 'on'%}
-              Обнаружено задымление!
-              {% else %}
-              Задымление не обнаружено
-              {% endif %}
-            tap_action:
-              action: more-info
   - type: sections
     max_columns: 2
     title: Кладовая
@@ -1280,6 +1301,8 @@ views:
                     icon: mdi:fireplace
                     icon_color: red
                     name: Камин
+                    tap_action:
+                      action: toggle
     header:
       card:
         type: markdown
@@ -1302,3 +1325,5 @@ views:
             icon_color: light-grey
             icon: mdi:gauge
         alignment: start
+    theme: My Custom Theme
+    cards: []

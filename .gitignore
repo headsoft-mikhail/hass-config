@@ -10,5 +10,7 @@ qrcode.svg
 
 *.log*
 *.db*
+haier_evo.*
 
 secrets.yaml
+haier_evo
