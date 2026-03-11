@@ -384,9 +384,9 @@ views:
     sections:
       - type: grid
         cards:
-          - type: grid
-            columns: 3
-            square: false
+          - square: false
+            type: grid
+            columns: 1
             cards:
               - type: grid
                 columns: 1
@@ -465,9 +465,9 @@ views:
     sections:
       - type: grid
         cards:
-          - type: grid
-            columns: 3
-            square: false
+          - square: false
+            type: grid
+            columns: 1
             cards:
               - type: grid
                 columns: 1
@@ -485,7 +485,10 @@ views:
                       action: more-info
                     fill_container: false
                     show_temperature_control: false
-                    hvac_modes: []
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
               - type: grid
                 columns: 1
                 square: false
@@ -500,6 +503,10 @@ views:
                     name: Спальня
                     tap_action:
                       action: more-info
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
               - type: grid
                 columns: 1
                 square: false
@@ -514,6 +521,10 @@ views:
                     name: Детская
                     tap_action:
                       action: more-info
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
           - type: custom:mushroom-chips-card
             chips:
               - type: entity
@@ -848,6 +859,8 @@ views:
                         icon: mdi:fireplace
                         icon_color: red
                         name: Камин
+                        tap_action:
+                          action: toggle
                     columns: 2
     header:
       card:

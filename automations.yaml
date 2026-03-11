@@ -437,7 +437,24 @@
       entity_id: switch.feed_cats_switch
     data: {}
   mode: single
-# oasis
+- id: '0019'
+  alias: notify_about_low_humidity
+  description: Уведомление о низкой влажности
+  mode: single
+  triggers:
+    - trigger: numeric_state
+      entity_id:
+        - sensor.kitchen_humidity
+        - sensor.airmonitor2_humidity
+        - sensor.kids_room_humidity
+      below: 30
+  actions:
+    - action: notify.notify
+      data:
+        title: Низкая влажность
+        message: >
+          Датчик {{ trigger.to_state.name }}: {{ trigger.to_state.state }}%.
+  # oasis
 - id: '0025'
   alias: oasis_set_target_temperature
   description: Установить целевую температуру приточной установки
