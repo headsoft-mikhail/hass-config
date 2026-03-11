@@ -331,6 +331,15 @@ views:
                 square: false
                 cards:
                   - type: custom:mushroom-climate-card
+                    entity: climate.living_room_air_conditioner
+                    name: Кондиционер
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
+                    show_temperature_control: true
+                    fill_container: false
+                  - type: custom:mushroom-climate-card
                     entity: climate.living_room_radiator_thermostat
                     show_temperature_control: true
                     hvac_modes:
@@ -345,15 +354,6 @@ views:
                     fill_container: false
                     tap_action:
                       action: toggle
-                  - type: custom:mushroom-climate-card
-                    entity: climate.living_room_air_conditioner
-                    name: Кондиционер
-                    hvac_modes:
-                      - 'off'
-                      - cool
-                      - heat
-                    show_temperature_control: true
-                    fill_container: false
     theme: My Custom Theme
     cards: []
     header:
@@ -594,6 +594,15 @@ views:
                 columns: 2
                 cards:
                   - type: custom:mushroom-climate-card
+                    entity: climate.bedroom_air_conditioner
+                    name: Кондиционер
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
+                    show_temperature_control: true
+                    fill_container: false
+                  - type: custom:mushroom-climate-card
                     entity: climate.bedroom_radiator_thermostat
                     tap_action:
                       action: none
@@ -610,15 +619,6 @@ views:
                     entity: switch.humidifier_system_control_switch_l2
                     tap_action:
                       action: toggle
-                    fill_container: false
-                  - type: custom:mushroom-climate-card
-                    entity: climate.bedroom_air_conditioner
-                    name: Кондиционер
-                    hvac_modes:
-                      - 'off'
-                      - cool
-                      - heat
-                    show_temperature_control: true
                     fill_container: false
     badges:
       - type: custom:mushroom-chips-card
@@ -748,6 +748,15 @@ views:
                 square: false
                 cards:
                   - type: custom:mushroom-climate-card
+                    entity: climate.kids_room_air_conditioner
+                    name: Кондиционер
+                    hvac_modes:
+                      - 'off'
+                      - cool
+                      - heat
+                    show_temperature_control: true
+                    fill_container: false
+                  - type: custom:mushroom-climate-card
                     entity: climate.kids_room_radiator_thermostat
                     show_temperature_control: true
                     hvac_modes:
@@ -762,15 +771,6 @@ views:
                     fill_container: false
                     tap_action:
                       action: toggle
-                  - type: custom:mushroom-climate-card
-                    entity: climate.kids_room_air_conditioner
-                    name: Кондиционер
-                    hvac_modes:
-                      - 'off'
-                      - cool
-                      - heat
-                    show_temperature_control: true
-                    fill_container: false
     badges:
       - type: custom:mushroom-chips-card
         chips:
