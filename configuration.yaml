@@ -696,6 +696,23 @@ template:
             - action: remote.turn_off
               target:
                 entity_id: remote.xgimi_horizon_ultra_switch_on
+      - name: XGIMI sound
+        unique_id: xgimi_sound
+        icon: mdi:surround-sound
+        state: >
+          {{ is_state('input_select.audio_system_signal_source', 'Optical') }}
+        turn_on:
+          action: input_select.select_option
+          target:
+            entity_id: input_select.audio_system_signal_source
+          data:
+            option: "Optical"
+        turn_off:
+          action: input_select.select_option
+          target:
+            entity_id: input_select.audio_system_signal_source
+          data:
+            option: "Line 1"
       - name: Feed cats switch
         unique_id: feed_cats_switch
         icon: mdi:hamburger-plus

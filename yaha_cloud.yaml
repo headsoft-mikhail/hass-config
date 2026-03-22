@@ -59,6 +59,7 @@ filter:
     - switch.living_room_behind_sofa_socket
     - switch.humidifier_system_control_switch_l1
     - switch.xgimi_horizon_ultra
+    - switch.xgimi_sound
     - cover.living_room_curtain
     - cover.living_room_roll_curtain
     - climate.living_room_radiator_thermostat
@@ -331,6 +332,10 @@ entity_config:
     type: devices.types.switch
   switch.xgimi_horizon_ultra:
     name: Проектор
+    room: Гостиная
+    type: devices.types.switch
+  switch.xgimi_sound:
+    name: Звук с проектора
     room: Гостиная
     type: devices.types.switch
   cover.living_room_curtain:
