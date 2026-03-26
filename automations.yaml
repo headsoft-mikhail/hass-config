@@ -490,7 +490,7 @@
                     target:
                       entity_id: climate.bathroom_heat_floor
                     data:
-                      temperature: 30
+                      temperature: 29
                   - wait_for_trigger:
                       - trigger: state
                         entity_id: input_boolean.bathroom_floor_cycle
@@ -508,7 +508,7 @@
                     target:
                       entity_id: climate.bathroom_heat_floor
                     data:
-                      temperature: 25
+                      temperature: 20
                   - wait_for_trigger:
                       - trigger: state
                         entity_id: input_boolean.bathroom_floor_cycle
@@ -528,7 +528,7 @@
           target:
             entity_id: climate.bathroom_heat_floor
           data:
-            temperature: 25
+            temperature: 20
 - id: '0021'
   alias: laundry_floor_cycle
   mode: restart
@@ -565,7 +565,7 @@
                     target:
                       entity_id: climate.laundry_heat_floor
                     data:
-                      temperature: 30
+                      temperature: 29
                   - wait_for_trigger:
                       - trigger: state
                         entity_id: input_boolean.laundry_floor_cycle
@@ -583,7 +583,7 @@
                     target:
                       entity_id: climate.laundry_heat_floor
                     data:
-                      temperature: 25
+                      temperature: 20
                   - wait_for_trigger:
                       - trigger: state
                         entity_id: input_boolean.laundry_floor_cycle
@@ -603,7 +603,7 @@
           target:
             entity_id: climate.laundry_heat_floor
           data:
-            temperature: 25
+            temperature: 20
   # oasis
 - id: '0025'
   alias: oasis_set_target_temperature
