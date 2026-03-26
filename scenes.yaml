@@ -193,50 +193,46 @@
     light.meross_ambient_light_l:
       min_color_temp_kelvin: 2700
       max_color_temp_kelvin: 6500
-      min_mireds: 153
-      max_mireds: 370
       supported_color_modes:
       - color_temp
       - rgb
       color_mode: rgb
       brightness: 166
       color_temp_kelvin:
-      color_temp:
       hs_color:
-      - 14.118
-      - 100
+      - 9.123
+      - 67.059
       rgb_color:
       - 255
-      - 60
-      - 0
+      - 110
+      - 84
       xy_color:
-      - 0.679
-      - 0.318
+      - 0.589
+      - 0.329
+      togglex_auto: 1
       friendly_name: Цветной светильник слева
       supported_features: 32
       state: 'on'
     light.meross_ambient_light_r:
       min_color_temp_kelvin: 2700
       max_color_temp_kelvin: 6500
-      min_mireds: 153
-      max_mireds: 370
       supported_color_modes:
       - color_temp
       - rgb
       color_mode: rgb
       brightness: 166
       color_temp_kelvin:
-      color_temp:
       hs_color:
-      - 14.118
-      - 100
+      - 9.123
+      - 67.059
       rgb_color:
       - 255
-      - 60
-      - 0
+      - 110
+      - 84
       xy_color:
-      - 0.679
-      - 0.318
+      - 0.589
+      - 0.329
+      togglex_auto: 1
       friendly_name: Цветной светильник справа
       supported_features: 32
       state: 'on'

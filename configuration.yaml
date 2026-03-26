@@ -244,7 +244,7 @@ utility_meter:
     cycle: monthly
     always_available: true
   fireplace_energy_montly:
-    name: Fireplace Plug Energy Monthly    
+    name: Fireplace Plug Energy Monthly
     unique_id: fireplace_plug_energy_monthly
     source: sensor.fireplace_plug_energy
     cycle: monthly
@@ -269,9 +269,9 @@ switch:
         name: RPi cooling fan
         unique_id: rpi_cooling_fan
 
-timer: 
+timer:
   oasis_state_applying:
-    duration: '00:01:00'
+    duration: "00:01:00"
 
 input_button:
   wifi_qr:
@@ -340,6 +340,26 @@ input_number:
     min: 0
     max: 100
     step: 1
+  bathroom_floor_heat_minutes:
+    name: Bathroom floor heat time
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: min
+    mode: slider
+  laundry_floor_heat_minutes:
+    name: Laundry floor heat time
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: min
+    mode: slider
+
+input_boolean:
+  bathroom_floor_cycle:
+    name: Bathroom floor cycle
+  laundry_floor_cycle:
+    name: Laundry floor cycle
 
 template:
   - sensor:
@@ -474,11 +494,6 @@ template:
         unit_of_measurement: "W"
         device_class: power
         state: "{% if state_attr('climate.laundry_heat_floor', 'hvac_action') == 'heating' %}225{% else %}0{% endif %}"
-      - name: "Laundry Heat Floor 2 Power"
-        unique_id: laundry_heat_floor_2_power
-        unit_of_measurement: "W"
-        device_class: power
-        state: "{% if state_attr('climate.laundry_heat_floor_2', 'hvac_action') == 'heating' %}225{% else %}0{% endif %}"
       - name: "Loggia Heat Floor Power"
         unique_id: loggia_heat_floor_power
         unit_of_measurement: "W"
@@ -504,11 +519,6 @@ template:
         unit_of_measurement: "°C"
         device_class: temperature
         state: "{{ state_attr('climate.laundry_heat_floor', 'current_temperature') | float(0) }}"
-      - name: Laundry Heat Floor 2 Current Temperature
-        unique_id: laundry_heat_floor_2_current_temperature
-        unit_of_measurement: "°C"
-        device_class: temperature
-        state: "{{ state_attr('climate.laundry_heat_floor_2', 'current_temperature') | float(0) }}"
       - name: Loggia Heat Floor Current Temperature
         unique_id: loggia_heat_floor_current_temperature
         unit_of_measurement: "°C"
@@ -749,8 +759,8 @@ template:
                     data:
                       hub: oasis
                       unit: 1
-                      address: 2      # map3
-                      value: 1        # Bit 0 = ON
+                      address: 2 # map3
+                      value: 1 # Bit 0 = ON
                   - action: timer.start
                     target:
                       entity_id: timer.oasis_state_applying
@@ -768,8 +778,8 @@ template:
                     data:
                       hub: oasis
                       unit: 1
-                      address: 2      # map3
-                      value: 0        # Bit 0 = OFF
+                      address: 2 # map3
+                      value: 0 # Bit 0 = OFF
                   - action: timer.start
                     target:
                       entity_id: timer.oasis_state_applying
@@ -804,6 +814,57 @@ template:
               entity_id: text.ir_remote_control_ir_code_to_send
             data:
               value: BWYjmRFCAuAHAQOZBkIC4AMBQA/AA8ABwA9AB0ABQAdAA+ADAcAPwAdAAUALwANAAQuZBkICTKBmI78IQgI=
+  - light:
+      - name: Bathroom Floor Heating
+        unique_id: bathroom_floor_heating_light
+        availability: >
+          {{ states('climate.bathroom_heat_floor') not in ['unavailable', 'unknown'] }}
+        state: >
+          {{ is_state('input_boolean.bathroom_floor_cycle', 'on') }}
+        icon: mdi:heating-coil
+        level: >
+          {{ (states('input_number.bathroom_floor_heat_minutes') | int * 255 / 100) | int }}
+        turn_on:
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.bathroom_floor_cycle
+        turn_off:
+          - action: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.bathroom_floor_cycle
+
+        set_level:
+          - action: input_number.set_value
+            target:
+              entity_id: input_number.bathroom_floor_heat_minutes
+            data:
+              value: >
+                {{ (brightness / 255 * 100) | int }}
+      - name: Laundry Floor Heating
+        unique_id: laundry_floor_heating_light
+        availability: >
+          {{ states('climate.laundry_heat_floor') not in ['unavailable', 'unknown'] }}
+        state: >
+          {{ is_state('input_boolean.laundry_floor_cycle', 'on') }}
+        icon: mdi:heating-coil
+        level: >
+          {{ (states('input_number.laundry_floor_heat_minutes') | int * 255 / 100) | int }}
+        turn_on:
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.laundry_floor_cycle
+        turn_off:
+          - action: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.laundry_floor_cycle
+
+        set_level:
+          - action: input_number.set_value
+            target:
+              entity_id: input_number.laundry_floor_heat_minutes
+            data:
+              value: >
+                {{ (brightness / 255 * 100) | int }}
 
 climate:
   - platform: generic_thermostat
@@ -827,4 +888,3 @@ climate:
     max_temp: 30
     target_temp_step: 0.5
     ac_mode: false
-

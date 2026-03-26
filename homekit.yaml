@@ -5,9 +5,9 @@
       - switch.bathroom_dimmed_light
       - switch.bathroom_bright_light
       - switch.bathroom_sconce
+      - input_boolean.bathroom_floor_cycle
       - climate.towel_dryer
       - climate.bathroom_heat_wall
-      - climate.bathroom_heat_floor
       - sensor.bathroom_temperature
       - sensor.bathroom_humidity
       - binary_sensor.bathroom_bath_water_leak_sensor
@@ -21,12 +21,12 @@
       name: Яркий свет
     switch.bathroom_sconce:
       name: Бра в ванной
+    input_boolean.bathroom_floor_cycle:
+      name: Теплый пол
     climate.towel_dryer:
       name: Полотенцесушитель
     climate.bathroom_heat_wall:
       name: Теплая стена
-    climate.bathroom_heat_floor:
-      name: Теплый пол
     sensor.bathroom_temperature:
       name: Температура
       linked_battery_sensor: sensor.bathroom_t1_battery
@@ -312,7 +312,7 @@
     include_entities:
       - switch.laundry_light
       - switch.laundry_water_valve_switch
-      - climate.laundry_heat_floor_2
+      - input_boolean.laundry_floor_cycle
       - sensor.laundry_temperature
       - sensor.laundry_humidity
       - binary_sensor.washing_machine_activity
@@ -328,7 +328,7 @@
     switch.laundry_water_valve_switch:
       name: Вода
       type: valve
-    climate.laundry_heat_floor_2:
+    input_boolean.laundry_floor_cycle:
       name: Теплый пол
     sensor.laundry_temperature:
       name: Температура

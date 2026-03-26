@@ -677,6 +677,13 @@ views:
                       - type: entity
                         entity: sensor.bathroom_heat_floor_power
                         icon_color: amber
+                  - type: custom:mushroom-light-card
+                    name: Теплый пол в ванной
+                    entity: light.bathroom_floor_heating
+                    show_brightness_control: true
+                    icon_color: deep-orange
+                    tap_action:
+                      action: more-info
                   - type: custom:mushroom-climate-card
                     entity: climate.bathroom_heat_floor
                     layout: horizontal
@@ -753,6 +760,13 @@ views:
                       - type: entity
                         entity: sensor.laundry_heat_floor_power
                         icon_color: amber
+                  - type: custom:mushroom-light-card
+                    name: Теплый пол в прачечной
+                    entity: light.laundry_floor_heating
+                    show_brightness_control: true
+                    icon_color: deep-orange
+                    tap_action:
+                      action: more-info
                   - type: custom:mushroom-climate-card
                     entity: climate.laundry_heat_floor
                     layout: horizontal
@@ -760,25 +774,6 @@ views:
                     hvac_modes:
                       - heat
                       - 'off'
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: more-info
-                  - type: custom:mushroom-chips-card
-                    chips:
-                      - type: entity
-                        entity: sensor.laundry_heat_floor_2_current_temperature
-                        icon_color: deep-orange
-                      - type: entity
-                        entity: sensor.laundry_heat_floor_2_power
-                        icon_color: amber
-                  - type: custom:mushroom-climate-card
-                    entity: climate.laundry_heat_floor_2
-                    show_temperature_control: true
-                    hvac_modes:
-                      - heat
-                      - 'off'
-                    layout: horizontal
                     tap_action:
                       action: none
                     hold_action:

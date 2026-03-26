@@ -454,6 +454,156 @@
         title: Низкая влажность
         message: >
           Датчик {{ trigger.to_state.name }}: {{ trigger.to_state.state }}%.
+- id: '0020'
+  alias: bathroom_floor_cycle
+  mode: restart
+  triggers:
+    - trigger: homeassistant
+      event: start
+    - trigger: state
+      entity_id: input_boolean.bathroom_floor_cycle
+  action:
+    - choose:
+        # ВКЛЮЧИЛИ
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.bathroom_floor_cycle
+              state: "on"
+          sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.bathroom_floor_cycle
+                    state: "on"
+                sequence:
+                  - if:
+                      - condition: template
+                        value_template: >
+                          {{ state_attr('climate.bathroom_heat_floor', 'hvac_mode') != 'heat' }}
+                    then:
+                      - action: climate.set_hvac_mode
+                        target:
+                          entity_id: climate.bathroom_heat_floor
+                        data:
+                          hvac_mode: heat
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.bathroom_heat_floor
+                    data:
+                      temperature: 30
+                  - wait_for_trigger:
+                      - trigger: state
+                        entity_id: input_boolean.bathroom_floor_cycle
+                        to: "off"
+                    timeout:
+                      minutes: "{{ states('input_number.bathroom_floor_heat_minutes') | int }}"
+                    continue_on_timeout: true
+                  - if:
+                      - condition: state
+                        entity_id: input_boolean.bathroom_floor_cycle
+                        state: "off"
+                    then:
+                      - stop: "Cycle stopped"
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.bathroom_heat_floor
+                    data:
+                      temperature: 25
+                  - wait_for_trigger:
+                      - trigger: state
+                        entity_id: input_boolean.bathroom_floor_cycle
+                        to: "off"
+                    timeout:
+                      minutes: "{{ 100 - (states('input_number.bathroom_floor_heat_minutes') | int) }}"
+                    continue_on_timeout: true
+                  - if:
+                      - condition: state
+                        entity_id: input_boolean.bathroom_floor_cycle
+                        state: "off"
+                    then:
+                      - stop: "Cycle stopped"
+      # ВЫКЛЮЧИЛИ
+      default:
+        - action: climate.set_temperature
+          target:
+            entity_id: climate.bathroom_heat_floor
+          data:
+            temperature: 25
+- id: '0021'
+  alias: laundry_floor_cycle
+  mode: restart
+  triggers:
+    - trigger: homeassistant
+      event: start
+    - trigger: state
+      entity_id: input_boolean.laundry_floor_cycle
+  action:
+    - choose:
+        # ВКЛЮЧИЛИ
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.laundry_floor_cycle
+              state: "on"
+          sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.laundry_floor_cycle
+                    state: "on"
+                sequence:
+                  - if:
+                      - condition: template
+                        value_template: >
+                          {{ state_attr('climate.laundry_heat_floor', 'hvac_mode') != 'heat' }}
+                    then:
+                      - action: climate.set_hvac_mode
+                        target:
+                          entity_id: climate.laundry_heat_floor
+                        data:
+                          hvac_mode: heat
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.laundry_heat_floor
+                    data:
+                      temperature: 30
+                  - wait_for_trigger:
+                      - trigger: state
+                        entity_id: input_boolean.laundry_floor_cycle
+                        to: "off"
+                    timeout:
+                      minutes: "{{ states('input_number.laundry_floor_heat_minutes') | int }}"
+                    continue_on_timeout: true
+                  - if:
+                      - condition: state
+                        entity_id: input_boolean.laundry_floor_cycle
+                        state: "off"
+                    then:
+                      - stop: "Cycle stopped"
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.laundry_heat_floor
+                    data:
+                      temperature: 25
+                  - wait_for_trigger:
+                      - trigger: state
+                        entity_id: input_boolean.laundry_floor_cycle
+                        to: "off"
+                    timeout:
+                      minutes: "{{ 100 - (states('input_number.laundry_floor_heat_minutes') | int) }}"
+                    continue_on_timeout: true
+                  - if:
+                      - condition: state
+                        entity_id: input_boolean.laundry_floor_cycle
+                        state: "off"
+                    then:
+                      - stop: "Cycle stopped"
+      # ВЫКЛЮЧИЛИ
+      default:
+        - action: climate.set_temperature
+          target:
+            entity_id: climate.laundry_heat_floor
+          data:
+            temperature: 25
   # oasis
 - id: '0025'
   alias: oasis_set_target_temperature

@@ -811,7 +811,7 @@ views:
                   - type: template
                     icon: |-
                       {% if states(entity) == 'on'%}
-                      mdi:lock-open
+                      mdi:lock-open-variant
                       {% else %}
                       mdi:lock
                       {% endif %}
@@ -1092,6 +1092,16 @@ views:
                 columns: 2
                 square: false
                 cards:
+                  - type: custom:mushroom-light-card
+                    name: Теплый пол
+                    entity: light.bathroom_floor_heating
+                    show_brightness_control: true
+                    icon_color: deep-orange
+                    tap_action:
+                      action: more-info
+                    use_light_color: false
+                    show_color_temp_control: false
+                    show_color_control: false
                   - type: custom:mushroom-climate-card
                     entity: climate.bathroom_heat_floor
                     show_temperature_control: true
@@ -1219,8 +1229,15 @@ views:
                 type: grid
                 columns: 2
                 cards:
+                  - type: custom:mushroom-light-card
+                    name: Теплый пол
+                    entity: light.laundry_floor_heating
+                    show_brightness_control: true
+                    icon_color: deep-orange
+                    tap_action:
+                      action: more-info
                   - type: custom:mushroom-climate-card
-                    entity: climate.laundry_heat_floor_2
+                    entity: climate.laundry_heat_floor
                     show_temperature_control: true
                     hvac_modes:
                       - heat

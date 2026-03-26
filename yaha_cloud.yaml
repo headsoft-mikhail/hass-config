@@ -6,9 +6,9 @@ filter:
     - switch.bathroom_dimmed_light
     - switch.bathroom_bright_light
     - switch.bathroom_sconce
+    - input_boolean.bathroom_floor_cycle
     - climate.towel_dryer
     - climate.bathroom_heat_wall
-    - climate.bathroom_heat_floor
     - sensor.bathroom_temperature
     # bedroom
     - light.lava_lamp
@@ -66,8 +66,8 @@ filter:
     - sensor.kitchen_temperature
     # laundry
     - switch.laundry_light
+    - input_boolean.laundry_floor_cycle
     - cover.laundry_water_valve
-    - climate.laundry_heat_floor_2
     - sensor.laundry_temperature
     - binary_sensor.washing_machine_activity
     - binary_sensor.drying_machine_activity
@@ -100,16 +100,16 @@ entity_config:
     name: Бра в ванной
     room: Ванная
     type: devices.types.light.lamp
+  input_boolean.bathroom_floor_cycle:
+    name: Теплый пол
+    room: Ванная
+    type: devices.types.thermostat
   climate.towel_dryer:
     name: Полотенцесушитель
     room: Ванная
     type: devices.types.thermostat
   climate.bathroom_heat_wall:
     name: Теплая стена
-    room: Ванная
-    type: devices.types.thermostat
-  climate.bathroom_heat_floor:
-    name: Теплый пол
     room: Ванная
     type: devices.types.thermostat
   sensor.bathroom_temperature:
@@ -373,7 +373,7 @@ entity_config:
     name: Вода
     room: Прачечная
     type: devices.types.openable.valve
-  climate.laundry_heat_floor_2:
+  input_boolean.laundry_floor_cycle:
     name: Теплый пол
     room: Прачечная
     type: devices.types.thermostat
@@ -400,7 +400,7 @@ entity_config:
   switch.fireplace_plug:
     name: Камин
     room: Балкон
-    type: devices.types.socket
+    type: devices.types.thermostat
   switch.oasis_power:
     name: Вентиляция
     room: Балкон
