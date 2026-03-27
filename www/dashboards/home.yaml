@@ -824,9 +824,9 @@ views:
                     entity: binary_sensor.hall_contact_sensor
                     content: |-
                       {% if states(entity) == 'on'%}
-                      Открыто
+                      Верхний замок - Открыто
                       {% else %}
-                      Закрыто
+                      Верхний замок - Закрыто
                       {% endif %}
                     tap_action:
                       action: more-info
@@ -884,7 +884,7 @@ views:
                       action: more-info
                     hold_action:
                       action: toggle
-                    name: Входная дверь
+                    name: Нижний замок
                 columns: 2
     cards: []
     header:
@@ -1092,26 +1092,6 @@ views:
                 columns: 2
                 square: false
                 cards:
-                  - type: custom:mushroom-light-card
-                    name: Теплый пол
-                    entity: light.bathroom_floor_heating
-                    show_brightness_control: true
-                    icon_color: deep-orange
-                    tap_action:
-                      action: more-info
-                    use_light_color: false
-                    show_color_temp_control: false
-                    show_color_control: false
-                  - type: custom:mushroom-climate-card
-                    entity: climate.bathroom_heat_floor
-                    show_temperature_control: true
-                    hvac_modes:
-                      - heat
-                      - 'off'
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: more-info
                   - type: custom:mushroom-climate-card
                     entity: climate.bathroom_heat_wall
                     show_temperature_control: true
@@ -1132,6 +1112,48 @@ views:
                       action: none
                     hold_action:
                       action: more-info
+                  - type: custom:mushroom-template-card
+                    secondary: >-
+                      {{ state_attr('climate.bathroom_heat_floor',
+                      'current_temperature') }} °C
+
+                      {% if states(entity) == 'on' %}Включен - {{
+                      state_attr('climate.bathroom_heat_floor', 'temperature')
+                      }} °C
+
+                      Нагрев {{((state_attr(entity, 'brightness') | int) / 2.55)
+                      | int }} мин  {% else %}Выключен {% endif %}
+                    icon: mdi:heating-coil
+                    features_position: bottom
+                    entity: light.bathroom_floor_heating
+                    primary: Теплый пол
+                    color: |-
+                      {% if states(entity) == 'on'%}
+                      deep-orange
+                      {% else %}
+                      grey
+                      {% endif %}
+                    icon_tap_action:
+                      action: toggle
+                    tap_action:
+                      action: more-info
+                    multiline_secondary: true
+                    badge_icon: >-
+                      {% if state_attr('climate.bathroom_heat_floor',
+                      'hvac_action') =='heating' %}mdi:fire{% endif %} 
+
+                      {% if state_attr('climate.bathroom_heat_floor',
+                      'hvac_action') == 'idle' and states(entity) == 'on'%}
+                      mdi:clock{% endif %}
+                    badge_color: >-
+                      {% if state_attr('climate.bathroom_heat_floor',
+                      'hvac_action') =='heating' %}deep-orange{% endif %} 
+
+                      {% if state_attr('climate.bathroom_heat_floor',
+                      'hvac_action') == 'idle' and states(entity) ==
+                      'on'%}grey{% endif %}
+                    hold_action:
+                      action: none
     badges:
       - type: custom:mushroom-chips-card
         chips:
@@ -1229,24 +1251,48 @@ views:
                 type: grid
                 columns: 2
                 cards:
-                  - type: custom:mushroom-light-card
-                    name: Теплый пол
+                  - type: custom:mushroom-template-card
+                    secondary: >-
+                      {{ state_attr('climate.laundry_heat_floor',
+                      'current_temperature') }} °C
+
+                      {% if states(entity) == 'on' %}Включен - {{
+                      state_attr('climate.laundry_heat_floor', 'temperature') }}
+                      °C
+
+                      Нагрев {{((state_attr(entity, 'brightness') | int) / 2.55)
+                      | int }} мин  {% else %}Выключен {% endif %}
+                    icon: mdi:heating-coil
+                    features_position: bottom
                     entity: light.laundry_floor_heating
-                    show_brightness_control: true
-                    icon_color: deep-orange
+                    primary: Теплый пол
+                    color: |-
+                      {% if states(entity) == 'on'%}
+                      deep-orange
+                      {% else %}
+                      grey
+                      {% endif %}
+                    icon_tap_action:
+                      action: toggle
                     tap_action:
                       action: more-info
-                  - type: custom:mushroom-climate-card
-                    entity: climate.laundry_heat_floor
-                    show_temperature_control: true
-                    hvac_modes:
-                      - heat
-                      - 'off'
-                    tap_action:
-                      action: none
+                    multiline_secondary: true
+                    badge_icon: >-
+                      {% if state_attr('climate.laundry_heat_floor',
+                      'hvac_action') =='heating' %}mdi:fire{% endif %} 
+
+                      {% if state_attr('climate.laundry_heat_floor',
+                      'hvac_action') == 'idle' and states(entity) == 'on'%}
+                      mdi:clock{% endif %}
+                    badge_color: >-
+                      {% if state_attr('climate.laundry_heat_floor',
+                      'hvac_action') =='heating' %}deep-orange{% endif %} 
+
+                      {% if state_attr('climate.laundry_heat_floor',
+                      'hvac_action') == 'idle' and states(entity) ==
+                      'on'%}grey{% endif %}
                     hold_action:
-                      action: more-info
-                    name: Теплый пол в прачечной
+                      action: none
     header:
       card:
         type: markdown
