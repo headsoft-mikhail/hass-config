@@ -382,6 +382,7 @@
   mode: queued
 - id: '0016'
   alias: notify_about_activity_ended
+  mode: queued
   triggers:
   - trigger: state
     entity_id:
@@ -391,12 +392,25 @@
     - binary_sensor.3d_printer_activity
     from: 'on'
     to: 'off'
+  variables:
+    device_name: "{{ trigger.to_state.name }}"
   actions:
-  - action: notify.notify
-    data:
-      title: Завершение активности
-      message: '{{ trigger.to_state.name }} — активность завершена'
-  mode: queued
+    - action: notify.notify
+      data:
+        title: Завершение активности
+        message: '{{ device_name }} — активность завершена'
+    - choose:
+      - conditions:
+        - condition: template
+          value_template: >
+            {{ trigger.entity_id == 'binary_sensor.dishwasher_activity'}}
+        sequence:
+          - delay: 
+              minutes: 22
+          - action: notify.notify
+            data:
+              title: Завершение активности
+              message: '{{ device_name }} — активность завершена, теперь точно'
 - id: '0017'
   alias: turn_off_vertical_vacuum_cleaner_charging_after_4h
   triggers:
