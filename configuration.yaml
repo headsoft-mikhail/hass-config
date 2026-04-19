@@ -108,6 +108,7 @@ sensor:
     unique_id: towel_dryer_energy
     source: sensor.towel_dryer_power
     unit_prefix: k
+    method: left
     round: 2
   - platform: integration
     name: "Laundry Heat Floor Energy"
@@ -735,6 +736,24 @@ template:
               target:
                 entity_id: automation.petkit_feeder_2_act
         turn_off: []
+      - name: "Kitchen Hood Fan Ext"
+        unique_id: kitchen_hood_fan_ext
+        state: >
+          {{ is_state('switch.kitchen_hood_fan', 'on') }}
+        turn_on:
+          - condition: state
+            entity_id: switch.kitchen_hood_fan
+            state: "off"
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_hood_fan
+        turn_off:
+          - condition: state
+            entity_id: switch.kitchen_hood_fan
+            state: "on"
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_hood_fan
       - name: Oasis Power
         unique_id: oasis_power
         icon: >-
@@ -865,6 +884,24 @@ template:
             data:
               value: >
                 {{ (brightness / 255 * 100) | int }}
+      - name: "Kitchen Hood LED Ext"
+        unique_id: kitchen_hood_led_ext
+        state: >
+          {{ is_state('switch.kitchen_hood_led', 'on') }}
+        turn_on:
+          - condition: state
+            entity_id: switch.kitchen_hood_led
+            state: "off"
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_hood_led
+        turn_off:
+          - condition: state
+            entity_id: switch.kitchen_hood_led
+            state: "on"
+          - action: switch.turn_on
+            target:
+              entity_id: switch.kitchen_hood_led
 
 climate:
   - platform: generic_thermostat

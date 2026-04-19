@@ -46,10 +46,10 @@ filter:
     # kitchen
     - switch.kitchen_dinner_table
     - switch.kitchen_led_light
-    - switch.kitchen_hood_led
-    - switch.kitchen_hood_fan
     - switch.kitchen_socket
     - switch.feed_cats_switch
+    - switch.kitchen_hood_fan_ext
+    - light.kitchen_hood_led_ext
     - cover.kitchen_water_valve
     - binary_sensor.dishwasher_activity
     # living_room
@@ -284,14 +284,6 @@ entity_config:
     name: Подсветка кухни
     room: Кухня
     type: devices.types.light.strip
-  switch.kitchen_hood_led:
-    name: Подсветка вытяжки
-    room: Кухня
-    type: devices.types.light.strip
-  switch.kitchen_hood_fan:
-    name: Вытяжка
-    room: Кухня
-    type: devices.types.switch
   switch.kitchen_socket:
     name: Розетка в кухне
     room: Кухня
@@ -300,6 +292,14 @@ entity_config:
     name: Покормить кошек
     room: Кухня
     type: devices.types.switch
+  switch.kitchen_hood_fan_ext:
+    name: Вытяжка
+    room: Кухня
+    type: devices.types.switch
+  light.kitchen_hood_led_ext:
+    name: Подсветка вытяжки
+    room: Кухня
+    type: devices.types.light.strip
   cover.kitchen_water_valve:
     name: Вода
     room: Кухня
