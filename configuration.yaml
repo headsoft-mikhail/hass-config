@@ -361,6 +361,10 @@ input_boolean:
     name: Bathroom floor cycle
   laundry_floor_cycle:
     name: Laundry floor cycle
+  kitchen_hood_led_state:
+    name: Kitchen hood LED state
+  kitchen_hood_fan_state:
+    name: Kitchen hood fan state
 
 template:
   - sensor:
@@ -736,24 +740,36 @@ template:
               target:
                 entity_id: automation.petkit_feeder_2_act
         turn_off: []
-      - name: "Kitchen Hood Fan Ext"
+      - name: Kitchen Hood Fan Ext
         unique_id: kitchen_hood_fan_ext
+        icon: >
+          {% if is_state('input_boolean.kitchen_hood_fan_state', 'on') %}
+          mdi:fan
+          {% else %}
+          mdi:fan-off
+          {% endif %}
         state: >
-          {{ is_state('switch.kitchen_hood_fan', 'on') }}
+          {{ is_state('input_boolean.kitchen_hood_fan_state', 'on') }}
         turn_on:
           - condition: state
-            entity_id: switch.kitchen_hood_fan
+            entity_id: input_boolean.kitchen_hood_fan_state
             state: "off"
           - action: switch.turn_on
             target:
-              entity_id: switch.kitchen_hood_fan
+              entity_id: switch.kitchen_hood_led
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.kitchen_hood_fan_state
         turn_off:
           - condition: state
-            entity_id: switch.kitchen_hood_fan
+            entity_id: input_boolean.kitchen_hood_fan_state
             state: "on"
           - action: switch.turn_on
             target:
-              entity_id: switch.kitchen_hood_fan
+              entity_id: switch.kitchen_hood_led
+          - action: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.kitchen_hood_fan_state
       - name: Oasis Power
         unique_id: oasis_power
         icon: >-
@@ -884,24 +900,36 @@ template:
             data:
               value: >
                 {{ (brightness / 255 * 100) | int }}
-      - name: "Kitchen Hood LED Ext"
-        unique_id: kitchen_hood_led_ext
+      - name: Kitchen Hood LED Ext
+        unique_id: kitchen_hood_led_ext        
+        icon: >
+          {% if is_state('input_boolean.kitchen_hood_led_state', 'on') %}
+          mdi:fan
+          {% else %}
+          mdi:fan-off
+          {% endif %}
         state: >
-          {{ is_state('switch.kitchen_hood_led', 'on') }}
+          {{ is_state('input_boolean.kitchen_hood_led_state', 'on') }}
         turn_on:
           - condition: state
-            entity_id: switch.kitchen_hood_led
+            entity_id: input_boolean.kitchen_hood_led_state
             state: "off"
           - action: switch.turn_on
             target:
               entity_id: switch.kitchen_hood_led
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.kitchen_hood_led_state
         turn_off:
           - condition: state
-            entity_id: switch.kitchen_hood_led
+            entity_id: input_boolean.kitchen_hood_led_state
             state: "on"
           - action: switch.turn_on
             target:
               entity_id: switch.kitchen_hood_led
+          - action: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.kitchen_hood_led_state
 
 climate:
   - platform: generic_thermostat

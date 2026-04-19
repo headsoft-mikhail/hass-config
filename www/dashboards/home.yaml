@@ -56,15 +56,17 @@ views:
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
-                    entity: switch.kitchen_hood_led
+                    entity: light.kitchen_hood_led_ext
                     icon_color: orange
                     tap_action:
                       action: toggle
+                    name: Подсветка вытяжки
                   - type: custom:mushroom-entity-card
-                    entity: switch.kitchen_hood_fan
+                    entity: switch.kitchen_hood_fan_ext
                     icon_color: blue
                     tap_action:
                       action: toggle
+                    name: Вытяжка
                   - type: custom:mushroom-entity-card
                     entity: switch.kitchen_dinner_table
                     icon_color: orange
