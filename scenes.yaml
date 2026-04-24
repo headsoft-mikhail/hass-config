@@ -100,7 +100,7 @@
       icon: mdi:track-light
       friendly_name: Свет в коридоре 1
       state: 'off'
-    switch.kitchen_hood_led:
+    light.kitchen_hood_led_ext:
       icon: mdi:fan
       friendly_name: Подсветка вытяжки
       state: 'off'
@@ -149,7 +149,7 @@
       entity_only: true
     switch.hall_track_part_1:
       entity_only: true
-    switch.kitchen_hood_led:
+    light.kitchen_hood_led_ext:
       entity_only: true
     light.lava_lamp:
       entity_only: true
@@ -174,7 +174,7 @@
       icon: mdi:mirror-rectangle
       friendly_name: Подсветка зеркала
       state: 'off'
-    switch.kitchen_hood_led:
+    light.kitchen_hood_led_ext:
       icon: mdi:fan
       friendly_name: Подсветка вытяжки
       state: 'off'
@@ -262,7 +262,7 @@
       entity_only: true
     switch.bedroom_mirror_backlight:
       entity_only: true
-    switch.kitchen_hood_led:
+    light.kitchen_hood_led_ext:
       entity_only: true
     switch.kitchen_led_light:
       entity_only: true

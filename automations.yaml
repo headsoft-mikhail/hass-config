@@ -66,7 +66,7 @@
   - action: input_datetime.set_datetime
     data:
       entity_id: input_datetime.electricity_down_at
-      timestamp: "{{ now().timestamp() }}"
+      timestamp: '{{ now().timestamp() }}'
   mode: restart
 - id: '0006'
   alias: notify_about_power_on
@@ -86,15 +86,13 @@
     metadata: {}
     data:
       title: Электричество восстановлено
-      message: >
-        {% set down = states('input_datetime.electricity_down_at') %}
-        {% if down not in ('unknown', 'unavailable', '') %}
-        {% set down_dt = strptime(down, '%Y-%m-%d %H:%M:%S') %}
-        {% set diff = (now().timestamp() - down_dt.timestamp()) | int %}
-        Было отключено {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
-        {% else %}
-        Ура!
-        {% endif %}
+      message: '{% set down = states(''input_datetime.electricity_down_at'') %} {%
+        if down not in (''unknown'', ''unavailable'', '''') %} {% set down_dt = strptime(down,
+        ''%Y-%m-%d %H:%M:%S'') %} {% set diff = (now().timestamp() - down_dt.timestamp())
+        | int %} Было отключено {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime(''%H:%M:%S
+        %d.%m.%Y'') }} {% else %} Ура! {% endif %}
+
+        '
   mode: restart
 - id: '0007'
   alias: notify_about_ping_google_fail
@@ -115,9 +113,9 @@
   - action: input_datetime.set_datetime
     data:
       entity_id: input_datetime.internet_down_at
-      timestamp: "{{ now().timestamp() }}"
+      timestamp: '{{ now().timestamp() }}'
   mode: restart
-- id: '0008'
+- id: 0008
   alias: notify_about_ping_google_ok
   description: Уведомление о восстановлении интернета
   triggers:
@@ -135,17 +133,15 @@
     metadata: {}
     data:
       title: Интернет снова работает
-      message: >
-        {% set down = states('input_datetime.internet_down_at') %}
-        {% if down not in ('unknown', 'unavailable', '') %}
-        {% set down_dt = strptime(down, '%Y-%m-%d %H:%M:%S') %}
-        {% set diff = (now().timestamp() - down_dt.timestamp()) | int %}
-        Не работал {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime('%H:%M:%S %d.%m.%Y') }}
-        {% else %}
-        Ура!
-        {% endif %}
+      message: '{% set down = states(''input_datetime.internet_down_at'') %} {% if
+        down not in (''unknown'', ''unavailable'', '''') %} {% set down_dt = strptime(down,
+        ''%Y-%m-%d %H:%M:%S'') %} {% set diff = (now().timestamp() - down_dt.timestamp())
+        | int %} Не работал {{ diff // 60 }} мин {{ diff % 60 }} сек с {{ down_dt.strftime(''%H:%M:%S
+        %d.%m.%Y'') }} {% else %} Ура! {% endif %}
+
+        '
   mode: restart
-- id: '0009'
+- id: 0009
   alias: end_lavalamp_warming
   description: Переключить яркость лавалампы на 40% после 90 минут на 100%
   triggers:
@@ -376,13 +372,11 @@
     data:
       title: Изменение состояния устройства
       message: '{{ trigger.to_state.name }} меняет состояние с "{{ trigger.from_state.state
-        | replace("on","включено") | replace("off","выключено") }}" на "{{
-        trigger.to_state.state | replace("on","включено") | replace("off","выключено")
-        }}"'
+        | replace("on","включено") | replace("off","выключено") }}" на "{{ trigger.to_state.state
+        | replace("on","включено") | replace("off","выключено") }}"'
   mode: queued
 - id: '0016'
   alias: notify_about_activity_ended
-  mode: queued
   triggers:
   - trigger: state
     entity_id:
@@ -392,25 +386,25 @@
     - binary_sensor.3d_printer_activity
     from: 'on'
     to: 'off'
-  variables:
-    device_name: "{{ trigger.to_state.name }}"
   actions:
-    - action: notify.notify
-      data:
-        title: Завершение активности
-        message: '{{ device_name }} — активность завершена'
-    - choose:
-      - conditions:
-        - condition: template
-          value_template: >
-            {{ trigger.entity_id == 'binary_sensor.dishwasher_activity'}}
-        sequence:
-          - delay: 
-              minutes: 22
-          - action: notify.notify
-            data:
-              title: Завершение активности
-              message: '{{ device_name }} — активность завершена, теперь точно'
+  - action: notify.notify
+    data:
+      title: Завершение активности
+      message: '{{ device_name }} — активность завершена'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ device_name == "binary_sensor.dishwasher_activity"}}'
+      sequence:
+      - delay:
+          minutes: 22
+      - action: notify.notify
+        data:
+          title: Завершение активности
+          message: '{{ device_name }} — активность завершена, теперь точно'
+  mode: queued
+  variables:
+    device_name: '{{ trigger.to_state.name }}'
 - id: '0017'
   alias: turn_off_vertical_vacuum_cleaner_charging_after_4h
   triggers:
@@ -427,7 +421,7 @@
   - action: switch.turn_off
     target:
       entity_id: switch.store_room_socket
-- id: '0018'
+- id: 0018
   alias: feed_cats_switch_auto_turn_off
   description: Отключить переключатель кормления кошек
   triggers:
@@ -451,362 +445,385 @@
       entity_id: switch.feed_cats_switch
     data: {}
   mode: single
-- id: '0019'
+- id: 0019
   alias: notify_about_low_humidity
   description: Уведомление о низкой влажности
   mode: single
   triggers:
-    - trigger: numeric_state
-      entity_id:
-        - sensor.kitchen_humidity
-        - sensor.airmonitor2_humidity
-        - sensor.kids_room_humidity
-      below: 30
+  - trigger: numeric_state
+    entity_id:
+    - sensor.kitchen_humidity
+    - sensor.airmonitor2_humidity
+    - sensor.kids_room_humidity
+    below: 30
   actions:
-    - action: notify.notify
-      data:
-        title: Низкая влажность
-        message: >
-          Датчик {{ trigger.to_state.name }}: {{ trigger.to_state.state }}%.
+  - action: notify.notify
+    data:
+      title: Низкая влажность
+      message: 'Датчик {{ trigger.to_state.name }}: {{ trigger.to_state.state }}%.
+
+        '
 - id: '0020'
   alias: bathroom_floor_cycle
   mode: restart
   triggers:
-    - trigger: homeassistant
-      event: start
-    - trigger: state
-      entity_id: input_boolean.bathroom_floor_cycle
+  - trigger: homeassistant
+    event: start
+  - trigger: state
+    entity_id: input_boolean.bathroom_floor_cycle
   action:
-    - choose:
-        # ВКЛЮЧИЛИ
-        - conditions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.bathroom_floor_cycle
+        state: 'on'
+      sequence:
+      - repeat:
+          while:
+          - condition: state
+            entity_id: input_boolean.bathroom_floor_cycle
+            state: 'on'
+          sequence:
+          - if:
+            - condition: template
+              value_template: '{{ state_attr(''climate.bathroom_heat_floor'', ''hvac_mode'')
+                != ''heat'' }}
+
+                '
+            then:
+            - action: climate.set_hvac_mode
+              target:
+                entity_id: climate.bathroom_heat_floor
+              data:
+                hvac_mode: heat
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.bathroom_heat_floor
+            data:
+              temperature: 30
+          - wait_for_trigger:
+            - trigger: state
+              entity_id: input_boolean.bathroom_floor_cycle
+              to: 'off'
+            timeout:
+              minutes: '{{ states(''input_number.bathroom_floor_heat_minutes'') |
+                int }}'
+            continue_on_timeout: true
+          - if:
             - condition: state
               entity_id: input_boolean.bathroom_floor_cycle
-              state: "on"
-          sequence:
-            - repeat:
-                while:
-                  - condition: state
-                    entity_id: input_boolean.bathroom_floor_cycle
-                    state: "on"
-                sequence:
-                  - if:
-                      - condition: template
-                        value_template: >
-                          {{ state_attr('climate.bathroom_heat_floor', 'hvac_mode') != 'heat' }}
-                    then:
-                      - action: climate.set_hvac_mode
-                        target:
-                          entity_id: climate.bathroom_heat_floor
-                        data:
-                          hvac_mode: heat
-                  - action: climate.set_temperature
-                    target:
-                      entity_id: climate.bathroom_heat_floor
-                    data:
-                      temperature: 30
-                  - wait_for_trigger:
-                      - trigger: state
-                        entity_id: input_boolean.bathroom_floor_cycle
-                        to: "off"
-                    timeout:
-                      minutes: "{{ states('input_number.bathroom_floor_heat_minutes') | int }}"
-                    continue_on_timeout: true
-                  - if:
-                      - condition: state
-                        entity_id: input_boolean.bathroom_floor_cycle
-                        state: "off"
-                    then:
-                      - stop: "Cycle stopped"
-                  - action: climate.set_temperature
-                    target:
-                      entity_id: climate.bathroom_heat_floor
-                    data:
-                      temperature: 20
-                  - wait_for_trigger:
-                      - trigger: state
-                        entity_id: input_boolean.bathroom_floor_cycle
-                        to: "off"
-                    timeout:
-                      minutes: "{{ 100 - (states('input_number.bathroom_floor_heat_minutes') | int) }}"
-                    continue_on_timeout: true
-                  - if:
-                      - condition: state
-                        entity_id: input_boolean.bathroom_floor_cycle
-                        state: "off"
-                    then:
-                      - stop: "Cycle stopped"
-      # ВЫКЛЮЧИЛИ
-      default:
-        - action: climate.set_temperature
-          target:
-            entity_id: climate.bathroom_heat_floor
-          data:
-            temperature: 20
+              state: 'off'
+            then:
+            - stop: Cycle stopped
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.bathroom_heat_floor
+            data:
+              temperature: 20
+          - wait_for_trigger:
+            - trigger: state
+              entity_id: input_boolean.bathroom_floor_cycle
+              to: 'off'
+            timeout:
+              minutes: '{{ 100 - (states(''input_number.bathroom_floor_heat_minutes'')
+                | int) }}'
+            continue_on_timeout: true
+          - if:
+            - condition: state
+              entity_id: input_boolean.bathroom_floor_cycle
+              state: 'off'
+            then:
+            - stop: Cycle stopped
+    default:
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.bathroom_heat_floor
+      data:
+        temperature: 20
 - id: '0021'
   alias: laundry_floor_cycle
   mode: restart
   triggers:
-    - trigger: homeassistant
-      event: start
-    - trigger: state
-      entity_id: input_boolean.laundry_floor_cycle
+  - trigger: homeassistant
+    event: start
+  - trigger: state
+    entity_id: input_boolean.laundry_floor_cycle
   action:
-    - choose:
-        # ВКЛЮЧИЛИ
-        - conditions:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.laundry_floor_cycle
+        state: 'on'
+      sequence:
+      - repeat:
+          while:
+          - condition: state
+            entity_id: input_boolean.laundry_floor_cycle
+            state: 'on'
+          sequence:
+          - if:
+            - condition: template
+              value_template: '{{ state_attr(''climate.laundry_heat_floor'', ''hvac_mode'')
+                != ''heat'' }}
+
+                '
+            then:
+            - action: climate.set_hvac_mode
+              target:
+                entity_id: climate.laundry_heat_floor
+              data:
+                hvac_mode: heat
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.laundry_heat_floor
+            data:
+              temperature: 30
+          - wait_for_trigger:
+            - trigger: state
+              entity_id: input_boolean.laundry_floor_cycle
+              to: 'off'
+            timeout:
+              minutes: '{{ states(''input_number.laundry_floor_heat_minutes'') | int
+                }}'
+            continue_on_timeout: true
+          - if:
             - condition: state
               entity_id: input_boolean.laundry_floor_cycle
-              state: "on"
-          sequence:
-            - repeat:
-                while:
-                  - condition: state
-                    entity_id: input_boolean.laundry_floor_cycle
-                    state: "on"
-                sequence:
-                  - if:
-                      - condition: template
-                        value_template: >
-                          {{ state_attr('climate.laundry_heat_floor', 'hvac_mode') != 'heat' }}
-                    then:
-                      - action: climate.set_hvac_mode
-                        target:
-                          entity_id: climate.laundry_heat_floor
-                        data:
-                          hvac_mode: heat
-                  - action: climate.set_temperature
-                    target:
-                      entity_id: climate.laundry_heat_floor
-                    data:
-                      temperature: 30
-                  - wait_for_trigger:
-                      - trigger: state
-                        entity_id: input_boolean.laundry_floor_cycle
-                        to: "off"
-                    timeout:
-                      minutes: "{{ states('input_number.laundry_floor_heat_minutes') | int }}"
-                    continue_on_timeout: true
-                  - if:
-                      - condition: state
-                        entity_id: input_boolean.laundry_floor_cycle
-                        state: "off"
-                    then:
-                      - stop: "Cycle stopped"
-                  - action: climate.set_temperature
-                    target:
-                      entity_id: climate.laundry_heat_floor
-                    data:
-                      temperature: 20
-                  - wait_for_trigger:
-                      - trigger: state
-                        entity_id: input_boolean.laundry_floor_cycle
-                        to: "off"
-                    timeout:
-                      minutes: "{{ 100 - (states('input_number.laundry_floor_heat_minutes') | int) }}"
-                    continue_on_timeout: true
-                  - if:
-                      - condition: state
-                        entity_id: input_boolean.laundry_floor_cycle
-                        state: "off"
-                    then:
-                      - stop: "Cycle stopped"
-      # ВЫКЛЮЧИЛИ
-      default:
-        - action: climate.set_temperature
-          target:
-            entity_id: climate.laundry_heat_floor
-          data:
-            temperature: 20
+              state: 'off'
+            then:
+            - stop: Cycle stopped
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.laundry_heat_floor
+            data:
+              temperature: 20
+          - wait_for_trigger:
+            - trigger: state
+              entity_id: input_boolean.laundry_floor_cycle
+              to: 'off'
+            timeout:
+              minutes: '{{ 100 - (states(''input_number.laundry_floor_heat_minutes'')
+                | int) }}'
+            continue_on_timeout: true
+          - if:
+            - condition: state
+              entity_id: input_boolean.laundry_floor_cycle
+              state: 'off'
+            then:
+            - stop: Cycle stopped
+    default:
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.laundry_heat_floor
+      data:
+        temperature: 20
 - id: '0022'
   alias: sync_kitchen_hood_led_state
   mode: restart
   triggers:
-    - trigger: state
-      entity_id: switch.kitchen_hood_led
+  - trigger: state
+    entity_id: switch.kitchen_hood_led
   conditions:
-    - condition: template
-      value_template: '{{ trigger.to_state.context.user_id is none }}'
+  - condition: template
+    value_template: '{{ trigger.to_state.context.user_id is none }}'
   actions:
-    - action: input_boolean.toggle
-      target:
-        entity_id: input_boolean.kitchen_hood_led_state
+  - action: input_boolean.toggle
+    target:
+      entity_id: input_boolean.kitchen_hood_led_state
 - id: '0023'
   alias: sync_kitchen_hood_fan_state
   mode: restart
   triggers:
-    - trigger: state
-      entity_id: switch.kitchen_hood_fan
+  - trigger: state
+    entity_id: switch.kitchen_hood_fan
   condition:
-    - condition: template
-      value_template: '{{ trigger.to_state.context.user_id is none }}'
+  - condition: template
+    value_template: '{{ trigger.to_state.context.user_id is none }}'
   actions:
-    - action: input_boolean.toggle
-      target:
-        entity_id: input_boolean.kitchen_hood_fan_state
-# oasis
+  - action: input_boolean.toggle
+    target:
+      entity_id: input_boolean.kitchen_hood_fan_state
 - id: '0025'
   alias: oasis_set_target_temperature
   description: Установить целевую температуру приточной установки
   mode: restart
   triggers:
-    - trigger: state
-      entity_id: input_number.oasis_target_temperature
+  - trigger: state
+    entity_id: input_number.oasis_target_temperature
   conditions:
-    - condition: template
-      value_template: >
-        {% set val_x_2 = states('input_number.oasis_target_temperature') | float(0) * 2 %}
-        {{ val_x_2 | round(0) | int == val_x_2}}
-    - condition: template
-      value_template: >
-        {% set val = states('input_number.oasis_target_temperature') | float(0) %}
-        {{ val >= 15 and val <= 30 }}
-    - condition: template
-      value_template: >
-        {% set input_val_x_10 = (states('input_number.oasis_target_temperature') | float(0) * 10) | round(0) %}
-        {% set sensor_val_x_10 = (states('sensor.oasis_target_temperature') | float(0)  * 10) | round(0) %}
-        {{ input_val_x_10 != sensor_val_x_10 }}
-    - condition: numeric_state
-      entity_id: input_number.oasis_write_register_counter
-      below: 20
+  - condition: template
+    value_template: '{% set val_x_2 = states(''input_number.oasis_target_temperature'')
+      | float(0) * 2 %} {{ val_x_2 | round(0) | int == val_x_2}}
+
+      '
+  - condition: template
+    value_template: '{% set val = states(''input_number.oasis_target_temperature'')
+      | float(0) %} {{ val >= 15 and val <= 30 }}
+
+      '
+  - condition: template
+    value_template: '{% set input_val_x_10 = (states(''input_number.oasis_target_temperature'')
+      | float(0) * 10) | round(0) %} {% set sensor_val_x_10 = (states(''sensor.oasis_target_temperature'')
+      | float(0)  * 10) | round(0) %} {{ input_val_x_10 != sensor_val_x_10 }}
+
+      '
+  - condition: numeric_state
+    entity_id: input_number.oasis_write_register_counter
+    below: 20
   actions:
-    - delay: 
-        seconds: 2
-    - action: modbus.write_register
-      data:
-        hub: oasis
-        unit: 1
-        address: 31   # map32
-        value: >
-          {{ (states('input_number.oasis_target_temperature') | float * 10) | round(0) | int }}
-    - action: input_number.increment
-      target:
-        entity_id: input_number.oasis_write_register_counter
+  - delay:
+      seconds: 2
+  - action: modbus.write_register
+    data:
+      hub: oasis
+      unit: 1
+      address: 31
+      value: '{{ (states(''input_number.oasis_target_temperature'') | float * 10)
+        | round(0) | int }}
+
+        '
+  - action: input_number.increment
+    target:
+      entity_id: input_number.oasis_write_register_counter
 - id: '0026'
   alias: oasis_sync_temperature_from_sensor_to_input_number
   description: Синхронизация температуры в input_number
   mode: single
   triggers:
-    - trigger: state
-      entity_id: sensor.oasis_target_temperature
+  - trigger: state
+    entity_id: sensor.oasis_target_temperature
   condition:
-    - condition: template
-      value_template: >
-        {% set val_x_2 = states('sensor.oasis_target_temperature') | float(0) * 2 %}
-        {{ val_x_2 | round(0) | int == val_x_2}}
-    - condition: template
-      value_template: >
-        {% set val = states('sensor.oasis_target_temperature') | float(0) %}
-        {{ val >= 15 and val <= 30 }}
-    - condition: template
-      value_template: >
-        {% set input_val = (states('input_number.oasis_target_temperature') | float(0) * 10) | round(0) %}
-        {% set sensor_val = (states('sensor.oasis_target_temperature') | float(0) * 10) | round(0)  %}
-        {{ input_val != sensor_val }}
+  - condition: template
+    value_template: '{% set val_x_2 = states(''sensor.oasis_target_temperature'')
+      | float(0) * 2 %} {{ val_x_2 | round(0) | int == val_x_2}}
+
+      '
+  - condition: template
+    value_template: '{% set val = states(''sensor.oasis_target_temperature'') | float(0)
+      %} {{ val >= 15 and val <= 30 }}
+
+      '
+  - condition: template
+    value_template: '{% set input_val = (states(''input_number.oasis_target_temperature'')
+      | float(0) * 10) | round(0) %} {% set sensor_val = (states(''sensor.oasis_target_temperature'')
+      | float(0) * 10) | round(0)  %} {{ input_val != sensor_val }}
+
+      '
   actions:
-    - action: input_number.set_value
-      target:
-        entity_id: input_number.oasis_target_temperature
-      data:
-        value: >
-          {{ states('sensor.oasis_target_temperature') | float }}
+  - action: input_number.set_value
+    target:
+      entity_id: input_number.oasis_target_temperature
+    data:
+      value: '{{ states(''sensor.oasis_target_temperature'') | float }}
+
+        '
 - id: '0027'
   alias: oasis_set_target_fan_speed
   description: Установить целевую скорость вентиляторов приточной установки
   mode: restart
   triggers:
-    - trigger: state
-      entity_id: input_number.oasis_target_fan_speed
+  - trigger: state
+    entity_id: input_number.oasis_target_fan_speed
   conditions:
-    - condition: template
-      value_template: >
-        {% set val = states('input_number.oasis_target_fan_speed') | float(0) %}
-        {{ val | round(0) | int == val }}
-    - condition: template
-      value_template: >
-        {% set val = states('input_number.oasis_target_fan_speed') | int(0) %}
-        {{ val >= 1 and val <= 10 }}
-    - condition: template
-      value_template: >
-        {% set input_val = states('input_number.oasis_target_fan_speed') | int(0) %}
-        {% set sensor_val = states('sensor.oasis_target_fan_speed') | int(0) %}
-        {{ input_val != sensor_val }}
-    - condition: numeric_state
-      entity_id: input_number.oasis_write_register_counter
-      below: 20
+  - condition: template
+    value_template: '{% set val = states(''input_number.oasis_target_fan_speed'')
+      | float(0) %} {{ val | round(0) | int == val }}
+
+      '
+  - condition: template
+    value_template: '{% set val = states(''input_number.oasis_target_fan_speed'')
+      | int(0) %} {{ val >= 1 and val <= 10 }}
+
+      '
+  - condition: template
+    value_template: '{% set input_val = states(''input_number.oasis_target_fan_speed'')
+      | int(0) %} {% set sensor_val = states(''sensor.oasis_target_fan_speed'') |
+      int(0) %} {{ input_val != sensor_val }}
+
+      '
+  - condition: numeric_state
+    entity_id: input_number.oasis_write_register_counter
+    below: 20
   action:
-    - delay: 
-        seconds: 2
-    - action: modbus.write_register
-      data:
-        hub: oasis
-        unit: 1
-        address: 32   # map33
-        value: >
-          {{ states('input_number.oasis_target_fan_speed') | int }}
-    - action: input_number.increment
-      target:
-        entity_id: input_number.oasis_write_register_counter
-- id: '0028'
+  - delay:
+      seconds: 2
+  - action: modbus.write_register
+    data:
+      hub: oasis
+      unit: 1
+      address: 32
+      value: '{{ states(''input_number.oasis_target_fan_speed'') | int }}
+
+        '
+  - action: input_number.increment
+    target:
+      entity_id: input_number.oasis_write_register_counter
+- id: 0028
   alias: oasis_sync_fan_speed_from_sensor_to_input_number
   description: Синхронизация скорости вентилятора в input_number
   mode: single
   triggers:
-    - trigger: state
-      entity_id: sensor.oasis_target_fan_speed
+  - trigger: state
+    entity_id: sensor.oasis_target_fan_speed
   conditions:
-    - condition: template
-      value_template: >
-        {% set val = states('sensor.oasis_target_fan_speed') | float(0) %}
-        {{ val | round(0) | int == val }}
-    - condition: template
-      value_template: >
-        {% set val = states('sensor.oasis_target_fan_speed') | int(0) %}
-        {{ val >= 1 and val <= 10 }}
-    - condition: template
-      value_template: >
-        {% set input_val = states('input_number.oasis_target_fan_speed') | int(0) %}
-        {% set sensor_val = states('sensor.oasis_target_fan_speed') | int(0) %}
-        {{ input_val != sensor_val }}
+  - condition: template
+    value_template: '{% set val = states(''sensor.oasis_target_fan_speed'') | float(0)
+      %} {{ val | round(0) | int == val }}
+
+      '
+  - condition: template
+    value_template: '{% set val = states(''sensor.oasis_target_fan_speed'') | int(0)
+      %} {{ val >= 1 and val <= 10 }}
+
+      '
+  - condition: template
+    value_template: '{% set input_val = states(''input_number.oasis_target_fan_speed'')
+      | int(0) %} {% set sensor_val = states(''sensor.oasis_target_fan_speed'') |
+      int(0) %} {{ input_val != sensor_val }}
+
+      '
   actions:
-    - action: input_number.set_value
-      target:
-        entity_id: input_number.oasis_target_fan_speed
-      data:
-        value: >
-          {{ states('sensor.oasis_target_fan_speed') | int }}
-- id: '0029'
+  - action: input_number.set_value
+    target:
+      entity_id: input_number.oasis_target_fan_speed
+    data:
+      value: '{{ states(''sensor.oasis_target_fan_speed'') | int }}
+
+        '
+- id: 0029
   alias: reset_oasis_write_registers_counter
   triggers:
-    - trigger: time_pattern
-      minutes: "0"
+  - trigger: time_pattern
+    minutes: '0'
   actions:
-    - action: input_number.set_value
-      target:
-        entity_id: input_number.oasis_write_register_counter
-      data:
-        value: 0
+  - action: input_number.set_value
+    target:
+      entity_id: input_number.oasis_write_register_counter
+    data:
+      value: 0
 - id: '0030'
   alias: oasis_confirmed_sync_switch_and_cancel_applying
-  description: Синхронизация switch c сенсором скорости и сброс таймера на применение режима
+  description: Синхронизация switch c сенсором скорости и сброс таймера на применение
+    режима
   mode: single
   triggers:
-    - trigger: state
-      entity_id: binary_sensor.oasis_power_state_confirmed
-  variables: 
-    target: "{{ 'on' if  is_state('binary_sensor.oasis_power_state_confirmed', 'on') else 'off' }}"
+  - trigger: state
+    entity_id: binary_sensor.oasis_power_state_confirmed
+  variables:
+    target: '{{ ''on'' if  is_state(''binary_sensor.oasis_power_state_confirmed'',
+      ''on'') else ''off'' }}'
   actions:
-    - action: 'switch.turn_{{ target }}'
-      target:
-        entity_id: switch.oasis_power
-    - action: climate.set_hvac_mode
-      target: 
-        entity_id: climate.oasis 
-      data:
-        hvac_mode: '{{ "heat" if target=="on" else "off" }}'
-    - action: timer.cancel
-      target:
-        entity_id: timer.oasis_state_applying
+  - action: switch.turn_{{ target }}
+    target:
+      entity_id: switch.oasis_power
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: climate.oasis
+    data:
+      hvac_mode: '{{ "heat" if target=="on" else "off" }}'
+  - action: timer.cancel
+    target:
+      entity_id: timer.oasis_state_applying
 - id: '0031'
   alias: oasis_confirmed_sync_switch_after_start
   description: Синхронизация switch после запуска Homeassistant
@@ -814,78 +831,84 @@
   - trigger: homeassistant
     event: start
   variables:
-    target: "{{ 'on' if  is_state('binary_sensor.oasis_power_state_confirmed', 'on') else 'off' }}"
+    target: '{{ ''on'' if  is_state(''binary_sensor.oasis_power_state_confirmed'',
+      ''on'') else ''off'' }}'
   actions:
-    - action: timer.start
-      target:
-        entity_id: timer.oasis_state_applying
-    - delay:
-        seconds: 120
-    - action: 'switch.turn_{{ target }}'
-      target:
-        entity_id: switch.oasis_power
-    - action: timer.cancel
-      target:
-        entity_id: timer.oasis_state_applying
-    - action: climate.set_hvac_mode
-      target: 
-        entity_id: climate.oasis 
-      data:
-        hvac_mode: '{{ "heat" if target=="on" else "off" }}'
+  - action: timer.start
+    target:
+      entity_id: timer.oasis_state_applying
+  - delay:
+      seconds: 120
+  - action: switch.turn_{{ target }}
+    target:
+      entity_id: switch.oasis_power
+  - action: timer.cancel
+    target:
+      entity_id: timer.oasis_state_applying
+  - action: climate.set_hvac_mode
+    target:
+      entity_id: climate.oasis
+    data:
+      hvac_mode: '{{ "heat" if target=="on" else "off" }}'
   mode: single
 - id: '0032'
   alias: oasis_climate_set_temperature
   mode: restart
   triggers:
-    - trigger: state
-      entity_id: climate.oasis
-      attribute: temperature
+  - trigger: state
+    entity_id: climate.oasis
+    attribute: temperature
   conditions:
-    - condition: template
-      value_template: >
-        {% set val_x_2 = state_attr('climate.oasis', 'temperature') | float(0) * 2 %}
-        {{ val_x_2 | round(0) | int == val_x_2}}
-    - condition: template
-      value_template: >
-        {% set val = state_attr('climate.oasis', 'temperature') | float(0) %}
-        {{ val >= 15 and val <= 30 }}
-    - condition: template
-      value_template: >
-        {% set climate_val = state_attr('climate.oasis', 'temperature') | float(0)  %}
-        {% set sensor_val = states('sensor.oasis_target_temperature') | float(0) %}
-        {% set input_val = states('input_number.oasis_target_temperature') | float(0) %}
-        {{ climate_val != sensor_val and sensor_val == input_val }}
+  - condition: template
+    value_template: '{% set val_x_2 = state_attr(''climate.oasis'', ''temperature'')
+      | float(0) * 2 %} {{ val_x_2 | round(0) | int == val_x_2}}
+
+      '
+  - condition: template
+    value_template: '{% set val = state_attr(''climate.oasis'', ''temperature'') |
+      float(0) %} {{ val >= 15 and val <= 30 }}
+
+      '
+  - condition: template
+    value_template: '{% set climate_val = state_attr(''climate.oasis'', ''temperature'')
+      | float(0)  %} {% set sensor_val = states(''sensor.oasis_target_temperature'')
+      | float(0) %} {% set input_val = states(''input_number.oasis_target_temperature'')
+      | float(0) %} {{ climate_val != sensor_val and sensor_val == input_val }}
+
+      '
   actions:
-    - action: input_number.set_value
-      target:
-        entity_id: input_number.oasis_target_temperature
-      data:
-        value: "{{ state_attr('climate.oasis', 'temperature') | float }}"
+  - action: input_number.set_value
+    target:
+      entity_id: input_number.oasis_target_temperature
+    data:
+      value: '{{ state_attr(''climate.oasis'', ''temperature'') | float }}'
 - id: '0033'
   alias: oasis_sync_temperature_from_sensor_to_climate
   description: Синхронизация температуры в climate
   mode: single
   triggers:
-    - trigger: state
-      entity_id: sensor.oasis_target_temperature
+  - trigger: state
+    entity_id: sensor.oasis_target_temperature
   condition:
-    - condition: template
-      value_template: >
-        {% set val_x_2 = states('sensor.oasis_target_temperature') | float(0) * 2 %}
-        {{ val_x_2 | round(0) | int == val_x_2}}
-    - condition: template
-      value_template: >
-        {% set val = states('sensor.oasis_target_temperature') | float(0) %}
-        {{ val >= 15 and val <= 30 }}
-    - condition: template
-      value_template: >
-        {% set climate_val = (state_attr('cliamte.oasis', 'temperature') | float(0) * 10) | round(0) %}
-        {% set sensor_val = (states('sensor.oasis_target_temperature') | float(0) * 10) | round(0)  %}
-        {{ climate_val != sensor_val }}
+  - condition: template
+    value_template: '{% set val_x_2 = states(''sensor.oasis_target_temperature'')
+      | float(0) * 2 %} {{ val_x_2 | round(0) | int == val_x_2}}
+
+      '
+  - condition: template
+    value_template: '{% set val = states(''sensor.oasis_target_temperature'') | float(0)
+      %} {{ val >= 15 and val <= 30 }}
+
+      '
+  - condition: template
+    value_template: '{% set climate_val = (state_attr(''cliamte.oasis'', ''temperature'')
+      | float(0) * 10) | round(0) %} {% set sensor_val = (states(''sensor.oasis_target_temperature'')
+      | float(0) * 10) | round(0)  %} {{ climate_val != sensor_val }}
+
+      '
   actions:
-    - action: climate.set_temperature
-      target: 
-        entity_id: climate.oasis 
-      data:
-        temperature: '{{ states("input_number.oasis_target_temperature") | float }}'
-# oasis
+  - action: climate.set_temperature
+    target:
+      entity_id: climate.oasis
+    data:
+      temperature: '{{ states("input_number.oasis_target_temperature") | float }}'
