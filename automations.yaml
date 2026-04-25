@@ -386,6 +386,8 @@
     - binary_sensor.3d_printer_activity
     from: 'on'
     to: 'off'
+  variables:
+    device_name: '{{ trigger.to_state.name }}'
   actions:
   - action: notify.notify
     data:
@@ -394,7 +396,7 @@
   - choose:
     - conditions:
       - condition: template
-        value_template: '{{ device_name == "binary_sensor.dishwasher_activity"}}'
+        value_template: '{{ trigger.entity_id == "binary_sensor.dishwasher_activity"}}'
       sequence:
       - delay:
           minutes: 22
@@ -403,8 +405,6 @@
           title: Завершение активности
           message: '{{ device_name }} — активность завершена, теперь точно'
   mode: queued
-  variables:
-    device_name: '{{ trigger.to_state.name }}'
 - id: '0017'
   alias: turn_off_vertical_vacuum_cleaner_charging_after_4h
   triggers:
