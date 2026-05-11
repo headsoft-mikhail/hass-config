@@ -675,8 +675,13 @@ views:
                         entity: sensor.bathroom_heat_floor_current_temperature
                         icon_color: deep-orange
                       - type: entity
+                        entity: sensor.bathroom_heat_floor_energy_monthly
+                        icon_color: orange
+                        icon: mdi:lightning-bolt-circle
+                      - type: entity
                         entity: sensor.bathroom_heat_floor_power
                         icon_color: amber
+                        icon: mdi:lightning-bolt
                   - type: custom:mushroom-template-card
                     secondary: >-
                       {% if states(entity) == 'on' %}Включен - {{
@@ -725,8 +730,13 @@ views:
                         entity: sensor.bathroom_heat_wall_current_temperature
                         icon_color: deep-orange
                       - type: entity
+                        entity: sensor.bathroom_heat_wall_energy_monthly
+                        icon_color: orange
+                        icon: mdi:lightning-bolt-circle
+                      - type: entity
                         entity: sensor.bathroom_heat_wall_power
                         icon_color: amber
+                        icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.bathroom_heat_wall
                     layout: horizontal
@@ -744,8 +754,13 @@ views:
                         entity: sensor.towel_dryer_current_temperature
                         icon_color: deep-orange
                       - type: entity
+                        entity: sensor.towel_dryer_energy_monthly
+                        icon_color: orange
+                        icon: mdi:lightning-bolt-circle
+                      - type: entity
                         entity: sensor.towel_dryer_power
                         icon_color: amber
+                        icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.towel_dryer
                     layout: horizontal
@@ -782,8 +797,13 @@ views:
                         entity: sensor.laundry_heat_floor_current_temperature
                         icon_color: deep-orange
                       - type: entity
+                        entity: sensor.laundry_heat_floor_energy_monthly
+                        icon_color: orange
+                        icon: mdi:lightning-bolt-circle
+                      - type: entity
                         entity: sensor.laundry_heat_floor_power
                         icon_color: amber
+                        icon: mdi:lightning-bolt
                   - type: custom:mushroom-template-card
                     secondary: >-
                       {% if states(entity) == 'on' %}Включен - {{
@@ -881,8 +901,13 @@ views:
                         entity: sensor.loggia_heat_floor_current_temperature
                         icon_color: deep-orange
                       - type: entity
+                        entity: sensor.loggia_heat_floor_energy_monthly
+                        icon_color: orange
+                        icon: mdi:lightning-bolt-circle
+                      - type: entity
                         entity: sensor.loggia_heat_floor_power
                         icon_color: amber
+                        icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.loggia_heat_floor
                     layout: horizontal

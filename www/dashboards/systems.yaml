@@ -51,7 +51,7 @@ views:
                       timestamp_custom('%d.%m %H:%M') }}
                     icon: |-
                       {% if states(entity) == 'on'%}
-                      mdi:lock-open
+                      mdi:lock-open-variant
                       {% else %}
                       mdi:lock
                       {% endif %}
@@ -67,7 +67,7 @@ views:
                     icon_tap_action:
                       action: more-info
                     tap_action:
-                      action: more-info
+                      action: none
                     multiline_secondary: true
                   - type: custom:mushroom-lock-card
                     entity: lock.aqara_smart_lock_u200
