@@ -688,7 +688,7 @@
   - condition: template
     value_template: >
         {% set val = states('input_number.oasis_target_temperature') | float(0) %}
-        {{ val >= 15 and val <= 30 }}
+        {{ val >= 5 and val <= 30 }}
   - condition: template
     value_template: >
         {% set input_val_x_10 = (states('input_number.oasis_target_temperature') | float(0) * 10) | round(0) %}
@@ -724,7 +724,7 @@
   - condition: template
     value_template: >
       {% set val = states('sensor.oasis_target_temperature') | float(0) %}
-      {{ val >= 15 and val <= 30 }}
+      {{ val >= 5 and val <= 30 }}
   - condition: template
     value_template: >
       {% set input_val = (states('input_number.oasis_target_temperature') | float(0) * 10) | round(0) %}
@@ -875,7 +875,7 @@
   - condition: template
     value_template: >
       {% set val = state_attr('climate.oasis', 'temperature') | float(0) %}
-      {{ val >= 15 and val <= 30 }}
+      {{ val >= 5 and val <= 30 }}
   - condition: template
     value_template: >
       {% set climate_val = state_attr('climate.oasis', 'temperature') | float(0)  %}
@@ -903,7 +903,7 @@
   - condition: template
     value_template: >
       {% set val = states('sensor.oasis_target_temperature') | float(0) %}
-      {{ val >= 15 and val <= 30 }}
+      {{ val >= 5 and val <= 30 }}
   - condition: template
     value_template: >
       {% set climate_val = (state_attr('cliamte.oasis', 'temperature') | float(0) * 10) | round(0) %}
