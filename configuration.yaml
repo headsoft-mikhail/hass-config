@@ -63,34 +63,38 @@ sensor:
     unit_time: s
     unit: B/s
     round: 2
-  - platform: statistics
+  - platform: filter
     name: "Ventilation System Relay Avg Power"
     unique_id: ventilation_system_relay_avg_power
     entity_id: sensor.ventilation_system_relay_power
-    state_characteristic: mean
-    max_age:
-      seconds: 120
-  - platform: statistics
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "00:02"
+        precision: 2
+  - platform: filter
     name: "Ventilation System Relay Avg Current"
     unique_id: ventilation_system_relay_avg_current
     entity_id: sensor.ventilation_system_relay_current
-    state_characteristic: mean
-    max_age:
-      seconds: 120
-  - platform: statistics
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "00:02"
+        precision: 2
+  - platform: filter
     name: "Zemismart SMP01 Avg Power"
     unique_id: zemismart_smp01_avg_power
     entity_id: sensor.zemismart_smp01_power
-    state_characteristic: mean
-    max_age:
-      seconds: 600
-  - platform: statistics
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "00:03"
+        precision: 2
+  - platform: filter
     name: "Zemismart SMP01 Avg Current"
     unique_id: zemismart_smp01_avg_current
     entity_id: sensor.zemismart_smp01_current
-    state_characteristic: mean
-    max_age:
-      seconds: 600
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "00:03"
+        precision: 2
   - platform: integration
     name: "Bathroom Heat Floor Energy"
     unique_id: bathroom_heat_floor_energy
