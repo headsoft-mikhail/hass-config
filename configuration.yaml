@@ -569,7 +569,7 @@ template:
           heartbeat: "{{ now().timestamp() | int }}"
       - name: "Zemismart SMP01 Power Sampled"
         unique_id: zemismart_smp01_power_sampled
-        device_class: current
+        device_class: power
         state_class: measurement
         unit_of_measurement: kW
         state: >
@@ -578,7 +578,7 @@ template:
           heartbeat: "{{ now().timestamp() | int }}"
       - name: "Zemismart SMP01 Current Sampled"
         unique_id: zemismart_smp01_current_sampled
-        device_class: power
+        device_class: current
         state_class: measurement
         unit_of_measurement: A
         state: >
