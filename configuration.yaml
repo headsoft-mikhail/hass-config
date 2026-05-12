@@ -27,6 +27,22 @@ command_line:
       unit_of_measurement: "°C"
       value_template: "{{ (value | float / 1000) | round(1) }}"
       scan_interval: 60
+  - sensor:
+      name: SMB Disk Free
+      unique_id: smb_disk_free
+      device_class: data_size
+      scan_interval: 60
+      command: >
+        df -BG /share/Keenetic | tail -1 | awk '{print $3}' | tr -d 'G'
+      unit_of_measurement: GB
+  - sensor:
+      name: SMB Disk Usage Percent
+      unique_id: smb_disk_usage_percent
+      device_class: data_size
+      scan_interval: 60
+      command: >
+        df -h /share/Keenetic | tail -1 | awk '{print $4}' | tr -d '%'
+      unit_of_measurement: '%'
 
 sensor:
   - platform: snmp
@@ -66,7 +82,7 @@ sensor:
   - platform: filter
     name: "Ventilation System Relay Avg Power"
     unique_id: ventilation_system_relay_avg_power
-    entity_id: sensor.ventilation_system_relay_power
+    entity_id: sensor.ventilation_system_relay_power_sampled
     filters:
       - filter: time_simple_moving_average
         window_size: "00:02"
@@ -74,7 +90,7 @@ sensor:
   - platform: filter
     name: "Ventilation System Relay Avg Current"
     unique_id: ventilation_system_relay_avg_current
-    entity_id: sensor.ventilation_system_relay_current
+    entity_id: sensor.ventilation_system_relay_current_sampled
     filters:
       - filter: time_simple_moving_average
         window_size: "00:02"
@@ -82,18 +98,18 @@ sensor:
   - platform: filter
     name: "Zemismart SMP01 Avg Power"
     unique_id: zemismart_smp01_avg_power
-    entity_id: sensor.zemismart_smp01_power
+    entity_id: sensor.zemismart_smp01_power_sampled
     filters:
       - filter: time_simple_moving_average
-        window_size: "00:03"
+        window_size: "00:02"
         precision: 2
   - platform: filter
     name: "Zemismart SMP01 Avg Current"
     unique_id: zemismart_smp01_avg_current
-    entity_id: sensor.zemismart_smp01_current
+    entity_id: sensor.zemismart_smp01_current_sampled
     filters:
       - filter: time_simple_moving_average
-        window_size: "00:03"
+        window_size: "00:02"
         precision: 2
   - platform: integration
     name: "Bathroom Heat Floor Energy"
@@ -533,6 +549,43 @@ template:
         unit_of_measurement: "°C"
         device_class: temperature
         state: "{{ state_attr('climate.loggia_heat_floor', 'current_temperature') | float(0) }}"
+      - name: "Ventilation System Relay Power Sampled"
+        unique_id: ventilation_system_relay_power_sampled
+        device_class: power
+        state_class: measurement
+        unit_of_measurement: kW
+        state: >
+          {{ states('sensor.ventilation_system_relay_power') | float(0) }}
+        attributes:
+          heartbeat: "{{ now().timestamp() | int }}"
+      - name: "Ventilation System Relay Current Sampled"
+        unique_id: ventilation_system_relay_current_sampled
+        device_class: current
+        state_class: measurement
+        unit_of_measurement: A
+        state: >
+          {{ states('sensor.ventilation_system_relay_current') | float(0) }}
+        attributes:
+          heartbeat: "{{ now().timestamp() | int }}"
+      - name: "Zemismart SMP01 Power Sampled"
+        unique_id: zemismart_smp01_power_sampled
+        device_class: current
+        state_class: measurement
+        unit_of_measurement: kW
+        state: >
+          {{ states('sensor.zemismart_smp01_power') | float(0) }}
+        attributes:
+          heartbeat: "{{ now().timestamp() | int }}"
+      - name: "Zemismart SMP01 Current Sampled"
+        unique_id: zemismart_smp01_current_sampled
+        device_class: power
+        state_class: measurement
+        unit_of_measurement: A
+        state: >
+          {{ states('sensor.zemismart_smp01_current') | float(0) }}
+        attributes:
+          heartbeat: "{{ now().timestamp() | int }}"
+
   - binary_sensor:
       - name: "Dishwasher Activity"
         unique_id: dishwasher_activity

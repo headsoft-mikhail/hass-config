@@ -916,3 +916,26 @@
     data:
       temperature: '{{ states("input_number.oasis_target_temperature") | float }}'
 # oasis
+- id: '0034'
+  alias: Power sensors heartbeat 15s
+  triggers:
+    - trigger: time_pattern
+      seconds: "/15"
+  variables:
+    sensors:
+      - sensor.ventilation_system_relay_power
+      - sensor.ventilation_system_relay_current
+      - sensor.zemismart_smp01_power
+      - sensor.zemismart_smp01_current
+  actions:
+    - repeat:
+        for_each: "{{ sensors }}"
+        sequence:
+          - if:
+              - condition: template
+                value_template: >
+                  {{ (now() - states[repeat.item].last_changed).total_seconds() > 15 }}
+            then:
+              - action: homeassistant.update_entity
+                target:
+                  entity_id: "{{ repeat.item }}_sampled"
