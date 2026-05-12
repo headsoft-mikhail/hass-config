@@ -10,9 +10,9 @@
     data:
       title: Загрузка завершена
       message: '{{trigger.event.data.name}}'
-  - action: transmission.remove_torrent
+  - action: transmission3.remove_torrent
     data:
-      entry_id: 97082637855de2c974fdf46142760427
+      entry_id: 01KRENTT2FHYAFJWKH33PG07C7
       id: '{{trigger.event.data.id}}'
       delete_data: false
   mode: single
