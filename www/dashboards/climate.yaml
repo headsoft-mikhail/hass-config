@@ -919,6 +919,16 @@ views:
                       action: none
                     hold_action:
                       action: more-info
+                  - type: custom:mushroom-chips-card
+                    chips:
+                      - type: entity
+                        entity: sensor.fireplace_plug_energy_monthly
+                        icon_color: orange
+                        icon: mdi:lightning-bolt-circle
+                      - type: entity
+                        entity: sensor.fireplace_plug_power
+                        icon_color: amber
+                        icon: mdi:lightning-bolt
                   - square: false
                     type: grid
                     cards:
@@ -929,7 +939,7 @@ views:
                         name: Камин
                         tap_action:
                           action: toggle
-                    columns: 2
+                    columns: 1
     header:
       card:
         type: markdown

@@ -746,9 +746,9 @@ views:
                   icon: mdi:fan
                   name: Вентиляция
                   secondary_info: {}
-                - entity: sensor.air_conditioner_system_relay_power
-                  icon: mdi:air-conditioner
-                  name: Кондиционер
+                - entity: sensor.other_power_consumers_power
+                  icon: mdi:lightning-bolt
+                  name: Другое
                   secondary_info: {}
                 - entity: sensor.washing_machine_power
                   name: Стиральная машина
@@ -801,6 +801,10 @@ views:
                   name: Теплый пол на балконе
                   secondary_info: {}
                   icon: mdi:heating-coil
+                - entity: sensor.air_conditioner_system_relay_power
+                  icon: mdi:air-conditioner
+                  name: Кондиционер
+                  secondary_info: {}
                 - entity: sensor.humidifier_system_relay_power
                   icon: mdi:air-humidifier
                   name: Увлажнение
@@ -809,15 +813,15 @@ views:
             clickable_entities: true
             display_zero_lines: true
             use_new_flow_rate_model: true
-            w_decimals: 0
-            kw_decimals: 2
             min_flow_rate: 0.75
             max_flow_rate: 6
             max_expected_power: 12000
             min_expected_power: 0.005
-            watt_threshold: 999
             transparency_zero_lines: 10
             sort_individual_devices: false
+            kilo_threshold: 999
+            base_decimals: 0
+            kilo_decimals: 2
           - type: custom:pie-chart-card
             title: ' '
             entities:
@@ -857,6 +861,8 @@ views:
                 name: Теплый пол в прачечной
               - entity: sensor.loggia_heat_floor_energy_monthly
                 name: Теплый пол на балконе
+              - entity: sensor.other_power_consumers_energy_monthly
+                name: Другое
         column_span: 3
       - type: grid
         cards:
