@@ -42,7 +42,7 @@ command_line:
       scan_interval: 60
       command: >
         df -h /share/Keenetic | tail -1 | awk '{print $4}' | tr -d '%'
-      unit_of_measurement: '%'
+      unit_of_measurement: "%"
 
 sensor:
   - platform: snmp
@@ -140,6 +140,12 @@ sensor:
     name: "Loggia Heat Floor Energy"
     unique_id: loggia_heat_floor_energy
     source: sensor.loggia_heat_floor_power
+    unit_prefix: k
+    round: 2
+  - platform: integration
+    name: "Other Power Consumers Energy"
+    unique_id: other_power_consumers_energy
+    source: sensor.other_power_consumers_power
     unit_prefix: k
     round: 2
   - platform: derivative
@@ -281,6 +287,12 @@ utility_meter:
     unique_id: zemismart_smp01_energy_daily
     source: sensor.zemismart_smp01_energy
     cycle: daily
+    always_available: true
+  other_power_consumers_energy_monthly:
+    name: Other Power Consumers Energy Monthly
+    unique_id: other_power_consumers_energy_monthly
+    source: sensor.other_power_consumers_energy
+    cycle: monthly
     always_available: true
 
 switch:
@@ -553,7 +565,7 @@ template:
         unique_id: ventilation_system_relay_power_sampled
         device_class: power
         state_class: measurement
-        unit_of_measurement: kW
+        unit_of_measurement: W
         state: >
           {{ states('sensor.ventilation_system_relay_power') | float(0) }}
         attributes:
@@ -585,7 +597,46 @@ template:
           {{ states('sensor.zemismart_smp01_current') | float(0) }}
         attributes:
           heartbeat: "{{ now().timestamp() | int }}"
+      - name: "Other Power Consumers Power"
+        unique_id: other_power_consumers_power
+        unit_of_measurement: "W"
+        device_class: power
+        state_class: measurement
+        state: >
+          {% macro power_w(entity_id) %}
+            {% set value = states(entity_id) | float(0) %}
+            {% set unit = state_attr(entity_id, 'unit_of_measurement') %}
+            {% if unit == 'kW' %}
+              {{ value * 1000 }}
+            {% else %}
+              {{ value }}
+            {% endif %}
+          {% endmacro %}
 
+          {% set total = power_w('sensor.zemismart_smp01_avg_power') | float(0) %}
+
+          {% set known =
+            power_w('sensor.ventilation_system_relay_avg_power') | float(0) +
+            power_w('sensor.air_conditioner_system_relay_power') | float(0) +
+            power_w('sensor.washing_machine_power') | float(0) +
+            power_w('sensor.drying_machine_power') | float(0) +
+            power_w('sensor.dishwasher_power') | float(0) +
+            power_w('sensor.fireplace_plug_power') | float(0) +
+            power_w('sensor.3d_printer_plug_power') | float(0) +
+            power_w('sensor.hall_under_wardrobe_socket_power') | float(0) +
+            power_w('sensor.kitchen_socket_power') | float(0) +
+            power_w('sensor.living_room_behind_sofa_socket_power') | float(0) +
+            power_w('sensor.store_room_socket_power') | float(0) +
+            power_w('sensor.fridge_socket_power') | float(0) +
+            power_w('sensor.bathroom_heat_floor_power') | float(0) +
+            power_w('sensor.bathroom_heat_wall_power') | float(0) +
+            power_w('sensor.towel_dryer_power') | float(0) +
+            power_w('sensor.laundry_heat_floor_power') | float(0) +
+            power_w('sensor.loggia_heat_floor_power') | float(0) +
+            power_w('sensor.humidifier_system_relay_power') | float(0)
+          %}
+
+          {{ [total - known, 0] | max | round(1) }}
   - binary_sensor:
       - name: "Dishwasher Activity"
         unique_id: dishwasher_activity
