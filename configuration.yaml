@@ -38,7 +38,6 @@ command_line:
   - sensor:
       name: SMB Disk Usage Percent
       unique_id: smb_disk_usage_percent
-      device_class: data_size
       scan_interval: 60
       command: >
         df -h /share/Keenetic | tail -1 | awk '{print $4}' | tr -d '%'
