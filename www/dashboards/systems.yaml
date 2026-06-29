@@ -10,7 +10,7 @@ views:
         cards:
           - type: markdown
             text_only: true
-            content: '## Безопасность'
+            content: "## Безопасность"
           - type: custom:mushroom-chips-card
             chips:
               - type: template
@@ -78,7 +78,7 @@ views:
         cards:
           - type: markdown
             text_only: true
-            content: '## Сцены'
+            content: "## Сцены"
           - square: false
             type: grid
             cards:
@@ -172,7 +172,7 @@ views:
                 icon: mdi:check-network-outline
                 ko_icon: mdi:close-network-outline
                 none_icon: mdi:wifi-strength-off-outline
-                average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+                average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
                 bar:
                   height: 20
                   round: 3
@@ -224,6 +224,13 @@ views:
                       action: url
                       url_path: >-
                         http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer
+                    picture: /local/images/lostfilm_logo.svg
+                    content: LostFilm
+                  - type: template
+                    tap_action:
+                      action: url
+                      url_path: >-
+                        http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer
                     picture: /local/images/icon_transmission.svg
                     content: Transmission
                   - type: entity
@@ -240,8 +247,8 @@ views:
             bar_height: 10
             show_value_inline: true
           - type: custom:transmission-card
-            header_text: ''
-            no_torrent_label: ''
+            header_text: ""
+            no_torrent_label: ""
             hide_header: false
             hide_status: false
             hide_turtle: true
@@ -314,7 +321,7 @@ views:
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template
-                    content: '{{ states(entity) }}'
+                    content: "{{ states(entity) }}"
                     icon_color: |-
                       {% if states(entity) == 'backed_up' %}
                         light-blue
@@ -352,7 +359,7 @@ views:
                     icon_color: teal
                     icon: mdi:cloud-braces
                     entity: sensor.backup_state
-                    picture: ''
+                    picture: ""
                     tap_action:
                       action: more-info
                     hold_action:
@@ -371,6 +378,7 @@ views:
                     enable_dynamic_bar_color: true
                     palette: green_to_red
                     icon_color: light-blue
+                    icon: mdi:harddisk
                     entity: sensor.home_assistant_host_disk_used
                     min: 0
                     max: 234
@@ -385,6 +393,7 @@ views:
                     enable_dynamic_bar_color: true
                     palette: green_to_red
                     icon_color: light-blue
+                    icon: mdi:database
                     entity: sensor.database_size_sqlite
                     min: 0
                     max: 2500
@@ -468,7 +477,7 @@ views:
                   exclude:
                     - options: {}
                       entity_id: binary_sensor.fresh_element_solo_1_food_level
-                      state: 'off'
+                      state: "off"
                     - options: {}
                       entity_id: sensor.fresh_element_solo_1_error
                       state: no_error
@@ -541,7 +550,7 @@ views:
                   exclude:
                     - options: {}
                       entity_id: binary_sensor.fresh_element_solo_2_food_level
-                      state: 'off'
+                      state: "off"
                     - options: {}
                       entity_id: sensor.fresh_element_solo_2_error
                       state: no_error
@@ -579,7 +588,7 @@ views:
                       options:
                         type: custom:mushroom-entity-card
                         icon_color: red
-                      state: 'on'
+                      state: "on"
                 show_empty: false
       - type: grid
         cards:
@@ -597,7 +606,7 @@ views:
                 bar_height: 30
                 show_value_inline: true
                 entity: sensor.eversweet_3_pro_uvc_filter
-                title: 'Питьевой фонтан: Фильтр'
+                title: "Питьевой фонтан: Фильтр"
                 tap_action: none
                 hold_action:
                   action: perform-action
@@ -611,7 +620,7 @@ views:
                 bar_height: 30
                 show_value_inline: true
                 entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                title: 'Кормилка - Фрея: Влагопоглотитель'
+                title: "Кормилка - Фрея: Влагопоглотитель"
                 icon: mdi:water-remove
                 min: 0
                 max: 30
@@ -628,7 +637,7 @@ views:
                 bar_height: 30
                 show_value_inline: true
                 entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                title: 'Кормилка - Шанталь: Влагопоглотитель'
+                title: "Кормилка - Шанталь: Влагопоглотитель"
                 icon: mdi:water-remove
                 min: 0
                 max: 30
@@ -645,7 +654,7 @@ views:
                 bar_height: 30
                 show_value_inline: true
                 entity: sensor.petkit_pura_air_filter_days_left
-                title: 'Освежитель лотка: Фильтр'
+                title: "Освежитель лотка: Фильтр"
                 icon: mdi:air-filter
                 min: 0
                 max: 90
@@ -658,7 +667,7 @@ views:
       card:
         type: markdown
         text_only: true
-        content: '## Кошки'
+        content: "## Кошки"
       layout: start
       badges_position: bottom
       badges_wrap: wrap
@@ -685,7 +694,7 @@ views:
             cards:
               - type: custom:uptime-card
                 entity: binary_sensor.electricity_outage_sensor
-                average_template: '[[[ return variables.uptime.toFixed(2); ]]]% uptime'
+                average_template: "[[[ return variables.uptime.toFixed(2); ]]]% uptime"
                 bar:
                   height: 20
                   round: 3
@@ -823,7 +832,7 @@ views:
             base_decimals: 0
             kilo_decimals: 2
           - type: custom:pie-chart-card
-            title: ' '
+            title: " "
             entities:
               - entity: sensor.ventilation_system_relay_energy_monthly
                 name: Вентиляция
@@ -926,7 +935,7 @@ views:
       card:
         type: markdown
         text_only: true
-        content: '## Электричество'
+        content: "## Электричество"
       layout: start
       badges_position: bottom
       badges_wrap: wrap
@@ -976,7 +985,7 @@ views:
                 red
               {% endif %}
             entity: sensor.zemismart_smp01_voltage
-            content: '{{states(entity) | float(0)}} V'
+            content: "{{states(entity) | float(0)}} V"
             icon: mdi:sine-wave
             tap_action:
               action: more-info
@@ -1087,7 +1096,7 @@ views:
       card:
         type: markdown
         text_only: true
-        content: '## Вода'
+        content: "## Вода"
       layout: start
       badges_position: bottom
       badges_wrap: wrap
