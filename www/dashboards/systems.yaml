@@ -222,8 +222,7 @@ views:
                   - type: template
                     tap_action:
                       action: url
-                      url_path: >-
-                        http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer
+                      url_path: https://www.lostfilm.tv
                     picture: /local/images/lostfilm_logo.svg
                     content: LostFilm
                   - type: template
