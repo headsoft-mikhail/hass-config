@@ -478,6 +478,14 @@ views:
                       - type: entity
                         entity: sensor.kitchen_temperature
                         icon_color: deep-orange
+                      - type: entity
+                        entity: switch.living_room_air_conditioner_podsvetka
+                        use_entity_picture: false
+                        content_info: name
+                        name: Подсветка
+                        tap_action:
+                          action: toggle
+                        icon_color: amber
                   - type: custom:mushroom-climate-card
                     entity: climate.living_room_air_conditioner
                     name: Гостиная
@@ -498,6 +506,14 @@ views:
                       - type: entity
                         entity: sensor.airmonitor2_temperature
                         icon_color: deep-orange
+                      - type: entity
+                        entity: switch.bedroom_air_conditioner_podsvetka
+                        use_entity_picture: false
+                        content_info: name
+                        name: Подсветка
+                        tap_action:
+                          action: toggle
+                        icon_color: amber
                   - type: custom:mushroom-climate-card
                     entity: climate.bedroom_air_conditioner
                     name: Спальня
@@ -516,6 +532,14 @@ views:
                       - type: entity
                         entity: sensor.kids_room_temperature
                         icon_color: deep-orange
+                      - type: entity
+                        entity: switch.kids_room_air_conditioner_podsvetka
+                        use_entity_picture: false
+                        content_info: name
+                        name: Подсветка
+                        tap_action:
+                          action: toggle
+                        icon_color: amber
                   - type: custom:mushroom-climate-card
                     entity: climate.kids_room_air_conditioner
                     name: Детская

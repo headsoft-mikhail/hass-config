@@ -939,3 +939,21 @@
               - action: homeassistant.update_entity
                 target:
                   entity_id: "{{ repeat.item }}_sampled"
+- id: '0035'
+  alias: bedroom_ac_night_light
+  description: Turn off bedroom AC light at night
+  triggers:
+    - trigger: state
+      entity_id: climate.bedroom_air_conditioner
+      from: 'off'
+      not_to: 'off'
+  condition:
+    - condition: time
+      after: '22:00:00'
+      before: '05:00:00'
+  actions:
+    - delay: '00:00:15'
+    - action: switch.turn_off
+      target:
+        entity_id: switch.bedroom_air_conditioner_podsvetka
+  mode: restart
