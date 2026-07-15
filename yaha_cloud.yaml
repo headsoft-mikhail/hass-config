@@ -27,6 +27,7 @@ filter:
     - switch.humidifier_system_control_switch_l2
     - cover.bedroom_curtain
     - climate.bedroom_radiator_thermostat
+    - climate.bedroom_air_conditioner
     - sensor.airmonitor2_temperature
     # hall
     - binary_sensor.hall_contact_sensor
@@ -42,6 +43,7 @@ filter:
     - switch.humidifier_system_control_switch_l3
     - cover.kids_room_curtain
     - climate.kids_room_radiator_thermostat
+    - climate.kids_room_air_conditioner
     - sensor.kids_room_temperature
     # kitchen
     - switch.kitchen_dinner_table
@@ -63,6 +65,7 @@ filter:
     - cover.living_room_curtain
     - cover.living_room_roll_curtain
     - climate.living_room_radiator_thermostat
+    - climate.living_room_air_conditioner
     - sensor.kitchen_temperature
     # laundry
     - switch.laundry_light
@@ -189,6 +192,15 @@ entity_config:
     room: Спальня
     type: devices.types.thermostat
     turn_off: false
+  climate.bedroom_air_conditioner:
+    name: Кондиционер
+    room: Спальня
+    type: devices.types.thermostat.ac
+    turn_on:
+      action: climate.set_hvac_mode
+      entity_id: climate.bedroom_air_conditioner
+      data:
+        hvac_mode: cool
   sensor.airmonitor2_temperature:
     name: Датчик
     room: Спальня
@@ -264,6 +276,15 @@ entity_config:
     room: Детская
     type: devices.types.thermostat
     turn_off: false
+  climate.kids_room_air_conditioner:
+    name: Кондиционер
+    room: Детская
+    type: devices.types.thermostat.ac
+    turn_on:
+      action: climate.set_hvac_mode
+      entity_id: climate.kids_room_air_conditioner
+      data:
+        hvac_mode: cool
   sensor.kids_room_temperature:
     name: Датчик
     room: Детская
@@ -351,6 +372,15 @@ entity_config:
     room: Гостиная
     type: devices.types.thermostat
     turn_off: false
+  climate.living_room_air_conditioner:
+    name: Кондиционер
+    room: Гостиная
+    type: devices.types.thermostat.ac
+    turn_on:
+      action: climate.set_hvac_mode
+      entity_id: climate.living_room_air_conditioner
+      data:
+        hvac_mode: cool
   sensor.kitchen_temperature:
     name: Датчик
     room: Гостиная
