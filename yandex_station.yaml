@@ -1,1 +1,7 @@
-include: []
+include: 
+  - name: Кондиционер
+    room_name: Гостиная
+  - name: Кондиционер
+    room_name: Спальня
+  - name: Кондиционер
+    room_name: Детская

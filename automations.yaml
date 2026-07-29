@@ -939,14 +939,47 @@
               - action: homeassistant.update_entity
                 target:
                   entity_id: "{{ repeat.item }}_sampled"
+
 - id: '0035'
-  alias: bedroom_ac_night_light
-  description: Turn off bedroom AC light at night
+  alias: living_room_air_conditioner_backlight
+  description: Turn off living room air conditioner backlight if watching cinema
   triggers:
     - trigger: state
-      entity_id: climate.bedroom_air_conditioner
+      entity_id:
+        - binary_sensor.living_room_air_conditioner_activity
+        - remote.xgimi_horizon_ultra_switch_off
+  conditions:
+    - condition: state
+      entity_id: binary_sensor.living_room_air_conditioner_activity
+      state: 'on'
+  actions:
+    - delay: '00:00:15'
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: remote.xgimi_horizon_ultra_switch_off
+              state: 'on'
+          sequence:
+            - action: switch.turn_off
+              target:
+                entity_id: switch.living_room_air_conditioner_podsvetka
+        - conditions:
+            - condition: state
+              entity_id: remote.xgimi_horizon_ultra_switch_off
+              state: 'off'
+          sequence:
+            - action: switch.turn_on
+              target:
+                entity_id: switch.living_room_air_conditioner_podsvetka
+  mode: restart
+- id: '0036'
+  alias: bedroom_air_conditioner_backlight
+  description: Turn off bedroom air conditioner backlight at night
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.bedroom_air_conditioner_activity
       from: 'off'
-      not_to: 'off'
+      to: 'on'
   condition:
     - condition: time
       after: '22:00:00'
@@ -956,4 +989,22 @@
     - action: switch.turn_off
       target:
         entity_id: switch.bedroom_air_conditioner_podsvetka
+  mode: restart
+- id: '0037'
+  alias: kids_room_air_conditioner_backlight
+  description: Turn off kids room air conditioner light at night
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.kids_room_air_conditioner_activity
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: time
+      after: '22:00:00'
+      before: '05:00:00'
+  actions:
+    - delay: '00:00:15'
+    - action: switch.turn_off
+      target:
+        entity_id: switch.kids_room_air_conditioner_podsvetka
   mode: restart

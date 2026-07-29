@@ -1037,6 +1037,90 @@ template:
           - action: input_boolean.turn_off
             target:
               entity_id: input_boolean.kitchen_hood_led_state
+  - triggers:
+      - trigger: state
+        entity_id:
+          - climate.living_room_air_conditioner
+          - climate.gostinaia_haier_black
+    variables:
+      invalid_states:
+        - unknown
+        - unavailable
+      active_states:
+        - auto
+        - heat
+        - cool
+        - fan_only
+        - dry
+    binary_sensor:
+      - name: "Living Room Air Conditioner Activity"
+        unique_id: living_room_air_conditioner_activity
+        device_class: running
+        availability: >
+          {{ states('climate.living_room_air_conditioner') not in invalid_states
+             or states('climate.sgostinaia_haier_black') not in invalid_states }}
+        state: >
+          {% if trigger.to_state.state in invalid_states %}
+            {{ this.state == 'on' }}
+          {% else %}
+            {{ trigger.to_state.state in active_states }}
+          {% endif %}
+  - triggers:
+      - trigger: state
+        entity_id:
+          - climate.bedroom_air_conditioner
+          - climate.spalnia_haier_white
+    variables:
+      invalid_states:
+        - unknown
+        - unavailable
+      active_states:
+        - auto
+        - heat
+        - cool
+        - fan_only
+        - dry
+    binary_sensor:
+      - name: "Bedroom Air Conditioner Activity"
+        unique_id: bedroom_air_conditioner_activity
+        device_class: running
+        availability: >
+          {{ states('climate.bedroom_air_conditioner') not in invalid_states
+             or states('climate.spalnia_haier_white') not in invalid_states }}
+        state: >
+          {% if trigger.to_state.state in invalid_states %}
+            {{ this.state == 'on' }}
+          {% else %}
+            {{ trigger.to_state.state in active_states }}
+          {% endif %}
+  - triggers:
+      - trigger: state
+        entity_id:
+          - climate.kids_room_air_conditioner
+          - climate.detskaia_haier_white
+    variables:
+      invalid_states:
+        - unknown
+        - unavailable
+      active_states:
+        - auto
+        - heat
+        - cool
+        - fan_only
+        - dry
+    binary_sensor:
+      - name: "Kids Room Air Conditioner Activity"
+        unique_id: kids_room_air_conditioner_activity
+        device_class: running
+        availability: >
+          {{ states('climate.kids_room_air_conditioner') not in invalid_states
+             or states('climate.detskaia_haier_white') not in invalid_states }}
+        state: >
+          {% if trigger.to_state.state in invalid_states %}
+            {{ this.state == 'on' }}
+          {% else %}
+            {{ trigger.to_state.state in active_states }}
+          {% endif %}
 
 climate:
   - platform: generic_thermostat
