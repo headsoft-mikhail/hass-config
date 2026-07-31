@@ -947,7 +947,7 @@
     - trigger: state
       entity_id:
         - binary_sensor.living_room_air_conditioner_activity
-        - remote.xgimi_horizon_ultra_switch_off
+        - binary_sensor.ping_xgimi
   conditions:
     - condition: state
       entity_id: binary_sensor.living_room_air_conditioner_activity
@@ -957,7 +957,7 @@
     - choose:
         - conditions:
             - condition: state
-              entity_id: remote.xgimi_horizon_ultra_switch_off
+              entity_id: binary_sensor.ping_xgimi
               state: 'on'
           sequence:
             - action: switch.turn_off
@@ -965,7 +965,7 @@
                 entity_id: switch.living_room_air_conditioner_podsvetka
         - conditions:
             - condition: state
-              entity_id: remote.xgimi_horizon_ultra_switch_off
+              entity_id: binary_sensor.ping_xgimi
               state: 'off'
           sequence:
             - action: switch.turn_on

@@ -38,7 +38,7 @@ views:
                       mdi:fridge-off
                       {% endif %}
                     icon_color: purple
-                    entity: binary_sensor.fridge_acticity
+                    entity: binary_sensor.fridge_activity
                     content: |-
                       {% if states(entity) == 'on'%}
                       Холодильник работает
