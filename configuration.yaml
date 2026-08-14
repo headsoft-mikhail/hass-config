@@ -339,10 +339,6 @@ input_select:
       - error
 
 input_datetime:
-  petkit_pura_air_filter_replaced:
-    name: "Petkit Pura Air - Filter - Reset date"
-    has_date: true
-    has_time: false
   electricity_down_at:
     name: Electricity Down At
     has_date: true
@@ -457,20 +453,6 @@ template:
           SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_memory_percent')  }}"
           Studio_Code_server: "{{ states('sensor.studio_code_server_memory_percent')  }}"
           AdGuard_home: "{{ states('sensor.adguard_home_memory_percent')  }}"
-      - name: "PetKit Pura Air Filter Days Left"
-        unique_id: "petkit_pura_air_filter_days_left"
-        unit_of_measurement: "d"
-        state: >
-          {% set start = states('input_datetime.petkit_pura_air_filter_replaced') %}
-          {% if start not in ['unknown', 'unavailable'] %}
-            {% set days_left = 90 - ((now().date() - as_datetime(start).date()).days) %}
-            {{ [days_left, 0] | max }}
-          {% else %}
-            90
-          {% endif %}
-        attributes:
-          last_update: "{{ now() }}"
-        availability: "{{ states('input_datetime.petkit_pura_air_filter_replaced') not in ['unknown', 'unavailable'] }}"
       - name: "AirMonitor2 TVOC ug"
         unique_id: "airmonitor2_tvoc_ug"
         unit_of_measurement: "µg/m³"

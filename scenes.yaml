@@ -1,284 +1,343 @@
-- id: '0001'
-  name: Sleep
-  entities:
-    switch.kitchen_dinner_table:
-      icon: mdi:ceiling-light-multiple
-      friendly_name: Обеденный стол
-      state: 'off'
-    switch.kitchen_led_light:
-      icon: mdi:led-strip-variant
-      friendly_name: Подсветка кухни
-      state: 'off'
-    switch.bedroom_desktop_dimmed_light:
-      icon: mdi:desk-lamp
-      friendly_name: Приглушенный свет
-      state: 'off'
-    switch.bedroom_desktop_bright_light:
-      icon: mdi:desk-lamp-on
-      friendly_name: Яркий свет
-      state: 'off'
-    light.meross_ambient_light_l:
-      min_color_temp_kelvin: 2700
-      max_color_temp_kelvin: 6500
-      min_mireds: 153
-      max_mireds: 370
-      supported_color_modes:
-      - color_temp
-      - rgb
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Цветной светильник слева
-      supported_features: 32
-      togglex_auto: true
-      state: 'off'
-    light.meross_ambient_light_r:
-      min_color_temp_kelvin: 2700
-      max_color_temp_kelvin: 6500
-      min_mireds: 153
-      max_mireds: 370
-      supported_color_modes:
-      - color_temp
-      - rgb
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Цветной светильник справа
-      supported_features: 32
-      togglex_auto: true
-      state: 'off'
-    switch.bedroom_bright_light:
-      icon: mdi:lightbulb-group
-      friendly_name: Яркий
-      state: 'off'
-    switch.bedroom_dimmed_light:
-      icon: mdi:lightbulb
-      friendly_name: Приглушенный свет
-      state: 'off'
-    switch.bedroom_mirror_backlight:
-      icon: mdi:mirror-rectangle
-      friendly_name: Подсветка зеркала
-      state: 'off'
-    light.stars_projector:
-      supported_color_modes:
-      - hs
-      - white
-      color_mode:
-      brightness:
-      hs_color:
-      rgb_color:
-      xy_color:
-      icon: mdi:star-four-points
-      friendly_name: Проектор звездное небо
-      supported_features: 0
-      state: 'off'
-    switch.living_room_bright_light:
-      icon: mdi:lightbulb-group
-      friendly_name: Яркий свет в гостиной
-      state: 'off'
-    switch.hall_wardrobe_light:
-      icon: mdi:led-strip-variant
-      friendly_name: Подсветка шкафа
-      state: 'off'
-    switch.living_room_dimmed_light:
-      icon: mdi:led-strip-variant
-      friendly_name: Подсветка
-      state: 'off'
-    switch.living_room_track:
-      icon: mdi:track-light
-      friendly_name: Трек в гостиной
-      state: 'off'
-    switch.hall_track_part_1:
-      icon: mdi:track-light
-      friendly_name: Свет в коридоре 1
-      state: 'off'
-    light.kitchen_hood_led_ext:
-      icon: mdi:fan
-      friendly_name: Подсветка вытяжки
-      state: 'off'
-    light.lava_lamp:
-      supported_color_modes:
-      - brightness
-      color_mode:
-      brightness:
-      icon: mdi:lava-lamp
-      friendly_name: Лава-лампа
-      supported_features: 0
-      state: 'off'
-    switch.hdmi_hub:
-      icon: mdi:hdmi-port
-      friendly_name: Хаб HDMI
-      state: 'off'
+- id: "0001"
+  name: Night
   icon: mdi:moon-waxing-crescent
-  metadata:
-    switch.kitchen_dinner_table:
-      entity_only: true
-    switch.kitchen_led_light:
-      entity_only: true
-    switch.bedroom_desktop_dimmed_light:
-      entity_only: true
-    switch.bedroom_desktop_bright_light:
-      entity_only: true
-    light.meross_ambient_light_l:
-      entity_only: true
-    light.meross_ambient_light_r:
-      entity_only: true
-    switch.bedroom_bright_light:
-      entity_only: true
-    switch.bedroom_dimmed_light:
-      entity_only: true
-    switch.bedroom_mirror_backlight:
-      entity_only: true
-    light.stars_projector:
-      entity_only: true
-    switch.living_room_bright_light:
-      entity_only: true
-    switch.hall_wardrobe_light:
-      entity_only: true
-    switch.living_room_dimmed_light:
-      entity_only: true
-    switch.living_room_track:
-      entity_only: true
-    switch.hall_track_part_1:
-      entity_only: true
-    light.kitchen_hood_led_ext:
-      entity_only: true
-    light.lava_lamp:
-      entity_only: true
-    switch.hdmi_hub:
-      entity_only: true
-- id: '1770043074667'
-  name: Work
   entities:
-    switch.hall_wardrobe_light:
-      icon: mdi:led-strip-variant
-      friendly_name: Подсветка шкафа
-      state: 'off'
-    switch.hall_track_part_1:
-      icon: mdi:track-light
-      friendly_name: Свет в коридоре 1
-      state: 'off'
-    switch.bedroom_dimmed_light:
-      icon: mdi:lightbulb
-      friendly_name: Приглушенный свет
-      state: 'off'
-    switch.bedroom_mirror_backlight:
-      icon: mdi:mirror-rectangle
-      friendly_name: Подсветка зеркала
-      state: 'off'
-    light.kitchen_hood_led_ext:
-      icon: mdi:fan
-      friendly_name: Подсветка вытяжки
-      state: 'off'
-    switch.kitchen_led_light:
-      icon: mdi:led-strip-variant
-      friendly_name: Подсветка кухни
-      state: 'off'
+    switch.living_room_bright_light:
+      state: "off"
     switch.kitchen_dinner_table:
-      icon: mdi:ceiling-light-multiple
-      friendly_name: Обеденный стол
-      state: 'off'
-    switch.living_room_dimmed_light:
-      icon: mdi:led-strip-variant
-      friendly_name: Подсветка
-      state: 'off'
-    light.meross_ambient_light_l:
-      min_color_temp_kelvin: 2700
-      max_color_temp_kelvin: 6500
-      supported_color_modes:
-      - color_temp
-      - rgb
-      color_mode: rgb
-      brightness: 166
-      color_temp_kelvin:
-      hs_color:
-      - 9.123
-      - 67.059
-      rgb_color:
-      - 255
-      - 110
-      - 84
-      xy_color:
-      - 0.589
-      - 0.329
-      togglex_auto: 1
-      friendly_name: Цветной светильник слева
-      supported_features: 32
-      state: 'on'
-    light.meross_ambient_light_r:
-      min_color_temp_kelvin: 2700
-      max_color_temp_kelvin: 6500
-      supported_color_modes:
-      - color_temp
-      - rgb
-      color_mode: rgb
-      brightness: 166
-      color_temp_kelvin:
-      hs_color:
-      - 9.123
-      - 67.059
-      rgb_color:
-      - 255
-      - 110
-      - 84
-      xy_color:
-      - 0.589
-      - 0.329
-      togglex_auto: 1
-      friendly_name: Цветной светильник справа
-      supported_features: 32
-      state: 'on'
-    switch.bedroom_desktop_dimmed_light:
-      icon: mdi:desk-lamp
-      friendly_name: Приглушенный свет
-      state: 'on'
+      state: "off"
+    switch.kitchen_led_light:
+      state: "off"
+    switch.kitchen_hood_led_ext:
+      state: "off"
+    switch.hall_wardrobe_light:
+      state: "off"
+    switch.hall_track_part_1:
+      state: "off"
+    switch.hall_track_part_2:
+      state: "off"
     switch.bedroom_desktop_bright_light:
-      icon: mdi:desk-lamp-on
-      friendly_name: Яркий свет
-      state: 'off'
+      state: "off"
+    switch.bedroom_desktop_dimmed_light:
+      state: "off"
     switch.bedroom_bright_light:
-      icon: mdi:lightbulb-group
-      friendly_name: Яркий
-      state: 'off'
+      state: "off"
+    switch.bedroom_mirror_backlight:
+      state: "off"
+    light.meross_ambient_light_l:
+      state: "off"
+    light.meross_ambient_light_r:
+      state: "off"
+    switch.bedroom_dimmed_light:
+      state: "off"
+    light.stars_projector:
+      state: "off"
+    switch.living_room_dimmed_light:
+      state: "off"
+    switch.living_room_track:
+      state: "off"
+    light.kitchen_hood_led_ext:
+      state: "off"
+    light.lava_lamp:
+      state: "off"
     switch.hdmi_hub:
-      icon: mdi:hdmi-port
-      friendly_name: Хаб HDMI
-      state: 'on'
+      state: "off"
+    input_number.oasis_target_temperature:
+      state: "16"
+    cover.bedroom_curtain:
+      state: "closed"
+    climate.living_room_air_conditioner:
+      state: "off"
+    switch.bedroom_air_conditioner_podsvetka:
+      state: "off"
+    media_player.yandex_station_m101k3a00pba6r:
+      state: "idle"
+      volume_level: 0.4
+    media_player.yandex_station_m00db3710dqrsg:
+      state: "idle"
+      volume_level: 0.4
+
+- id: "0002"
+  name: Sleep
+  icon: mdi:moon-waxing-crescent
+  entities:
+    switch.living_room_bright_light:
+      state: "off"
+    switch.living_room_dimmed_light:
+      state: "on"
+    switch.living_room_track:
+      state: "off"
+    switch.kitchen_dinner_table:
+      state: "off"
+    switch.kitchen_led_light:
+      state: "off"
+    switch.kitchen_hood_led_ext:
+      state: "off"
+    switch.hall_wardrobe_light:
+      state: "off"
+    switch.hall_track_part_1:
+      state: "off"
+    switch.hall_track_part_2:
+      state: "off"
+    switch.bedroom_desktop_bright_light:
+      state: "off"
+    switch.bedroom_desktop_dimmed_light:
+      state: "off"
+    switch.bedroom_bright_light:
+      state: "off"
+    switch.bedroom_mirror_backlight:
+      state: "off"
+    switch.bedroom_dimmed_light:
+      state: "on"
+    light.meross_ambient_light_l:
+      state: "on"
+      brightness: 166
+      rgb_color:
+        - 245
+        - 43
+        - 39
+    light.meross_ambient_light_r:
+      state: "on"
+      brightness: 166
+      rgb_color:
+        - 245
+        - 43
+        - 39
+    light.stars_projector:
+      state: "on"
+    light.lava_lamp:
+      state: "off"
+    switch.hdmi_hub:
+      state: "off"
+    input_number.oasis_target_temperature:
+      state: "16"
+    cover.bedroom_curtain:
+      state: "closed"
+    climate.living_room_air_conditioner:
+      state: "off"
+    media_player.yandex_station_m101k3a00pba6r:
+      state: "idle"
+      volume_level: 0.4
+    media_player.yandex_station_m00db3710dqrsg:
+      state: "idle"
+      volume_level: 0.4
+
+- id: "0003"
+  name: Work
   icon: mdi:briefcase
-  metadata:
-    switch.hall_wardrobe_light:
-      entity_only: true
-    switch.hall_track_part_1:
-      entity_only: true
-    switch.bedroom_dimmed_light:
-      entity_only: true
-    switch.bedroom_mirror_backlight:
-      entity_only: true
-    light.kitchen_hood_led_ext:
-      entity_only: true
-    switch.kitchen_led_light:
-      entity_only: true
+  entities:
+    switch.living_room_bright_light:
+      state: "off"
     switch.kitchen_dinner_table:
-      entity_only: true
-    switch.living_room_dimmed_light:
-      entity_only: true
-    light.meross_ambient_light_l:
-      entity_only: true
-    light.meross_ambient_light_r:
-      entity_only: true
-    switch.bedroom_desktop_dimmed_light:
-      entity_only: true
+      state: "off"
+    switch.kitchen_led_light:
+      state: "off"
+    switch.kitchen_hood_led_ext:
+      state: "off"
+    switch.hall_wardrobe_light:
+      state: "off"
+    switch.hall_track_part_1:
+      state: "off"
+    switch.hall_track_part_2:
+      state: "off"
     switch.bedroom_desktop_bright_light:
-      entity_only: true
+      state: "off"
+    switch.bedroom_desktop_dimmed_light:
+      state: "off"
     switch.bedroom_bright_light:
-      entity_only: true
+      state: "off"
+    switch.bedroom_mirror_backlight:
+      state: "off"
+    light.meross_ambient_light_l:
+      state: "on"
+      brightness: 166
+      rgb_color:
+        - 255
+        - 110
+        - 84
+    light.meross_ambient_light_r:
+      state: "on"
+      brightness: 166
+      rgb_color:
+        - 255
+        - 110
+        - 84
+    switch.bedroom_dimmed_light:
+      state: "on"
+    light.stars_projector:
+      state: "off"
+    switch.living_room_dimmed_light:
+      state: "off"
+    switch.living_room_track:
+      state: "off"
+    light.kitchen_hood_led_ext:
+      state: "off"
+    light.lava_lamp:
+      state: "off"
     switch.hdmi_hub:
-      entity_only: true
+      state: "on"
+    input_number.oasis_target_temperature:
+      state: "18"
+    cover.bedroom_curtain:
+      state: "open"
+
+- id: "0004"
+  name: Cinema
+  icon: mdi:theater
+  entities:
+    switch.living_room_bright_light:
+      state: "off"
+    switch.kitchen_dinner_table:
+      state: "off"
+    switch.kitchen_led_light:
+      state: "on"
+    switch.kitchen_hood_led_ext:
+      state: "off"
+    switch.hall_wardrobe_light:
+      state: "off"
+    switch.hall_track_part_1:
+      state: "off"
+    switch.hall_track_part_2:
+      state: "off"
+    switch.bedroom_desktop_bright_light:
+      state: "off"
+    switch.bedroom_desktop_dimmed_light:
+      state: "off"
+    switch.bedroom_bright_light:
+      state: "off"
+    switch.bedroom_mirror_backlight:
+      state: "off"
+    light.meross_ambient_light_l:
+      state: "off"
+    light.meross_ambient_light_r:
+      state: "off"
+    switch.bedroom_dimmed_light:
+      state: "off"
+    light.stars_projector:
+      state: "off"
+    switch.living_room_dimmed_light:
+      state: "off"
+    switch.living_room_track:
+      state: "off"
+    light.kitchen_hood_led_ext:
+      state: "off"
+    light.lava_lamp:
+      state: "off"
+    switch.hdmi_hub:
+      state: "off"
+    cover.bedroom_curtain:
+      state: "closed"
+    cover.living_room_curtain:
+      state: "closed"
+    cover.living_room_roll_curtain:
+      state: "closed"
+    input_select.audio_system_signal_source:
+      state: "Optical"
+
+- id: "0005"
+  name: After Cinema
+  icon: mdi:theater
+  entities:
+    switch.kitchen_dinner_table:
+      state: "off"
+    switch.kitchen_led_light:
+      state: "on"
+    switch.living_room_dimmed_light:
+      state: "on"
+    cover.bedroom_curtain:
+      state: "open"
+    cover.living_room_curtain:
+      state: "open"
+    cover.living_room_roll_curtain:
+      state: "open"
+    input_select.audio_system_signal_source:
+      state: "Line 1"
+    switch.xgimi_horizon_ultra:
+      state: "off"
+
+- id: "0006"
+  name: Leave
+  icon: mdi:home-export-outline
+  entities:
+    switch.living_room_bright_light:
+      state: "off"
+    switch.kitchen_dinner_table:
+      state: "off"
+    switch.kitchen_led_light:
+      state: "off"
+    switch.kitchen_hood_led_ext:
+      state: "off"
+    switch.hall_wardrobe_light:
+      state: "on"
+    switch.hall_track_part_1:
+      state: "off"
+    switch.hall_track_part_2:
+      state: "off"
+    switch.bedroom_desktop_bright_light:
+      state: "off"
+    switch.bedroom_desktop_dimmed_light:
+      state: "off"
+    switch.bedroom_bright_light:
+      state: "off"
+    switch.bedroom_mirror_backlight:
+      state: "off"
+    light.meross_ambient_light_l:
+      state: "off"
+    light.meross_ambient_light_r:
+      state: "off"
+    switch.bedroom_dimmed_light:
+      state: "off"
+    light.stars_projector:
+      state: "off"
+    switch.living_room_dimmed_light:
+      state: "off"
+    switch.living_room_track:
+      state: "off"
+    light.kitchen_hood_led_ext:
+      state: "off"
+    light.lava_lamp:
+      state: "off"
+    switch.hdmi_hub:
+      state: "off"
+
+    switch.bathroom_bright_light:
+      state: "off"
+    switch.bathroom_dimmed_light:
+      state: "off"
+    switch.bathroom_sconce:
+      state: "off"
+    switch.laundry_light:
+      state: "off"
+    switch.store_room_light:
+      state: "off"
+    switch.store_room_table_light:
+      state: "off"
+
+    climate.living_room_air_conditioner:
+      state: "off"
+    climate.bedroom_air_conditioner:
+      state: "off"
+    climate.kids_room_air_conditioner:
+      state: "off"
+    switch.humidifier_system_control_switch_l1:
+      state: "off"
+    switch.humidifier_system_control_switch_l2:
+      state: "off"
+    switch.humidifier_system_control_switch_l3:
+      state: "off"
+    switch.oasis_power:
+      state: "off"
+
+- id: "0007"
+  name: Home
+  icon: mdi:home-import-outline
+  entities:
+    switch.humidifier_system_control_switch_l1:
+      state: "on"
+    switch.humidifier_system_control_switch_l2:
+      state: "on"
+    switch.humidifier_system_control_switch_l3:
+      state: "on"
+    switch.oasis_power:
+      state: "on"
+

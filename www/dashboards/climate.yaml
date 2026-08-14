@@ -58,7 +58,7 @@ views:
         cards:
           - type: custom:windrose-card
             data_period:
-              period_back: '-4w'
+              period_back: -4w
             refresh_interval: 300
             windspeed_bar_location: bottom
             wind_direction_entity:
@@ -486,6 +486,9 @@ views:
                         tap_action:
                           action: toggle
                         icon_color: amber
+                      - type: entity
+                        entity: binary_sensor.living_room_air_conditioner_activity
+                        content_info: state
                   - type: custom:mushroom-climate-card
                     entity: climate.living_room_air_conditioner
                     name: Гостиная
@@ -514,6 +517,8 @@ views:
                         tap_action:
                           action: toggle
                         icon_color: amber
+                      - type: entity
+                        entity: binary_sensor.bedroom_air_conditioner_activity
                   - type: custom:mushroom-climate-card
                     entity: climate.bedroom_air_conditioner
                     name: Спальня
@@ -540,6 +545,8 @@ views:
                         tap_action:
                           action: toggle
                         icon_color: amber
+                      - type: entity
+                        entity: binary_sensor.kids_room_air_conditioner_activity
                   - type: custom:mushroom-climate-card
                     entity: climate.kids_room_air_conditioner
                     name: Детская

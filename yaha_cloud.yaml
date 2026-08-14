@@ -2,6 +2,16 @@ settings:
   beta: true
 filter:
   include_entities:
+    - scene.sleep
+    - scene.night
+    - scene.work
+    - scene.leave
+    - scene.home
+    - scene.cinema
+    - scene.after_cinema
+    - script.feed_cats
+    - script.cat_spa
+    - script.loggia_heat
     # bathroom
     - switch.bathroom_dimmed_light
     - switch.bathroom_bright_light
@@ -59,7 +69,6 @@ filter:
     - switch.living_room_behind_sofa_socket
     - switch.humidifier_system_control_switch_l1
     - switch.xgimi_horizon_ultra
-    - switch.xgimi_sound
     - cover.living_room_curtain
     - cover.living_room_roll_curtain
     - climate.living_room_radiator_thermostat
@@ -87,6 +96,30 @@ filter:
   include_entity_globs: []
 
 entity_config:
+  scene.sleep:
+    name: Ложимся
+  scene.night:
+    name: Ночь
+  scene.work:
+    name: Работаю
+  scene.leave:
+    name: Уходим
+  scene.home:
+    name: Дома
+  scene.cinema:
+    name: Кинотеатр
+  scene.after_cinema:
+    name: Кино закончилось
+  script.feed_cats:
+    name: Кормить кошек
+    room: Кухня
+  script.cat_spa:
+    name: Копчение
+    room: Кухня
+  script.loggia_heat:
+    name: Нагрев балкона
+    room: Балкон
+
   # bathroom
   switch.bathroom_dimmed_light:
     name: Приглушенный свет
@@ -332,10 +365,6 @@ entity_config:
     type: devices.types.switch
   switch.xgimi_horizon_ultra:
     name: Проектор
-    room: Гостиная
-    type: devices.types.switch
-  switch.xgimi_sound:
-    name: Звук с проектора
     room: Гостиная
     type: devices.types.switch
   cover.living_room_curtain:

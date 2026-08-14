@@ -1,12 +1,3 @@
-reset_petkit_pura_air_filter:
-  alias: "Petkit Pura Air - Сбросить фильтр"
-  sequence:
-    - action: input_datetime.set_datetime
-      target:
-        entity_id: input_datetime.petkit_pura_air_filter_replaced
-      data:
-        date: "{{ now().strftime('%Y-%m-%d') }}"
-
 laundry_water_valve_toggle_by_state:
   alias: Laundry water valve toggle by state
   mode: single
@@ -54,3 +45,91 @@ kitchen_water_valve_toggle_by_state:
               target:
                 entity_id: switch.kitchen_water_valve_open
       default: []
+
+loggia_heat:
+  alias: Loggia heat
+  icon: mdi:fireplace
+  mode: single
+  sequence:
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.loggia_heat_floor
+      data:
+        temperature: 30 s
+    - action: switch.turn_on
+      target:
+        entity_id: switch.fireplace_plug
+    - delay: "00:20:00"
+    - action: switch.turn_on
+      target:
+        entity_id: switch.bedroom_mirror_backlight
+    - delay: "02:00:00"
+    - action: switch.turn_off
+      target:
+        entity_id: switch.fireplace_plug
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.loggia_heat_floor
+      data:
+        temperature: 23
+
+cat_spa:
+  alias: Cat spa
+  icon: mdi:cat
+  mode: single
+  sequence:    
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.yandex_station_m101k3a00pba6r
+      data:
+        volume_level: 0.4
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.yandex_station_m101k3a00pba6r
+      data:
+        media_content_id: "Начинаем кошачьи спа-процедуры"
+        media_content_type: text
+    - delay: "00:00:04"
+    - action: switch.turn_on
+      target:
+        entity_id: switch.kitchen_socket
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.yandex_station_m101k3a00pba6r
+      data:
+        volume_level: 0.6
+    - action: yandex_station.send_command
+      data:
+        entity_id: media_player.yandex_station_m101k3a00pba6r
+        text: "Поставь таймер на 15 минут"
+    - delay: "00:14:50"
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.yandex_station_m101k3a00pba6r
+      data:
+        volume_level: 0.4
+    - action: yandex_station.send_command
+      data:
+        entity_id: media_player.yandex_station_m101k3a00pba6r
+        text: "Отключи таймер"
+    - delay: "00:00:10"
+    - action: switch.turn_off
+      target:
+        entity_id: switch.kitchen_socket
+
+feed_cats:
+  alias: Feed Cats
+  icon: mdi:cat
+  mode: single
+  sequence:
+    - action: select.select_option
+      target:
+        entity_id: select.fresh_element_solo_1_manual_feed
+      data:
+        option: "1/10th Cup (10g)"
+    - delay: "00:00:02"
+    - action: select.select_option
+      target:
+        entity_id: select.fresh_element_solo_2_manual_feed
+      data:
+        option: "1/10th Cup (10g)"
