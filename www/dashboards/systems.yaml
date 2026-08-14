@@ -942,20 +942,6 @@ views:
                       attributes:
                         device_class: battery
                       state: unavailable
-                    - options:
-                        type: custom:bar-sensor-card
-                        enable_dynamic_icon_color: true
-                        display_mode: icon
-                      entity_id: sensor.*_battery_status
-                      state: < 50
-                    - options:
-                        type: custom:mushroom-entity-card
-                      entity_id: sensor.*_battery_status
-                      state: unknown
-                    - options:
-                        type: custom:mushroom-entity-card
-                      entity_id: sensor.*_battery_status
-                      state: unavailable
                   exclude: []
                 sort:
                   method: state
