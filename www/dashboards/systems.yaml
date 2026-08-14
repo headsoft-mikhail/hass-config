@@ -117,11 +117,9 @@ views:
                 name: Уходим
                 tap_action:
                   action: toggle
-      - type: grid
-        cards:
           - type: markdown
             text_only: true
-            content: '## Сцены'
+            content: '## Сценарии'
           - square: false
             type: grid
             cards:
