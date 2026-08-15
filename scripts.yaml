@@ -55,7 +55,7 @@ loggia_heat:
       target:
         entity_id: climate.loggia_heat_floor
       data:
-        temperature: 30 s
+        temperature: 30
     - action: switch.turn_on
       target:
         entity_id: switch.fireplace_plug

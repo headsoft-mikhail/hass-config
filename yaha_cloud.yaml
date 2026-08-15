@@ -57,7 +57,6 @@ filter:
     - switch.kitchen_dinner_table
     - switch.kitchen_led_light
     - switch.kitchen_socket
-    - switch.feed_cats_switch
     - switch.kitchen_hood_fan_ext
     - light.kitchen_hood_led_ext
     - cover.kitchen_water_valve
@@ -321,10 +320,6 @@ entity_config:
     name: Розетка в кухне
     room: Кухня
     type: devices.types.socket
-  switch.feed_cats_switch:
-    name: Покормить кошек
-    room: Кухня
-    type: devices.types.switch
   switch.kitchen_hood_fan_ext:
     name: Вытяжка
     room: Кухня
