@@ -781,54 +781,18 @@ template:
               entity_id: switch.laundry_water_valve_close
       - name: Xgimi Horizon Ultra
         unique_id: xgimi_horizon_ultra
-        state: "{{ is_state('remote.xgimi_horizon_ultra_switch_off', 'on') }}"
+        state: "{{ is_state('binary_sensor.ping_xgimi', 'on') }}"
         icon: >-
-          {% if is_state('remote.xgimi_horizon_ultra_switch_off', 'on') %}
+          {% if is_state('binary_sensor.ping_xgimi', 'on') %}
             mdi:projector
           {% else %}
             mdi:projector-off
           {% endif %}
-        turn_on:
-          action: remote.turn_on
-          target:
-            entity_id: remote.xgimi_horizon_ultra_switch_on
+        turn_on: []
         turn_off:
-          sequence:
-            - action: remote.turn_off
-              target:
-                entity_id: remote.xgimi_horizon_ultra_switch_off
-            - action: remote.turn_off
-              target:
-                entity_id: remote.xgimi_horizon_ultra_switch_on
-      - name: XGIMI sound
-        unique_id: xgimi_sound
-        icon: mdi:surround-sound
-        state: >
-          {{ is_state('input_select.audio_system_signal_source', 'Optical') }}
-        turn_on:
-          action: input_select.select_option
+          action: remote.turn_off
           target:
-            entity_id: input_select.audio_system_signal_source
-          data:
-            option: "Optical"
-        turn_off:
-          action: input_select.select_option
-          target:
-            entity_id: input_select.audio_system_signal_source
-          data:
-            option: "Line 1"
-      - name: Feed cats switch
-        unique_id: feed_cats_switch
-        icon: mdi:hamburger-plus
-        turn_on:
-          sequence:
-            - action: automation.trigger
-              target:
-                entity_id: automation.petkit_feeder_1_act
-            - action: automation.trigger
-              target:
-                entity_id: automation.petkit_feeder_2_act
-        turn_off: []
+            entity_id: remote.xgimi_horizon_ultra_switch_off
       - name: Kitchen Hood Fan Ext
         unique_id: kitchen_hood_fan_ext
         icon: >

@@ -231,30 +231,7 @@
         domain: text
         value: BYcjpRFBAuAHAQOZBkEC4AMBQA/AA8ABwA/gAwfgFwHgAyvgAwsHGaCHI6oIQQI=
   mode: single
-- id: '0011'
-  alias: petkit_feeder_1_act
-  description: Выдать порцию еды Petkit Feeder 1
-  triggers: []
-  conditions: []
-  actions:
-  - device_id: 81a094e022d2b74f6460993e1d717bfc
-    domain: select
-    entity_id: 4602dd31c4c59efbb1a950b8c7b0d4a3
-    type: select_option
-    option: 1/10th Cup (10g)
-  mode: single
-- id: '0012'
-  alias: petkit_feeder_2_act
-  description: Выдать порцию еды Petkit Feeder 2
-  triggers: []
-  conditions: []
-  actions:
-  - device_id: 72e9542e1e36f6df0e408762c518bf8c
-    domain: select
-    entity_id: f9e820aad82b338f68d514f0f8ff789d
-    type: select_option
-    option: 1/10th Cup (10g)
-  mode: single
+
 - id: '0013'
   alias: select_kitchen_water_valve_state
   mode: queued
@@ -421,30 +398,7 @@
   - action: switch.turn_off
     target:
       entity_id: switch.store_room_socket
-- id: '0018'
-  alias: feed_cats_switch_auto_turn_off
-  description: Отключить переключатель кормления кошек
-  triggers:
-  - trigger: state
-    entity_id:
-    - switch.feed_cats_switch
-    from:
-    - 'off'
-    to:
-    - 'on'
-  conditions: []
-  actions:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 3
-      milliseconds: 0
-  - action: switch.turn_off
-    metadata: {}
-    target:
-      entity_id: switch.feed_cats_switch
-    data: {}
-  mode: single
+
 - id: '0019'
   alias: notify_about_low_humidity
   description: Уведомление о низкой влажности

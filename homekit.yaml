@@ -217,12 +217,12 @@
       - switch.kitchen_led_light
       - switch.kitchen_socket
       - switch.kitchen_water_valve_switch
-      - switch.feed_cats_switch
       - switch.kitchen_hood_fan_ext
       - light.kitchen_hood_led_ext
       - binary_sensor.dishwasher_activity
       - binary_sensor.kitchen_sink_water_leak_sensor
       - binary_sensor.kitchen_dishwasher_water_leak_sensor
+      - script.feed_cats
   entity_config:
     switch.kitchen_dinner_table:
       name: Свет над столом
@@ -234,8 +234,6 @@
     switch.kitchen_water_valve_switch:
       name: Вода
       type: valve
-    switch.feed_cats_switch:
-      name: Покормить кошек
     switch.kitchen_hood_fan_ext:
       name: Вытяжка
     light.kitchen_hood_led_ext:
@@ -250,6 +248,8 @@
       name: Протечка за посудомойкой
       linked_battery_sensor: sensor.kitchen_dishwasher_water_leak_sensor_battery
       low_battery_threshold: 25
+    script.feed_cats:
+      name: Покормить кошек
 
 - name: HASS Bridge LivingRoom
   port: 56325

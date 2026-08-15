@@ -51,11 +51,23 @@
     switch.bedroom_air_conditioner_podsvetka:
       state: "off"
     media_player.yandex_station_m101k3a00pba6r:
-      state: "idle"
+      state: "off"
       volume_level: 0.4
     media_player.yandex_station_m00db3710dqrsg:
-      state: "idle"
+      state: "off"
       volume_level: 0.4
+    switch.bathroom_bright_light:
+      state: "off"
+    switch.bathroom_dimmed_light:
+      state: "off"
+    switch.bathroom_sconce:
+      state: "off"
+    switch.laundry_light:
+      state: "off"
+    switch.store_room_light:
+      state: "off"
+    switch.store_room_table_light:
+      state: "off"
 
 - id: "0002"
   name: Sleep
@@ -93,16 +105,16 @@
       state: "on"
       brightness: 166
       rgb_color:
-        - 245
-        - 43
-        - 39
+        - 178
+        - 68
+        - 193
     light.meross_ambient_light_r:
       state: "on"
       brightness: 166
       rgb_color:
-        - 245
-        - 43
-        - 39
+        - 178
+        - 68
+        - 193
     light.stars_projector:
       state: "on"
     light.lava_lamp:
@@ -116,11 +128,15 @@
     climate.living_room_air_conditioner:
       state: "off"
     media_player.yandex_station_m101k3a00pba6r:
-      state: "idle"
+      state: "off"
       volume_level: 0.4
     media_player.yandex_station_m00db3710dqrsg:
-      state: "idle"
+      state: "off"
       volume_level: 0.4
+    switch.store_room_light:
+      state: "off"
+    switch.store_room_table_light:
+      state: "off"
 
 - id: "0003"
   name: Work
@@ -152,16 +168,16 @@
       state: "on"
       brightness: 166
       rgb_color:
-        - 255
-        - 110
-        - 84
+        - 245
+        - 43
+        - 39
     light.meross_ambient_light_r:
       state: "on"
       brightness: 166
       rgb_color:
-        - 255
-        - 110
-        - 84
+        - 245
+        - 43
+        - 39
     switch.bedroom_dimmed_light:
       state: "on"
     light.stars_projector:
@@ -340,4 +356,3 @@
       state: "on"
     switch.oasis_power:
       state: "on"
-

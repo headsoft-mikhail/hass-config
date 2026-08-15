@@ -83,18 +83,8 @@ views:
             type: grid
             cards:
               - type: custom:mushroom-entity-card
-                entity: scene.work
-                name: Работа
-                tap_action:
-                  action: toggle
-              - type: custom:mushroom-entity-card
                 entity: scene.sleep
                 name: Сон
-                tap_action:
-                  action: toggle
-              - type: custom:mushroom-entity-card
-                entity: scene.sleep
-                name: Ночь
                 tap_action:
                   action: toggle
               - type: custom:mushroom-entity-card
@@ -103,18 +93,28 @@ views:
                 tap_action:
                   action: toggle
               - type: custom:mushroom-entity-card
-                entity: scene.after_cinema
-                name: Кино закончилось
-                tap_action:
-                  action: toggle
-              - type: custom:mushroom-entity-card
                 entity: scene.home
                 name: Мы дома
                 tap_action:
                   action: toggle
               - type: custom:mushroom-entity-card
+                entity: scene.sleep
+                name: Ночь
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: scene.after_cinema
+                name: Кино закончилось
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
                 entity: scene.leave
                 name: Уходим
+                tap_action:
+                  action: toggle
+              - type: custom:mushroom-entity-card
+                entity: scene.work
+                name: Работа
                 tap_action:
                   action: toggle
           - type: markdown
@@ -478,22 +478,21 @@ views:
                     min: 0
                     max: 50
                   - type: custom:mushroom-entity-card
-                    entity: automation.petkit_feeder_1_act
+                    entity: select.fresh_element_solo_1_manual_feed
+                    name: Кормить
                     icon: mdi:hamburger-plus
                     icon_color: purple
                     hold_action:
-                      action: perform-action
-                      perform_action: automation.trigger
-                      target:
-                        entity_id: automation.petkit_feeder_1_act
-                      data:
-                        skip_condition: true
-                    tap_action:
                       action: none
+                    tap_action:
+                      action: select.select_option
+                      target:
+                        entity_id: select.fresh_element_solo_1_manual_feed
+                      data:
+                        option: 1/10th Cup (10g)
                     secondary_info: last-updated
                     fill_container: true
                     layout: vertical
-                    name: Кормить
                 layout:
                   grid-template-columns: auto 30%
                   margin: 0px
@@ -551,22 +550,22 @@ views:
                     min: 0
                     max: 50
                   - type: custom:mushroom-entity-card
-                    entity: automation.petkit_feeder_2_act
+                    entity: select.fresh_element_solo_2_manual_feed
+                    name: Кормить
                     icon: mdi:hamburger-plus
                     icon_color: purple
                     hold_action:
-                      action: perform-action
-                      perform_action: automation.trigger
-                      target:
-                        entity_id: automation.petkit_feeder_2_act
-                      data:
-                        skip_condition: true
+                      action: none
                     secondary_info: last-updated
                     fill_container: true
                     layout: vertical
                     tap_action:
-                      action: none
-                    name: Кормить
+                      action: select.select_option
+                      target:
+                        entity_id: select.fresh_element_solo_2_manual_feed
+                      data:
+                        option: 1/10th Cup (10g)
+                        name: Кормить
                 layout:
                   grid-template-columns: auto 30%
                   margin: 0px
