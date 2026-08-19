@@ -334,7 +334,7 @@ views:
                 square: false
                 cards:
                   - type: custom:mushroom-climate-card
-                    entity: climate.living_room_air_conditioner
+                    entity: climate.gostinaia_haier_black
                     name: Кондиционер
                     hvac_modes:
                       - 'off'
@@ -597,7 +597,7 @@ views:
                 columns: 2
                 cards:
                   - type: custom:mushroom-climate-card
-                    entity: climate.bedroom_air_conditioner
+                    entity: climate.spalnia_haier_white
                     name: Кондиционер
                     hvac_modes:
                       - 'off'
@@ -751,7 +751,7 @@ views:
                 square: false
                 cards:
                   - type: custom:mushroom-climate-card
-                    entity: climate.kids_room_air_conditioner
+                    entity: climate.detskaia_haier_white
                     name: Кондиционер
                     hvac_modes:
                       - 'off'

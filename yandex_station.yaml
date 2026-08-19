@@ -1,7 +1,25 @@
 include: 
   - name: Кондиционер
     room_name: Гостиная
+    capabilities:
+      - themostat
+      - temperature
+      - fan_speed
+      - swing
+      - backlight
   - name: Кондиционер
     room_name: Спальня
+    capabilities:
+      - themostat
+      - temperature
+      - fan_speed
+      - swing
+      - backlight
   - name: Кондиционер
     room_name: Детская
+    capabilities:
+      - themostat
+      - temperature
+      - fan_speed
+      - swing
+      - backlight

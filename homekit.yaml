@@ -72,7 +72,7 @@
       - switch.humidifier_system_control_switch_l2
       - cover.bedroom_curtain
       - climate.bedroom_radiator_thermostat
-      - climate.bedroom_air_conditioner
+      - climate.spalnia_haier_white
       - sensor.airmonitor2_temperature
       - sensor.airmonitor2_humidity
       - sensor.airmonitor2_tvoc_ug
@@ -113,7 +113,7 @@
       name: Батарея
       linked_battery_sensor: sensor.bedroom_radiator_thermostat_battery
       low_battery_threshold: 25
-    climate.bedroom_air_conditioner:
+    climate.spalnia_haier_white:
       name: Кондиционер
     sensor.airmonitor2_temperature:
       name: Температура
@@ -179,7 +179,7 @@
       - switch.humidifier_system_control_switch_l3
       - cover.kids_room_curtain
       - climate.kids_room_radiator_thermostat
-      - climate.kids_room_air_conditioner
+      - climate.detskaia_haier_white
       - sensor.kids_room_temperature
       - sensor.kids_room_humidity
   entity_config:
@@ -198,7 +198,7 @@
       name: Батарея
       linked_battery_sensor: sensor.kids_room_radiator_thermostat_battery
       low_battery_threshold: 25
-    climate.kids_room_air_conditioner:
+    climate.detskaia_haier_white:
       name: Кондиционер
     sensor.kids_room_temperature:
       name: Температура
@@ -264,7 +264,7 @@
       - cover.living_room_curtain
       - cover.living_room_roll_curtain
       - climate.living_room_radiator_thermostat
-      - climate.living_room_air_conditioner
+      - climate.gostinaia_haier_black
       - sensor.kitchen_temperature
       - sensor.kitchen_humidity
       - sensor.living_room_luminance_sensor_illuminance
@@ -291,7 +291,7 @@
       name: Батарея
       linked_battery_sensor: sensor.living_room_radiator_thermostat_battery
       low_battery_threshold: 25
-    climate.living_room_air_conditioner:
+    climate.gostinaia_haier_black:
       name: Кондиционер
     sensor.kitchen_temperature:
       name: Температура

@@ -479,18 +479,16 @@ views:
                         entity: sensor.kitchen_temperature
                         icon_color: deep-orange
                       - type: entity
-                        entity: switch.living_room_air_conditioner_podsvetka
+                        entity: switch.gostinaia_haier_black_podsvetka
                         use_entity_picture: false
                         content_info: name
                         name: Подсветка
                         tap_action:
                           action: toggle
                         icon_color: amber
-                      - type: entity
-                        entity: binary_sensor.living_room_air_conditioner_activity
-                        content_info: state
+                        icon: mdi:lightbulb
                   - type: custom:mushroom-climate-card
-                    entity: climate.living_room_air_conditioner
+                    entity: climate.gostinaia_haier_black
                     name: Гостиная
                     tap_action:
                       action: more-info
@@ -510,17 +508,16 @@ views:
                         entity: sensor.airmonitor2_temperature
                         icon_color: deep-orange
                       - type: entity
-                        entity: switch.bedroom_air_conditioner_podsvetka
+                        entity: switch.spalnia_haier_white_bedroom_podsvetka
                         use_entity_picture: false
                         content_info: name
                         name: Подсветка
                         tap_action:
                           action: toggle
                         icon_color: amber
-                      - type: entity
-                        entity: binary_sensor.bedroom_air_conditioner_activity
+                        icon: mdi:lightbulb
                   - type: custom:mushroom-climate-card
-                    entity: climate.bedroom_air_conditioner
+                    entity: climate.spalnia_haier_white
                     name: Спальня
                     tap_action:
                       action: more-info
@@ -538,17 +535,16 @@ views:
                         entity: sensor.kids_room_temperature
                         icon_color: deep-orange
                       - type: entity
-                        entity: switch.kids_room_air_conditioner_podsvetka
+                        entity: switch.detskaia_konditsioner_podsvetka
                         use_entity_picture: false
                         content_info: name
                         name: Подсветка
                         tap_action:
                           action: toggle
                         icon_color: amber
-                      - type: entity
-                        entity: binary_sensor.kids_room_air_conditioner_activity
+                        icon: mdi:lightbulb
                   - type: custom:mushroom-climate-card
-                    entity: climate.kids_room_air_conditioner
+                    entity: climate.detskaia_haier_white
                     name: Детская
                     tap_action:
                       action: more-info
@@ -574,6 +570,9 @@ views:
                 entity: sensor.air_conditioner_system_relay_power
                 icon_color: orange
                 icon: mdi:lightning-bolt
+              - type: entity
+                entity: counter.haier_yaha_refresh
+                icon_color: light-blue
     header:
       card:
         type: markdown

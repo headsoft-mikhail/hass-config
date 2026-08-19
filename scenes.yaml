@@ -1,4 +1,4 @@
-- id: "0001"
+- id: "0001"  # Night
   name: Night
   icon: mdi:moon-waxing-crescent
   entities:
@@ -46,9 +46,9 @@
       state: "16"
     cover.bedroom_curtain:
       state: "closed"
-    climate.living_room_air_conditioner:
+    climate.gostinaia_haier_black:
       state: "off"
-    switch.bedroom_air_conditioner_podsvetka:
+    switch.spalnia_haier_white_bedroom_podsvetka:
       state: "off"
     media_player.yandex_station_m101k3a00pba6r:
       state: "off"
@@ -69,7 +69,7 @@
     switch.store_room_table_light:
       state: "off"
 
-- id: "0002"
+- id: "0002"  # Sleep
   name: Sleep
   icon: mdi:moon-waxing-crescent
   entities:
@@ -125,7 +125,7 @@
       state: "16"
     cover.bedroom_curtain:
       state: "closed"
-    climate.living_room_air_conditioner:
+    climate.gostinaia_haier_black:
       state: "off"
     media_player.yandex_station_m101k3a00pba6r:
       state: "off"
@@ -138,7 +138,7 @@
     switch.store_room_table_light:
       state: "off"
 
-- id: "0003"
+- id: "0003"  # Work
   name: Work
   icon: mdi:briefcase
   entities:
@@ -159,7 +159,7 @@
     switch.bedroom_desktop_bright_light:
       state: "off"
     switch.bedroom_desktop_dimmed_light:
-      state: "off"
+      state: "on"
     switch.bedroom_bright_light:
       state: "off"
     switch.bedroom_mirror_backlight:
@@ -197,7 +197,7 @@
     cover.bedroom_curtain:
       state: "open"
 
-- id: "0004"
+- id: "0004"  # Cinema
   name: Cinema
   icon: mdi:theater
   entities:
@@ -250,7 +250,7 @@
     input_select.audio_system_signal_source:
       state: "Optical"
 
-- id: "0005"
+- id: "0005"  # After Cinema
   name: After Cinema
   icon: mdi:theater
   entities:
@@ -271,7 +271,7 @@
     switch.xgimi_horizon_ultra:
       state: "off"
 
-- id: "0006"
+- id: "0006"  # Leave
   name: Leave
   icon: mdi:home-export-outline
   entities:
@@ -329,11 +329,11 @@
     switch.store_room_table_light:
       state: "off"
 
-    climate.living_room_air_conditioner:
+    climate.gostinaia_haier_black:
       state: "off"
-    climate.bedroom_air_conditioner:
+    climate.spalnia_haier_white:
       state: "off"
-    climate.kids_room_air_conditioner:
+    climate.detskaia_haier_white:
       state: "off"
     switch.humidifier_system_control_switch_l1:
       state: "off"
@@ -344,7 +344,7 @@
     switch.oasis_power:
       state: "off"
 
-- id: "0007"
+- id: "0007"  # Home
   name: Home
   icon: mdi:home-import-outline
   entities:
