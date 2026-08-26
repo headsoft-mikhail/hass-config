@@ -1,3 +1,4 @@
+# notifications
 - id: '0001'  # notify_about_download_completed
   alias: notify_about_download_completed
   description: Уведомление о завершении загрузки transmission
@@ -16,6 +17,47 @@
       id: '{{trigger.event.data.id}}'
       delete_data: false
   mode: single
+- id: '0002'  # notify_about_door_not_locked
+  alias: notify_about_door_not_locked
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id:
+        - binary_sensor.hall_contact_sensor
+        - lock.aqara_smart_lock_u200
+  conditions:
+    - condition: state
+      entity_id: binary_sensor.hall_contact_sensor
+      state: "on"
+    - condition: state
+      entity_id: lock.aqara_smart_lock_u200
+      state: "unlocked"
+  actions:
+    - wait_for_trigger:
+        - trigger: state
+          entity_id: binary_sensor.hall_contact_sensor
+          to: "off" 
+        - trigger: state
+          entity_id: lock.aqara_smart_lock_u200
+          to: "locked"
+      timeout: "00:02:00"
+      continue_on_timeout: true
+    - condition: template
+      value_template: "{{ wait.completed == false }}"
+    - repeat:
+        while:
+          - condition: state
+            entity_id: binary_sensor.hall_contact_sensor
+            state: "on"
+          - condition: state
+            entity_id: lock.aqara_smart_lock_u200
+            state: "unlocked"
+        sequence:
+          - action: notify.notify
+            data:
+              title: "Внимание!"
+              message: "Дверь не заперта"
+          - delay: "00:05:00"
 - id: '0003'  # notify_about_homeassistant_started
   alias: notify_about_homeassistant_started
   description: Уведомление о запуске Homeassistant
@@ -145,6 +187,58 @@
         Ура!
         {% endif %}
   mode: restart
+- id: '0015'  # notify_about_switch_state_changed
+  alias: notify_about_switch_state_changed
+  triggers:
+  - trigger: state
+    entity_id:
+    - switch.fridge_socket
+    - switch.washing_machine
+    - switch.drying_machine
+    - switch.dishwasher
+    not_from:
+    - unknown
+    - unavailable
+  actions:
+  - action: notify.notify
+    data:
+      title: Изменение состояния устройства
+      message: '{{ trigger.to_state.name }} меняет состояние с "{{ trigger.from_state.state
+        | replace("on","включено") | replace("off","выключено") }}" на "{{ trigger.to_state.state
+        | replace("on","включено") | replace("off","выключено") }}"'
+  mode: queued
+- id: '0016'  # notify_about_activity_ended
+  alias: notify_about_activity_ended
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.washing_machine_activity
+    - binary_sensor.drying_machine_activity
+    - binary_sensor.dishwasher_activity
+    - binary_sensor.3d_printer_activity
+    from: 'on'
+    to: 'off'
+  variables:
+    device_name: '{{ trigger.to_state.name }}'
+  actions:
+  - action: notify.notify
+    data:
+      title: Завершение активности
+      message: '{{ device_name }} — активность завершена'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.entity_id == "binary_sensor.dishwasher_activity"}}'
+      sequence:
+      - delay:
+          minutes: 22
+      - action: notify.notify
+        data:
+          title: Завершение активности
+          message: '{{ device_name }} — активность завершена, теперь точно'
+  mode: queued
+# notifications
+
 - id: '0009'  # end_lavalamp_warming
   alias: end_lavalamp_warming
   description: Переключить яркость лавалампы на 40% после 90 минут на 100%
@@ -383,56 +477,6 @@
           entity_id: input_select.laundry_water_valve_state
         data:
           option: "{% if prev in ['opening', 'open'] %}open{% elif prev in ['closing', 'closed'] %}closed{% else %}{{ prev }}{% endif %}"
-- id: '0015'  # notify_about_switch_state_changed
-  alias: notify_about_switch_state_changed
-  triggers:
-  - trigger: state
-    entity_id:
-    - switch.fridge_socket
-    - switch.washing_machine
-    - switch.drying_machine
-    - switch.dishwasher
-    not_from:
-    - unknown
-    - unavailable
-  actions:
-  - action: notify.notify
-    data:
-      title: Изменение состояния устройства
-      message: '{{ trigger.to_state.name }} меняет состояние с "{{ trigger.from_state.state
-        | replace("on","включено") | replace("off","выключено") }}" на "{{ trigger.to_state.state
-        | replace("on","включено") | replace("off","выключено") }}"'
-  mode: queued
-- id: '0016'  # notify_about_activity_ended
-  alias: notify_about_activity_ended
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.washing_machine_activity
-    - binary_sensor.drying_machine_activity
-    - binary_sensor.dishwasher_activity
-    - binary_sensor.3d_printer_activity
-    from: 'on'
-    to: 'off'
-  variables:
-    device_name: '{{ trigger.to_state.name }}'
-  actions:
-  - action: notify.notify
-    data:
-      title: Завершение активности
-      message: '{{ device_name }} — активность завершена'
-  - choose:
-    - conditions:
-      - condition: template
-        value_template: '{{ trigger.entity_id == "binary_sensor.dishwasher_activity"}}'
-      sequence:
-      - delay:
-          minutes: 22
-      - action: notify.notify
-        data:
-          title: Завершение активности
-          message: '{{ device_name }} — активность завершена, теперь точно'
-  mode: queued
 - id: '0017'  # turn_off_vertical_vacuum_cleaner_charging_after_4h
   alias: turn_off_vertical_vacuum_cleaner_charging_after_4h
   triggers:
@@ -651,163 +695,8 @@
   - action: input_boolean.toggle
     target:
       entity_id: input_boolean.kitchen_hood_fan_state
-- id: '0024'  # notify_about_door_not_locked
-  alias: notify_about_door_not_locked
-  mode: restart
-  triggers:
-    - trigger: state
-      entity_id:
-        - binary_sensor.hall_contact_sensor
-        - lock.aqara_smart_lock_u200
-  conditions:
-    - condition: state
-      entity_id: binary_sensor.hall_contact_sensor
-      state: "on"
-    - condition: state
-      entity_id: lock.aqara_smart_lock_u200
-      state: "unlocked"
-  actions:
-    - wait_for_trigger:
-        - trigger: state
-          entity_id: binary_sensor.hall_contact_sensor
-          to: "off" 
-        - trigger: state
-          entity_id: lock.aqara_smart_lock_u200
-          to: "locked"
-      timeout: "00:02:00"
-      continue_on_timeout: true
-    - condition: template
-      value_template: "{{ wait.completed == false }}"
-    - repeat:
-        while:
-          - condition: state
-            entity_id: binary_sensor.hall_contact_sensor
-            state: "on"
-          - condition: state
-            entity_id: lock.aqara_smart_lock_u200
-            state: "unlocked"
-        sequence:
-          - action: notify.notify
-            data:
-              title: "Внимание!"
-              message: "Дверь не заперта"
-          - delay: "00:05:00"
+
 # oasis
-# air-conditioners
-- id: '0034'  # air conditioner sync
-  alias: haier_yaha_sync
-  mode: parallel
-  max: 5
-  triggers:
-    # 1 минута после восстановления
-    - trigger: state
-      entity_id: 
-        - switch.air_conditioner_system_relay
-        - binary_sensor.electricity_outage_sensor
-        - binary_sensor.ping_8_8_8_8
-      from: "off"
-      to: "on"
-      for: "00:01:00"
-      id: recover
-    # после запуска HA
-    - trigger: homeassistant
-      event: start
-      id: ha_start
-    # Кондиционер стал unavailable
-    - trigger: state
-      entity_id:
-        - climate.gostinaia_haier_black
-        - climate.spalnia_haier_white
-        - climate.detskaia_haier_white
-      to: unavailable
-      id: ac_unavailable
-    # Кондиционер непрерывно unavailable 5 минут
-    - trigger: state
-      entity_id:
-        - climate.gostinaia_haier_black
-        - climate.spalnia_haier_white
-        - climate.detskaia_haier_white
-      to: unavailable
-      for: "00:05:00"
-      id: ac_unavailable_5m
-  actions:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: 
-                - recover
-            - condition: state
-              entity_id: switch.air_conditioner_system_relay
-              state: "on"
-            - condition: state
-              entity_id: binary_sensor.electricity_outage_sensor
-              state: "on"
-            - condition: state
-              entity_id: binary_sensor.ping_8_8_8_8
-              state: "on"
-          sequence:
-            - action: counter.increment
-              target: 
-                entity_id: counter.haier_yaha_refresh
-            - action: homeassistant.update_entity
-              target:
-                entity_id:
-                  - climate.gostinaia_haier_black
-                  - climate.spalnia_haier_white
-                  - climate.detskaia_haier_white
-        - conditions: 
-            - condition: trigger
-              id: ha_start
-          sequence:
-            - action: counter.increment
-              target:
-                entity_id: counter.haier_yaha_refresh
-            - action: homeassistant.update_entity
-              target:
-                entity_id:
-                  - climate.gostinaia_haier_black
-                  - climate.spalnia_haier_white
-                  - climate.detskaia_haier_white
-            - delay: "00:01:00"
-            - condition: state
-              entity_id: switch.air_conditioner_system_relay
-              state: "on"
-            - condition: state
-              entity_id: binary_sensor.electricity_outage_sensor
-              state: "on"
-            - condition: state
-              entity_id: binary_sensor.ping_8_8_8_8
-              state: "on"
-            - repeat:
-                for_each:
-                  - climate.gostinaia_haier_black
-                  - climate.spalnia_haier_white
-                  - climate.detskaia_haier_white 
-                sequence:
-                  - condition: template
-                    value_template: >
-                      {{ states(repeat.item) == "unavailable" }}
-                  - action: counter.increment
-                    target:
-                      entity_id: counter.haier_yaha_refresh
-                  - action: homeassistant.update_entity
-                    target:
-                      entity_id: "{{ repeat.item }}"
-        - conditions:
-            - condition: trigger
-              id: 
-                - ac_unavailable
-                - ac_unavailable_5m
-            - condition: state
-              entity_id: switch.air_conditioner_system_relay
-              state: "on"
-          sequence:
-            - action: counter.increment
-              target: 
-                entity_id: counter.haier_yaha_refresh
-            - action: homeassistant.update_entity
-              target:
-                entity_id: "{{ trigger.entity_id }}"
 - id: '0025'  # oasis_set_target_temperature
   alias: oasis_set_target_temperature
   description: Установить целевую температуру приточной установки
@@ -1051,8 +940,122 @@
     data:
       temperature: '{{ states("input_number.oasis_target_temperature") | float }}'
 # oasis
-# air conditioners
 
+# air conditioners
+- id: '0034'  # air conditioner sync
+  alias: haier_yaha_sync
+  mode: parallel
+  max: 5
+  triggers:
+    # 1 минута после восстановления
+    - trigger: state
+      entity_id: 
+        - switch.air_conditioner_system_relay
+        - binary_sensor.electricity_outage_sensor
+        - binary_sensor.ping_8_8_8_8
+      from: "off"
+      to: "on"
+      for: "00:01:00"
+      id: recover
+    # после запуска HA
+    - trigger: homeassistant
+      event: start
+      id: ha_start
+    # Кондиционер стал unavailable
+    - trigger: state
+      entity_id:
+        - climate.gostinaia_haier_black
+        - climate.spalnia_haier_white
+        - climate.detskaia_haier_white
+      to: unavailable
+      id: ac_unavailable
+    # Кондиционер непрерывно unavailable 5 минут
+    - trigger: state
+      entity_id:
+        - climate.gostinaia_haier_black
+        - climate.spalnia_haier_white
+        - climate.detskaia_haier_white
+      to: unavailable
+      for: "00:05:00"
+      id: ac_unavailable_5m
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: 
+                - recover
+            - condition: state
+              entity_id: switch.air_conditioner_system_relay
+              state: "on"
+            - condition: state
+              entity_id: binary_sensor.electricity_outage_sensor
+              state: "on"
+            - condition: state
+              entity_id: binary_sensor.ping_8_8_8_8
+              state: "on"
+          sequence:
+            - action: counter.increment
+              target: 
+                entity_id: counter.haier_yaha_refresh
+            - action: homeassistant.update_entity
+              target:
+                entity_id:
+                  - climate.gostinaia_haier_black
+                  - climate.spalnia_haier_white
+                  - climate.detskaia_haier_white
+        - conditions: 
+            - condition: trigger
+              id: ha_start
+          sequence:
+            - action: counter.increment
+              target:
+                entity_id: counter.haier_yaha_refresh
+            - action: homeassistant.update_entity
+              target:
+                entity_id:
+                  - climate.gostinaia_haier_black
+                  - climate.spalnia_haier_white
+                  - climate.detskaia_haier_white
+            - delay: "00:01:00"
+            - condition: state
+              entity_id: switch.air_conditioner_system_relay
+              state: "on"
+            - condition: state
+              entity_id: binary_sensor.electricity_outage_sensor
+              state: "on"
+            - condition: state
+              entity_id: binary_sensor.ping_8_8_8_8
+              state: "on"
+            - repeat:
+                for_each:
+                  - climate.gostinaia_haier_black
+                  - climate.spalnia_haier_white
+                  - climate.detskaia_haier_white 
+                sequence:
+                  - condition: template
+                    value_template: >
+                      {{ states(repeat.item) == "unavailable" }}
+                  - action: counter.increment
+                    target:
+                      entity_id: counter.haier_yaha_refresh
+                  - action: homeassistant.update_entity
+                    target:
+                      entity_id: "{{ repeat.item }}"
+        - conditions:
+            - condition: trigger
+              id: 
+                - ac_unavailable
+                - ac_unavailable_5m
+            - condition: state
+              entity_id: switch.air_conditioner_system_relay
+              state: "on"
+          sequence:
+            - action: counter.increment
+              target: 
+                entity_id: counter.haier_yaha_refresh
+            - action: homeassistant.update_entity
+              target:
+                entity_id: "{{ trigger.entity_id }}"
 - id: '0035'  # living_room_air_conditioner_backlight
   alias: living_room_air_conditioner_backlight
   description: Turn off living room air conditioner backlight if watching cinema
@@ -1160,4 +1163,25 @@
       target:
         entity_id: switch.detskaia_haier_white_podsvetka
   mode: restart
+# air conditioners
 
+- id: '0038'  # yandex_station_volume_default
+  alias: yandex_station_volume_default
+  mode: parallel
+  triggers:
+    - trigger: state
+      entity_id:
+        - media_player.yandex_station_m101k3a00pba6r
+        - media_player.yandex_station_m00db3710dqrsg
+      to: "paused"
+      for: "00:02:00"
+  conditions:
+    - condition: template
+      value_template: >
+        {{ state_attr(trigger.entity_id, 'volume_level') | float(0) > 0.4 }}
+  actions:
+    - action: media_player.volume_set
+      target:
+        entity_id: "{{ trigger.entity_id }}"
+      data:
+        volume_level: 0.4
