@@ -1,358 +1,352 @@
-- id: "0001"  # Night
+- id: '0001'
   name: Night
   icon: mdi:moon-waxing-crescent
   entities:
     switch.living_room_bright_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_dinner_table:
-      state: "off"
+      state: 'off'
     switch.kitchen_led_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     switch.hall_wardrobe_light:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_1:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_2:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_mirror_backlight:
-      state: "off"
+      state: 'off'
     light.meross_ambient_light_l:
-      state: "off"
+      state: 'off'
     light.meross_ambient_light_r:
-      state: "off"
+      state: 'off'
     switch.bedroom_dimmed_light:
-      state: "off"
+      state: 'off'
     light.stars_projector:
-      state: "off"
+      state: 'off'
     switch.living_room_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.living_room_track:
-      state: "off"
+      state: 'off'
     light.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     light.lava_lamp:
-      state: "off"
+      state: 'off'
     switch.hdmi_hub:
-      state: "off"
+      state: 'off'
     input_number.oasis_target_temperature:
-      state: "16"
+      state: '16'
     cover.bedroom_curtain:
-      state: "closed"
-    climate.gostinaia_haier_black:
-      state: "off"
-    switch.spalnia_haier_white_bedroom_podsvetka:
-      state: "off"
+      state: closed
+    switch.living_room_air_conditioner:
+      state: 'off'
+    switch.spalnia_haier_white_podsvetka:
+      state: 'off'
     media_player.yandex_station_m101k3a00pba6r:
-      state: "off"
+      state: 'off'
       volume_level: 0.4
     media_player.yandex_station_m00db3710dqrsg:
-      state: "off"
+      state: 'off'
       volume_level: 0.4
     switch.bathroom_bright_light:
-      state: "off"
+      state: 'off'
     switch.bathroom_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.bathroom_sconce:
-      state: "off"
+      state: 'off'
     switch.laundry_light:
-      state: "off"
+      state: 'off'
     switch.store_room_light:
-      state: "off"
+      state: 'off'
     switch.store_room_table_light:
-      state: "off"
-
-- id: "0002"  # Sleep
+      state: 'off'
+- id: '0002'
   name: Sleep
   icon: mdi:moon-waxing-crescent
   entities:
     switch.living_room_bright_light:
-      state: "off"
+      state: 'off'
     switch.living_room_dimmed_light:
-      state: "on"
+      state: 'on'
     switch.living_room_track:
-      state: "off"
+      state: 'off'
     switch.kitchen_dinner_table:
-      state: "off"
+      state: 'off'
     switch.kitchen_led_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     switch.hall_wardrobe_light:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_1:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_2:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_mirror_backlight:
-      state: "off"
+      state: 'off'
     switch.bedroom_dimmed_light:
-      state: "on"
+      state: 'on'
     light.meross_ambient_light_l:
-      state: "on"
+      state: 'on'
       brightness: 166
       rgb_color:
-        - 178
-        - 68
-        - 193
+      - 178
+      - 68
+      - 193
     light.meross_ambient_light_r:
-      state: "on"
+      state: 'on'
       brightness: 166
       rgb_color:
-        - 178
-        - 68
-        - 193
+      - 178
+      - 68
+      - 193
     light.stars_projector:
-      state: "on"
+      state: 'on'
     light.lava_lamp:
-      state: "off"
+      state: 'off'
     switch.hdmi_hub:
-      state: "off"
+      state: 'off'
     input_number.oasis_target_temperature:
-      state: "16"
+      state: '16'
     cover.bedroom_curtain:
-      state: "closed"
-    climate.gostinaia_haier_black:
-      state: "off"
+      state: closed
+    switch.living_room_air_conditioner:
+      state: 'off'
     media_player.yandex_station_m101k3a00pba6r:
-      state: "off"
+      state: 'off'
       volume_level: 0.4
     media_player.yandex_station_m00db3710dqrsg:
-      state: "off"
+      state: 'off'
       volume_level: 0.4
     switch.store_room_light:
-      state: "off"
+      state: 'off'
     switch.store_room_table_light:
-      state: "off"
-
-- id: "0003"  # Work
+      state: 'off'
+- id: '0003'
   name: Work
-  icon: mdi:briefcase
   entities:
     switch.living_room_bright_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_dinner_table:
-      state: "off"
+      state: 'off'
     switch.kitchen_led_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     switch.hall_wardrobe_light:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_1:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_2:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_dimmed_light:
-      state: "on"
+      state: 'on'
     switch.bedroom_bright_light:
-      state: "off"
-    switch.bedroom_mirror_backlight:
-      state: "off"
-    light.meross_ambient_light_l:
-      state: "on"
-      brightness: 166
-      rgb_color:
-        - 245
-        - 43
-        - 39
-    light.meross_ambient_light_r:
-      state: "on"
-      brightness: 166
-      rgb_color:
-        - 245
-        - 43
-        - 39
+      state: 'off'
     switch.bedroom_dimmed_light:
-      state: "on"
+      state: 'off'
+    switch.bedroom_mirror_backlight:
+      state: 'off'
+    light.meross_ambient_light_l:
+      state: 'on'
+      brightness: 166
+      rgb_color:
+      - 245
+      - 43
+      - 39
+    light.meross_ambient_light_r:
+      state: 'on'
+      brightness: 166
+      rgb_color:
+      - 245
+      - 43
+      - 39
     light.stars_projector:
-      state: "off"
+      state: 'off'
     switch.living_room_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.living_room_track:
-      state: "off"
+      state: 'off'
     light.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     light.lava_lamp:
-      state: "off"
+      state: 'off'
     switch.hdmi_hub:
-      state: "on"
+      state: 'on'
     input_number.oasis_target_temperature:
-      state: "18"
+      state: '18'
     cover.bedroom_curtain:
-      state: "open"
-
-- id: "0004"  # Cinema
+      state: open
+  icon: mdi:briefcase
+- id: '0004'
   name: Cinema
   icon: mdi:theater
   entities:
     switch.living_room_bright_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_dinner_table:
-      state: "off"
+      state: 'off'
     switch.kitchen_led_light:
-      state: "on"
+      state: 'on'
     switch.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     switch.hall_wardrobe_light:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_1:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_2:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_mirror_backlight:
-      state: "off"
+      state: 'off'
     light.meross_ambient_light_l:
-      state: "off"
+      state: 'off'
     light.meross_ambient_light_r:
-      state: "off"
+      state: 'off'
     switch.bedroom_dimmed_light:
-      state: "off"
+      state: 'off'
     light.stars_projector:
-      state: "off"
+      state: 'off'
     switch.living_room_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.living_room_track:
-      state: "off"
+      state: 'off'
     light.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     light.lava_lamp:
-      state: "off"
+      state: 'off'
     switch.hdmi_hub:
-      state: "off"
+      state: 'off'
     cover.bedroom_curtain:
-      state: "closed"
+      state: closed
     cover.living_room_curtain:
-      state: "closed"
+      state: closed
     cover.living_room_roll_curtain:
-      state: "closed"
+      state: closed
     input_select.audio_system_signal_source:
-      state: "Optical"
-
-- id: "0005"  # After Cinema
+      state: Optical
+    switch.xgimi_horizon_ultra:
+      state: 'on'
+- id: '0005'
   name: After Cinema
   icon: mdi:theater
   entities:
     switch.kitchen_dinner_table:
-      state: "off"
+      state: 'off'
     switch.kitchen_led_light:
-      state: "on"
+      state: 'on'
     switch.living_room_dimmed_light:
-      state: "on"
+      state: 'on'
     cover.bedroom_curtain:
-      state: "open"
+      state: open
     cover.living_room_curtain:
-      state: "open"
+      state: open
     cover.living_room_roll_curtain:
-      state: "open"
+      state: open
     input_select.audio_system_signal_source:
-      state: "Line 1"
+      state: Line 1
     switch.xgimi_horizon_ultra:
-      state: "off"
-
-- id: "0006"  # Leave
+      state: 'off'
+- id: '0006'
   name: Leave
   icon: mdi:home-export-outline
   entities:
     switch.living_room_bright_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_dinner_table:
-      state: "off"
+      state: 'off'
     switch.kitchen_led_light:
-      state: "off"
+      state: 'off'
     switch.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     switch.hall_wardrobe_light:
-      state: "on"
+      state: 'on'
     switch.hall_track_part_1:
-      state: "off"
+      state: 'off'
     switch.hall_track_part_2:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_desktop_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_bright_light:
-      state: "off"
+      state: 'off'
     switch.bedroom_mirror_backlight:
-      state: "off"
+      state: 'off'
     light.meross_ambient_light_l:
-      state: "off"
+      state: 'off'
     light.meross_ambient_light_r:
-      state: "off"
+      state: 'off'
     switch.bedroom_dimmed_light:
-      state: "off"
+      state: 'off'
     light.stars_projector:
-      state: "off"
+      state: 'off'
     switch.living_room_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.living_room_track:
-      state: "off"
+      state: 'off'
     light.kitchen_hood_led_ext:
-      state: "off"
+      state: 'off'
     light.lava_lamp:
-      state: "off"
+      state: 'off'
     switch.hdmi_hub:
-      state: "off"
-
+      state: 'off'
     switch.bathroom_bright_light:
-      state: "off"
+      state: 'off'
     switch.bathroom_dimmed_light:
-      state: "off"
+      state: 'off'
     switch.bathroom_sconce:
-      state: "off"
+      state: 'off'
     switch.laundry_light:
-      state: "off"
+      state: 'off'
     switch.store_room_light:
-      state: "off"
+      state: 'off'
     switch.store_room_table_light:
-      state: "off"
-
-    climate.gostinaia_haier_black:
-      state: "off"
-    climate.spalnia_haier_white:
-      state: "off"
-    climate.detskaia_haier_white:
-      state: "off"
+      state: 'off'
+    switch.living_room_air_conditioner:
+      state: 'off'
+    switch.bedroom_air_conditioner:
+      state: 'off'
+    switch.kids_room_air_conditioner:
+      state: 'off'
     switch.humidifier_system_control_switch_l1:
-      state: "off"
+      state: 'off'
     switch.humidifier_system_control_switch_l2:
-      state: "off"
+      state: 'off'
     switch.humidifier_system_control_switch_l3:
-      state: "off"
+      state: 'off'
     switch.oasis_power:
-      state: "off"
-
-- id: "0007"  # Home
+      state: 'off'
+- id: '0007'
   name: Home
   icon: mdi:home-import-outline
   entities:
     switch.humidifier_system_control_switch_l1:
-      state: "on"
+      state: 'on'
     switch.humidifier_system_control_switch_l2:
-      state: "on"
+      state: 'on'
     switch.humidifier_system_control_switch_l3:
-      state: "on"
+      state: 'on'
     switch.oasis_power:
-      state: "on"
+      state: 'on'

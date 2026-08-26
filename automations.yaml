@@ -263,6 +263,8 @@
         - sensor.fresh_element_solo_1_status
         - sensor.fresh_element_solo_2_status
       to: "offline"
+      for:
+        seconds: 5
   actions:
     - variables:
         feeder_switch: >
@@ -447,7 +449,22 @@
   - action: switch.turn_off
     target:
       entity_id: switch.store_room_socket
-
+- id: '0018'  # sync xgimi sitch state to ping sensor
+  alias: xgimi_sync_state
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.ping_xgimi
+  actions:
+    - action: input_select.select_option
+      target:
+        entity_id: input_select.xgimi_power_state
+      data:
+        option: >-
+          {% if is_state('binary_sensor.ping_xgimi', 'on') %}
+            on
+          {% else %}
+            off
+          {% endif %}
 - id: '0019'  # notify_about_low_humidity
   alias: notify_about_low_humidity
   description: Уведомление о низкой влажности
@@ -1113,7 +1130,7 @@
             - 'unknown'
     - action: switch.turn_off
       target:
-        entity_id: switch.spalnia_haier_white_bedroom_podsvetka
+        entity_id: switch.spalnia_haier_white_podsvetka
   mode: restart
 - id: '0037'  # kids_room_air_conditioner_backlight
   alias: kids_room_air_conditioner_backlight
@@ -1141,6 +1158,6 @@
             - 'unknown'
     - action: switch.turn_off
       target:
-        entity_id: switch.detskaia_konditsioner_podsvetka
+        entity_id: switch.detskaia_haier_white_podsvetka
   mode: restart
 

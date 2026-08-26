@@ -508,7 +508,7 @@ views:
                         entity: sensor.airmonitor2_temperature
                         icon_color: deep-orange
                       - type: entity
-                        entity: switch.spalnia_haier_white_bedroom_podsvetka
+                        entity: switch.spalnia_haier_white_podsvetka
                         use_entity_picture: false
                         content_info: name
                         name: Подсветка
@@ -535,7 +535,7 @@ views:
                         entity: sensor.kids_room_temperature
                         icon_color: deep-orange
                       - type: entity
-                        entity: switch.detskaia_konditsioner_podsvetka
+                        entity: switch.detskaia_haier_white_podsvetka
                         use_entity_picture: false
                         content_info: name
                         name: Подсветка
