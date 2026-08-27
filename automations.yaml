@@ -237,6 +237,48 @@
           title: Завершение активности
           message: '{{ device_name }} — активность завершена, теперь точно'
   mode: queued
+- id: '0039'  # notify_about_water_leak
+  alias: notify_about_water_leak
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.hall_collector_water_leak_sensor
+    - binary_sensor.kitchen_sink_water_leak_sensor
+    - binary_sensor.kitchen_dishwasher_water_leak_sensor
+    - binary_sensor.laundry_collector_water_leak_sensor
+    - binary_sensor.laundry_installation_water_leak_sensor
+    - binary_sensor.laundry_humidifier_water_leak_sensor
+    - binary_sensor.laundry_washing_machine_water_leak_sensor
+    - binary_sensor.laundry_sink_water_leak_sensor
+    - binary_sensor.bathroom_installation_water_leak_sensor
+    - binary_sensor.bathroom_bath_water_leak_sensor
+    - binary_sensor.bathroom_sink_water_leak_sensor
+    - binary_sensor.bathroom_drain_water_leak_sensor
+    from: 'off'
+    to: 'on'
+  variables:
+    sensor_name: >-
+      {% set names = {
+        'binary_sensor.hall_collector_water_leak_sensor': 'В коллекторе — кухня',
+        'binary_sensor.kitchen_sink_water_leak_sensor': 'Под раковиной — кухня',
+        'binary_sensor.kitchen_dishwasher_water_leak_sensor': 'Под посудомойкой — кухня',
+        'binary_sensor.laundry_collector_water_leak_sensor': 'В коллекторе — прачечная',
+        'binary_sensor.laundry_installation_water_leak_sensor': 'В инсталляции — прачечная',
+        'binary_sensor.laundry_humidifier_water_leak_sensor': 'В системе увлажнения — прачечная',
+        'binary_sensor.laundry_washing_machine_water_leak_sensor': 'Под стиральной машинкой — прачечная',
+        'binary_sensor.laundry_sink_water_leak_sensor': 'Под раковиной — прачечная',
+        'binary_sensor.bathroom_installation_water_leak_sensor': 'В инсталляции — ванная',
+        'binary_sensor.bathroom_bath_water_leak_sensor': 'Под ванной — ванная',
+        'binary_sensor.bathroom_sink_water_leak_sensor': 'Под раковиной — ванная',
+        'binary_sensor.bathroom_drain_water_leak_sensor': 'У фановой трубы — ванная'
+      } %}
+      {{ names.get(trigger.entity_id, trigger.to_state.name) }}
+  actions:
+  - action: notify.notify
+    data:
+      title: Протечка!
+      message: 'Сработал датчик {{ sensor_name }}'
+  mode: queued
 # notifications
 
 - id: '0009'  # end_lavalamp_warming
