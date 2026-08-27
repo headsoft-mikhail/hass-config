@@ -2,7 +2,7 @@ include:
   - name: Кондиционер
     room_name: Гостиная
     capabilities:
-      - themostat
+      - thermostat
       - temperature
       - fan_speed
       - swing
@@ -10,7 +10,7 @@ include:
   - name: Кондиционер
     room_name: Спальня
     capabilities:
-      - themostat
+      - thermostat
       - temperature
       - fan_speed
       - swing
@@ -18,7 +18,7 @@ include:
   - name: Кондиционер
     room_name: Детская
     capabilities:
-      - themostat
+      - thermostat
       - temperature
       - fan_speed
       - swing

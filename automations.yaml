@@ -493,7 +493,7 @@
   - action: switch.turn_off
     target:
       entity_id: switch.store_room_socket
-- id: '0018'  # sync xgimi sitch state to ping sensor
+- id: '0018'  # sync xgimi switch state to ping sensor
   alias: xgimi_sync_state
   triggers:
     - trigger: state
@@ -930,7 +930,7 @@
       {{ val >= 5 and val <= 30 }}
   - condition: template
     value_template: >
-      {% set climate_val = (state_attr('cliamte.oasis', 'temperature') | float(0) * 10) | round(0) %}
+      {% set climate_val = (state_attr('climate.oasis', 'temperature') | float(0) * 10) | round(0) %}
       {% set sensor_val = (states('sensor.oasis_target_temperature') | float(0) * 10) | round(0)  %}
       {{ climate_val != sensor_val }}
   actions:

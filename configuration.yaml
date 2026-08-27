@@ -269,7 +269,7 @@ utility_meter:
     source: sensor.3d_printer_plug_energy
     cycle: monthly
     always_available: true
-  fireplace_energy_montly:
+  fireplace_energy_monthly:
     name: Fireplace Plug Energy Monthly
     unique_id: fireplace_plug_energy_monthly
     source: sensor.fireplace_plug_energy
@@ -429,7 +429,7 @@ template:
           OpenThread_Border_Router: "{{ states('sensor.openthread_border_router_cpu_percent') }}"
           Google_Drive_backup: "{{ states('sensor.home_assistant_google_drive_backup_cpu_percent') }}"
           Studio_Code_server: "{{ states('sensor.studio_code_server_cpu_percent') }}"
-          SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_cpuy_percent') }}"
+          SSH_web_terminal: "{{ states('sensor.advanced_ssh_web_terminal_cpu_percent') }}"
           AdGuard_home: "{{ states('sensor.adguard_home_cpu_percent') }}"
       - name: "Total RAM Usage"
         unique_id: "total_ram_usage"
