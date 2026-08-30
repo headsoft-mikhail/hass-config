@@ -67,6 +67,8 @@ My Custom Theme:
   markdown-code-background-color: "#464646"
   code-editor-background-color: "#161616"
   clear-background-color: var(--ha-card-background)
+  ha-tooltip-background-color: var(--primary-background-color)
+  ha-tooltip-text-color: var(--primary-text-color)
   # Forms
   ha-color-form-background: rgba(0, 0, 0, 0) # HA 2026.4 ha-input background
   ha-color-form-background-hover: rgba(255, 255, 255, 0.05)
