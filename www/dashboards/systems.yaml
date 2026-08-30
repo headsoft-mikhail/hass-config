@@ -138,6 +138,51 @@ views:
                 name: Нагрев балкона
                 tap_action:
                   action: toggle
+          - type: markdown
+            text_only: true
+            content: '## Автоматизации'
+          - type: logbook
+            title: Запуски за последние сутки
+            hours_to_show: 24
+            name_detail: entity
+            target:
+              entity_id:
+                - automation.notify_about_download_completed
+                - automation.notify_about_door_not_locked
+                - automation.notify_about_homeassistant_started
+                - automation.notify_about_homeassistant_stopped
+                - automation.notify_about_power_off
+                - automation.notify_about_power_on
+                - automation.notify_about_ping_google_fail
+                - automation.notify_about_ping_google_ok
+                - automation.notify_about_switch_state_changed
+                - automation.notify_about_activity_ended
+                - automation.notify_about_water_leak
+                - automation.end_lavalamp_warming
+                - automation.change_audio_system_signal_source
+                - automation.petkit_cat_feeder_reboot
+                - automation.select_kitchen_water_valve_state
+                - automation.select_laundry_water_valve_state
+                - automation.turn_off_vertical_vacuum_cleaner_charging_after_4h
+                - automation.xgimi_sync_state
+                - automation.notify_about_low_humidity
+                - automation.bathroom_floor_cycle
+                - automation.laundry_floor_cycle
+                - automation.sync_kitchen_hood_led_state
+                - automation.sync_kitchen_hood_fan_state
+                - automation.oasis_set_target_temperature
+                - automation.oasis_sync_temperature_from_sensor_to_input_number
+                - automation.oasis_set_target_fan_speed
+                - automation.oasis_sync_fan_speed_from_sensor_to_input_number
+                - automation.oasis_confirmed_sync_switch_and_cancel_applying
+                - automation.oasis_confirmed_sync_switch_after_start
+                - automation.oasis_climate_set_temperature
+                - automation.oasis_sync_temperature_from_sensor_to_climate
+                - automation.haier_yaha_sync
+                - automation.living_room_air_conditioner_backlight
+                - automation.bedroom_air_conditioner_backlight
+                - automation.kids_room_air_conditioner_backlight
+                - automation.yandex_station_volume_default
     header:
       layout: start
       badges_position: bottom
