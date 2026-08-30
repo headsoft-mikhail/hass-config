@@ -63,7 +63,7 @@ views:
             windspeed_bar_location: bottom
             wind_direction_entity:
               entity: sensor.black_river_wind_bearing
-              use_statistics: false
+              use_statistics: true
               direction_compensation: 0
             windspeed_entities:
               - entity: sensor.black_river_wind_speed
@@ -82,7 +82,7 @@ views:
             rose_config:
               wind_direction_count: 8
               windrose_draw_north_offset: 0
-              center_calm_percentage: false
+              center_calm_percentage: true
             current_direction:
               show_arrow: true
               arrow_size: 50
@@ -90,7 +90,6 @@ views:
               hide_direction_below_speed: 0
             compass_direction:
               auto_rotate: false
-              entity: ''
             matching_strategy:
               time_interval: 60
               name: time-frame
