@@ -128,6 +128,7 @@ views:
                 name: Кормить кошек
                 tap_action:
                   action: toggle
+                icon: mdi:hamburger-plus
               - type: custom:mushroom-entity-card
                 entity: script.cat_spa
                 name: Кошачье спа
@@ -278,6 +279,12 @@ views:
                         http://192.168.1.1:8090/transmission/web/index.html?devicetype=computer
                     picture: /local/images/icon_transmission.svg
                     content: Transmission
+          - square: false
+            type: grid
+            columns: 1
+            cards:
+              - type: custom:mushroom-chips-card
+                chips:
                   - type: entity
                     entity: sensor.smb_disk_free_mypassport
                     icon_color: light-blue
@@ -475,145 +482,110 @@ views:
             heading_style: title
             heading: Фрея
             icon: mdi:cat
-          - square: false
-            type: grid
-            columns: 1
-            cards:
-              - type: custom:layout-card
-                layout_type: custom:grid-layout
-                cards:
-                  - type: custom:bar-sensor-card
-                    palette: green_to_red
-                    color: light-blue
-                    entity: sensor.fresh_element_solo_1_dispensed
-                    title: Выдано еды
-                    show_value_inline: true
-                    min: 0
-                    max: 50
-                  - type: custom:mushroom-entity-card
-                    entity: select.fresh_element_solo_1_manual_feed
-                    name: Кормить
-                    icon: mdi:hamburger-plus
-                    icon_color: purple
-                    hold_action:
-                      action: none
-                    tap_action:
-                      action: select.select_option
-                      target:
-                        entity_id: select.fresh_element_solo_1_manual_feed
-                      data:
-                        option: 1/10th Cup (10g)
-                    secondary_info: last-updated
-                    fill_container: true
-                    layout: vertical
-                layout:
-                  grid-template-columns: auto 30%
-                  margin: 0px
-              - type: custom:auto-entities
-                card:
-                  type: custom:layout-card
-                  layout_type: grid
-                  layout:
-                    grid-template-columns: repeat(2, minmax(50%, 50%))
-                    margin: 0px
-                entities: null
-                filter:
-                  include:
-                    - options:
-                        type: custom:mushroom-entity-card
-                        icon_color: red
-                      entity_id: binary_sensor.fresh_element_solo_1_food_level
-                    - options:
-                        type: custom:mushroom-entity-card
-                        icon_color: red
-                      entity_id: sensor.fresh_element_solo_1_error
-                    - options:
-                        type: custom:mushroom-entity-card
-                        icon_color: red
-                      entity_id: sensor.fresh_element_solo_1_status
-                  exclude:
-                    - options: {}
-                      entity_id: binary_sensor.fresh_element_solo_1_food_level
-                      state: 'off'
-                    - options: {}
-                      entity_id: sensor.fresh_element_solo_1_error
-                      state: no_error
-                    - options: {}
-                      entity_id: sensor.fresh_element_solo_1_status
-                      state: normal
+          - type: tile
+            entity: sensor.fresh_element_solo_1_dispensed
+            color: light-blue
+            show_entity_picture: false
+            hide_state: false
+            state_content:
+              - state
+              - last_changed
+            vertical: false
+            features:
+              - type: bar-gauge
+                max: 50
+                min: 0
+            features_position: bottom
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:auto-entities
+            card:
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-template-columns: repeat(2, minmax(50%, 50%))
+              margin: 0px
+            entities: null
+            filter:
+              include:
+                - options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                  entity_id: binary_sensor.fresh_element_solo_1_food_level
+                - options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                  entity_id: sensor.fresh_element_solo_1_error
+                - options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                  entity_id: sensor.fresh_element_solo_1_status
+              exclude:
+                - options: {}
+                  entity_id: binary_sensor.fresh_element_solo_1_food_level
+                  state: 'off'
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_1_error
+                  state: no_error
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_1_status
+                  state: normal
       - type: grid
         cards:
           - type: heading
             heading_style: title
             heading: Шанталь
             icon: mdi:cat
-          - square: false
-            type: grid
-            columns: 1
-            cards:
-              - type: custom:layout-card
-                layout_type: custom:grid-layout
-                cards:
-                  - type: custom:bar-sensor-card
-                    palette: green_to_red
-                    color: light-blue
-                    entity: sensor.fresh_element_solo_2_dispensed
-                    title: Выдано еды
-                    show_value_inline: true
-                    min: 0
-                    max: 50
-                  - type: custom:mushroom-entity-card
-                    entity: select.fresh_element_solo_2_manual_feed
-                    name: Кормить
-                    icon: mdi:hamburger-plus
-                    icon_color: purple
-                    hold_action:
-                      action: none
-                    secondary_info: last-updated
-                    fill_container: true
-                    layout: vertical
-                    tap_action:
-                      action: select.select_option
-                      target:
-                        entity_id: select.fresh_element_solo_2_manual_feed
-                      data:
-                        option: 1/10th Cup (10g)
-                        name: Кормить
-                layout:
-                  grid-template-columns: auto 30%
-                  margin: 0px
-              - type: custom:auto-entities
-                card:
-                  type: custom:layout-card
-                  layout_type: grid
-                  layout:
-                    grid-template-columns: repeat(2, minmax(50%, 50%))
-                  margin: 0px
-                entities: null
-                filter:
-                  include:
-                    - options:
-                        type: custom:mushroom-entity-card
-                        icon_color: red
-                      entity_id: binary_sensor.fresh_element_solo_2_food_level
-                    - options:
-                        type: custom:mushroom-entity-card
-                        icon_color: red
-                      entity_id: sensor.fresh_element_solo_2_error
-                    - options:
-                        type: custom:mushroom-entity-card
-                        icon_color: red
-                      entity_id: sensor.fresh_element_solo_2_status
-                  exclude:
-                    - options: {}
-                      entity_id: binary_sensor.fresh_element_solo_2_food_level
-                      state: 'off'
-                    - options: {}
-                      entity_id: sensor.fresh_element_solo_2_error
-                      state: no_error
-                    - options: {}
-                      entity_id: sensor.fresh_element_solo_2_status
-                      state: normal
+          - type: tile
+            entity: sensor.fresh_element_solo_2_dispensed
+            color: light-blue
+            show_entity_picture: false
+            hide_state: false
+            state_content:
+              - state
+              - last_changed
+            vertical: false
+            features:
+              - type: bar-gauge
+                max: 50
+                min: 0
+            features_position: bottom
+            grid_options:
+              columns: 12
+              rows: 2
+          - type: custom:auto-entities
+            card:
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-template-columns: repeat(2, minmax(50%, 50%))
+              margin: 0px
+            entities: null
+            filter:
+              include:
+                - options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                  entity_id: binary_sensor.fresh_element_solo_2_food_level
+                - options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                  entity_id: sensor.fresh_element_solo_2_error
+                - options:
+                    type: custom:mushroom-entity-card
+                    icon_color: red
+                  entity_id: sensor.fresh_element_solo_2_status
+              exclude:
+                - options: {}
+                  entity_id: binary_sensor.fresh_element_solo_2_food_level
+                  state: 'off'
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_2_error
+                  state: no_error
+                - options: {}
+                  entity_id: sensor.fresh_element_solo_2_status
+                  state: normal
       - type: grid
         cards:
           - type: heading
@@ -647,6 +619,28 @@ views:
                         icon_color: red
                       state: 'on'
                 show_empty: false
+          - type: custom:auto-entities
+            card:
+              type: custom:layout-card
+              layout_type: grid
+              layout:
+                grid-template-columns: repeat(2, minmax(50%, 50%))
+              margin: 0px
+            entities: null
+            filter:
+              include:
+                - options:
+                    type: custom:mushroom-entity-card
+                    icon: mdi:water-alert
+                    icon_color: red
+                  entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
+              exclude:
+                - options: {}
+                  entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
+                  state: 'off'
+                - options: {}
+                  entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
+                  state: unavailable
       - type: grid
         cards:
           - type: heading
@@ -720,6 +714,7 @@ views:
         icon_color: purple
         secondary_info: last-changed
         name: Кормить кошек
+        icon: mdi:hamburger-plus
   - type: sections
     max_columns: 3
     title: Электричество

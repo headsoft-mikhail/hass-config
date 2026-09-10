@@ -266,16 +266,6 @@ views:
                 hold_action:
                   action: more-info
                 secondary_info: last-changed
-          - entity: input_number.oasis_write_register_counter
-            title: Записей регистра за час
-            type: custom:bar-sensor-card
-            enable_dynamic_bar_color: true
-            palette: green_to_red
-            display_mode: bar
-            show_value_inline: ture
-            bar_position: right
-            bar_height: 12
-            max: 20
           - type: custom:mushroom-chips-card
             chips:
               - type: entity
@@ -569,9 +559,6 @@ views:
                 entity: sensor.air_conditioner_system_relay_power
                 icon_color: orange
                 icon: mdi:lightning-bolt
-              - type: entity
-                entity: counter.haier_yaha_refresh
-                icon_color: light-blue
     header:
       card:
         type: markdown

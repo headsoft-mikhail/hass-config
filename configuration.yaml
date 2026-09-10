@@ -384,12 +384,6 @@ input_number:
     min: 1
     max: 10
     step: 1
-  oasis_write_register_counter:
-    name: Oasis Write Register Counter
-    icon: mdi:counter
-    min: 0
-    max: 100
-    step: 1
   bathroom_floor_heat_minutes:
     name: Bathroom floor heat time
     min: 0
@@ -1085,10 +1079,3 @@ climate:
     max_temp: 30
     target_temp_step: 0.5
     ac_mode: false
-
-counter:
-  haier_yaha_refresh:
-    name: Haier Yaha refresh
-    initial: 0
-    step: 1
-    minimum: 0

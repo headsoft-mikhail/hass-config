@@ -760,9 +760,6 @@
         {% set input_val_x_10 = (states('input_number.oasis_target_temperature') | float(0) * 10) | round(0) %}
         {% set sensor_val_x_10 = (states('sensor.oasis_target_temperature') | float(0)  * 10) | round(0) %}
         {{ input_val_x_10 != sensor_val_x_10 }}
-  - condition: numeric_state
-    entity_id: input_number.oasis_write_register_counter
-    below: 20
   actions:
   - delay:
       seconds: 2
@@ -772,9 +769,6 @@
       unit: 1
       address: 31
       value: '{{ (states("input_number.oasis_target_temperature") | float * 10) | round(0) | int }}'
-  - action: input_number.increment
-    target:
-      entity_id: input_number.oasis_write_register_counter
 - id: '0026'  # oasis_sync_temperature_from_sensor_to_input_number
   alias: oasis_sync_temperature_from_sensor_to_input_number
   description: Синхронизация температуры в input_number
@@ -824,9 +818,6 @@
       {% set input_val = states('input_number.oasis_target_fan_speed') | int(0) %}
       {% set sensor_val = states('sensor.oasis_target_fan_speed') | int(0) %}
       {{ input_val != sensor_val }}
-  - condition: numeric_state
-    entity_id: input_number.oasis_write_register_counter
-    below: 20
   action:
   - delay: 
       seconds: 2
@@ -837,9 +828,6 @@
       address: 32   # map33
       value: >
         {{ states('input_number.oasis_target_fan_speed') | int }}
-  - action: input_number.increment
-    target:
-      entity_id: input_number.oasis_write_register_counter
 - id: '0028'  # oasis_sync_fan_speed_from_sensor_to_input_number
   alias: oasis_sync_fan_speed_from_sensor_to_input_number
   description: Синхронизация скорости вентилятора в input_number
@@ -868,17 +856,6 @@
       data:
         value: >
           {{ states('sensor.oasis_target_fan_speed') | int }}
-- id: '0029'  # reset_oasis_write_registers_counter
-  alias: reset_oasis_write_registers_counter
-  triggers:
-  - trigger: time_pattern
-    minutes: "0"
-  actions:
-  - action: input_number.set_value
-    target:
-      entity_id: input_number.oasis_write_register_counter
-    data:
-      value: 0
 - id: '0030'  # oasis_confirmed_sync_switch_and_cancel_applying
   alias: oasis_confirmed_sync_switch_and_cancel_applying
   description: Синхронизация switch c сенсором скорости и сброс таймера на применение режима
@@ -1036,9 +1013,6 @@
               entity_id: binary_sensor.ping_8_8_8_8
               state: "on"
           sequence:
-            - action: counter.increment
-              target: 
-                entity_id: counter.haier_yaha_refresh
             - action: homeassistant.update_entity
               target:
                 entity_id:
@@ -1049,9 +1023,6 @@
             - condition: trigger
               id: ha_start
           sequence:
-            - action: counter.increment
-              target:
-                entity_id: counter.haier_yaha_refresh
             - action: homeassistant.update_entity
               target:
                 entity_id:
@@ -1077,9 +1048,6 @@
                   - condition: template
                     value_template: >
                       {{ states(repeat.item) == "unavailable" }}
-                  - action: counter.increment
-                    target:
-                      entity_id: counter.haier_yaha_refresh
                   - action: homeassistant.update_entity
                     target:
                       entity_id: "{{ repeat.item }}"
@@ -1092,9 +1060,6 @@
               entity_id: switch.air_conditioner_system_relay
               state: "on"
           sequence:
-            - action: counter.increment
-              target: 
-                entity_id: counter.haier_yaha_refresh
             - action: homeassistant.update_entity
               target:
                 entity_id: "{{ trigger.entity_id }}"
