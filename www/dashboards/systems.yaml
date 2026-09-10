@@ -616,31 +616,10 @@ views:
                     - entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
                       options:
                         type: custom:mushroom-entity-card
+                        icon: mdi:water-alert
                         icon_color: red
                       state: 'on'
                 show_empty: false
-          - type: custom:auto-entities
-            card:
-              type: custom:layout-card
-              layout_type: grid
-              layout:
-                grid-template-columns: repeat(2, minmax(50%, 50%))
-              margin: 0px
-            entities: null
-            filter:
-              include:
-                - options:
-                    type: custom:mushroom-entity-card
-                    icon: mdi:water-alert
-                    icon_color: red
-                  entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
-              exclude:
-                - options: {}
-                  entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
-                  state: 'off'
-                - options: {}
-                  entity_id: binary_sensor.eversweet_3_pro_uvc_water_level
-                  state: unavailable
       - type: grid
         cards:
           - type: heading
