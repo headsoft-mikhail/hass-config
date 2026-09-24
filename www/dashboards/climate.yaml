@@ -58,21 +58,14 @@ views:
         cards:
           - type: custom:windrose-card
             data_period:
-              period_back: -4w
-            refresh_interval: 300
-            windspeed_bar_location: bottom
+              period_back: -7d
             wind_direction_entity:
               entity: sensor.black_river_wind_bearing
-              use_statistics: true
-              direction_compensation: 0
             windspeed_entities:
               - entity: sensor.black_river_wind_speed
                 name: Скорость ветра
                 speed_unit: mps
-                use_statistics: true
-                statistics_period: hour
                 windspeed_bar_full: false
-                output_speed_unit: mps
                 speed_range_beaufort: false
                 speed_range_step: 1
                 speed_range_max: 15
@@ -81,17 +74,10 @@ views:
               cardinal_direction_letters: СВЮЗ
             rose_config:
               wind_direction_count: 8
-              windrose_draw_north_offset: 0
-              center_calm_percentage: true
             current_direction:
               show_arrow: true
-              arrow_size: 50
-              center_circle_size: 30
               hide_direction_below_speed: 0
-            compass_direction:
-              auto_rotate: false
             matching_strategy:
-              time_interval: 60
               name: time-frame
             corner_info:
               top_right:
