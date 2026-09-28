@@ -67,7 +67,7 @@
       - switch.bedroom_mirror_backlight
       - switch.bedroom_track_l
       - switch.bedroom_track_r
-      - switch.pc_power_switch
+      - switch.esp_pc_power
       - switch.hdmi_hub
       - switch.humidifier_system_control_switch_l2
       - cover.bedroom_curtain
@@ -100,7 +100,7 @@
       name: Трек слева
     switch.bedroom_track_r:
       name: Трек справа
-    switch.pc_power_switch:
+    switch.esp_pc_power:
       name: Компьютер
     switch.hdmi_hub:
       name: Хаб

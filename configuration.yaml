@@ -833,6 +833,27 @@ template:
               - action: remote.turn_off
                 target:
                   entity_id: remote.xgimi_horizon_ultra_switch_off
+      - name: ESP PC Power
+        unique_id: esp_pc_power
+        icon: mdi:desktop-tower-monitor
+        state: "{{ is_state('binary_sensor.ping_desktop_pc', 'on') }}"
+        availability: >-
+          {{ states('binary_sensor.ping_desktop_pc') in ['on', 'off']
+             and has_value('button.esp_pc_power_button') }}
+        turn_on:
+          - condition: state
+            entity_id: binary_sensor.ping_desktop_pc
+            state: "off"
+          - action: button.press
+            target:
+              entity_id: button.esp_pc_power_button
+        turn_off:
+          - condition: state
+            entity_id: binary_sensor.ping_desktop_pc
+            state: "on"
+          - action: button.press
+            target:
+              entity_id: button.esp_pc_power_button
       - name: Living room air conditioner
         unique_id: living_room_air_condotioner
         state: "{{ states('climate.gostinaia_haier_black') not in ['off', 'unavailable', 'unknown'] }}"
@@ -1056,6 +1077,39 @@ template:
           - action: input_boolean.turn_off
             target:
               entity_id: input_boolean.kitchen_hood_led_state
+  - triggers:
+      - trigger: state
+        entity_id: sensor.fresh_element_solo_1_dispensed
+      - trigger: homeassistant
+        event: start
+    conditions:
+      - condition: template
+        value_template: >-
+          {{ is_number(states('sensor.fresh_element_solo_1_dispensed')) }}
+    sensor:
+      - name: Fresh Element Solo 1 Dispensed Stable
+        unique_id: fresh_element_solo_1_dispensed_stable
+        icon: mdi:food-drumstick
+        device_class: weight
+        unit_of_measurement: "g"
+        state: "{{ states('sensor.fresh_element_solo_1_dispensed') }}"
+  - triggers:
+      - trigger: state
+        entity_id: sensor.fresh_element_solo_2_dispensed
+      - trigger: homeassistant
+        event: start
+    conditions:
+      - condition: template
+        value_template: >-
+          {{ is_number(states('sensor.fresh_element_solo_2_dispensed')) }}
+    sensor:
+      - name: Fresh Element Solo 2 Dispensed Stable
+        unique_id: fresh_element_solo_2_dispensed_stable
+        icon: mdi:food-drumstick
+        device_class: weight
+        unit_of_measurement: "g"
+        state: "{{ states('sensor.fresh_element_solo_2_dispensed') }}"
+
 
 climate:
   - platform: generic_thermostat

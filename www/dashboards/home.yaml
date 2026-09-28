@@ -426,10 +426,14 @@ views:
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
-                    entity: switch.pc_power_switch
-                    icon_color: blue
+                    entity: switch.esp_pc_power
+                    name: Компьютер
+                    secondary_info: last-changed
                     tap_action:
-                      action: toggle
+                      action: more-info
+                    hold_action:
+                      action: navigate
+                      navigation_path: /config/devices/device/3e93066b9286654e977e842dbfffe3df
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_track_l
                     icon_color: orange

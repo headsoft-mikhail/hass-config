@@ -483,8 +483,9 @@ views:
             heading: Фрея
             icon: mdi:cat
           - type: tile
-            entity: sensor.fresh_element_solo_1_dispensed
+            entity: sensor.fresh_element_solo_1_dispensed_stable
             color: light-blue
+            name: Выдано
             show_entity_picture: false
             hide_state: false
             state_content:
@@ -538,8 +539,9 @@ views:
             heading: Шанталь
             icon: mdi:cat
           - type: tile
-            entity: sensor.fresh_element_solo_2_dispensed
+            entity: sensor.fresh_element_solo_2_dispensed_stable
             color: light-blue
+            name: Выдано
             show_entity_picture: false
             hide_state: false
             state_content:
