@@ -483,23 +483,23 @@ views:
             heading: Фрея
             icon: mdi:cat
           - type: tile
+            grid_options:
+              columns: 12
+              rows: 2
             entity: sensor.fresh_element_solo_1_dispensed_stable
-            color: light-blue
             name: Выдано
+            color: light-blue
             show_entity_picture: false
             hide_state: false
             state_content:
               - state
-              - last_changed
+              - last_dispensed_time
             vertical: false
             features:
               - type: bar-gauge
                 max: 50
                 min: 0
             features_position: bottom
-            grid_options:
-              columns: 12
-              rows: 2
           - type: custom:auto-entities
             card:
               type: custom:layout-card
@@ -539,23 +539,23 @@ views:
             heading: Шанталь
             icon: mdi:cat
           - type: tile
+            grid_options:
+              columns: 12
+              rows: 2
             entity: sensor.fresh_element_solo_2_dispensed_stable
-            color: light-blue
             name: Выдано
+            color: light-blue
             show_entity_picture: false
             hide_state: false
             state_content:
               - state
-              - last_changed
+              - last_dispensed_time
             vertical: false
             features:
               - type: bar-gauge
                 max: 50
                 min: 0
             features_position: bottom
-            grid_options:
-              columns: 12
-              rows: 2
           - type: custom:auto-entities
             card:
               type: custom:layout-card
@@ -639,7 +639,6 @@ views:
                 show_value_inline: true
                 entity: sensor.eversweet_3_pro_uvc_filter
                 title: 'Питьевой фонтан: Фильтр'
-                tap_action: none
                 hold_action:
                   action: perform-action
                   perform_action: button.press
@@ -656,7 +655,6 @@ views:
                 icon: mdi:water-remove
                 min: 0
                 max: 30
-                tap_action: none
                 hold_action:
                   action: perform-action
                   perform_action: button.press
@@ -673,7 +671,6 @@ views:
                 icon: mdi:water-remove
                 min: 0
                 max: 30
-                tap_action: none
                 hold_action:
                   action: perform-action
                   perform_action: button.press

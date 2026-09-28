@@ -1093,6 +1093,15 @@ template:
         device_class: weight
         unit_of_measurement: "g"
         state: "{{ states('sensor.fresh_element_solo_1_dispensed') }}"
+        attributes:
+          last_dispensed_time: >-
+            {% set saved_dispense_time = this.attributes.get('last_dispensed_time') %}
+            {% if saved_dispense_time is none
+                  or (states('sensor.fresh_element_solo_1_dispensed') | float) > (this.state | float(0)) %}
+              {{ now().strftime('%H:%M') }}
+            {% else %}
+              {{ saved_dispense_time }}
+            {% endif %}
   - triggers:
       - trigger: state
         entity_id: sensor.fresh_element_solo_2_dispensed
@@ -1109,6 +1118,15 @@ template:
         device_class: weight
         unit_of_measurement: "g"
         state: "{{ states('sensor.fresh_element_solo_2_dispensed') }}"
+        attributes:
+          last_dispensed_time: >-
+            {% set saved_dispense_time = this.attributes.get('last_dispensed_time') %}
+            {% if saved_dispense_time is none
+                  or (states('sensor.fresh_element_solo_2_dispensed') | float) > (this.state | float(0)) %}
+              {{ now().strftime('%H:%M') }}
+            {% else %}
+              {{ saved_dispense_time }}
+            {% endif %}
 
 
 climate:
