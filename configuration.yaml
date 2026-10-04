@@ -903,7 +903,7 @@ template:
             state: "off"
           - action: switch.turn_on
             target:
-              entity_id: switch.kitchen_hood_led
+              entity_id: switch.kitchen_hood_fan
           - action: input_boolean.turn_on
             target:
               entity_id: input_boolean.kitchen_hood_fan_state
@@ -913,7 +913,7 @@ template:
             state: "on"
           - action: switch.turn_on
             target:
-              entity_id: switch.kitchen_hood_led
+              entity_id: switch.kitchen_hood_fan
           - action: input_boolean.turn_off
             target:
               entity_id: input_boolean.kitchen_hood_fan_state

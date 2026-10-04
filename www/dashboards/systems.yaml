@@ -495,6 +495,11 @@ views:
               - state
               - last_dispensed_time
             vertical: false
+            hold_action:
+              action: navigate
+              navigation_path: /config/devices/device/81a094e022d2b74f6460993e1d717bfc
+            icon_tap_action:
+              action: more-info
             features:
               - type: bar-gauge
                 max: 50
@@ -551,6 +556,11 @@ views:
               - state
               - last_dispensed_time
             vertical: false
+            hold_action:
+              action: navigate
+              navigation_path: /config/devices/device/72e9542e1e36f6df0e408762c518bf8c
+            icon_tap_action:
+              action: more-info
             features:
               - type: bar-gauge
                 max: 50
@@ -833,6 +843,14 @@ views:
                   name: Увлажнение
               home:
                 secondary_info: {}
+              battery:
+                icon: mdi:car-battery
+                entity:
+                  consumption: sensor.river_3_total_in_power
+                  production: sensor.river_3_total_out_power
+                color_circle: color_dynamically
+                color_icon: color_dynamically
+                name: RIVER 3
             clickable_entities: true
             display_zero_lines: true
             use_new_flow_rate_model: true
@@ -887,6 +905,53 @@ views:
               - entity: sensor.other_power_consumers_energy_monthly
                 name: Другое
         column_span: 3
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Резервное питание
+            icon: mdi:car-battery
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.river_3_discharge_remaining_time
+                icon_color: blue
+              - type: entity
+                entity: sensor.river_3_battery_charging_state
+                icon_color: blue
+              - type: entity
+                entity: sensor.river_3_status
+                icon: mdi:access-point-network
+                icon_color: light-blue
+              - type: entity
+                entity: sensor.river_3_total_out_power
+                icon_color: accent
+          - type: custom:mushroom-chips-card
+            chips:
+              - type: entity
+                entity: sensor.river_3_battery_temperature
+                icon: mdi:car-battery
+                icon_color: accent
+              - type: entity
+                entity: sensor.river_3_pcs_ac_temperature
+                icon_color: accent
+                icon: mdi:current-ac
+              - type: entity
+                entity: sensor.river_3_pcs_dc_temperature
+                icon_color: accent
+                icon: mdi:current-dc
+          - type: custom:bar-sensor-card
+            entity: sensor.river_3_battery_level
+            min: 0
+            max: 100
+            enable_dynamic_bar_color: true
+            enable_dynamic_icon_color: true
+            bar_height: 10
+            display_mode: bar
+            show_value_inline: true
+            palette: red_to_green
+            title: Заряд RIVER 3
+            icon: mdi:car-battery
       - type: grid
         cards:
           - type: heading
@@ -1006,6 +1071,15 @@ views:
             entity: sensor.zemismart_smp01_energy_monthly
             icon: mdi:lightning-bolt-circle
             icon_color: deep-orange
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.river_3_battery_level
+        tap_action:
+          action: navigate
+          navigation_path: /config/devices/device/00c2d4f36b50af9694179958e3db5b6c
+        icon: mdi:car-battery
   - type: sections
     max_columns: 3
     title: Безопасность

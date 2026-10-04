@@ -943,6 +943,13 @@ views:
                     tap_action:
                       action: more-info
                     icon: mdi:printer-3d
+                  - type: entity
+                    entity: sensor.river_3_battery_level
+                    icon: mdi:car-battery
+                    icon_color: blue
+                  - type: entity
+                    entity: sensor.river_3_total_out_power
+                    icon_color: accent
               - square: false
                 type: grid
                 cards:
