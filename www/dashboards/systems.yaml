@@ -916,30 +916,28 @@ views:
               - type: entity
                 entity: sensor.river_3_discharge_remaining_time
                 icon_color: blue
-              - type: entity
+              - type: template
                 entity: sensor.river_3_battery_charging_state
+                icon: mdi:battery-charging
                 icon_color: blue
-              - type: entity
-                entity: sensor.river_3_status
-                icon: mdi:access-point-network
-                icon_color: light-blue
+                content: >-
+                  {% set s = states('sensor.river_3_battery_charging_state') %}
+                  {{ {
+                    'idle': 'Ожидание',
+                    'discharging': 'Разряд',
+                    'charging': 'Заряд',
+                    'unknown': 'Неизвестно',
+                    'unavailable': 'Недоступно'
+                  }.get(s, s) }}
+                tap_action:
+                  action: more-info
               - type: entity
                 entity: sensor.river_3_total_out_power
                 icon_color: accent
-          - type: custom:mushroom-chips-card
-            chips:
               - type: entity
                 entity: sensor.river_3_battery_temperature
                 icon: mdi:car-battery
                 icon_color: accent
-              - type: entity
-                entity: sensor.river_3_pcs_ac_temperature
-                icon_color: accent
-                icon: mdi:current-ac
-              - type: entity
-                entity: sensor.river_3_pcs_dc_temperature
-                icon_color: accent
-                icon: mdi:current-dc
           - type: custom:bar-sensor-card
             entity: sensor.river_3_battery_level
             min: 0
