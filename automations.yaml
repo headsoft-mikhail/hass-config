@@ -279,7 +279,28 @@
       title: Протечка!
       message: 'Сработал датчик {{ sensor_name }}'
   mode: queued
-# notifications
+- id: '0040'  # notify_about_petkit_low_level
+  alias: notify_about_petkit_low_level
+  description: Уведомление о срабатывании датчика уровня корма или воды
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.fresh_element_solo_1_food_level
+    - binary_sensor.fresh_element_solo_2_food_level
+    - binary_sensor.eversweet_3_pro_uvc_water_level
+    to: 'on'
+  variables:
+    device_name: >-
+      {{ device_attr(trigger.entity_id, 'name_by_user') or device_attr(trigger.entity_id, 'name') }}
+    resource_name: >-
+      {{ 'воды' if trigger.entity_id == 'binary_sensor.eversweet_3_pro_uvc_water_level' else 'корма' }}
+  actions:
+  - action: notify.notify
+    data:
+      title: 'Низкий уровень {{ resource_name }}!'
+      message: '{{ device_name }} — сработал датчик уровня {{ resource_name }}'
+  mode: queued
+  # notifications
 
 - id: '0009'  # end_lavalamp_warming
   alias: end_lavalamp_warming
