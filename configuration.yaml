@@ -32,30 +32,30 @@ command_line:
       unique_id: smb_disk_free_my_passport
       device_class: data_size
       scan_interval: 60
-      command: >
-        df -BG /share/KeeneticMyPassport | tail -1 | awk '{print $4}' | tr -d 'G'
+      command: "df -BG /share/KeeneticMyPassport"
+      value_template: "{{ value.splitlines()[-1].split()[3] | replace('G', '') }}"
       unit_of_measurement: GB
   - sensor:
       name: SMB Disk Usage Percent MyPassport
       unique_id: smb_disk_usage_percent_my_passport
       scan_interval: 60
-      command: >
-        df -h /share/KeeneticMyPassport | tail -1 | awk '{print $5}' | tr -d '%'
+      command: "df -h /share/KeeneticMyPassport"
+      value_template: "{{ value.splitlines()[-1].split()[4] | replace('%', '') }}"
       unit_of_measurement: "%"
   - sensor:
       name: SMB Disk Free Elements
       unique_id: smb_disk_free_elements
       device_class: data_size
       scan_interval: 60
-      command: >
-        df -BG /share/KeeneticElements | tail -1 | awk '{print $4}' | tr -d 'G'
+      command: "df -BG /share/KeeneticElements"
+      value_template: "{{ value.splitlines()[-1].split()[3] | replace('G', '') }}"
       unit_of_measurement: GB
   - sensor:
       name: SMB Disk Usage Percent Elements
       unique_id: smb_disk_usage_percent_elements
       scan_interval: 60
-      command: >
-        df -h /share/KeeneticElements | tail -1 | awk '{print $5}' | tr -d '%'
+      command: "df -h /share/KeeneticElements"
+      value_template: "{{ value.splitlines()[-1].split()[4] | replace('%', '') }}"
       unit_of_measurement: "%"
 
 sensor:
