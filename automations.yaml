@@ -200,9 +200,8 @@
     - switch.washing_machine
     - switch.drying_machine
     - switch.dishwasher
-    not_from:
-    - unknown
-    - unavailable
+    from: 'on'
+    to: 'off'
   actions:
   - action: notify.notify
     data:
@@ -305,6 +304,25 @@
       message: '{{ device_name }} — сработал датчик уровня {{ resource_name }}'
   mode: queued
   # notifications
+
+- id: '0042'  # reset_petkit_fountain_filter
+  alias: reset_petkit_fountain_filter
+  triggers:
+  - trigger: state
+    entity_id: sensor.eversweet_3_pro_uvc_filter
+    not_to:
+    - unknown
+    - unavailable
+  conditions:
+  - condition: template
+    value_template: >-
+      {{ is_number(trigger.to_state.state)
+         and trigger.to_state.state | float <= 5 }}
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.eversweet_3_pro_uvc_reset_filter
+  mode: single
 
 - id: '0009'  # end_lavalamp_warming
   alias: end_lavalamp_warming

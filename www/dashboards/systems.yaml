@@ -631,60 +631,6 @@ views:
                         icon_color: red
                       state: 'on'
                 show_empty: false
-      - type: grid
-        cards:
-          - type: heading
-            heading_style: title
-            heading: Расходники
-          - square: false
-            type: grid
-            columns: 1
-            cards:
-              - type: custom:bar-sensor-card
-                enable_dynamic_bar_color: true
-                icon_color: light-blue
-                bar_position: bottom
-                bar_height: 30
-                show_value_inline: true
-                entity: sensor.eversweet_3_pro_uvc_filter
-                title: 'Питьевой фонтан: Фильтр'
-                hold_action:
-                  action: perform-action
-                  perform_action: button.press
-                  target:
-                    entity_id: button.eversweet_3_pro_uvc_reset_filter
-              - type: custom:bar-sensor-card
-                enable_dynamic_bar_color: true
-                icon_color: light-blue
-                bar_position: bottom
-                bar_height: 30
-                show_value_inline: true
-                entity: sensor.fresh_element_solo_1_desiccant_days_remaining
-                title: 'Кормилка - Фрея: Влагопоглотитель'
-                icon: mdi:water-remove
-                min: 0
-                max: 30
-                hold_action:
-                  action: perform-action
-                  perform_action: button.press
-                  target:
-                    entity_id: button.fresh_element_solo_1_reset_desiccant
-              - type: custom:bar-sensor-card
-                enable_dynamic_bar_color: true
-                icon_color: light-blue
-                bar_position: bottom
-                bar_height: 30
-                show_value_inline: true
-                entity: sensor.fresh_element_solo_2_desiccant_days_remaining
-                title: 'Кормилка - Шанталь: Влагопоглотитель'
-                icon: mdi:water-remove
-                min: 0
-                max: 30
-                hold_action:
-                  action: perform-action
-                  perform_action: button.press
-                  target:
-                    entity_id: button.fresh_element_solo_2_reset_desiccant
     header:
       card:
         type: markdown
