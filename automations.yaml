@@ -138,16 +138,24 @@
         Ура!
         {% endif %}
   mode: restart
+- id: '0041'  # internet_ping_poll
+  alias: internet_ping_poll
+  triggers:
+  - trigger: time_pattern
+    seconds: "/15"
+  actions:
+  - action: homeassistant.update_entity
+    target:
+      entity_id: binary_sensor.ping_8_8_8_8
+  mode: single
 - id: '0007'  # notify_about_ping_google_fail
   alias: notify_about_ping_google_fail
   description: Уведомление об отключении интернета
   triggers:
   - trigger: state
-    entity_id: binary_sensor.ping_8_8_8_8
+    entity_id: binary_sensor.internet_available
     from: 'on'
     to: 'off'
-    for:
-      seconds: 1
   conditions: []
   actions:
   - action: notify.notify
@@ -164,13 +172,9 @@
   description: Уведомление о восстановлении интернета
   triggers:
   - trigger: state
-    entity_id: binary_sensor.ping_8_8_8_8
+    entity_id: binary_sensor.internet_available
     from: 'off'
     to: 'on'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
   conditions: []
   actions:
   - action: notify.notify

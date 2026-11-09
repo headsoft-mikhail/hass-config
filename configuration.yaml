@@ -410,6 +410,16 @@ input_boolean:
     name: Kitchen hood fan state
 
 template:
+  - binary_sensor:
+      - name: Internet Available
+        unique_id: internet_available
+        device_class: connectivity
+        availability: "{{ states('binary_sensor.ping_8_8_8_8') in ['on', 'off'] }}"
+        state: "{{ is_state('binary_sensor.ping_8_8_8_8', 'on') }}"
+        delay_on:
+          seconds: 17
+        delay_off:
+          seconds: 17
   - sensor:
       - name: "Total CPU Usage"
         unique_id: "total_cpu_usage"

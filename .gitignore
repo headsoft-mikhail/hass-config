@@ -14,3 +14,6 @@ haier_evo.*
 
 secrets.yaml
 haier_evo
+
+/tmp/
+.DS_Store
