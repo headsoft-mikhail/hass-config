@@ -588,6 +588,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.living_room_radiator_thermostat
+                    name: "Батарея в гостиной"
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -618,6 +619,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.bedroom_radiator_thermostat
+                    name: "Батарея в спальне"
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -648,6 +650,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.kids_room_radiator_thermostat
+                    name: "Батарея в детской"
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -746,6 +749,7 @@ views:
                         icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.bathroom_heat_wall
+                    name: "Теплая стена в ванной"
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -770,6 +774,7 @@ views:
                         icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.towel_dryer
+                    name: "Полотенцесушитель"
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -917,6 +922,7 @@ views:
                         icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.loggia_heat_floor
+                    name: "Теплый пол на балконе"
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:

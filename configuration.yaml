@@ -309,13 +309,6 @@ utility_meter:
     cycle: monthly
     always_available: true
 
-switch:
-  - platform: rpi_gpio
-    switches:
-      - port: 17
-        name: RPi cooling fan
-        unique_id: rpi_cooling_fan
-
 timer:
   oasis_state_applying:
     duration: "00:01:00"
@@ -1140,18 +1133,6 @@ template:
 
 
 climate:
-  - platform: generic_thermostat
-    name: Охлаждение RPi
-    unique_id: rpi_cooling_system
-    heater: switch.rpi_cooling_fan
-    target_sensor: sensor.rpi_cpu_temperature
-    min_temp: 40
-    max_temp: 80
-    target_temp: 62.5
-    cold_tolerance: 2.5
-    hot_tolerance: 2.5
-    ac_mode: true
-    initial_hvac_mode: "cool"
   - platform: generic_thermostat
     name: Oasis
     unique_id: oasis

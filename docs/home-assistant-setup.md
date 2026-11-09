@@ -23,7 +23,7 @@ Studio Code Server открывает /config. Чтение/копировани
 
 | Ручная копия в Git | URL действующего dashboard |
 | --- | --- |
-| www/dashboards/home.yaml | http://homeassistant.local:8123/dashboard-unknown |
+| www/dashboards/home.yaml | http://homeassistant.local:8123/dashboard-home |
 | www/dashboards/climate.yaml | http://homeassistant.local:8123/dashboard-climate |
 | www/dashboards/systems.yaml | http://homeassistant.local:8123/dashboard-systems |
 
@@ -119,3 +119,7 @@ JSON-снимок нужен только локально для повторн
 ## Применение подготовленной интернет-конфигурации
 
 Локально подготовлен binary_sensor.internet_available со встроенными delay_on/off по 17 секунд, опросом исходного Ping раз в 15 секунд и простыми уведомлениями по его подтверждённым on/off переходам. В работающем HA это ещё не применено. Перед развёртыванием отдельно согласовать и выполнить для записи 8.8.8.8 count=1 и отключение штатного polling; проверить отсутствие конфликта нового entity_id, актуальность серверных файлов и конфигурацию самим HA. Ожидаемый diff не содержит изменений actions уведомлений. Для отката вернуть прежние YAML и настройки Ping.
+
+2026-11-09: панель «Дом» перенесена через UI на /dashboard-home, назначена системной по умолчанию и показана в боковой панели; иконка mdi:home-assistant. Старый dashboard-unknown удалён после отдельного подтверждения. YAML новой панели побайтно совпал с экспортом старой (54 394 символа).
+
+Проверка перед задачей очистки сцен и охлаждения 2026-11-09, UI «О программе»: Core 2026.11.1; Supervisor 2026.10.5; HAOS 18.5; Frontend 20261028.5. Обновление Core и перезагрузку владелец уже выполнил.

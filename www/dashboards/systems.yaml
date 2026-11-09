@@ -98,7 +98,7 @@ views:
                 tap_action:
                   action: toggle
               - type: custom:mushroom-entity-card
-                entity: scene.sleep
+                entity: scene.night
                 name: Ночь
                 tap_action:
                   action: toggle
@@ -354,34 +354,6 @@ views:
                   - type: entity
                     entity: sensor.rpi_cpu_temperature
                     icon_color: orange
-                  - type: template
-                    tap_action:
-                      action: more-info
-                    hold_action:
-                      action: toggle
-                    content: |-
-                      {% set action = state_attr(entity, 'hvac_action') %}
-                      {{ {
-                        'off': 'Выключено',
-                        'idle': 'Ожидание',
-                        'cooling': 'Охлаждение',
-                      }[action] if action else 'Неизвестно' }}
-                    entity: climate.rpi_cooling_system
-                    icon: |+
-                      {% set action = state_attr(entity,  'hvac_action') %}
-                      {{ {
-                        'off': 'mdi:fan-off',
-                        'idle': 'mdi:fan-clock',
-                        'cooling': 'mdi:fan',
-                      }[action] if action else 'mdi:help-circle-outline' }}
-
-                    icon_color: |
-                      {% set action = state_attr(entity,  'hvac_action') %}
-                      {{ {
-                        'off': 'grey',
-                        'idle': 'cyan',
-                        'cooling': 'cyan',
-                      }[action] if action else 'orange' }}
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template

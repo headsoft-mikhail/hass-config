@@ -8,8 +8,6 @@
       state: 'off'
     switch.kitchen_led_light:
       state: 'off'
-    switch.kitchen_hood_led_ext:
-      state: 'off'
     switch.hall_wardrobe_light:
       state: 'off'
     switch.hall_track_part_1:
@@ -82,7 +80,7 @@
       state: 'off'
     switch.kitchen_led_light:
       state: 'off'
-    switch.kitchen_hood_led_ext:
+    light.kitchen_hood_led_ext:
       state: 'off'
     switch.hall_wardrobe_light:
       state: 'off'
@@ -145,8 +143,6 @@
       state: 'off'
     switch.kitchen_led_light:
       state: 'off'
-    switch.kitchen_hood_led_ext:
-      state: 'off'
     switch.hall_wardrobe_light:
       state: 'off'
     switch.hall_track_part_1:
@@ -204,8 +200,6 @@
       state: 'off'
     switch.kitchen_led_light:
       state: 'on'
-    switch.kitchen_hood_led_ext:
-      state: 'off'
     switch.hall_wardrobe_light:
       state: 'off'
     switch.hall_track_part_1:
@@ -277,8 +271,6 @@
     switch.kitchen_dinner_table:
       state: 'off'
     switch.kitchen_led_light:
-      state: 'off'
-    switch.kitchen_hood_led_ext:
       state: 'off'
     switch.hall_wardrobe_light:
       state: 'on'
