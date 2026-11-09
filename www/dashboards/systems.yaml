@@ -178,7 +178,7 @@ views:
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template
-                    entity: binary_sensor.ping_8_8_8_8
+                    entity: binary_sensor.internet_available
                     icon_color: |-
                       {% if is_state(entity, 'on') %}
                         green
@@ -215,7 +215,7 @@ views:
                     icon: mdi:arrow-up-bold
                     icon_color: blue
               - type: custom:uptime-card
-                entity: binary_sensor.ping_8_8_8_8
+                entity: binary_sensor.internet_available
                 icon: mdi:check-network-outline
                 ko_icon: mdi:close-network-outline
                 none_icon: mdi:wifi-strength-off-outline
