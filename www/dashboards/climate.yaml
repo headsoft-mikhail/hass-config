@@ -19,13 +19,18 @@ views:
                 show_precipitation_amounts: true
                 show_precipitation_probability: false
                 label_spacing: '2'
-                name: ' '
+                name: " "
                 num_segments: '8'
               - type: custom:clock-weather-card
                 entity: weather.black_river
                 hide_today_section: true
                 forecast_rows: 7
                 weather_icon_type: fill
+                sections:
+                  header:
+                    hide: true
+                  forecast_strip:
+                    hide: true
           - type: custom:mini-graph-card
             name: Температура
             hour24: true

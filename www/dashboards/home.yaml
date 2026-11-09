@@ -156,8 +156,8 @@ views:
                 square: false
                 cards:
                   - type: tile
-                    name: Колонки
                     entity: input_select.audio_system_signal_source
+                    name: Колонки
                     hide_state: true
                     vertical: false
                     hold_action:
@@ -192,6 +192,7 @@ views:
                                     --label-color: grey;
                                     {% endif %}
                                   }
+                                type: button
                               - entity_id: input_select.audio_system_signal_source
                                 option: Optical
                                 tap_action:
@@ -212,6 +213,7 @@ views:
                                     --label-color: orange;
                                     {% endif %}
                                   }
+                                type: button
                               - entity_id: input_select.audio_system_signal_source
                                 option: Bluetooth
                                 tap_action:
@@ -232,6 +234,7 @@ views:
                                     --label-color: cyan;
                                     {% endif %}
                                   }
+                                type: button
                               - entity_id: input_select.audio_system_signal_source
                                 option: Line 1
                                 tap_action:
@@ -252,6 +255,7 @@ views:
                                     --label-color: green;
                                     {% endif %}
                                   }
+                                type: button
                               - entity_id: input_select.audio_system_signal_source
                                 option: Line 2
                                 tap_action:
@@ -272,6 +276,7 @@ views:
                                     --label-color: green;
                                     {% endif %}
                                   }
+                                type: button
                               - entity_id: input_select.audio_system_signal_source
                                 option: Coax
                                 tap_action:
@@ -292,6 +297,7 @@ views:
                                     --label-color: magenta;
                                     {% endif %}
                                   }
+                                type: button
                             autofill_entity_id: true
                       - type: custom:service-call
                         entries:
@@ -501,6 +507,7 @@ views:
                                     {% endif %}
                                   }
                                 entity_id: light.lava_lamp
+                                type: button
                               - option: 102
                                 label: Relax
                                 tap_action:
@@ -525,6 +532,7 @@ views:
                                     {% endif %}
                                   }
                                 entity_id: light.lava_lamp
+                                type: button
                               - option: 255
                                 label: Heat
                                 tap_action:
@@ -545,6 +553,7 @@ views:
                                     {% endif %}
                                   }
                                 entity_id: light.lava_lamp
+                                type: button
                             entity_id: light.lava_lamp
                     features_position: inline
                   - type: custom:mushroom-light-card
