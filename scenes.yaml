@@ -50,10 +50,8 @@
       state: 'off'
     media_player.yandex_station_m101k3a00pba6r:
       state: 'off'
-      volume_level: 0.4
     media_player.yandex_station_m00db3710dqrsg:
       state: 'off'
-      volume_level: 0.4
     switch.bathroom_bright_light:
       state: 'off'
     switch.bathroom_dimmed_light:
@@ -114,8 +112,6 @@
       - 193
     light.stars_projector:
       state: 'on'
-    light.lava_lamp:
-      state: 'off'
     switch.hdmi_hub:
       state: 'off'
     input_number.oasis_target_temperature:
@@ -126,10 +122,8 @@
       state: 'off'
     media_player.yandex_station_m101k3a00pba6r:
       state: 'off'
-      volume_level: 0.4
     media_player.yandex_station_m00db3710dqrsg:
       state: 'off'
-      volume_level: 0.4
     switch.store_room_light:
       state: 'off'
     switch.store_room_table_light:

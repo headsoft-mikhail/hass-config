@@ -3066,7 +3066,6 @@
 | Entity ID | Имя | Комната | Интеграция | Статус |
 | --- | --- | --- | --- | --- |
 | `climate.oasis` | Oasis | Балкон | generic_thermostat | загружена |
-| `climate.rpi_cooling_system` | Охлаждение RPi | Система | generic_thermostat | загружена |
 
 ### conversation
 
@@ -3254,7 +3253,6 @@
 | `switch.living_room_air_conditioner` | Living room air conditioner | Гостиная | template | загружена |
 | `switch.oasis_power` | Oasis Power | Балкон | template | загружена |
 | `switch.oasis_power_dummy` | Oasis Power Dummy | — | — | загружена |
-| `switch.rpi_cooling_fan` | RPi cooling fan | Система | rpi_gpio | загружена |
 | `switch.xgimi_horizon_ultra` | Xgimi Horizon Ultra | Гостиная | template | загружена |
 
 ### timer
@@ -3334,7 +3332,6 @@
 | `climate.living_room_radiator_thermostat` | `homekit.yaml:266`<br>`homekit.yaml:290`<br>`www/dashboards/climate.yaml:590`<br>`www/dashboards/home.yaml:352`<br>`yaha_cloud.yaml:73`<br>`yaha_cloud.yaml:373` |
 | `climate.loggia_heat_floor` | `configuration.yaml:535`<br>`configuration.yaml:560`<br>`homekit.yaml:372`<br>`homekit.yaml:381`<br>`scripts.yaml:56`<br>`scripts.yaml:72`<br>`www/dashboards/climate.yaml:919`<br>`www/dashboards/home.yaml:1376`<br>`yaha_cloud.yaml:86`<br>`yaha_cloud.yaml:436` |
 | `climate.oasis` | `automations.yaml:895`<br>`automations.yaml:923`<br>`automations.yaml:932`<br>`automations.yaml:937`<br>`automations.yaml:941`<br>`automations.yaml:945`<br>`automations.yaml:954`<br>`automations.yaml:973`<br>`automations.yaml:979`<br>`yaha_cloud.yaml:85`<br>`yaha_cloud.yaml:432` |
-| `climate.rpi_cooling_system` | `www/dashboards/systems.yaml:369` |
 | `climate.spalnia_haier_white` | `automations.yaml:1008`<br>`automations.yaml:1016`<br>`automations.yaml:1041`<br>`automations.yaml:1051`<br>`automations.yaml:1066`<br>`automations.yaml:1143`<br>`automations.yaml:1157`<br>`configuration.yaml:870`<br>`configuration.yaml:874`<br>`configuration.yaml:878`<br>`homekit.yaml:75`<br>`homekit.yaml:116`<br>`www/dashboards/climate.yaml:500`<br>`www/dashboards/home.yaml:613` |
 | `climate.towel_dryer` | `configuration.yaml:521`<br>`configuration.yaml:540`<br>`homekit.yaml:9`<br>`homekit.yaml:26`<br>`www/dashboards/climate.yaml:772`<br>`www/dashboards/home.yaml:1129`<br>`yaha_cloud.yaml:20`<br>`yaha_cloud.yaml:139` |
 | `cover.bedroom_curtain` | `homekit.yaml:73`<br>`homekit.yaml:110`<br>`scenes.yaml:47`<br>`scenes.yaml:125`<br>`scenes.yaml:194`<br>`scenes.yaml:241`<br>`scenes.yaml:261`<br>`www/dashboards/home.yaml:463`<br>`yaha_cloud.yaml:38`<br>`yaha_cloud.yaml:215` |
@@ -3651,7 +3648,6 @@
 | `switch.living_room_track` | `homekit.yaml:260`<br>`homekit.yaml:276`<br>`scenes.yaml:37`<br>`scenes.yaml:79`<br>`scenes.yaml:184`<br>`scenes.yaml:233`<br>`scenes.yaml:307`<br>`www/dashboards/home.yaml:139`<br>`yaha_cloud.yaml:67`<br>`yaha_cloud.yaml:349` |
 | `switch.oasis_power` | `automations.yaml:892`<br>`automations.yaml:917`<br>`homekit.yaml:371`<br>`homekit.yaml:379`<br>`scenes.yaml:339`<br>`scenes.yaml:351`<br>`www/dashboards/climate.yaml:229`<br>`www/dashboards/home.yaml:1353`<br>`yaha_cloud.yaml:84`<br>`yaha_cloud.yaml:428` |
 | `switch.oasis_power_dummy` | `configuration.yaml:1148` |
-| `switch.rpi_cooling_fan` | `configuration.yaml:1136` |
 | `switch.spalnia_haier_white_podsvetka` | `automations.yaml:1164`<br>`scenes.yaml:51`<br>`www/dashboards/climate.yaml:491` |
 | `switch.store_room_light` | `homekit.yaml:396`<br>`homekit.yaml:407`<br>`scenes.yaml:67`<br>`scenes.yaml:135`<br>`scenes.yaml:323`<br>`www/dashboards/home.yaml:966`<br>`yaha_cloud.yaml:89`<br>`yaha_cloud.yaml:452` |
 | `switch.store_room_socket` | `automations.yaml:547`<br>`automations.yaml:554`<br>`automations.yaml:558`<br>`homekit.yaml:398`<br>`homekit.yaml:411`<br>`www/dashboards/home.yaml:977`<br>`yaha_cloud.yaml:91`<br>`yaha_cloud.yaml:460` |
@@ -3663,3 +3659,5 @@
 | `timer.oasis_state_applying` | `automations.yaml:900`<br>`automations.yaml:912`<br>`automations.yaml:920`<br>`configuration.yaml:685`<br>`configuration.yaml:948`<br>`configuration.yaml:967` |
 | `vacuum.roborock_robotic_vacuum_cleaner` | `www/dashboards/home.yaml:990` |
 | `weather.black_river` | `www/dashboards/climate.yaml:15`<br>`www/dashboards/climate.yaml:25`<br>`www/dashboards/climate.yaml:135` |
+
+2026-11-10: из актуального каталога исключены climate.rpi_cooling_system и switch.rpi_cooling_fan — конфигурация удалена, остаточные записи удалены после подтверждения владельца. Остальные записи отражают дату исходного обследования.
