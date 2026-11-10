@@ -377,8 +377,9 @@ views:
                       action: none
                   - type: template
                     content: >-
-                      {{ as_datetime(state_attr(entity,
-                      'last_backup')).strftime('%d.%m.%Y') }}
+                      {% set date = as_datetime(state_attr(entity,
+                      'last_backup'), none) %}
+                      {{ date.strftime('%d.%m.%Y') if date is not none else 'unknown' }}
                     icon_color: light-blue
                     icon: mdi:cloud-clock
                     entity: sensor.backup_state
@@ -389,9 +390,15 @@ views:
                   - type: template
                     content: >-
 
-                      {{ state_attr(entity, 'backups')[-1]['size'] }} / {{
-                      state_attr(entity, 'size_in_google_drive') }} / {{
-                      state_attr(entity, 'free_space_in_google_drive') }}
+                      {% set backups = state_attr(entity, 'backups') or [] %}
+                      {% set backup_size = backups[-1].get('size') if backups else none %}
+                      {% set used_space = state_attr(entity, 'size_in_google_drive') %}
+                      {% set free_space = state_attr(entity, 'free_space_in_google_drive') %}
+                      {% if backup_size is none or used_space is none or free_space is none %}
+                        unknown
+                      {% else %}
+                        {{ backup_size }} / {{ used_space }} / {{ free_space }}
+                      {% endif %}
                     icon_color: teal
                     icon: mdi:cloud-braces
                     entity: sensor.backup_state
