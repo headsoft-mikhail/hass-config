@@ -1,6 +1,6 @@
 # Инвентарь устройств и entity Home Assistant
 
-Снимок 2026-11-09. Прочитаны полные действующие реестры устройств, сущностей и комнат через Studio Code Server без изменения файлов. Удалённые записи deleted_entities/deleted_devices не включены. Имена загруженных entity дополнены читающим шаблоном HA. Значения состояний, секреты, MAC, серийные номера, токены и исходные служебные файлы сюда не перенесены.
+Снимок 2026-11-09. Каталог действующих реестров устройств, сущностей и комнат; включает зарегистрированные и дополнительные загруженные entity. Секреты, MAC, серийные номера, токены и значения состояний не включаются.
 
 - 180 записей устройств (физические, служебные и программные).
 - 1350 зарегистрированных entity.
@@ -3659,5 +3659,3 @@
 | `timer.oasis_state_applying` | `automations.yaml:900`<br>`automations.yaml:912`<br>`automations.yaml:920`<br>`configuration.yaml:685`<br>`configuration.yaml:948`<br>`configuration.yaml:967` |
 | `vacuum.roborock_robotic_vacuum_cleaner` | `www/dashboards/home.yaml:990` |
 | `weather.black_river` | `www/dashboards/climate.yaml:15`<br>`www/dashboards/climate.yaml:25`<br>`www/dashboards/climate.yaml:135` |
-
-2026-11-10: из актуального каталога исключены climate.rpi_cooling_system и switch.rpi_cooling_fan — конфигурация удалена, остаточные записи удалены после подтверждения владельца. Остальные записи отражают дату исходного обследования.
