@@ -52,7 +52,7 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.kitchen_led_light
-                    name: "Подсветка кухни"
+                    name: Подсветка кухни
                     icon_color: orange
                     tap_action:
                       action: toggle
@@ -70,13 +70,13 @@ views:
                     name: Вытяжка
                   - type: custom:mushroom-entity-card
                     entity: switch.kitchen_dinner_table
-                    name: "Обеденный стол"
+                    name: Обеденный стол
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.dishwasher
-                    name: "Посудомоечная машина"
+                    name: Посудомоечная машина
                     icon_color: purple
                     tap_action:
                       action: more-info
@@ -84,7 +84,7 @@ views:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.fridge_socket
-                    name: "Холодильник"
+                    name: Холодильник
                     icon_color: purple
                     tap_action:
                       action: more-info
@@ -92,7 +92,7 @@ views:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.kitchen_socket
-                    name: "Розетка в кухне"
+                    name: Розетка в кухне
                     icon_color: red
                     tap_action:
                       action: toggle
@@ -112,14 +112,14 @@ views:
                 cards:
                   - type: custom:mushroom-cover-card
                     entity: cover.living_room_curtain
-                    name: "Шторы"
+                    name: Шторы
                     tap_action:
                       action: toggle
                     show_position_control: true
                     show_buttons_control: false
                   - type: custom:mushroom-cover-card
                     entity: cover.living_room_roll_curtain
-                    name: "Занавес"
+                    name: Занавес
                     show_position_control: true
                     tap_action:
                       action: toggle
@@ -134,25 +134,25 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.living_room_dimmed_light
-                    name: "Подсветка"
+                    name: Подсветка
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.living_room_bright_light
-                    name: "Яркий свет"
+                    name: Яркий свет
                     icon_color: yellow
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.living_room_track
-                    name: "Трек в гостиной"
+                    name: Трек в гостиной
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.living_room_behind_sofa_socket
-                    name: "Розетка за диваном"
+                    name: Розетка за диваном
                     icon_color: red
                     tap_action:
                       action: toggle
@@ -335,7 +335,7 @@ views:
                     features_position: bottom
                   - type: custom:mushroom-media-player-card
                     entity: media_player.yandex_station_m101k3a00pba6r
-                    name: "Станция Мини Red"
+                    name: Станция Мини Red
                     icon: ''
                     fill_container: false
                     use_media_info: true
@@ -362,7 +362,7 @@ views:
                     fill_container: false
                   - type: custom:mushroom-climate-card
                     entity: climate.living_room_radiator_thermostat
-                    name: "Батарея"
+                    name: Батарея
                     show_temperature_control: true
                     hvac_modes:
                       - heat
@@ -373,7 +373,7 @@ views:
                       action: more-info
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l1
-                    name: "Увлажнение"
+                    name: Увлажнение
                     fill_container: false
                     tap_action:
                       action: toggle
@@ -422,31 +422,31 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_dimmed_light
-                    name: "Приглушенный свет"
+                    name: Приглушенный свет
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_bright_light
-                    name: "Яркий свет"
+                    name: Яркий свет
                     icon_color: yellow
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_mirror_backlight
-                    name: "Подсветка зеркала"
+                    name: Подсветка зеркала
                     icon_color: yellow
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_desktop_dimmed_light
-                    name: "Приглушенный свет"
+                    name: Приглушенный свет
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_desktop_bright_light
-                    name: "Яркий свет"
+                    name: Яркий свет
                     icon_color: orange
                     tap_action:
                       action: toggle
@@ -461,29 +461,29 @@ views:
                       navigation_path: /config/devices/device/3e93066b9286654e977e842dbfffe3df
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_track_l
-                    name: "Трек - Лина"
+                    name: Трек - Лина
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.bedroom_track_r
-                    name: "Трек - Миша"
+                    name: Трек - Миша
                     icon_color: orange
                     tap_action:
                       action: toggle
-                  - name: "HDMI хаб"
-                    type: custom:mushroom-entity-card
+                  - type: custom:mushroom-entity-card
                     entity: switch.hdmi_hub
                     icon_color: blue
                     tap_action:
                       action: toggle
+                    name: HDMI хаб
               - square: false
                 columns: 2
                 type: grid
                 cards:
                   - type: custom:mushroom-cover-card
                     entity: cover.bedroom_curtain
-                    name: "Шторы в спальне"
+                    name: Шторы в спальне
                     tap_action:
                       action: toggle
                     show_position_control: true
@@ -581,7 +581,7 @@ views:
                     features_position: inline
                   - type: custom:mushroom-light-card
                     entity: light.stars_projector
-                    name: "Звездное небо"
+                    name: Звездное небо
                     icon: ''
                     show_color_temp_control: false
                     show_color_control: true
@@ -599,7 +599,7 @@ views:
                     cards:
                       - type: custom:mushroom-light-card
                         entity: light.meross_ambient_light_l
-                        name: "Цветной светильник слева"
+                        name: Цветной светильник слева
                         show_color_control: true
                         show_brightness_control: true
                         use_light_color: true
@@ -607,7 +607,7 @@ views:
                           action: toggle
                       - type: custom:mushroom-light-card
                         entity: light.meross_ambient_light_r
-                        name: "Цветной светильник справа"
+                        name: Цветной светильник справа
                         show_brightness_control: true
                         show_color_control: true
                         tap_action:
@@ -620,7 +620,7 @@ views:
                 cards:
                   - type: custom:mushroom-media-player-card
                     entity: media_player.yandex_station_m00db3710dqrsg
-                    name: "Станция Мини White"
+                    name: Станция Мини White
                     icon: ''
                     volume_controls:
                       - volume_buttons
@@ -647,7 +647,7 @@ views:
                     fill_container: false
                   - type: custom:mushroom-climate-card
                     entity: climate.bedroom_radiator_thermostat
-                    name: "Батарея"
+                    name: Батарея
                     tap_action:
                       action: none
                     fill_container: false
@@ -661,7 +661,7 @@ views:
                       - 'off'
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l2
-                    name: "Увлажнение"
+                    name: Увлажнение
                     tap_action:
                       action: toggle
                     fill_container: false
@@ -765,19 +765,19 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.kids_room_light
-                    name: "Яркий свет"
+                    name: Яркий свет
                     icon_color: yellow
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.kids_room_desktop_light
-                    name: "Рабочий стол"
+                    name: Рабочий стол
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.kids_room_track
-                    name: "Трек"
+                    name: Трек
                     icon_color: orange
                     tap_action:
                       action: toggle
@@ -787,7 +787,7 @@ views:
                 cards:
                   - type: custom:mushroom-cover-card
                     entity: cover.kids_room_curtain
-                    name: "Шторы"
+                    name: Шторы
                     tap_action:
                       action: toggle
                     show_position_control: true
@@ -807,7 +807,7 @@ views:
                     fill_container: false
                   - type: custom:mushroom-climate-card
                     entity: climate.kids_room_radiator_thermostat
-                    name: "Батарея"
+                    name: Батарея
                     show_temperature_control: true
                     hvac_modes:
                       - heat
@@ -818,7 +818,7 @@ views:
                       action: more-info
                   - type: custom:mushroom-entity-card
                     entity: switch.humidifier_system_control_switch_l3
-                    name: "Увлажнение"
+                    name: Увлажнение
                     fill_container: false
                     tap_action:
                       action: toggle
@@ -908,25 +908,25 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.hall_track_part_1
-                    name: "Свет у входа"
+                    name: Свет у входа
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.hall_track_part_2
-                    name: "Свет в коридоре"
+                    name: Свет в коридоре
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.hall_wardrobe_light
-                    name: "Подсветка шкафа"
+                    name: Подсветка шкафа
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.hall_under_wardrobe_socket
-                    name: "Розетка под шкафом"
+                    name: Розетка под шкафом
                     icon_color: red
                     tap_action:
                       action: toggle
@@ -1003,26 +1003,26 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.store_room_light
-                    name: "Яркий свет"
+                    name: Яркий свет
                     icon_color: yellow
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.store_room_table_light
-                    name: "Свет над столом"
+                    name: Свет над столом
                     icon_color: orange
                     tap_action:
                       action: toggle
                     icon: mdi:desk-lamp
                   - type: custom:mushroom-entity-card
                     entity: switch.store_room_socket
-                    name: "Розетка в кладовке"
+                    name: Розетка в кладовке
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.3d_printer_plug
-                    name: "3D Принтер"
+                    name: 3D Принтер
                     icon_color: purple
                     tap_action:
                       action: toggle
@@ -1141,19 +1141,19 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.bathroom_dimmed_light
-                    name: "Приглушенный свет"
+                    name: Приглушенный свет
                     icon_color: orange
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.bathroom_bright_light
-                    name: "Яркий свет"
+                    name: Яркий свет
                     icon_color: yellow
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.bathroom_sconce
-                    name: "Бра"
+                    name: Бра
                     icon_color: yellow
                     tap_action:
                       action: toggle
@@ -1163,7 +1163,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.bathroom_heat_wall
-                    name: "Теплая стена"
+                    name: Теплая стена
                     show_temperature_control: true
                     hvac_modes:
                       - heat
@@ -1174,7 +1174,7 @@ views:
                       action: more-info
                   - type: custom:mushroom-climate-card
                     entity: climate.towel_dryer
-                    name: "Полотенцесушитель"
+                    name: Полотенцесушитель
                     hvac_modes:
                       - heat
                       - 'off'
@@ -1301,13 +1301,13 @@ views:
                 cards:
                   - type: custom:mushroom-entity-card
                     entity: switch.laundry_light
-                    name: "Яркий свет"
+                    name: Яркий свет
                     icon_color: yellow
                     tap_action:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.washing_machine
-                    name: "Стиральная машина"
+                    name: Стиральная машина
                     icon_color: purple
                     tap_action:
                       action: more-info
@@ -1315,7 +1315,7 @@ views:
                       action: toggle
                   - type: custom:mushroom-entity-card
                     entity: switch.drying_machine
-                    name: "Сушильная машина"
+                    name: Сушильная машина
                     icon_color: purple
                     tap_action:
                       action: more-info
@@ -1425,7 +1425,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.loggia_heat_floor
-                    name: "Теплый пол"
+                    name: Теплый пол
                     show_temperature_control: true
                     hvac_modes:
                       - heat

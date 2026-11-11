@@ -269,11 +269,11 @@ views:
                   action: more-info
               - type: entity
                 entity: sensor.ventilation_system_relay_energy_monthly
-                icon_color: deep-orange
+                icon_color: orange
                 icon: mdi:lightning-bolt-circle
               - type: entity
                 entity: sensor.ventilation_system_relay_avg_power
-                icon_color: orange
+                icon_color: amber
                 icon: mdi:lightning-bolt
     header:
       layout: start
@@ -422,11 +422,11 @@ views:
                   action: more-info
               - type: entity
                 entity: sensor.humidifier_system_relay_energy_monthly
-                icon_color: deep-orange
+                icon_color: orange
                 icon: mdi:lightning-bolt-circle
               - type: entity
                 entity: sensor.humidifier_system_relay_power
-                icon_color: orange
+                icon_color: amber
                 icon: mdi:lightning-bolt
     cards: []
     header:
@@ -544,11 +544,11 @@ views:
                   action: more-info
               - type: entity
                 entity: sensor.air_conditioner_system_relay_energy_monthly
-                icon_color: deep-orange
+                icon_color: orange
                 icon: mdi:lightning-bolt-circle
               - type: entity
                 entity: sensor.air_conditioner_system_relay_power
-                icon_color: orange
+                icon_color: amber
                 icon: mdi:lightning-bolt
     header:
       card:
@@ -588,7 +588,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.living_room_radiator_thermostat
-                    name: "Батарея"
+                    name: Батарея
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -619,7 +619,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.bedroom_radiator_thermostat
-                    name: "Батарея"
+                    name: Батарея
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -650,7 +650,7 @@ views:
                 cards:
                   - type: custom:mushroom-climate-card
                     entity: climate.kids_room_radiator_thermostat
-                    name: "Батарея"
+                    name: Батарея
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -703,7 +703,9 @@ views:
                     icon: mdi:heating-coil
                     features_position: bottom
                     entity: light.bathroom_floor_heating
-                    primary: "Теплый пол - {{ state_attr('climate.bathroom_heat_floor', 'current_temperature') }} °C"
+                    primary: >-
+                      Теплый пол - {{ state_attr('climate.bathroom_heat_floor',
+                      'current_temperature') }} °C
                     color: |-
                       {% if states(entity) == 'on'%}
                       deep-orange
@@ -746,7 +748,7 @@ views:
                         icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.bathroom_heat_wall
-                    name: "Теплая стена"
+                    name: Теплая стена
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -771,7 +773,7 @@ views:
                         icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.towel_dryer
-                    name: "Полотенцесушитель"
+                    name: Полотенцесушитель
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
@@ -824,7 +826,9 @@ views:
                     icon: mdi:heating-coil
                     features_position: bottom
                     entity: light.laundry_floor_heating
-                    primary: "Теплый пол - {{ state_attr('climate.laundry_heat_floor', 'current_temperature') }} °C"
+                    primary: >-
+                      Теплый пол - {{ state_attr('climate.laundry_heat_floor',
+                      'current_temperature') }} °C
                     color: |-
                       {% if states(entity) == 'on'%}
                       deep-orange
@@ -916,7 +920,7 @@ views:
                         icon: mdi:lightning-bolt
                   - type: custom:mushroom-climate-card
                     entity: climate.loggia_heat_floor
-                    name: "Теплый пол"
+                    name: Теплый пол
                     layout: horizontal
                     show_temperature_control: true
                     hvac_modes:
