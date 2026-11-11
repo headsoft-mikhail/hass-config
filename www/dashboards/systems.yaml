@@ -354,6 +354,15 @@ views:
                   - type: entity
                     entity: sensor.rpi_cpu_temperature
                     icon_color: orange
+                  - type: entity
+                    entity: sensor.argon_one_addon_fan_speed
+                    icon_color: cyan
+                    hold_action:
+                      action: none
+                    double_tap_action:
+                      action: none
+                    tap_action:
+                      action: more-info
               - type: custom:mushroom-chips-card
                 chips:
                   - type: template
@@ -378,8 +387,8 @@ views:
                   - type: template
                     content: >-
                       {% set date = as_datetime(state_attr(entity,
-                      'last_backup'), none) %}
-                      {{ date.strftime('%d.%m.%Y') if date is not none else 'unknown' }}
+                      'last_backup'), none) %} {{ date.strftime('%d.%m.%Y') if
+                      date is not none else 'unknown' }}
                     icon_color: light-blue
                     icon: mdi:cloud-clock
                     entity: sensor.backup_state
@@ -390,11 +399,13 @@ views:
                   - type: template
                     content: >-
 
-                      {% set backups = state_attr(entity, 'backups') or [] %}
-                      {% set backup_size = backups[-1].get('size') if backups else none %}
-                      {% set used_space = state_attr(entity, 'size_in_google_drive') %}
-                      {% set free_space = state_attr(entity, 'free_space_in_google_drive') %}
-                      {% if backup_size is none or used_space is none or free_space is none %}
+                      {% set backups = state_attr(entity, 'backups') or [] %} {%
+                      set backup_size = backups[-1].get('size') if backups else
+                      none %} {% set used_space = state_attr(entity,
+                      'size_in_google_drive') %} {% set free_space =
+                      state_attr(entity, 'free_space_in_google_drive') %} {% if
+                      backup_size is none or used_space is none or free_space is
+                      none %}
                         unknown
                       {% else %}
                         {{ backup_size }} / {{ used_space }} / {{ free_space }}
@@ -857,11 +868,11 @@ views:
                   action: more-info
               - type: entity
                 entity: sensor.river_3_total_out_power
-                icon_color: accent
+                icon_color: orange
               - type: entity
                 entity: sensor.river_3_battery_temperature
                 icon: mdi:car-battery
-                icon_color: accent
+                icon_color: deep-orange
           - type: custom:bar-sensor-card
             entity: sensor.river_3_battery_level
             min: 0
@@ -992,7 +1003,7 @@ views:
           - type: entity
             entity: sensor.zemismart_smp01_energy_monthly
             icon: mdi:lightning-bolt-circle
-            icon_color: deep-orange
+            icon_color: orange
       - type: entity
         show_name: false
         show_state: true
